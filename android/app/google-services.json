@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "984970650443",
+    "project_id": "test-405da",
+    "storage_bucket": "test-405da.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984970650443:android:1942ccc12b4b90ae28bece",
+        "android_client_info": {
+          "package_name": "grad.grad"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGZhZQMB1xt0F0Hsnd6VB1qGK1gPDQrMw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984970650443:android:086bbcddfb6c1ff428bece",
+        "android_client_info": {
+          "package_name": "sakkeni.graduation_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGZhZQMB1xt0F0Hsnd6VB1qGK1gPDQrMw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984970650443:android:eae6cfe0608339ed28bece",
+        "android_client_info": {
+          "package_name": "test1.test1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGZhZQMB1xt0F0Hsnd6VB1qGK1gPDQrMw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

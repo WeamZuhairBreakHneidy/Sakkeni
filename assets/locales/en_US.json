@@ -1,0 +1,43 @@
+{
+  "welcome": "Welcome",
+  "language": "en",
+  "labels": {
+    "or": "Or",
+    "login": "Login",
+    "login_with_Google": "Login with Google",
+    "sign_in": "Sign-in",
+    "logout": "Logout",
+    "sign_in_fb": "Sign-in with Facebook",
+    "sign_in_google": "Sign-in with Google",
+    "login_to_continue": "Login to Continue",
+    "email": "Email",
+    "password": "Password",
+    "remember_me": "Remember me",
+    "forgot_password": "Forgot Password?",
+    "dont_have_an_account": "Don't have an account?",
+    "register": "Register",
+    "register_to_continue_using_the_app": "Register to continue using the app",
+    "user_name": "User Name",
+    "register_with_Google": "Register with Google",
+    "welcome_to": "Welcome to"
+
+
+
+
+  },
+  "hint_text": {
+    "enter_your_email": "Enter your email",
+    "enter_your_password": "Enter your password",
+    "enter_your_user_name": "Enter your user name"
+  },
+  "buttons": {
+    "login": "Login",
+    "register": "Register",
+    "sign_up": "Sign-up",
+
+    "sign_in": "Sign-in",
+    "logout": "Logout",
+    "sign_in_fb": "Sign-in with Facebook",
+    "sign_in_google": "Sign-in with Google"
+  }
+}
