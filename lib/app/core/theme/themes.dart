@@ -5,8 +5,8 @@ import 'colors.dart';
 
 
 class AppTheme {
-  static const String primaryFont = 'Inter';
-  static const String secondaryFont = 'Poppins';
+  static const String primaryFont = 'Poppins';
+  static const String secondaryFont = 'Inter';
 
   // Define light theme
   static ThemeData get lightTheme {
@@ -17,15 +17,19 @@ class AppTheme {
         primary: AppColors.primary,
         secondary: AppColors.secondary,
         surface: AppColors.surface,
+
+
       ),
-      scaffoldBackgroundColor: AppColors.surface,
-      fontFamily: secondaryFont,
+      dividerColor: AppColors.surface,
+
+      scaffoldBackgroundColor: AppColors.background,
+      fontFamily: primaryFont,
       textTheme: TextTheme(
         headlineLarge: TextStyle(fontSize: 24.r,  color: AppColors.white),
-        headlineMedium: TextStyle(fontSize: 28.r, fontWeight: FontWeight.w600, color: AppColors.primary),
+        headlineMedium: TextStyle(fontSize: 22.r, fontWeight: FontWeight.w600, color: AppColors.white),
         bodyLarge: TextStyle(fontSize: 18.r, color: AppColors.primary),
         bodyMedium: TextStyle(fontSize: 16.r, color: AppColors.primary),
-        bodySmall: TextStyle(fontSize: 14.r, color: AppColors.secondary.withOpacity(0.7)),
+        bodySmall: TextStyle(fontSize: 14.r, color: AppColors.white),
         labelLarge: TextStyle(fontSize: 16.r, fontWeight: FontWeight.bold, color: AppColors.primary),
       ),
       appBarTheme: AppBarTheme(

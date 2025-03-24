@@ -28,32 +28,43 @@ class CustomDivider extends StatelessWidget {
     this.fontWeight = FontWeight.bold,
     this.padding = const EdgeInsets.symmetric(horizontal: 8.0),
     this.fontFamily = 'DefaultFont',
-     this.indent=0,  this.endIndent=0,
+    this.indent = 0,
+    this.endIndent = 0,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
+    return Row(
       children: [
-        Divider(
-          thickness: thickness.h,
-          color: dividerColor ?? Get.theme.primaryColor,
-          height: height.h,
-          indent: indent,
-          endIndent: endIndent,
+        Expanded(
+          child: Divider(
+            thickness: thickness.h,
+            color: dividerColor ?? Get.theme.dividerColor,
+            height: height.h,
+            indent: indent,
+            endIndent: 10.w, // Adds spacing between the line and text
+          ),
         ),
         Container(
-          color: backgroundColor ?? Get.theme.scaffoldBackgroundColor,
+
           padding: padding,
           child: Text(
             text,
             style: TextStyle(
-              color: textColor ?? Get.theme.primaryColor,
+              color: textColor ?? Get.theme.dividerColor,
               fontFamily: fontFamily,
               fontWeight: fontWeight,
               fontSize: fontSize,
             ),
+          ),
+        ),
+        Expanded(
+          child: Divider(
+            thickness: thickness.h,
+            color: dividerColor ?? Get.theme.dividerColor,
+            height: height.h,
+            indent: 10.w, // Adds spacing between the text and line
+            endIndent: endIndent,
           ),
         ),
       ],
