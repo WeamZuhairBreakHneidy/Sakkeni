@@ -24,7 +24,6 @@ class ResponsiveButton extends StatelessWidget {
         this.buttonStyle,
         this.boxDecoration,
         this.padding, this.margin, this.child
-
       }
       );
 

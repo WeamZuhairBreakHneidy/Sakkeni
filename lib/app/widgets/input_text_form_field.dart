@@ -57,7 +57,9 @@ class InputTextFormField extends StatelessWidget {
 
 
         decoration: decoration ??
+
             InputDecoration(
+
               filled: true,
               icon: icon,
               fillColor: Theme.of(context).colorScheme.surface,
@@ -65,11 +67,12 @@ class InputTextFormField extends StatelessWidget {
               helper: helper,
               counter: counter,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50.r), // Responsive border radius
+                borderRadius: BorderRadius.circular(10.r), // Responsive border radius
                 borderSide: BorderSide.none,
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50.r),
+
+                borderRadius: BorderRadius.circular(10.r),
                 borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
               ),
               focusedBorder: OutlineInputBorder(
@@ -82,6 +85,7 @@ class InputTextFormField extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
               prefixIcon: prefixIcon,
               suffixIcon: suffixIcon,
+
             ),
 
         validator: (value) {
