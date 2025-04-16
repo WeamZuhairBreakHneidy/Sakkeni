@@ -24,7 +24,7 @@ class LocaleKeys {
   static const labels_email = 'labels_email';
   static const labels_password = 'labels_password';
   static const labels_remember_me = 'labels_remember_me';
-  static const labels_forgot_password = 'labels_forgot_password';
+  static const labels_forgot = 'labels_forgot';
   static const labels_dont_have_an_account = 'labels_dont_have_an_account';
   static const labels_register = 'labels_register';
   static const labels_register_to_continue_using_the_app =
@@ -60,7 +60,7 @@ class Locales {
     'labels_email': 'البريد الإلكتروني',
     'labels_password': 'كلمة المرور',
     'labels_remember_me': 'تذكرنى',
-    'labels_forgot_password': 'هل نسيت كلمة المرور؟',
+    'labels_forgot': 'هل نسيت؟',
     'labels_dont_have_an_account': 'ليس لديك حساب؟',
     'labels_register': 'قم بالتسجيل',
     'labels_register_to_continue_using_the_app':
@@ -93,7 +93,7 @@ class Locales {
     'labels_email': 'Email',
     'labels_password': 'Password',
     'labels_remember_me': 'Remember me',
-    'labels_forgot_password': 'Forgot Password?',
+    'labels_forgot': 'Forgot?',
     'labels_dont_have_an_account': 'Don\'t have an account?',
     'labels_register': 'Register',
     'labels_register_to_continue_using_the_app':

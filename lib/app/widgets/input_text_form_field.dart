@@ -47,6 +47,7 @@ class InputTextFormField extends StatelessWidget {
       margin: margin , // Responsive margin
       padding: padding,  // Responsive padding
       child: TextFormField(
+       
         controller: textEditingController,
         obscureText: obsecure,
         keyboardType: validatorType == ValidatorType.PhoneNumber ||
@@ -59,6 +60,7 @@ class InputTextFormField extends StatelessWidget {
         decoration: decoration ??
 
             InputDecoration(
+
 
               filled: true,
               icon: icon,
