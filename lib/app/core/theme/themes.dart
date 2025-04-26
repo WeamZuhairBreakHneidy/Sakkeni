@@ -13,10 +13,13 @@ class AppTheme {
 
     return ThemeData(
 
+
       colorScheme: ColorScheme.light(
         primary: AppColors.primary,
         secondary: AppColors.secondary,
         surface: AppColors.surface,
+        error: AppColors.orange,
+
 
 
       ),
@@ -29,7 +32,7 @@ class AppTheme {
         headlineMedium: TextStyle(fontSize: 22.r, fontWeight: FontWeight.w600, color: AppColors.white),
         bodyLarge: TextStyle(fontSize: 18.r, color: AppColors.primary),
         bodyMedium: TextStyle(fontSize: 16.r, color: AppColors.primary),
-        bodySmall: TextStyle(fontSize: 14.r, color: AppColors.white),
+        bodySmall: TextStyle(fontSize: 12.r, color: AppColors.white,fontWeight: FontWeight.w400),
         labelLarge: TextStyle(fontSize: 16.r, fontWeight: FontWeight.bold, color: AppColors.primary),
       ),
       appBarTheme: AppBarTheme(
@@ -40,7 +43,7 @@ class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
+          backgroundColor: AppColors.responsiveButtonColor,
           foregroundColor: AppColors.surface,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),

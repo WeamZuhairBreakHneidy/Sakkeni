@@ -19,6 +19,7 @@ class InputTextFormField extends StatelessWidget {
   final Widget? suffixIcon; // Suffix icon
   final Widget? icon; // Custom leading icon
   final Widget? helper;
+  final TextStyle? errorStyle;
 
   final Widget? counter;
   InputTextFormField({
@@ -34,6 +35,7 @@ class InputTextFormField extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.icon,
+    this.errorStyle,
     required this.obsecure,   this.labelTextAboveTextField, this.counter, this.helper,
   });
 
@@ -62,9 +64,11 @@ class InputTextFormField extends StatelessWidget {
             InputDecoration(
 
 
+              errorStyle: errorStyle,
               filled: true,
               icon: icon,
               fillColor: Theme.of(context).colorScheme.surface,
+
 
               helper: helper,
               counter: counter,
@@ -77,9 +81,10 @@ class InputTextFormField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.r),
                 borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
               ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50.r),
-                borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 2),
+              focusedBorder:  OutlineInputBorder(
+
+                borderRadius: BorderRadius.circular(10.r),
+                borderSide: BorderSide(color: Theme.of(context).colorScheme.secondary, width: 1),
               ),
                 labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 14.r),
               hintText: hintText,

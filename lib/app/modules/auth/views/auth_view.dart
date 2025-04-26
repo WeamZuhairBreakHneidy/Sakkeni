@@ -107,6 +107,7 @@ class AuthView extends GetView<AuthController> {
                     InputTextFormField(
 
 
+                      errorStyle: TextStyle(height: 0, color: Theme.of(context).colorScheme.error),
                       labelTextAboveTextField: Text(
                         'labels_email'.tr,
                         style: Theme.of(context).textTheme.bodyLarge,
@@ -124,6 +125,8 @@ class AuthView extends GetView<AuthController> {
                     //Password
                     Obx(
                       () => InputTextFormField(
+
+                        errorStyle: const TextStyle(height: -1, color: Colors.transparent),
 
                         labelTextAboveTextField: Text(
                           'labels_password'.tr,
@@ -145,7 +148,7 @@ class AuthView extends GetView<AuthController> {
                           },
                         ),
 
-                        helper: Text(''),
+
                         validatorType: ValidatorType.LoginPassword,
 
                       ),
@@ -189,70 +192,66 @@ class AuthView extends GetView<AuthController> {
                       clickable: true,
                       margin: EdgeInsets.symmetric(horizontal: 48).w,
                       buttonStyle: ButtonStyle(
-                        padding: WidgetStatePropertyAll(
-                          EdgeInsets.symmetric(vertical: 10.r),
-                        ),
+
+
                         shape: WidgetStatePropertyAll(
                           RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(50.r)),
+                            borderRadius: BorderRadius.all(Radius.circular(10.r)),
                           ),
                         ),
                       ),
                       buttonWidth: Get.width,
-                      child: Text('labels_login'.tr, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white,)),
+                      child: Text('labels_login'.tr, style: Theme.of(context).textTheme.bodyMedium),
                     ),
-                    20.verticalSpace,
+                    40.verticalSpace,
 
-                    //OR Divider
-                    CustomDivider(
-
-                      height: 20.h,
-                      text: 'OR',
-                      fontSize: 16.r,
-                      fontFamily: AppTheme.primaryFont,
-
-                      thickness: 2,
-                      indent: 20.w,
-                      endIndent: 20.w,
-
-
-                    ),
-                    20.verticalSpace,
-                    //Google Login
-                    ResponsiveButton(
-                      onPressed: () {},
-                      clickable: true,
-                      margin: EdgeInsets.symmetric(horizontal: 48).w,
-                      buttonStyle: ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(AppColors.surface),
-                        overlayColor: WidgetStatePropertyAll(Theme.of(context).colorScheme.secondary),
-                        padding: WidgetStatePropertyAll(
-                          EdgeInsets.symmetric(vertical: 10.r),
-                        ),
-                        shape: WidgetStatePropertyAll(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(50.r)),
-                          ),
-                        ),
-                      ),
-                      buttonWidth: Get.width,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('labels_login_with_Google'.tr, style: Theme.of(context).textTheme.bodyMedium,),
-                          10.horizontalSpace,
-                          Image.asset(
-                            'assets/google.png',
-                            width: 20,
-                            height: 20,
-                          ),
-
-                        ],
-                      ),
-                    ),
-                    20.verticalSpace,
-
-                    //Don't have an account
+                    // //OR Divider
+                    // CustomDivider(
+                    //
+                    //   height: 20.h,
+                    //   text: 'OR',
+                    //   fontSize: 16.r,
+                    //   fontFamily: AppTheme.primaryFont,
+                    //
+                    //   thickness: 2,
+                    //   indent: 20.w,
+                    //   endIndent: 20.w,
+                    //
+                    //
+                    // ),
+                    // 20.verticalSpace,
+                    // //Google Login
+                    // ResponsiveButton(
+                    //   onPressed: () {},
+                    //   clickable: true,
+                    //   margin: EdgeInsets.symmetric(horizontal: 48).w,
+                    //   buttonStyle: ButtonStyle(
+                    //     backgroundColor: WidgetStatePropertyAll(AppColors.surface),
+                    //     overlayColor: WidgetStatePropertyAll(Theme.of(context).colorScheme.secondary),
+                    //     padding: WidgetStatePropertyAll(
+                    //       EdgeInsets.symmetric(vertical: 10.r),
+                    //     ),
+                    //     shape: WidgetStatePropertyAll(
+                    //       RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.all(Radius.circular(50.r)),
+                    //       ),
+                    //     ),
+                    //   ),
+                    //   buttonWidth: Get.width,
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       Text('labels_login_with_Google'.tr, style: Theme.of(context).textTheme.bodyMedium,),
+                    //       10.horizontalSpace,
+                    //       Image.asset(
+                    //         'assets/google.png',
+                    //         width: 20,
+                    //         height: 20,
+                    //       ),
+                    //
+                    //     ],
+                    //   ),
+                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -260,16 +259,29 @@ class AuthView extends GetView<AuthController> {
                           "labels_dont_have_an_account".tr,
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
-                        TextButton(onPressed: (){
 
-
-                          Get.toNamed(Routes.REGISTER);
-
-
-                        }, child: Text('labels_register'.tr, style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold),),)
                       ],
                     ),
 
+                    20.verticalSpace,
+                    ResponsiveButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.REGISTER);
+                      },
+                      clickable: true,
+                      margin: EdgeInsets.symmetric(horizontal: 48).w,
+                      buttonStyle: ButtonStyle(
+
+
+                        shape: WidgetStatePropertyAll(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10.r)),
+                          ),
+                        ),
+                      ),
+                      buttonWidth: Get.width,
+                      child: Text('labels_register'.tr, style: Theme.of(context).textTheme.bodyMedium),
+                    ),
 
 
                   ],
