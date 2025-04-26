@@ -14,9 +14,9 @@ class ValidationController extends GetxController {
 
   String? validateEmail(String value) {
     if (value.isEmpty) {
-      return "Email must not be empty";
+      return "error_email_must_not_be_empty".tr;
     } else if (!RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$").hasMatch(value)) {
-      return "Invalid email format";
+      return "error_invalid_email_format";
     }
     return null;
   }

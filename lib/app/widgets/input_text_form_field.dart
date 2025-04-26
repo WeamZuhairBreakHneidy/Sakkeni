@@ -20,8 +20,9 @@ class InputTextFormField extends StatelessWidget {
   final Widget? icon; // Custom leading icon
   final Widget? helper;
   final TextStyle? errorStyle;
-
+  final String? otherValueForValidation;
   final Widget? counter;
+  final String? Function(String?)? validator;
   InputTextFormField({
     super.key,
     this.textEditingController,
@@ -36,7 +37,10 @@ class InputTextFormField extends StatelessWidget {
     this.suffixIcon,
     this.icon,
     this.errorStyle,
+    this.otherValueForValidation,
+    this.validator,
     required this.obsecure,   this.labelTextAboveTextField, this.counter, this.helper,
+
   });
 
   final ValidationController validationController = Get.put(ValidationController());
@@ -95,7 +99,7 @@ class InputTextFormField extends StatelessWidget {
 
             ),
 
-        validator: (value) {
+        validator: validator??(value) {
           switch (validatorType) {
             case ValidatorType.Name:
               return validationController.validateName(value!);
@@ -111,6 +115,7 @@ class InputTextFormField extends StatelessWidget {
               return validationController.validateNumber(value!);
             case ValidatorType.Code:
               return validationController.validateResetCode(value!);
+
             default:
               return validationController.validateDefault(value!);
           }

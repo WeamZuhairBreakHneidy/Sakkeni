@@ -36,6 +36,10 @@ class LocaleKeys {
   static const hint_text_enter_your_password = 'hint_text_enter_your_password';
   static const hint_text_enter_your_user_name =
       'hint_text_enter_your_user_name';
+  static const hint_text_enter_password_confirmation =
+      'hint_text_enter_password_confirmation';
+  static const error_email_must_not_be_empty = 'error_email_must_not_be_empty';
+  static const error_invalid_email_format = 'error_invalid_email_format';
   static const buttons_login = 'buttons_login';
   static const buttons_register = 'buttons_register';
   static const buttons_sign_up = 'buttons_sign_up';
@@ -71,9 +75,12 @@ class Locales {
     'hint_text_enter_your_email': 'أدخل البريد الإلكتروني',
     'hint_text_enter_your_password': 'أدخل كلمة السر',
     'hint_text_enter_your_user_name': 'أدخل اسم المستخدم',
+    'hint_text_enter_password_confirmation': 'أدخل تأكيد كلمة السر',
+    'error_email_must_not_be_empty': 'البريد الإلكتروني يجب أن لا يكون فارغاً',
+    'error_invalid_email_format': 'البريد إلكتروني غير صالح',
     'buttons_login': 'تسجيل الدخول',
     'buttons_register': 'تسجيل',
-    'buttons_sign_up': 'تسجيل',
+    'buttons_sign_up': 'إنشاء حساب',
     'buttons_sign_in': 'تسجيل الدخول',
     'buttons_logout': 'تسجيل الخروج',
     'buttons_sign_in_fb': 'تسجيل الدخول عن طريق Facebook',
@@ -104,9 +111,12 @@ class Locales {
     'hint_text_enter_your_email': 'Enter your email',
     'hint_text_enter_your_password': 'Enter your password',
     'hint_text_enter_your_user_name': 'Enter your user name',
+    'hint_text_enter_password_confirmation': 'Enter password confirmation',
+    'error_email_must_not_be_empty': 'Email must not be empty',
+    'error_invalid_email_format': 'Invalid email format',
     'buttons_login': 'Login',
     'buttons_register': 'Register',
-    'buttons_sign_up': 'Sign-up',
+    'buttons_sign_up': 'Sign up',
     'buttons_sign_in': 'Sign-in',
     'buttons_logout': 'Logout',
     'buttons_sign_in_fb': 'Sign-in with Facebook',

@@ -24,12 +24,19 @@
   "hint_text": {
     "enter_your_email": "Enter your email",
     "enter_your_password": "Enter your password",
-    "enter_your_user_name": "Enter your user name"
+    "enter_your_user_name": "Enter your user name",
+    "enter_password_confirmation": "Enter password confirmation"
+  },
+  "error":{
+  "email_must_not_be_empty": "Email must not be empty",
+  "invalid_email_format": "Invalid email format",
+  "name_must_not_be_empty": "Name must not be empty",
+  "name_is_too_short": "Name is too short"
   },
   "buttons": {
     "login": "Login",
     "register": "Register",
-    "sign_up": "Sign-up",
+    "sign_up": "Sign up",
 
     "sign_in": "Sign-in",
     "logout": "Logout",

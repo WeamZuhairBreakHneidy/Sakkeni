@@ -26,12 +26,17 @@
   "hint_text": {
     "enter_your_email": "أدخل البريد الإلكتروني",
     "enter_your_password": "أدخل كلمة السر",
-    "enter_your_user_name": "أدخل اسم المستخدم"
+    "enter_your_user_name": "أدخل اسم المستخدم",
+    "enter_password_confirmation": "أدخل تأكيد كلمة السر"
+  },
+  "error": {
+    "email_must_not_be_empty": "البريد الإلكتروني يجب أن لا يكون فارغاً",
+    "invalid_email_format": "البريد إلكتروني غير صالح"
   },
   "buttons": {
     "login": "تسجيل الدخول",
     "register": "تسجيل",
-    "sign_up": "تسجيل",
+    "sign_up": "إنشاء حساب",
     "sign_in": "تسجيل الدخول",
     "logout": "تسجيل الخروج",
     "sign_in_fb": "تسجيل الدخول عن طريق Facebook",

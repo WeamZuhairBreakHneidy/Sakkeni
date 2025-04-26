@@ -32,7 +32,8 @@ class RegisterController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final nameController = TextEditingController();
- Future<void> signup(String name,String emailAddress, String password) async {
+  final passwordConfirmationController = TextEditingController();
+ Future<void> signup(String name,String emailAddress, String password,String passwordConfirmation) async {
    try {
      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
        email: emailAddress,
