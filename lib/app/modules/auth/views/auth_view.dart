@@ -84,6 +84,7 @@ class AuthView extends GetView<AuthController> {
                   ),
                 ),
 
+
                 //Logo
                 Container(
                   alignment: Alignment.center,
