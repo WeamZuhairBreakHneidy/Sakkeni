@@ -1,55 +1,89 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:get_storage/get_storage.dart';
+import '../../../data/models/user_model.dart';
+import '../../../data/services/api_endpoints.dart';
+import '../../../data/services/api_service.dart';
+import '../../../data/services/token_service.dart';
 import '../../../routes/app_pages.dart';
 
 class RegisterController extends GetxController {
-  //TODO: Implement RegisterController
-  var isPasswordHidden=true.obs;
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final passwordConfirmationController = TextEditingController();
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  var isPasswordHidden = true.obs;
+  final isLoading = false.obs;
+
+  final box = GetStorage();
+  final tokenService = TokenService();
 
   @override
   void onClose() {
+    nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
+    passwordConfirmationController.dispose();
     super.onClose();
   }
 
-  void increment() => count.value++;
+  Future<void> signup() async {
+    final name = nameController.text.trim();
+    final email = emailController.text.trim();
+    final password = passwordController.text;
+    final passwordConfirmation = passwordConfirmationController.text;
 
+    isLoading.value = true;
 
-  // Define controllers for text fields
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final nameController = TextEditingController();
-  final passwordConfirmationController = TextEditingController();
- Future<void> signup(String name,String emailAddress, String password,String passwordConfirmation) async {
-   try {
-     final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-       email: emailAddress,
-       password: password,
+    try {
+      final response = await ApiService().postApi(
+        url: ApiEndpoints.signup,
+        body: {
+          'username': name,
+          'email': email,
+          'password': password,
+          'password_confirmation': passwordConfirmation,
+        },
+      );
 
-     );
-     Get.offNamed(Routes.HOME);
+      if (response.statusCode == 200) {
+        final body = response.body;
+        final status = body['status'];
+        final message = body['message'];
 
-   } on FirebaseAuthException catch (e) {
-     if (e.code == 'weak-password') {
-       print('The password provided is too weak.');
-     } else if (e.code == 'email-already-in-use') {
-       print('The account already exists for that email.');
-     }
-   } catch (e) {
-     print(e);
-   }
- }
+        if (status == true) {
+          final data = body['data'];
+
+          // Add default fields if missing
+          data['is_admin'] = 0;
+          data['is_super_admin'] = 0;
+          data['email_verified_at'] = null;
+          data['profile_picture_path'] = null;
+          data['address'] = null;
+          data['phone_number'] = null;
+
+          // Convert JSON to model
+          final user = UserModel.fromJson(data);
+
+          // Save token securely
+          await tokenService.saveToken(user.token);
+
+          // Save user data to GetStorage
+          box.write('user', user.toJson());
+
+          Get.offAllNamed(Routes.AUTH);
+          Get.snackbar('Success', message ?? 'Registration successful');
+        } else {
+          Get.snackbar('Registration Failed', message ?? 'Unknown error');
+        }
+      } else {
+        Get.snackbar('Error', 'Registration failed: ${response.statusCode}');
+      }
+    } catch (e) {
+      Get.snackbar('Exception', e.toString());
+    } finally {
+      isLoading.value = false;
+    }
+  }
 }

@@ -75,7 +75,9 @@ class ApiService extends GetConnect {
             form.files.addAll(files.map((file) => MapEntry(file.filename, file)));
             response = await post(url, form, headers: combinedHeaders);
           } else {
+
             response = await post(url, body, query: query, headers: combinedHeaders);
+
           }
           break;
         case 'DELETE':

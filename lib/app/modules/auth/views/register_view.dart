@@ -28,6 +28,7 @@ class RegisterView extends GetView<RegisterController> {
 
     return Scaffold(
 
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
@@ -97,6 +98,7 @@ class RegisterView extends GetView<RegisterController> {
 
 
 
+
                     labelTextAboveTextField: Text(
                       'labels_user_name'.tr,
                       style: Theme.of(context).textTheme.bodyLarge,
@@ -119,6 +121,7 @@ class RegisterView extends GetView<RegisterController> {
                   child: InputTextFormField(
 
 
+                    textEditingController: controller.emailController,
 
                     errorStyle: TextStyle(height: 0, color: Theme.of(context).colorScheme.error),
                     labelTextAboveTextField: Text(
@@ -201,12 +204,13 @@ class RegisterView extends GetView<RegisterController> {
                     onPressed: () {
                       if(registerFormKey.currentState!.validate()){
 
-                        controller.signup(controller.nameController.text,controller.emailController.text,controller.passwordController.text,controller.passwordConfirmationController.text);
+                        controller.signup();
                       }
                     },
                     clickable: true,
 
                     buttonStyle: ButtonStyle(
+
 
 
                       shape: WidgetStatePropertyAll(

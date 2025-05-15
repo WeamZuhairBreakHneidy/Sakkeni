@@ -1,11 +1,14 @@
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:test1/app/core/theme/colors.dart';
 import 'package:test1/generated/locales.g.dart';
+
+import 'app/core/bindings/app_binding.dart';
 
 import 'app/core/theme/themes.dart';
 import 'app/data/services/theme_service.dart';
@@ -16,6 +19,8 @@ final ThemeController themeController = Get.put(ThemeController());
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await GetStorage.init();
+
 
   // Set the system UI overlay style globally before running the app
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -42,6 +47,7 @@ void main() async {
           themeMode: themeController.theme,
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
+          initialBinding: AppBinding(),
           initialRoute: AppPages.INITIAL,
           getPages: AppPages.routes,
           translationsKeys: AppTranslation.translations,

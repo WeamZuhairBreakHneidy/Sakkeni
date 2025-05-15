@@ -106,7 +106,7 @@ class AuthView extends GetView<AuthController> {
                   margin:   EdgeInsets.only(top:129.h,left: 48.w,right: 48.w),
                   child: InputTextFormField(
 
-
+                    textEditingController: controller.emailController,
 
                     errorStyle: TextStyle(height: 0, color: Theme.of(context).colorScheme.error),
 
@@ -127,9 +127,8 @@ class AuthView extends GetView<AuthController> {
                   child: Obx(
                     () => InputTextFormField(
 
+                      textEditingController: controller.passwordController,
                       errorStyle: const TextStyle(height: -1, color: Colors.transparent),
-
-
                       obsecure: controller.isPasswordHidden.value,
                       hintText: 'hint_text_enter_your_password'.tr,
                       suffixIcon: IconButton(
@@ -157,7 +156,7 @@ class AuthView extends GetView<AuthController> {
                      mainAxisAlignment:  MainAxisAlignment.spaceBetween,
                     children: [
                       // Remember Me Checkbox
-                      Flexible(flex: 1,child: RememberMeCheckbox(isChecked: RxBool(false))),
+                      Flexible(flex: 1,child: RememberMeCheckbox(isChecked: controller.rememberMe)),
 
 
                       // Forgot Password Button
@@ -186,10 +185,10 @@ class AuthView extends GetView<AuthController> {
                     onPressed: () {
                       if(loginFormKey.currentState!.validate()){
 
-                        controller.login(controller.emailController.text,controller.passwordController.text);
+                        controller.login();
                       }
                     },
-                    clickable: true,
+                    clickable: !controller.isLoading.value,
 
                     buttonStyle: ButtonStyle(
 
