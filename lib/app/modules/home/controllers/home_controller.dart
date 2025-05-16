@@ -1,31 +1,21 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-
 import '../../../routes/app_pages.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
+  final RxInt selectedIndex = 0.obs;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  void onItemTap(int index) {
+    selectedIndex.value = index;
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+    final List<String> routes = [
+      Routes.REGISTER,
+      Routes.REGISTER,
+      Routes.REGISTER,
+      Routes.AUTH
+    ];
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
-
-  Future<void> signOut() async {
-    await FirebaseAuth.instance.signOut();
-    Get.offNamed(Routes.AUTH);
+    if (index < routes.length) {
+      Get.toNamed(routes[index]);
+    }
   }
 }
