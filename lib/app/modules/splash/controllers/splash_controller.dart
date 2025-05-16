@@ -14,7 +14,8 @@ class SplashController extends GetxController {
 
     final box = GetStorage();
     final rememberMe = box.read('rememberMe') ?? false;
-    if (rememberMe) {
+    final hasUser= box.read('hasUser') ?? false;
+    if (rememberMe && hasUser) {
       Get.offAllNamed(Routes.HOME);
     } else {
       Get.offAllNamed(Routes.AUTH);

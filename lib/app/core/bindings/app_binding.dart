@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:test1/app/modules/splash/controllers/splash_controller.dart';
+import '../../data/services/locale_service.dart';
 import '../controllers/root_controller.dart';
 
 class AppBinding extends Bindings {
@@ -7,5 +8,6 @@ class AppBinding extends Bindings {
   void dependencies() {
     Get.put(RootController());
     Get.put(SplashController());
+
   }
 }

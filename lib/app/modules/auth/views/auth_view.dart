@@ -7,9 +7,10 @@ import 'package:get/get.dart';
 import '../../../core/theme/colors.dart';
 
 import '../../../core/util/device_utils.dart';
+import '../../../data/services/locale_service.dart';
 import '../../../data/services/validator_service.dart';
 import '../../../routes/app_pages.dart';
-import '../../../widgets/RememberMeCheckbox.dart';
+import '../../../widgets/remember_me_checkbox.dart';
 
 import '../../../widgets/input_text_form_field.dart';
 import '../../../widgets/responsive_buttun.dart';
@@ -26,19 +27,15 @@ class AuthView extends GetView<AuthController> {
       resizeToAvoidBottomInset: false,
 
 
-      // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      //
       // appBar: AppBar(
       //   backgroundColor: Colors.transparent,
       //   elevation: 0, // Remove the shadow of the app bar
       //   automaticallyImplyLeading: false,
       //   leading: TextButton(
       //     onPressed: () {
-      //       if (Get.locale?.languageCode == 'en') {
-      //         Get.updateLocale(Locale('ar', 'SY'));
-      //       } else {
-      //         Get.updateLocale(Locale('en', 'US'));
-      //       }
+      //       Get.find<LocaleService>().toggleLocale();
       //     },
       //     child: Text(
       //       '${Get.locale?.languageCode}',

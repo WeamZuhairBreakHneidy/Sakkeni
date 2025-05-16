@@ -11,14 +11,15 @@ import 'package:test1/generated/locales.g.dart';
 import 'app/core/bindings/app_binding.dart';
 
 import 'app/core/theme/themes.dart';
+import 'app/data/services/locale_service.dart';
 import 'app/data/services/theme_service.dart';
 import 'app/routes/app_pages.dart';
 
 final ThemeController themeController = Get.put(ThemeController());
+final LocaleService localeService = Get.put(LocaleService());
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   await GetStorage.init();
 
 
@@ -51,7 +52,8 @@ void main() async {
           initialRoute: AppPages.INITIAL,
           getPages: AppPages.routes,
           translationsKeys: AppTranslation.translations,
-          locale: Locale('en', 'US'),
+          locale: localeService.getLocale(),
+          fallbackLocale: const Locale('en', 'US'),
           // Wrap MaterialApp with AnnotatedRegion to apply the system UI style globally
           builder: (context, child) {
             return AnnotatedRegion<SystemUiOverlayStyle>(
