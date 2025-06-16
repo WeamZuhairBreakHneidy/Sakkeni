@@ -85,7 +85,7 @@ class AuthView extends GetView<AuthController> {
                 //Logo
                 Container(
                   alignment: Alignment.center,
-                  height: 124.h,
+                  height: 126.h,
                   margin: EdgeInsets.only(  top:13.h ,left: 76.w,right: 75.61.w).r,
                   child: Image.asset(
                     'assets/Logo.png',
@@ -100,7 +100,7 @@ class AuthView extends GetView<AuthController> {
                 //Email
                 Container(
 
-                  margin:   EdgeInsets.only(top:129.h,left: 48.w,right: 48.w),
+                  margin:   EdgeInsets.only(top:110.h,left: 48.w,right: 48.w),
                   child: InputTextFormField(
 
                     textEditingController: controller.emailController,
@@ -120,7 +120,7 @@ class AuthView extends GetView<AuthController> {
 
                 //Password
                 Container(
-                  margin:   EdgeInsets.only(top:10.h,left: 48.w,right: 48.w),
+                  margin:   EdgeInsets.only(left: 48.w,right: 48.w),
                   child: Obx(
                     () => InputTextFormField(
 
@@ -177,7 +177,7 @@ class AuthView extends GetView<AuthController> {
 
                 //Button
                 Container(
-                  margin:   EdgeInsets.only(top:24.h,left: 48.w,right: 48.w),
+                  margin:   EdgeInsets.only(top:18.h,left: 48.w,right: 48.w),
                   child: ResponsiveButton(
                     onPressed: () {
                       if(loginFormKey.currentState!.validate()){
@@ -197,14 +197,14 @@ class AuthView extends GetView<AuthController> {
                       ),
                     ),
                     buttonWidth: Get.width,
-                    child: Text('buttons_login'.tr, style: Theme.of(context).textTheme.bodyMedium),
+                    child: Text('buttons_login'.tr, style: Theme.of(context).textTheme.labelSmall),
                   ),
                 ),
 
 
 
                 Container(
-                  margin:   EdgeInsets.only(top:71.h,),
+                  margin:   EdgeInsets.only(top:61.h,),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -219,7 +219,7 @@ class AuthView extends GetView<AuthController> {
 
 
                 Container(
-                            margin:   EdgeInsets.only(top:33.h,left: 48.w,right: 48.w),
+                            margin:   EdgeInsets.only(top:23.h,left: 48.w,right: 48.w),
                   child: ResponsiveButton(
                     onPressed: () {
                       Get.toNamed(Routes.REGISTER);
@@ -236,7 +236,7 @@ class AuthView extends GetView<AuthController> {
                       ),
                     ),
                     buttonWidth: Get.width,
-                    child: Text('buttons_sign_up'.tr, style: Theme.of(context).textTheme.bodyMedium),
+                    child: Text('buttons_sign_up'.tr, style: Theme.of(context).textTheme.labelSmall),
                   ),
                 ),
               ],

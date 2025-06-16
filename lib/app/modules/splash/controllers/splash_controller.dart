@@ -16,9 +16,9 @@ class SplashController extends GetxController {
     final rememberMe = box.read('rememberMe') ?? false;
     final hasUser= box.read('hasUser') ?? false;
     if (rememberMe && hasUser) {
-      Get.offAllNamed(Routes.HOME);
+      Get.offAllNamed(Routes.Onboarding);
     } else {
-      Get.offAllNamed(Routes.HOME);
+      Get.offAllNamed(Routes.Onboarding);
     }
   }
 }

@@ -199,7 +199,7 @@ class RegisterView extends GetView<RegisterController> {
 
                 //Button
                 Container(
-                  margin:   EdgeInsets.only(top:24.h,left: 48.w,right: 48.w),
+                  margin:   EdgeInsets.only(top:82.h,left: 48.w,right: 48.w),
                   child: ResponsiveButton(
                     onPressed: () {
                       if(registerFormKey.currentState!.validate()){
@@ -220,7 +220,7 @@ class RegisterView extends GetView<RegisterController> {
                       ),
                     ),
                     buttonWidth: Get.width,
-                    child: Text('buttons_sign_up'.tr, style: Theme.of(context).textTheme.bodyMedium),
+                    child: Text('buttons_sign_up'.tr, style: Theme.of(context).textTheme.labelSmall),
                   ),
                 ),
 

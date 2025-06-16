@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:test1/app/modules/Onboarding%20Screens/views/onboarding1_view.dart';
 
+import '../modules/Onboarding Screens/bindings/onboarding_binding.dart';
+import '../modules/Onboarding Screens/views/onboarding_view.dart';
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/bindings/register_binding.dart';
 import '../modules/auth/views/auth_view.dart';
@@ -23,6 +26,10 @@ class AppPages {
       name: _Paths.GETSTARTED,
       page: () => const GetstartedView(),
       binding: HomeBinding(),
+    ), GetPage(
+      name: _Paths.Onboarding,
+      page: () => OnboardingView(),
+      binding: OnboardingBinding(),
     ),
     GetPage(
       name: _Paths.HOME,
