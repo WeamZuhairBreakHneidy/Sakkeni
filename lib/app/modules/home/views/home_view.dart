@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:test1/app/core/theme/colors.dart';
-import '../../../widgets/CustomBottomNavBar.dart';
+import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../../../widgets/buildcard.dart';
 import '../../../widgets/custom_nav_bar.dart';
 import '../controllers/home_controller.dart';
@@ -12,14 +12,7 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> categories = [
-      'Category 1',
-      'Category 2',
-      'Category 3',
-      'Category 4',
-      'Category 5',
-      'Category 6',
-    ];
+
     return Scaffold(
       backgroundColor: AppColors.background1,
       body: Stack(
@@ -57,50 +50,50 @@ class HomeView extends GetView<HomeController> {
                   ],
                 ),
               ),
-              HorizontalFlipSections(
-                frontImages: [
-                  'assets/backgrounds/background1.jpeg',
-                  'assets/backgrounds/background1.jpeg',
-                  'assets/backgrounds/background1.jpeg',
-                  'assets/backgrounds/background1.jpeg',
-                  'assets/backgrounds/background1.jpeg',
-                  'assets/backgrounds/background1.jpeg',
-                ],
-                backImages: [
-                  'assets/backgrounds/background1.jpeg',
-                  'assets/backgrounds/background1.jpeg',
-                  'assets/backgrounds/background1.jpeg',
-                  'assets/backgrounds/background1.jpeg',
-                  'assets/backgrounds/background1.jpeg',
-                  'assets/backgrounds/background1.jpeg',
-                ],
-                height: 200.h,
-                viewportFraction: 0.4,
-                flipDuration: Duration(seconds: 2),
-                pageDuration: Duration(seconds: 4),
-              ),
-              HorizontalFlipSections(
-                frontImages: [
-                  'assets/backgrounds/background1.jpeg',
-                  'assets/backgrounds/background1.jpeg',
-                  'assets/backgrounds/background1.jpeg',
-                  'assets/backgrounds/background1.jpeg',
-                  'assets/backgrounds/background1.jpeg',
-                  'assets/backgrounds/background1.jpeg',
-                ],
-                backImages: [
-                  'assets/backgrounds/background1.jpeg',
-                  'assets/backgrounds/background1.jpeg',
-                  'assets/backgrounds/background1.jpeg',
-                  'assets/backgrounds/background1.jpeg',
-                  'assets/backgrounds/background1.jpeg',
-                  'assets/backgrounds/background1.jpeg',
-                ],
-                height: 200.h,
-                viewportFraction: 0.4,
-                flipDuration: Duration(seconds: 2),
-                pageDuration: Duration(seconds: 4),
-              ),
+              // HorizontalFlipSections(
+              //   frontImages: [
+              //     'assets/backgrounds/background1.jpeg',
+              //     'assets/backgrounds/background1.jpeg',
+              //     'assets/backgrounds/background1.jpeg',
+              //     'assets/backgrounds/background1.jpeg',
+              //     'assets/backgrounds/background1.jpeg',
+              //     'assets/backgrounds/background1.jpeg',
+              //   ],
+              //   backImages: [
+              //     'assets/backgrounds/background1.jpeg',
+              //     'assets/backgrounds/background1.jpeg',
+              //     'assets/backgrounds/background1.jpeg',
+              //     'assets/backgrounds/background1.jpeg',
+              //     'assets/backgrounds/background1.jpeg',
+              //     'assets/backgrounds/background1.jpeg',
+              //   ],
+              //   height: 200.h,
+              //   viewportFraction: 0.4,
+              //   flipDuration: Duration(seconds: 2),
+              //   pageDuration: Duration(seconds: 4),
+              // ),
+              // HorizontalFlipSections(
+              //   frontImages: [
+              //     'assets/backgrounds/background1.jpeg',
+              //     'assets/backgrounds/background1.jpeg',
+              //     'assets/backgrounds/background1.jpeg',
+              //     'assets/backgrounds/background1.jpeg',
+              //     'assets/backgrounds/background1.jpeg',
+              //     'assets/backgrounds/background1.jpeg',
+              //   ],
+              //   backImages: [
+              //     'assets/backgrounds/background1.jpeg',
+              //     'assets/backgrounds/background1.jpeg',
+              //     'assets/backgrounds/background1.jpeg',
+              //     'assets/backgrounds/background1.jpeg',
+              //     'assets/backgrounds/background1.jpeg',
+              //     'assets/backgrounds/background1.jpeg',
+              //   ],
+              //   height: 200.h,
+              //   viewportFraction: 0.4,
+              //   flipDuration: Duration(seconds: 2),
+              //   pageDuration: Duration(seconds: 4),
+              // ),
             ],
           ),
         ],

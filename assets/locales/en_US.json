@@ -27,12 +27,29 @@
     "enter_your_user_name": "Enter your user name",
     "enter_password_confirmation": "Enter password confirmation"
   },
-  "error":{
-  "email_must_not_be_empty": "Email must not be empty",
-  "invalid_email_format": "Invalid email format",
-  "name_must_not_be_empty": "Name must not be empty",
-  "name_is_too_short": "Name is too short"
-  },
+  "error": {
+    "email_must_not_be_empty": "Email must not be empty",
+    "invalid_email_format": "Invalid email format",
+    "name_must_not_be_empty": "Name must not be empty",
+    "name_is_too_short": "Name is too short",
+    "invalid_name": "Enter a valid name",
+    "password_must_not_be_empty": "Password must not be empty",
+    "password_too_short": "Password is too short",
+    "password_uppercase_required": "Password must contain at least one uppercase letter",
+    "password_lowercase_required": "Password must contain at least one lowercase letter",
+    "password_number_required": "Password must contain at least one number",
+    "password_special_char_required": "Password must contain at least one special character",
+    "phone_must_not_be_empty": "Phone number must not be empty",
+    "invalid_phone_number": "Enter a valid phone number",
+    "number_must_not_be_empty": "Number must not be empty",
+    "invalid_number": "Enter a valid number",
+    "reset_code_must_not_be_empty": "Reset code must not be empty",
+    "reset_code_invalid_length": "Reset code must be 8 characters long",
+    "must_not_be_empty": "It must not be empty",
+    "please_confirm_your_password": "Please confirm your password",
+    "passwords_do_not_match": "Passwords do not match"
+  }
+,
   "buttons": {
     "login": "Login",
     "register": "Register",

@@ -66,7 +66,7 @@ class HorizontalFlipSections extends StatelessWidget {
     required this.pageDuration,
   }) : super(key: key);
 
-  // إنشاء الكنترولر مع تمرير البيانات المطلوبة
+
   final FlipController controller = Get.put(
     FlipController(
       itemCount: 6, // أو frontImages.length

@@ -51,7 +51,6 @@ class AuthController extends GetxController {
           await tokenService.saveToken(user.token);
 
           if (rememberMe.value) {
-
             box.write('rememberMe', true);
           } else {
             box.write('rememberMe', false);

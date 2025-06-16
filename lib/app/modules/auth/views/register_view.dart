@@ -10,6 +10,7 @@ import '../../../core/theme/colors.dart';
 
 import '../../../core/util/device_utils.dart';
 
+
 import '../../../widgets/input_text_form_field.dart';
 import '../../../widgets/responsive_buttun.dart';
 import '../controllers/register_controller.dart';
@@ -28,6 +29,20 @@ class RegisterView extends GetView<RegisterController> {
 
     return Scaffold(
 
+      // appBar: AppBar(
+      //   backgroundColor: Colors.transparent,
+      //   elevation: 0, // Remove the shadow of the app bar
+      //   automaticallyImplyLeading: false,
+      //   leading: TextButton(
+      //     onPressed: () {
+      //       Get.find<LocaleService>().toggleLocale();
+      //     },
+      //     child: Text(
+      //       '${Get.locale?.languageCode}',
+      //       style: Theme.of(context).textTheme.bodyLarge,
+      //     ),
+      //   ),
+      // ),
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
@@ -185,10 +200,10 @@ class RegisterView extends GetView<RegisterController> {
                       hintText: 'hint_text_enter_password_confirmation'.tr,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Please confirm your password";
+                          return "error_please_confirm_your_password".tr;
                         }
                         if (value != controller.passwordController.text) {
-                          return "Passwords do not match";
+                          return "error_passwords_do_not_match".tr;
                         }
                         return null;
                       },
@@ -198,7 +213,7 @@ class RegisterView extends GetView<RegisterController> {
                 ),
 
                 //Button
-                Container(
+                Obx(()=>Container(
                   margin:   EdgeInsets.only(top:24.h,left: 48.w,right: 48.w),
                   child: ResponsiveButton(
                     onPressed: () {
@@ -207,9 +222,10 @@ class RegisterView extends GetView<RegisterController> {
                         controller.signup();
                       }
                     },
-                    clickable: true,
+                    clickable: !controller.isLoading.value,
 
                     buttonStyle: ButtonStyle(
+
 
 
 
@@ -223,7 +239,7 @@ class RegisterView extends GetView<RegisterController> {
                     child: Text('buttons_sign_up'.tr, style: Theme.of(context).textTheme.bodyMedium),
                   ),
                 ),
-
+                )
               ],
             ),
           )
