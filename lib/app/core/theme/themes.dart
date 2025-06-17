@@ -33,6 +33,8 @@ class AppTheme {
         headlineMedium: TextStyle(fontSize: 22.r, fontWeight: FontWeight.w600, color: AppColors.white),
         bodyLarge: TextStyle(fontSize: 18.r, color: AppColors.primary),
         bodyMedium: TextStyle(fontSize: 16.r, color: AppColors.primary),
+        titleMedium:TextStyle(fontSize: 14.r, color: AppColors.background1,fontWeight: FontWeight.w600 ),
+        titleSmall: TextStyle(fontSize: 12.r, color: AppColors.background1,fontWeight: FontWeight.w400),
         bodySmall: TextStyle(fontSize: 12.r, color: AppColors.white,fontWeight: FontWeight.w400),
         labelLarge: TextStyle(fontSize: 16.r, fontWeight: FontWeight.bold, color: AppColors.primary),
       ),

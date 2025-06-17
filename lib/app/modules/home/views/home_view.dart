@@ -5,6 +5,7 @@ import 'package:test1/app/core/theme/colors.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../../../widgets/buildcard.dart';
 import '../../../widgets/custom_nav_bar.dart';
+import '../../../widgets/filter_sheet.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -94,6 +95,44 @@ class HomeView extends GetView<HomeController> {
               //   flipDuration: Duration(seconds: 2),
               //   pageDuration: Duration(seconds: 4),
               // ),
+
+
+
+// Somewhere in your page
+
+              ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    barrierColor: Colors.transparent,
+
+                    builder: (_) {
+                      return Stack(
+                        children: [
+                          Positioned(
+                            bottom: 80.h, // distance from bottom in pixels
+                            left: 0,
+                            right: 0,
+                            child: Container(
+                              height: 600.h, // exact height
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all( Radius.circular(50.r)),
+                              ),
+                              child: FilterSheet(), // your custom widget
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+
+
+
+                },
+                child: const Text("Open Filter"),
+              )
+
             ],
           ),
         ],
