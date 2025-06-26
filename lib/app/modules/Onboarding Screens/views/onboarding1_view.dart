@@ -7,7 +7,7 @@ import '../../../core/theme/colors.dart';
 class OnboardingPage1 extends StatelessWidget {
   final PageController controller;
 
-  const OnboardingPage1({required this.controller});
+  const OnboardingPage1({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {

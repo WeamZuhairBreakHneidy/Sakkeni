@@ -17,4 +17,7 @@ class AppColors {
   static const Color gray2 = Color.fromRGBO (39, 57, 58, 0.55);
   static const Color gray3 = Color.fromRGBO(39, 57, 58, 0.45);
   static const Color SmoothPageIndicator = Color.fromRGBO(39, 57, 58, 0.5);
+  static const Color tab = Color.fromRGBO(233, 238, 238, 1);
+  static const Color tabtext = Color.fromRGBO(39, 57, 58, 1);
+  static const Color tabtextselected = Color.fromRGBO(180, 197, 197, 1);
 }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 import 'dart:math';
-import 'package:get/get.dart';
 
 import '../modules/getstarted/views/getstarted_view.dart';
 
@@ -57,14 +56,14 @@ class HorizontalFlipSections extends StatelessWidget {
   final Duration pageDuration;
 
   HorizontalFlipSections({
-    Key? key,
+    super.key,
     required this.frontImages,
     this.backImages,
     required this.height,
     required this.viewportFraction,
     required this.flipDuration,
     required this.pageDuration,
-  }) : super(key: key);
+  });
 
   // إنشاء الكنترولر مع تمرير البيانات المطلوبة
   final FlipController controller = Get.put(

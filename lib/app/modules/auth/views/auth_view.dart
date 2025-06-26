@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import '../../../core/theme/colors.dart';
 
 import '../../../core/util/device_utils.dart';
-import '../../../data/services/locale_service.dart';
 import '../../../data/services/validator_service.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/remember_me_checkbox.dart';

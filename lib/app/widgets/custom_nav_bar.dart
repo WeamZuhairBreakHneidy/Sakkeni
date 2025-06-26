@@ -15,7 +15,7 @@ class CustomNavItems extends StatelessWidget {
   final RxInt selectedIndex = 0.obs;
 
    CustomNavItems({
-    Key? key,
+    super.key,
     required this.navItems,
     this.textColor,
     this.fontSize = 12.0,
@@ -23,7 +23,7 @@ class CustomNavItems extends StatelessWidget {
     this.onItemTap,
     this.mainAxisAlignment = MainAxisAlignment.spaceEvenly,
     this.spacing = 20.0,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

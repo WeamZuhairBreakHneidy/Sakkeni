@@ -80,7 +80,7 @@ class RegisterView extends GetView<RegisterController> {
                 ),
                 //Register to continue
                 Container(
-                  padding: EdgeInsets.only(top: 74.h,left: 48.w, right: 48.w),
+                  padding: EdgeInsets.only(top: 13.h,left: 48.w, right: 48.w),
                   child: Text(
                     'labels_register_to_continue_using_the_app'.tr,
                     style: Theme.of(context).textTheme.bodySmall,
@@ -89,29 +89,60 @@ class RegisterView extends GetView<RegisterController> {
 
 
 
-
-
-                //Name
+// First Name
                 Container(
-                  margin:   EdgeInsets.only(top:5.h,left: 48.w,right: 48.w),
+                  margin: EdgeInsets.only(top: 5.h, left: 48.w, right: 48.w),
                   child: InputTextFormField(
-
-
-
-
                     labelTextAboveTextField: Text(
-                      'labels_user_name'.tr,
+                      'labels_first_name'.tr,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
-
                     suffixIcon: Icon(Icons.person, color: AppColors.primary),
                     obsecure: false,
-                    hintText: 'hint_text_enter_your_user_name'.tr,
-
+                    hintText: 'hint_text_enter_your_first_name'.tr,
                     validatorType: ValidatorType.Name,
-                    textEditingController: controller.nameController,
+                    textEditingController: controller.firstNameController,
                   ),
                 ),
+
+// Last Name
+                Container(
+                  margin: EdgeInsets.only(top: 20.h, left: 48.w, right: 48.w),
+                  child: InputTextFormField(
+                    labelTextAboveTextField: Text(
+                      'labels_last_name'.tr,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    suffixIcon: Icon(Icons.person_outline, color: AppColors.primary),
+                    obsecure: false,
+                    hintText: 'hint_text_enter_your_last_name'.tr,
+                    validatorType: ValidatorType.Name,
+                    textEditingController: controller.lastNameController,
+                  ),
+                ),
+
+
+                // //Name
+                // Container(
+                //   margin:   EdgeInsets.only(top:5.h,left: 48.w,right: 48.w),
+                //   child: InputTextFormField(
+                //
+                //
+                //
+                //
+                //     labelTextAboveTextField: Text(
+                //       'labels_user_name'.tr,
+                //       style: Theme.of(context).textTheme.bodyLarge,
+                //     ),
+                //
+                //     suffixIcon: Icon(Icons.person, color: AppColors.primary),
+                //     obsecure: false,
+                //     hintText: 'hint_text_enter_your_user_name'.tr,
+                //
+                //     validatorType: ValidatorType.Name,
+                //     textEditingController: controller.nameController,
+                //   ),
+                // ),
 
 
                 //Email

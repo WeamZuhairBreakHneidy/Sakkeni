@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../controllers/onboarding_controller.dart';
 import 'onboarding1_view.dart';
@@ -10,6 +8,8 @@ import 'onboarding3_view.dart';
 
 
 class OnboardingView extends GetView<OnboardingController> {
+  const OnboardingView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

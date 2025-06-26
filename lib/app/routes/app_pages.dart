@@ -1,6 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:test1/app/modules/Onboarding%20Screens/views/onboarding1_view.dart';
+import 'package:test1/app/modules/properties/bindings/properties_binding.dart';
+import 'package:test1/app/modules/properties/views/properties_offplan_view.dart';
+import 'package:test1/app/modules/properties/views/properties_purchase_view.dart';
+import 'package:test1/app/modules/properties/views/properties_rent_view.dart';
 
 import '../modules/Onboarding Screens/bindings/onboarding_binding.dart';
 import '../modules/Onboarding Screens/views/onboarding_view.dart';
@@ -26,8 +28,9 @@ class AppPages {
       name: _Paths.GETSTARTED,
       page: () => const GetstartedView(),
       binding: HomeBinding(),
-    ), GetPage(
-      name: _Paths.Onboarding,
+    ),
+    GetPage(
+      name: _Paths.ONBOARDING,
       page: () => OnboardingView(),
       binding: OnboardingBinding(),
     ),
@@ -45,9 +48,25 @@ class AppPages {
       binding: RegisterBinding(),
     ),
     GetPage(
+      name: Routes.RENT,
+      page: () => PropertiesRentView(),
+      binding: PropertiesBinding(),
+    ),
+    GetPage(
+      name: Routes.PURCHASE,
+      page: () => PropertiesPurchaseView(),
+      binding: PropertiesBinding(),
+    ),
+    GetPage(
+      name: Routes.OFFPLANE,
+      page: () => PropertiesOffplanView(),
+      binding: PropertiesBinding(),
+    ),
+    GetPage(
       name: _Paths.SPLASH,
       page: () => SplashView(),
       binding: SplashBinding(),
     ),
+
   ];
 }

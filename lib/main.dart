@@ -1,5 +1,3 @@
-
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,27 +11,35 @@ import 'app/core/bindings/app_binding.dart';
 import 'app/core/theme/themes.dart';
 import 'app/data/services/locale_service.dart';
 import 'app/data/services/theme_service.dart';
+import 'app/modules/savedPpoperties/controllers/savedproperties_controller.dart';
 import 'app/routes/app_pages.dart';
 
 final ThemeController themeController = Get.put(ThemeController());
 final LocaleService localeService = Get.put(LocaleService());
 
 void main() async {
+  Get.put(SavedPropertiesController());
+
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
 
-
   // Set the system UI overlay style globally before running the app
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    systemNavigationBarContrastEnforced: true,
-    systemStatusBarContrastEnforced: true,
-    statusBarColor: AppColors.primary, // Set your desired color here
-    statusBarIconBrightness: Brightness.light, // Icon brightness (light or dark)
-    systemNavigationBarColor: AppColors.primary, // Navigation bar color
-    systemNavigationBarIconBrightness: Brightness.light, // Navigation bar icon brightness
-    statusBarBrightness: Brightness.light,
-    systemNavigationBarDividerColor: AppColors.primary,
-  ));
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      systemNavigationBarContrastEnforced: true,
+      systemStatusBarContrastEnforced: true,
+      statusBarColor: AppColors.primary,
+      // Set your desired color here
+      statusBarIconBrightness: Brightness.light,
+      // Icon brightness (light or dark)
+      systemNavigationBarColor: AppColors.primary,
+      // Navigation bar color
+      systemNavigationBarIconBrightness: Brightness.light,
+      // Navigation bar icon brightness
+      statusBarBrightness: Brightness.light,
+      systemNavigationBarDividerColor: AppColors.primary,
+    ),
+  );
 
   // Now, run the app
   runApp(
@@ -75,7 +81,6 @@ void main() async {
     ),
   );
 }
-
 
 //for the dark mode button
 //  onTap:() {

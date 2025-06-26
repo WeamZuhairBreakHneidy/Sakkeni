@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class RememberMeCheckbox extends StatelessWidget {
   final RxBool isChecked;
   final Color? activeColor;
-RememberMeCheckbox({super.key, required this.isChecked, this.activeColor});
+const RememberMeCheckbox({super.key, required this.isChecked, this.activeColor});
 
   @override
   Widget build(BuildContext context) {

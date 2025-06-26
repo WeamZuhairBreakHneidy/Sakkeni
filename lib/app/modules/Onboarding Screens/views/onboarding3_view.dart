@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../core/theme/colors.dart';
@@ -10,7 +9,7 @@ import '../../../routes/app_pages.dart';
 class OnboardingPage3 extends StatelessWidget {
   final PageController controller;
 
-  const OnboardingPage3({required this.controller});
+  const OnboardingPage3({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
