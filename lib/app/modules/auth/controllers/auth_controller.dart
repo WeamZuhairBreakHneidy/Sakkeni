@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -8,7 +7,6 @@ import '../../../data/models/user_model.dart';
 import '../../../data/services/api_service.dart';
 import '../../../data/services/token_service.dart';
 import '../../../routes/app_pages.dart';
-
 
 class AuthController extends GetxController {
   final emailController = TextEditingController();
@@ -28,10 +26,7 @@ class AuthController extends GetxController {
     try {
       final response = await ApiService().postApi(
         url: ApiEndpoints.login,
-        body: {
-          'email': email,
-          'password': password,
-        },
+        body: {'email': email, 'password': password},
       );
 
       print(response.statusCode);
@@ -49,13 +44,13 @@ class AuthController extends GetxController {
 
           // Save token securely
           await tokenService.saveToken(user.token);
+          print(user.token);
 
           if (rememberMe.value) {
             box.write('rememberMe', true);
           } else {
             box.write('rememberMe', false);
           }
-
 
           // Save user data to GetStorage
           box.write('user', user.toJson());
@@ -70,11 +65,11 @@ class AuthController extends GetxController {
       }
     } catch (e) {
       Get.snackbar('Error', e.toString());
+      print(e.toString());
     } finally {
       isLoading.value = false;
     }
   }
-
 
   UserModel? get currentUser {
     final json = box.read('user');

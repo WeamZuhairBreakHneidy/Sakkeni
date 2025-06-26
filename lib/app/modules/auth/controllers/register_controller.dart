@@ -8,10 +8,13 @@ import '../../../data/services/token_service.dart';
 import '../../../routes/app_pages.dart';
 
 class RegisterController extends GetxController {
-  final nameController = TextEditingController();
+  // final nameController = TextEditingController();
+  final  firstNameController = TextEditingController();
+  final  lastNameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final passwordConfirmationController = TextEditingController();
+
 
   var isPasswordHidden = true.obs;
   final isLoading = false.obs;
@@ -21,7 +24,9 @@ class RegisterController extends GetxController {
 
   @override
   void onClose() {
-    nameController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
+    // nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     passwordConfirmationController.dispose();
@@ -29,7 +34,10 @@ class RegisterController extends GetxController {
   }
 
   Future<void> signup() async {
-    final name = nameController.text.trim();
+    // final name = nameController.text.trim();
+    final firstName = firstNameController.text.trim();
+    final lastName = lastNameController.text.trim();
+
     final email = emailController.text.trim();
     final password = passwordController.text;
     final passwordConfirmation = passwordConfirmationController.text;
@@ -40,7 +48,8 @@ class RegisterController extends GetxController {
       final response = await ApiService().postApi(
         url: ApiEndpoints.signup,
         body: {
-          'username': name,
+          'first_name': firstName,
+          'last_name': lastName,
           'email': email,
           'password': password,
           'password_confirmation': passwordConfirmation,

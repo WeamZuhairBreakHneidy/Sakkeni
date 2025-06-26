@@ -17,7 +17,7 @@ class CustomDivider extends StatelessWidget {
   final double endIndent;
 
   const CustomDivider({
-    Key? key,
+    super.key,
     this.thickness = 2.0,
     this.height = 50.0,
     this.text = '',
@@ -30,7 +30,7 @@ class CustomDivider extends StatelessWidget {
     this.fontFamily = 'DefaultFont',
     this.indent = 0,
     this.endIndent = 0,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
