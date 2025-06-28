@@ -101,6 +101,7 @@ class AuthView extends GetView<AuthController> {
                   margin:   EdgeInsets.only(top:110.h,left: 48.w,right: 48.w),
                   child: InputTextFormField(
 
+
                     textEditingController: controller.emailController,
 
                     errorStyle: TextStyle(height: 0, color: Theme.of(context).colorScheme.error),

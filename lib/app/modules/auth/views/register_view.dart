@@ -215,7 +215,7 @@ class RegisterView extends GetView<RegisterController> {
                         controller.signup();
                       }
                     },
-                    clickable: true,
+                    clickable: !controller.isLoading.value,
 
                     buttonStyle: ButtonStyle(
                       shape: WidgetStatePropertyAll(

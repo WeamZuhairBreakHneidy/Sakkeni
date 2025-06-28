@@ -26,10 +26,9 @@
     "enter_your_password": "Enter your password",
     "enter_your_user_name": "Enter your user name",
     "enter_password_confirmation": "Enter password confirmation",
-    "labels_first_name": "First Name",
-    "labels_last_name": "Last Name",
-    "hint_text_enter_your_first_name": "First Name",
-    "hint_text_enter_your_last_name": "Last Name"
+
+    "enter_your_first_name": "First Name",
+    "enter_your_last_name": "Last Name"
 
   },
   "error": {

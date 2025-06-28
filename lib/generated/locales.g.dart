@@ -36,6 +36,10 @@ class LocaleKeys {
   static const hint_text_enter_your_password = 'hint_text_enter_your_password';
   static const hint_text_enter_your_user_name =
       'hint_text_enter_your_user_name';
+  static const hint_text_enter_your_first_name =
+      'hint_text_enter_your_first_name';
+  static const hint_text_enter_your_last_name =
+      'hint_text_enter_your_last_name';
   static const hint_text_enter_password_confirmation =
       'hint_text_enter_password_confirmation';
   static const error_email_must_not_be_empty = 'error_email_must_not_be_empty';
@@ -102,6 +106,8 @@ class Locales {
     'hint_text_enter_your_email': 'أدخل البريد الإلكتروني',
     'hint_text_enter_your_password': 'أدخل كلمة السر',
     'hint_text_enter_your_user_name': 'أدخل اسم المستخدم',
+    'hint_text_enter_your_first_name': 'الاسم الاول',
+    'hint_text_enter_your_last_name': 'العائلة',
     'hint_text_enter_password_confirmation': 'أدخل تأكيد كلمة السر',
     'error_email_must_not_be_empty': 'البريد الإلكتروني يجب ألا يكون فارغاً',
     'error_invalid_email_format': 'تنسيق البريد الإلكتروني غير صالح',
@@ -163,6 +169,8 @@ class Locales {
     'hint_text_enter_your_password': 'Enter your password',
     'hint_text_enter_your_user_name': 'Enter your user name',
     'hint_text_enter_password_confirmation': 'Enter password confirmation',
+    'hint_text_enter_your_first_name': 'First Name',
+    'hint_text_enter_your_last_name': 'Last Name',
     'error_email_must_not_be_empty': 'Email must not be empty',
     'error_invalid_email_format': 'Invalid email format',
     'error_name_must_not_be_empty': 'Name must not be empty',

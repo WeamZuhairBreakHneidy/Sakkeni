@@ -6,9 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:test1/app/core/theme/colors.dart';
 import 'package:test1/generated/locales.g.dart';
-
 import 'app/core/bindings/app_binding.dart';
-
 import 'app/core/theme/themes.dart';
 import 'app/data/services/locale_service.dart';
 import 'app/data/services/theme_service.dart';
@@ -34,7 +32,7 @@ void main() async {
     systemNavigationBarDividerColor: AppColors.primary,
   ));
 
-  // Now, run the app
+
   runApp(
     ScreenUtilInit(
       designSize: const Size(402, 874),
