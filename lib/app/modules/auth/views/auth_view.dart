@@ -17,7 +17,6 @@ import '../controllers/auth_controller.dart';
 
 class AuthView extends GetView<AuthController> {
    AuthView({super.key});
-  GlobalKey<FormState> loginFormKey=GlobalKey();
 
 
   @override
@@ -62,7 +61,7 @@ class AuthView extends GetView<AuthController> {
           ),
 
           Form(
-            key:loginFormKey,
+            key:controller.loginFormKey,
             child: ListView(
 
               children: [
@@ -179,7 +178,7 @@ class AuthView extends GetView<AuthController> {
                   margin:   EdgeInsets.only(top:18.h,left: 48.w,right: 48.w),
                   child: ResponsiveButton(
                     onPressed: () {
-                      if(loginFormKey.currentState!.validate()){
+                      if(controller.loginFormKey.currentState!.validate()){
 
                         controller.login();
                       }

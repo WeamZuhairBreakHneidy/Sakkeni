@@ -20,4 +20,5 @@ class AppColors {
   static const Color tab = Color.fromRGBO(233, 238, 238, 1);
   static const Color tabtext = Color.fromRGBO(39, 57, 58, 1);
   static const Color tabtextselected = Color.fromRGBO(180, 197, 197, 1);
+  static const Color unselectedItemColor= Color.fromARGB(153, 255, 255, 255);
 }

@@ -16,6 +16,7 @@ class AuthController extends GetxController {
   final tokenService = TokenService();
   var rememberMe = false.obs;
   var isLoading = false.obs;
+  GlobalKey<FormState> loginFormKey=GlobalKey();
 
   Future<void> login() async {
     final email = emailController.text.trim();

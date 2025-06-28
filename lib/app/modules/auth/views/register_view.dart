@@ -15,7 +15,7 @@ import '../controllers/register_controller.dart';
 class RegisterView extends GetView<RegisterController> {
   RegisterView({super.key});
 
-  GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
+  // GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class RegisterView extends GetView<RegisterController> {
           Container(color: Theme.of(context).scaffoldBackgroundColor),
 
           Form(
-            key: registerFormKey,
+            key: controller.registerFormKey,
             child: ListView(
               children: [
                 //Welcome to
@@ -211,7 +211,7 @@ class RegisterView extends GetView<RegisterController> {
                   margin: EdgeInsets.only(top: 82.h, left: 48.w, right: 48.w),
                   child: ResponsiveButton(
                     onPressed: () {
-                      if (registerFormKey.currentState!.validate()) {
+                      if (controller.registerFormKey.currentState!.validate()) {
                         controller.signup();
                       }
                     },

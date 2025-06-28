@@ -15,6 +15,7 @@ class RegisterController extends GetxController {
   final passwordController = TextEditingController();
   final passwordConfirmationController = TextEditingController();
 
+  final GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
 
   var isPasswordHidden = true.obs;
   final isLoading = false.obs;
