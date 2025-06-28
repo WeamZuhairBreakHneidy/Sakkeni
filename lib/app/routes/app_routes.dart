@@ -10,9 +10,11 @@ abstract class Routes {
   static const SPLASH = _Paths.SPLASH;
   static const ONBOARDING = _Paths.ONBOARDING;
   static const RENT = _Paths.RENT;
+  static const PropertiesUnifiedView = _Paths.PropertiesUnifiedView;
   static const OFFPLANE = _Paths.OFFPLANE;
   static const PURCHASE = _Paths.PURCHASE;
   static const PROPERTIES = _Paths.PROPERTIES;
+  static const PROFILE = _Paths.PROFILE;
 }
 
 abstract class _Paths {
@@ -23,8 +25,10 @@ abstract class _Paths {
   static const REGISTER = '/register';
   static const SPLASH = '/splash';
   static const ONBOARDING = '/Onboarding';
+  static const PropertiesUnifiedView = '/PropertiesUnifiedView';
   static const RENT = '/rent';
   static const OFFPLANE = '/offplane';
   static const PURCHASE = '/purchase';
   static const PROPERTIES = '/properties';
+  static const PROFILE = '/profile';
 }

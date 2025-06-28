@@ -37,6 +37,7 @@ class AppTheme {
         titleSmall: TextStyle(fontSize: 12.r, color: AppColors.background1,fontWeight: FontWeight.w400),
         bodySmall: TextStyle(fontSize: 12.r, color: AppColors.white,fontWeight: FontWeight.w400),
         labelLarge: TextStyle(fontSize: 16.r, fontWeight: FontWeight.bold, color: AppColors.primary),
+        labelSmall: TextStyle(fontSize: 10.r, color: AppColors.primary),
       ),
       appBarTheme: AppBarTheme(
         color: AppColors.primary,

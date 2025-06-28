@@ -10,45 +10,39 @@ Widget buildHeaderTabs() {
   tabController.updateTabFromRoute();
 
   return Obx(
-    () => Row(
+        () => Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _tabButton("For Rent", 0, tabController),
+        _tabButton("For Rent", 0, tabController, '${Routes.PropertiesUnifiedView}?type=rent'),
         SizedBox(width: 10.w),
-        _tabButton("For Sale", 1, tabController),
+        _tabButton("For Sale", 1, tabController, '${Routes.PropertiesUnifiedView}?type=purchase'),
         SizedBox(width: 10.w),
-        _tabButton("Off plan", 2, tabController),
+        _tabButton("Off plan", 2, tabController, '${Routes.PropertiesUnifiedView}?type=offplan'),
+
       ],
     ),
   );
 }
 
-Widget _tabButton(String label, int index, TabControllerX tabController) {
+Widget _tabButton(String label, int index, TabControllerX controller, String route) {
   return GestureDetector(
     onTap: () {
-      tabController.selectedTab.value = index;
-      if (index == 0) Get.offNamed(Routes.RENT);
-      if (index == 1) Get.offNamed(Routes.PURCHASE);
-      if (index == 2) Get.offNamed(Routes.OFFPLANE);
+      controller.selectedTab.value = index;
+      Get.offNamed(route);
     },
     child: Container(
       padding: EdgeInsets.symmetric(horizontal: 13.w, vertical: 5.h),
       decoration: BoxDecoration(
-        color:
-            tabController.selectedTab.value == index
-                ? AppColors.tabtextselected
-                : AppColors.tab,
+        color: controller.selectedTab.value == index
+            ? AppColors.tabtextselected
+            : AppColors.tab,
         borderRadius: BorderRadius.circular(5),
         border: Border.all(color: AppColors.tab),
       ),
       child: Text(
         label,
         style: TextStyle(
-          color:
-              tabController.selectedTab.value == index
-                  ? AppColors.tabtext
-                  : AppColors.tabtext,
-          // fontWeight: FontWeight.bold,
+          color: AppColors.tabtext,
           fontSize: 13.sp,
         ),
       ),

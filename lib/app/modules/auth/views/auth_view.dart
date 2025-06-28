@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import '../../../core/theme/colors.dart';
 
 import '../../../core/util/device_utils.dart';
-import '../../../data/services/locale_service.dart';
 import '../../../data/services/validator_service.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/remember_me_checkbox.dart';
@@ -100,7 +99,7 @@ class AuthView extends GetView<AuthController> {
                 //Email
                 Container(
 
-                  margin:   EdgeInsets.only(top:129.h,left: 48.w,right: 48.w),
+                  margin:   EdgeInsets.only(top:110.h,left: 48.w,right: 48.w),
                   child: InputTextFormField(
 
                     textEditingController: controller.emailController,
@@ -120,7 +119,7 @@ class AuthView extends GetView<AuthController> {
 
                 //Password
                 Container(
-                  margin:   EdgeInsets.only(top:10.h,left: 48.w,right: 48.w),
+                  margin:   EdgeInsets.only(left: 48.w,right: 48.w),
                   child: Obx(
                     () => InputTextFormField(
 
@@ -177,7 +176,7 @@ class AuthView extends GetView<AuthController> {
 
                 //Button
                 Container(
-                  margin:   EdgeInsets.only(top:24.h,left: 48.w,right: 48.w),
+                  margin:   EdgeInsets.only(top:18.h,left: 48.w,right: 48.w),
                   child: ResponsiveButton(
                     onPressed: () {
                       if(loginFormKey.currentState!.validate()){
@@ -197,14 +196,14 @@ class AuthView extends GetView<AuthController> {
                       ),
                     ),
                     buttonWidth: Get.width,
-                    child: Text('buttons_login'.tr, style: Theme.of(context).textTheme.bodyMedium),
+                    child: Text('buttons_login'.tr, style: Theme.of(context).textTheme.labelSmall),
                   ),
                 ),
 
 
 
                 Container(
-                  margin:   EdgeInsets.only(top:71.h,),
+                  margin:   EdgeInsets.only(top:61.h,),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -219,7 +218,7 @@ class AuthView extends GetView<AuthController> {
 
 
                 Container(
-                            margin:   EdgeInsets.only(top:33.h,left: 48.w,right: 48.w),
+                            margin:   EdgeInsets.only(top:23.h,left: 48.w,right: 48.w),
                   child: ResponsiveButton(
                     onPressed: () {
                       Get.toNamed(Routes.REGISTER);
@@ -236,7 +235,7 @@ class AuthView extends GetView<AuthController> {
                       ),
                     ),
                     buttonWidth: Get.width,
-                    child: Text('buttons_sign_up'.tr, style: Theme.of(context).textTheme.bodyMedium),
+                    child: Text('buttons_sign_up'.tr, style: Theme.of(context).textTheme.titleSmall),
                   ),
                 ),
               ],

@@ -6,14 +6,12 @@ import '../core/theme/themes.dart';
 import '../data/models/properties-model.dart';
 import '../data/services/api_service.dart';
 import '../modules/property/views/property_view.dart';
-import '../modules/savedPpoperties/controllers/savedproperties_controller.dart';
 
 class PropertyCard extends StatelessWidget {
   final Datum property;
 
-  PropertyCard({super.key, required this.property});
-
-  final SavedPropertiesController savedController = Get.find();
+  const PropertyCard({super.key, required this.property});
+  // final SavedPropertiesController savedController = Get.find();
 
   num? getPropertyPrice(Datum property) {
     if (property.rent?.price != null) {
@@ -28,6 +26,8 @@ class PropertyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get.put(SavedPropertiesController());
+
     final imageUrl = property.coverImage?.imagePath ?? '';
     final image = "${ApiService().baseUrl}/$imageUrl";
     final price = getPropertyPrice(property) ?? 0;
@@ -79,40 +79,40 @@ class PropertyCard extends StatelessWidget {
                         (_, __, ___) => const Icon(Icons.image_not_supported),
                   ),
                 ),
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: Obx(
-                        () => GestureDetector(
-                      onTap: () {
-                        savedController.toggleSaved(property.id);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 4,
-                              offset: Offset(2, 2),
-                            ),
-                          ],
-                        ),
-                        child: Icon(
-                          savedController.isSaved(property.id)
-                              ? Icons.bookmark
-                              : Icons.bookmark_border,
-                          color: savedController.isSaved(property.id)
-                              ? AppColors.tabtext
-                              : Colors.grey,
-                          size: 20,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                // Positioned(
+                //   top: 8,
+                //   right: 8,
+                //   child: Obx(
+                //         () => GestureDetector(
+                //       onTap: () {
+                //         // savedController.toggleSaved(property.id);
+                //       },
+                //       child: Container(
+                //         padding: const EdgeInsets.all(4),
+                //         decoration: BoxDecoration(
+                //           color: Colors.white,
+                //           shape: BoxShape.circle,
+                //           boxShadow: [
+                //             BoxShadow(
+                //               color: Colors.black12,
+                //               blurRadius: 4,
+                //               offset: Offset(2, 2),
+                //             ),
+                //           ],
+                //         ),
+                //         child: Icon(
+                //           savedController.isSaved(property.id)
+                //               ? Icons.bookmark
+                //               : Icons.bookmark_border,
+                //           color: savedController.isSaved(property.id)
+                //               ? AppColors.tabtext
+                //               : Colors.grey,
+                //           size: 20,
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
             SizedBox(height: 4.h),

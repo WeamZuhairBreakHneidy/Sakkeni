@@ -1,26 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
+import 'package:loading_indicator/loading_indicator.dart';
 import '../../../core/theme/colors.dart';
-import '../../../widgets/CustomBottomNavBar.dart';
+import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../../../widgets/properties_tab.dart';
 import '../../../widgets/property_card.dart';
+import '../controllers/properties_offplan_controller.dart';
+import '../controllers/properties_purchase_controller.dart';
 import '../controllers/properties_rent_controller.dart';
 import '../controllers/properties_tab_controller.dart';
 
-class PropertiesRentView extends StatelessWidget {
-  final controller = Get.put(RentController());
+class PropertiesUnifiedView extends StatelessWidget {
   final ScrollController scrollController = ScrollController();
   final tabController = Get.put(TabControllerX(), permanent: true);
 
-  PropertiesRentView({super.key}) {
+  PropertiesUnifiedView({super.key}) {
+    final controller = getControllerForCurrentRoute();
+
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
           scrollController.position.maxScrollExtent - 100) {
         controller.loadNextPage();
       }
     });
+  }
+
+  late final dynamic controller = getControllerForCurrentRoute();
+
+  dynamic getControllerForCurrentRoute() {
+    final typeParam = Get.parameters['type'] ?? 'rent'; // fallback
+
+    switch (typeParam) {
+      case 'rent':
+        return Get.find<RentController>();
+      case 'purchase':
+        return Get.find<PurchaseController>();
+      case 'offplan':
+        return Get.find<OffPlanController>();
+      default:
+        return Get.find<RentController>();
+    }
   }
 
   @override
@@ -75,7 +95,7 @@ class PropertiesRentView extends StatelessWidget {
             ),
           ),
 
-          // Main content
+          // Main Content
           Expanded(
             child: Container(
               decoration: BoxDecoration(
@@ -83,6 +103,9 @@ class PropertiesRentView extends StatelessWidget {
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30.r),
                   topRight: Radius.circular(30.r),
+                    bottomLeft: Radius.circular(30.r),
+                  bottomRight: Radius.circular(30.r),
+
                 ),
               ),
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
@@ -96,11 +119,23 @@ class PropertiesRentView extends StatelessWidget {
                       final isLoading = controller.isLoading.value;
 
                       if (props.isEmpty && isLoading) {
-                        return const Center(child: CircularProgressIndicator());
+                        return Center(
+                          child: SizedBox(
+                            width: 75,
+                            height: 75,
+                            child: LoadingIndicator(
+                              indicatorType: Indicator.ballZigZagDeflect,
+                              colors: [AppColors.primary],
+                              strokeWidth: 1,
+                            ),
+                          ),
+                        );
                       }
 
                       if (props.isEmpty && !isLoading) {
-                        return const Center(child: Text("No properties found."));
+                        return const Center(
+                          child: Text("No properties found."),
+                        );
                       }
 
                       return GridView.builder(
@@ -108,25 +143,27 @@ class PropertiesRentView extends StatelessWidget {
                         itemCount: props.length + 1,
                         padding: const EdgeInsets.only(bottom: 16),
                         gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          mainAxisSpacing: 20,
-                          crossAxisSpacing: 20,
-                          childAspectRatio: 0.67,
-                        ),
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              mainAxisSpacing: 20,
+                              crossAxisSpacing: 20,
+                              childAspectRatio: 0.65,
+                            ),
                         itemBuilder: (context, index) {
                           if (index < props.length) {
-                            final property = props[index];
-                            return PropertyCard(property: property);
+                            return PropertyCard(property: props[index]);
                           } else {
-                            return Obx(() => controller.isLoading.value
-                                ? const Padding(
-                              padding: EdgeInsets.all(30.0),
-                              child: Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                            )
-                                : const SizedBox());
+                            return Obx(
+                              () =>
+                                  controller.isLoading.value
+                                      ? const Padding(
+                                        padding: EdgeInsets.all(16.0),
+                                        child: Center(
+                                          child: CircularProgressIndicator(),
+                                        ),
+                                      )
+                                      : const SizedBox(),
+                            );
                           }
                         },
                       );
@@ -142,4 +179,3 @@ class PropertiesRentView extends StatelessWidget {
     );
   }
 }
-

@@ -15,13 +15,13 @@ class BottomNavController extends GetxController {
         Get.toNamed(Routes.REGISTER);
         break;
       case 1:
-        Get.toNamed(Routes.RENT);
+        Get.toNamed(Routes.PropertiesUnifiedView);
         break;
       case 3:
         Get.toNamed(Routes.REGISTER);
         break;
       case 4:
-        Get.toNamed(Routes.REGISTER);
+        Get.toNamed(Routes.PROFILE);
         break;
     }
   }

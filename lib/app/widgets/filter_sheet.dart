@@ -230,9 +230,9 @@ class FilterSheet extends StatelessWidget {
                         buttonStyle: ButtonStyle(
                           backgroundColor: WidgetStatePropertyAll(AppColors.background1),
                         ),
-                        child: Text('Search', style: Theme.of(context).textTheme.bodySmall),
                         onPressed: () => Get.back(),
                         clickable: true,
+                        child: Text('Search', style: Theme.of(context).textTheme.bodySmall),
                       ),
                   ],
 
