@@ -8,6 +8,11 @@ class ApiEndpoints {
   static const String purchase = '/api/view-properties/purchase';
   static const String offplan = '/api/view-properties/off-plan';
   static const String profile = '/api/my-profile';
+  static const String updateProfile = '/api/update-profile';
+  static const String resetpassword = '/api/reset-password';
+  static const String renthistory = '/api/view-my-properties/rent';
+  static const String purchasehistory = '/api/view-my-properties/purchase';
+  static const String offplanhistory = '/api/view-my-properties/off-plan';
 
 
 

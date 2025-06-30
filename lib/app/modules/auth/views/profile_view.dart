@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:test1/app/core/theme/colors.dart';
 
+import '../../../data/services/api_service.dart';
+import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../controllers/profile_controller.dart';
 
@@ -38,27 +40,28 @@ class ProfileView extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-              190.horizontalSpace,
+                    190.horizontalSpace,
                     Text(
                       "View History",
                       style: Theme.of(context).textTheme.labelSmall,
-
                     ),
                     IconButton(
                       icon: const Icon(
                         Icons.history,
                         color: AppColors.background1,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.toNamed(Routes.VIEWHISTORY);
+                      },
                     ),
                   ],
                 ),
               ),
               Padding(
-                padding:  EdgeInsets.only(left: 16.0.w, right: 16.0.w),
+                padding: EdgeInsets.only(left: 16.0.w, right: 16.0.w),
                 child: Divider(height: 1.h, thickness: 1, color: Colors.grey),
               ),
-
+              30.verticalSpace,
               Expanded(
                 child: Obx(() {
                   if (controller.isLoading.value) {
@@ -72,7 +75,8 @@ class ProfileView extends StatelessWidget {
                           strokeWidth: 1,
                         ),
                       ),
-                    );                  }
+                    );
+                  }
 
                   final profile = controller.profileModel.value?.data;
 
@@ -85,54 +89,92 @@ class ProfileView extends StatelessWidget {
                     child: Column(
                       children: [
                         CircleAvatar(
-                          radius: 100,
+                          radius: 100.r,
                           backgroundImage:
                               profile.profilePicturePath != null
-                                  ? NetworkImage(profile.profilePicturePath)
+                                  ? NetworkImage(
+                                    '${ApiService().baseUrl}/${profile.profilePicturePath}',
+                                  )
                                   : const AssetImage(
                                         "assets/backgrounds/default.png",
                                       )
                                       as ImageProvider,
                         ),
-                        SizedBox(height: 30.h),
+                        45.verticalSpace,
                         ProfileInfoTile(
                           icon: Icons.person,
                           text: '${profile.firstName} ${profile.lastName}',
+                        ),
+                        Padding(
+                          padding:  EdgeInsets.symmetric(horizontal: 20.w),
+                          child: Divider(
+                            thickness: 1,
+                            color: Colors.grey[300],
+                            height: 5.h, // يجعل الخط قريب من النص
+                          ),
                         ),
                         ProfileInfoTile(
                           icon: Icons.phone,
                           text: profile.phoneNumber ?? 'No Phone',
                         ),
+                        Padding(
+                          padding:  EdgeInsets.symmetric(horizontal: 20.w),
+                          child: Divider(
+                            thickness: 1,
+                            color: Colors.grey[300],
+                            height: 5.h, // يجعل الخط قريب من النص
+                          ),
+                        ),
+
                         ProfileInfoTile(icon: Icons.email, text: profile.email),
+                        Padding(
+                          padding:  EdgeInsets.symmetric(horizontal: 20.w),
+                          child: Divider(
+                            thickness: 1,
+                            color: Colors.grey[300],
+                            height: 5.h, // يجعل الخط قريب من النص
+                          ),
+                        ),
                         ProfileInfoTile(
                           icon: Icons.location_on,
                           text: profile.address ?? 'No Address',
                         ),
-                        ProfileInfoTile(
-                          icon: Icons.business,
-                          text: "Personal or Company",
+                        Padding(
+                          padding:  EdgeInsets.symmetric(horizontal: 20.w),
+                          child: Divider(
+                            thickness: 1,
+                            color: Colors.grey[300],
+                            height: 5.h, // يجعل الخط قريب من النص
+                          ),
                         ),
-                        95.verticalSpace,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          // تحريك الأزرار لليمين
-                          children: [
-                            TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                "Edit Profile",
-                                style: Theme.of(context).textTheme.labelSmall,
+                        65.verticalSpace,
+                        Padding(
+                          padding:  EdgeInsets.only(right: 20.0.w),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  Get.toNamed(Routes.UPDATEPROFILE);
+                                },
+
+                                child: Text(
+                                  "Edit Profile",
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
                               ),
-                            ),
-                            SizedBox(width: 16.w),
-                            TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                "Reset Password",
-                                style: Theme.of(context).textTheme.labelSmall,
+                              // SizedBox(width: 10.w),
+                              TextButton(
+                                onPressed: () {
+                                  Get.toNamed(Routes.RESETPASSWORD);
+                                },
+                                child: Text(
+                                  "Reset Password",
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ],
                     ),

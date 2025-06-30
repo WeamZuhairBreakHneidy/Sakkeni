@@ -61,4 +61,29 @@ class UserModel {
       'token': token,
     };
   }
+  UserModel copyWith({
+    String? firstName,
+    String? lastName,
+    String? email,
+    String? phoneNumber,
+    String? address,
+    String? token,
+    String? profilePicturePath,
+  }) {
+    return UserModel(
+      id: id,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      email: email ?? this.email,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      address: address ?? this.address,
+      token: token ?? this.token,
+      profilePicturePath: profilePicturePath ?? this.profilePicturePath,
+      isAdmin: isAdmin,
+      isSuperAdmin: isSuperAdmin,
+      emailVerifiedAt: emailVerifiedAt,
+    );
+  }
+
+
 }

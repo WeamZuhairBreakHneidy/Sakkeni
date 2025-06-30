@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import '../../../core/theme/colors.dart';
+import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../../../widgets/properties_tab.dart';
 import '../../../widgets/property_card.dart';
@@ -13,7 +14,7 @@ import '../controllers/properties_tab_controller.dart';
 
 class PropertiesUnifiedView extends StatelessWidget {
   final ScrollController scrollController = ScrollController();
-  final tabController = Get.put(TabControllerX(), permanent: true);
+  final tabController = Get.put(PropertiesTabController(), permanent: true);
 
   PropertiesUnifiedView({super.key}) {
     final controller = getControllerForCurrentRoute();
@@ -111,8 +112,22 @@ class PropertiesUnifiedView extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
               child: Column(
                 children: [
-                  buildHeaderTabs(),
-                  17.verticalSpace,
+                  buildHeaderTabs(
+                    tabController: tabController,
+                    onTabSelected: (index) {
+                      switch (index) {
+                        case 0:
+                          Get.offNamed('${Routes.PropertiesUnifiedView}?type=rent');
+                          break;
+                        case 1:
+                          Get.offNamed('${Routes.PropertiesUnifiedView}?type=purchase');
+                          break;
+                        case 2:
+                          Get.offNamed('${Routes.PropertiesUnifiedView}?type=offplan');
+                          break;
+                      }
+                    },
+                  ),                  17.verticalSpace,
                   Expanded(
                     child: Obx(() {
                       final props = controller.properties;

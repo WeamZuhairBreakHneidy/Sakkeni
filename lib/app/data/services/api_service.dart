@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:get/get.dart';
 
@@ -150,8 +151,70 @@ class ApiService extends GetConnect {
     return await _makeRequest(method: 'DELETE', url: url, query: query, body: body, headers: headers);
   }
 
-  // Public method for uploading files
+  Future<Response> uploadSingleImage({
+    required String url,
+    required String imageFieldKey,
+    required File imageFile,
+    Map<String, dynamic>? fields,
+    Map<String, String>? headers,
+  }) async {
+    final combinedHeaders = {
+      ...await _getDefaultHeaders()..remove('Content-Type'),
+      ...?headers,
+    };
+
+    final multipartFile = MultipartFile(
+      imageFile,
+      filename: imageFile.path.split('/').last,
+    );
+
+    final formData = FormData(
+      (fields ?? {}).map((key, value) => MapEntry(key, value.toString())),
+    );
+
+    formData.files.add(MapEntry(imageFieldKey, multipartFile));
+
+    logger.i('Uploading image to $url');
+
+    final response = await post(url, formData, headers: combinedHeaders); // This is GetConnect.post
+
+    logResponse(url, response);
+
+    return response;
+  }
+
+
+  void logRequest(String url, Map<String, dynamic>? q, {String? additional}) {
+    logger.i(
+        '$url \n ${jsonEncode(q)}${additional == null ? '' : '\n$additional'}');
+  }
+  void logResponse(String url, Response response) {
+    final bodyString = jsonEncode(response.body); // convert Map to String
+
+    String res = '';
+    if (bodyString.length > 800) {
+      final parts = _splitByLength(bodyString, 800);
+      for (var e in parts) {
+        res += '$e\n';
+      }
+    } else {
+      res = bodyString;
+    }
+
+    logger.v('${response.statusCode} \n $res');
+  }
+
+// Helper function for splitting a long string
+  List<String> _splitByLength(String str, int chunkSize) {
+    final List<String> chunks = [];
+    for (int i = 0; i < str.length; i += chunkSize) {
+      chunks.add(str.substring(i, i + chunkSize > str.length ? str.length : i + chunkSize));
+    }
+    return chunks;
+  }
+
   Future<Response> uploadFiles({
+
     required String url,
     required List<File> files,
     required String fileKey,

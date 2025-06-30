@@ -15,6 +15,12 @@ abstract class Routes {
   static const PURCHASE = _Paths.PURCHASE;
   static const PROPERTIES = _Paths.PROPERTIES;
   static const PROFILE = _Paths.PROFILE;
+  static const UPDATEPROFILE = _Paths.UPDATEPROFILE;
+  static const RESETPASSWORD = _Paths.RESETPASSWORD;
+  static const VIEWHISTORY = _Paths.VIEWHISTORY;
+  // static const VIEWRENTHISTORY = _Paths.VIEWRENTHISTORY;
+  // static const VIEWPURCHASEHISTORY = _Paths.VIEWPURCHASEHISTORY;
+  // static const VIEWOFFPLANHISTORY = _Paths.VIEWOFFPLANHISTORY;
 }
 
 abstract class _Paths {
@@ -31,4 +37,11 @@ abstract class _Paths {
   static const PURCHASE = '/purchase';
   static const PROPERTIES = '/properties';
   static const PROFILE = '/profile';
+  static const UPDATEPROFILE = '/updateprofile';
+  static const RESETPASSWORD = '/resetpassword';
+  static const VIEWHISTORY = '/history';
+  // static const VIEWRENTHISTORY = '/rent/history';
+  // static const VIEWPURCHASEHISTORY = 'PURCHASE/history';
+  // static const VIEWOFFPLANHISTORY = 'OFFPLAN/history';
+
 }

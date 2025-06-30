@@ -1,20 +1,23 @@
 import 'package:get/get.dart';
+import 'package:test1/app/modules/auth/bindings/reset_password_binding.dart';
 import 'package:test1/app/modules/auth/views/profile_view.dart';
+import 'package:test1/app/modules/auth/views/reset_password_view.dart';
+import 'package:test1/app/modules/auth/views/update_profile_view.dart';
+import 'package:test1/app/modules/history/bindings/history_binding.dart';
 import 'package:test1/app/modules/properties/bindings/properties_binding.dart';
 
-// import 'package:test1/app/modules/properties/views/properties_offplan_view.dart';
-// import 'package:test1/app/modules/properties/views/properties_purchase_view.dart';
-// import 'package:test1/app/modules/properties/views/properties_rent_view.dart';
 
-import '../modules/Onboarding Screens/bindings/onboarding_binding.dart';
-import '../modules/Onboarding Screens/views/onboarding_view.dart';
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/bindings/register_binding.dart';
+import '../modules/auth/bindings/update_profile_binding.dart';
 import '../modules/auth/views/auth_view.dart';
 import '../modules/auth/views/register_view.dart';
 import '../modules/getstarted/views/getstarted_view.dart';
+import '../modules/history/views/history_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/onboarding/bindings/onboarding_binding.dart';
+import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/properties/views/properties_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
@@ -50,21 +53,6 @@ class AppPages {
       page: () => RegisterView(),
       binding: RegisterBinding(),
     ),
-    // GetPage(
-    //   name: Routes.RENT,
-    //   page: () => PropertiesRentView(),
-    //   binding: PropertiesBinding(),
-    // ),
-    // GetPage(
-    //   name: Routes.PURCHASE,
-    //   page: () => PropertiesPurchaseView(),
-    //   binding: PropertiesBinding(),
-    // ),
-    // GetPage(
-    //   name: Routes.OFFPLANE,
-    //   page: () => PropertiesOffplanView(),
-    //   binding: PropertiesBinding(),
-    // ),
     GetPage(
       name: _Paths.SPLASH,
       page: () => SplashView(),
@@ -80,5 +68,20 @@ class AppPages {
       page: () => PropertiesUnifiedView(),
       binding: PropertiesBinding(),
     ),
+    GetPage(
+      name: Routes.UPDATEPROFILE,
+      page: () => UpdateProfileView(),
+      binding: UpdateProfileBinding(),
+    ),
+    GetPage(
+      name: Routes.RESETPASSWORD,
+      page: () => ResetPasswordView(),
+      binding: ResetPasswordBinding(),
+    ), GetPage(
+      name: Routes.VIEWHISTORY,
+      page: () => HistoryView(),
+      binding: HistoryBinding(),
+    ),
+
   ];
 }

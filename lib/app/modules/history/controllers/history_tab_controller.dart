@@ -1,3 +1,3 @@
 import '../../../core/controllers/BaseTabController.dart';
 
-class PropertiesTabController extends BaseTabController { }
+class HistoryTabController extends BaseTabController { }

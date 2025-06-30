@@ -8,21 +8,23 @@ class InputTextFormField extends StatelessWidget {
   final TextEditingController? textEditingController;
   final ValidatorType? validatorType;
   final InputDecoration? decoration;
-  final double? width; // Width of the field
-  final double? height; // Height of the field
-  final EdgeInsetsGeometry? margin; // Margin around the field
-  final EdgeInsetsGeometry? padding; // Padding inside the field
+  final double? width;
+  final double? height;
+  final EdgeInsetsGeometry? margin;
+  final EdgeInsetsGeometry? padding;
   final bool obsecure;
-  final String? hintText; // Hint text
-  final Widget? labelTextAboveTextField; // Nullable label
-  final Widget? prefixIcon; // Prefix icon
-  final Widget? suffixIcon; // Suffix icon
-  final Widget? icon; // Custom leading icon
+  final String? hintText;
+  final Widget? labelTextAboveTextField;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
+  final Widget? icon;
   final Widget? helper;
   final TextStyle? errorStyle;
   final String? otherValueForValidation;
   final Widget? counter;
   final String? Function(String?)? validator;
+  final Color? fillColor;
+  final Color? borderColor;
   InputTextFormField({
     super.key,
     this.textEditingController,
@@ -39,98 +41,98 @@ class InputTextFormField extends StatelessWidget {
     this.errorStyle,
     this.otherValueForValidation,
     this.validator,
-    required this.obsecure,   this.labelTextAboveTextField, this.counter, this.helper,
-
+    required this.obsecure,
+    this.labelTextAboveTextField,
+    this.counter,
+    this.helper,
+    this.fillColor,
+    this.borderColor,
   });
 
   final ValidationController validationController = Get.put(ValidationController());
 
   @override
   Widget build(BuildContext context) {
+    final Color effectiveBorderColor = borderColor ?? Theme.of(context).colorScheme.primary; // اللون الافتراضي رمادي
+
     return Container(
-      width: width, // Responsive width
-      height: height, // Responsive height
-      margin: margin , // Responsive margin
-      padding: padding,  // Responsive padding
+      width: width,
+      height: height,
+      margin: margin,
+      padding: padding,
       child: TextFormField(
-       
         controller: textEditingController,
         obscureText: obsecure,
         keyboardType: validatorType == ValidatorType.PhoneNumber ||
             validatorType == ValidatorType.Number
             ? TextInputType.number
             : TextInputType.text,
-
-
-
         decoration: decoration ??
-
             InputDecoration(
-
-
               errorStyle: errorStyle,
               filled: true,
               icon: icon,
-              fillColor: Theme.of(context).colorScheme.surface,
-
-
+              fillColor: fillColor ?? Theme.of(context).colorScheme.surface, // ✅ هنا التبديل
               helper: helper,
               counter: counter,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.r), // Responsive border radius
+                borderRadius: BorderRadius.circular(10.r),
                 borderSide: BorderSide.none,
               ),
               enabledBorder: OutlineInputBorder(
-
                 borderRadius: BorderRadius.circular(10.r),
-                borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                borderSide: BorderSide(
+                  color: effectiveBorderColor,
+                  width: 1,
+                ),
               ),
-              focusedBorder:  OutlineInputBorder(
-
+              focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.r),
-                borderSide: BorderSide(color: Theme.of(context).colorScheme.secondary, width: 1),
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.secondary,
+                  width: 1,
+                ),
               ),
-                labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 12.r),
+              labelStyle: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+                fontSize: 12.r,
+              ),
               hintText: hintText,
-              hintStyle: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 12.r),
-              contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+              label: labelTextAboveTextField,
+              floatingLabelBehavior: FloatingLabelBehavior.always, // ✅ هذا يجبر الليبل أن يبقى فوق
+              hintStyle: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+                fontSize: 12.r,
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                vertical: 12.h,
+                horizontal: 16.w,
+              ),
               prefixIcon: prefixIcon,
               suffixIcon: suffixIcon,
-
             ),
-
-        validator: validator??(value) {
-          switch (validatorType) {
-            case ValidatorType.Name:
-              return validationController.validateName(value!);
-            case ValidatorType.Email:
-              return validationController.validateEmail(value!);
-            case ValidatorType.Password:
-              return validationController.validatePassword(value!);
-            case ValidatorType.LoginPassword:
-              return validationController.validateLoginPassword(value!);
-            case ValidatorType.PhoneNumber:
-              return validationController.validatePhoneNumber(value!);
-            case ValidatorType.Number:
-              return validationController.validateNumber(value!);
-            case ValidatorType.Code:
-              return validationController.validateResetCode(value!);
-
-            default:
-              return validationController.validateDefault(value!);
-          }
-        },
+        validator: validator ??
+                (value) {
+              switch (validatorType) {
+                case ValidatorType.Name:
+                  return validationController.validateName(value!);
+                case ValidatorType.Email:
+                  return validationController.validateEmail(value!);
+                case ValidatorType.Password:
+                  return validationController.validatePassword(value!);
+                case ValidatorType.LoginPassword:
+                  return validationController.validateLoginPassword(value!);
+                case ValidatorType.PhoneNumber:
+                  return validationController.validatePhoneNumber(value!);
+                case ValidatorType.Number:
+                  return validationController.validateNumber(value!);
+                case ValidatorType.Code:
+                  return validationController.validateResetCode(value!);
+                default:
+                  return validationController.validateDefault(value!);
+              }
+            },
       ),
     );
   }
 }
-
-//For a label above the text field but but in in a column with start as a crossAxisAlignment
-//   For label above the textFormField
-//           if (labelTextAboveTextField != null) ...[  // Only show label if not null
-//             Container(
-//               padding: EdgeInsets.only(left: 10.w, bottom: 5.h ,right: 10.w),
-//
-//               child: labelTextAboveTextField,
-//             ),
-//           ],

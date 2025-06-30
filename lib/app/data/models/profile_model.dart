@@ -9,11 +9,14 @@ class ProfileModel {
   final String message;
   final Data? data;
 
-  factory ProfileModel.fromJson(Map<String, dynamic> json){
+  factory ProfileModel.fromJson(Map<String, dynamic> json) {
+    final dataList = json["data"];
     return ProfileModel(
       status: json["status"] ?? false,
       message: json["message"] ?? "",
-      data: json["data"] == null ? null : Data.fromJson(json["data"]),
+      data: (dataList != null && dataList is List && dataList.isNotEmpty)
+          ? Data.fromJson(dataList[0])
+          : null,
     );
   }
 
@@ -37,12 +40,14 @@ class Data {
     required this.phoneNumber,
     required this.createdAt,
     required this.updatedAt,
+    required this.seller,
   });
 
   final int id;
   final String firstName;
   final String lastName;
   final String email;
+  final String seller;
   final dynamic emailVerifiedAt;
   final dynamic profilePicturePath;
   final dynamic address;
@@ -55,6 +60,7 @@ class Data {
       id: json["id"] ?? 0,
       firstName: json["first_name"] ?? "",
       lastName: json["last_name"] ?? "",
+      seller: json["seller"] ?? "",
       email: json["email"] ?? "",
       emailVerifiedAt: json["email_verified_at"],
       profilePicturePath: json["profile_picture_path"],
@@ -70,6 +76,7 @@ class Data {
     "first_name": firstName,
     "last_name": lastName,
     "email": email,
+    "seller": seller,
     "email_verified_at": emailVerifiedAt,
     "profile_picture_path": profilePicturePath,
     "address": address,
