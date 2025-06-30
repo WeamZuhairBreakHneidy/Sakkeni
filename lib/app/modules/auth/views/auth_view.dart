@@ -175,7 +175,7 @@ class AuthView extends GetView<AuthController> {
 
 
                 //Button
-                Container(
+                Obx(()=>Container(
                   margin:   EdgeInsets.only(top:18.h,left: 48.w,right: 48.w),
                   child: ResponsiveButton(
                     onPressed: () {
@@ -198,7 +198,7 @@ class AuthView extends GetView<AuthController> {
                     buttonWidth: Get.width,
                     child: Text('buttons_login'.tr, style: Theme.of(context).textTheme.labelSmall),
                   ),
-                ),
+                ),),
 
 
 

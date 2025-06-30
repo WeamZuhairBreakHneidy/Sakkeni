@@ -39,7 +39,7 @@ class FilterSheet extends StatelessWidget {
                   context: context
                 ),
 
-                12.verticalSpace,
+                20.verticalSpace,
 
 
                 _buildCustomDropdown(
@@ -51,15 +51,17 @@ class FilterSheet extends StatelessWidget {
                   },
                   context: context
                 ),
-                12.verticalSpace,
+                20.verticalSpace,
 
                 // Area
                 Text("Area (m²)", style: Theme.of(context).textTheme.titleSmall),
                 RangeSlider(
 
 
+
                   min: 0, max: 1000, divisions: 100,
                   labels: RangeLabels(
+
                     "${controller.minArea.value.toInt()}",
                     "${controller.maxArea.value.toInt()}",
                   ),
@@ -265,6 +267,8 @@ class FilterSheet extends StatelessWidget {
         Expanded(
           child: Container(
             height: 20.h,
+            margin: EdgeInsets.fromLTRB(0, 0,20, 0).w,
+
 
             decoration: BoxDecoration(
               border: Border(

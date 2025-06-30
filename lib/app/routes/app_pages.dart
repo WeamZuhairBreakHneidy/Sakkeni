@@ -6,8 +6,6 @@ import 'package:test1/app/modules/properties/bindings/properties_binding.dart';
 // import 'package:test1/app/modules/properties/views/properties_purchase_view.dart';
 // import 'package:test1/app/modules/properties/views/properties_rent_view.dart';
 
-import '../modules/Onboarding Screens/bindings/onboarding_binding.dart';
-import '../modules/Onboarding Screens/views/onboarding_view.dart';
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/bindings/register_binding.dart';
 import '../modules/auth/views/auth_view.dart';
@@ -15,6 +13,8 @@ import '../modules/auth/views/register_view.dart';
 import '../modules/getstarted/views/getstarted_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/onboarding/bindings/onboarding_binding.dart';
+import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/properties/views/properties_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';

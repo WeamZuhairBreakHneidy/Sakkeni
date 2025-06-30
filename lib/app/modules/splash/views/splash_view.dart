@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/colors.dart';
 import '../../../core/util/device_utils.dart';
-import '../../Onboarding Screens/controllers/onboarding_controller.dart';
+import '../../onboarding/controllers/onboarding_controller.dart';
+
 
 class SplashView extends StatelessWidget {
   const SplashView({super.key});
