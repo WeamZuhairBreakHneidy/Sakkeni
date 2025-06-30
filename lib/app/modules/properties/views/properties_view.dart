@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
+import 'package:test1/app/widgets/filter_sheet.dart';
 import '../../../core/theme/colors.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
@@ -86,8 +87,36 @@ class PropertiesUnifiedView extends StatelessWidget {
                           style: TextStyle(color: Colors.grey),
                         ),
                       ),
-                      Icon(Icons.tune, color: Colors.grey),
-                      SizedBox(width: 8.w),
+                      IconButton(icon: Icon(Icons.tune),onPressed: () {
+                        showDialog(
+                          context: context,
+                          barrierColor: Colors.transparent,
+
+                          builder: (_) {
+                            return Stack(
+                              children: [
+                                Positioned(
+                                  bottom: 80.h, // distance from bottom in pixels
+                                  left: 0,
+                                  right: 0,
+                                  child: Container(
+                                    height: 560.h, // exact height
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.all( Radius.circular(50.r)),
+                                    ),
+                                    child: FilterSheet(), // your custom widget
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+
+
+
+                      }, color: Colors.grey),
+
                       Icon(Icons.add_circle_outline, color: Colors.grey),
                     ],
                   ),

@@ -76,10 +76,7 @@ class RegisterView extends GetView<RegisterController> {
                 Container(
                   margin: EdgeInsets.only(top: 15.h, left: 48.w, right: 48.w),
                   child: InputTextFormField(
-                    labelTextAboveTextField: Text(
-                      'labels_first_name'.tr,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
+
                     suffixIcon: Icon(Icons.person, color: AppColors.primary),
                     obsecure: false,
                     hintText: 'hint_text_enter_your_first_name'.tr,
@@ -92,10 +89,7 @@ class RegisterView extends GetView<RegisterController> {
                 Container(
                   margin: EdgeInsets.only(top: 20.h, left: 48.w, right: 48.w),
                   child: InputTextFormField(
-                    labelTextAboveTextField: Text(
-                      'labels_last_name'.tr,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
+
                     suffixIcon: Icon(
                       Icons.person_outline,
                       color: AppColors.primary,
@@ -139,10 +133,7 @@ class RegisterView extends GetView<RegisterController> {
                       height: 0,
                       color: Theme.of(context).colorScheme.error,
                     ),
-                    labelTextAboveTextField: Text(
-                      'labels_email'.tr,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
+
 
                     suffixIcon: Icon(Icons.mail, color: AppColors.primary),
                     obsecure: false,
@@ -159,10 +150,6 @@ class RegisterView extends GetView<RegisterController> {
                     () => InputTextFormField(
                       textEditingController: controller.passwordController,
 
-                      labelTextAboveTextField: Text(
-                        'labels_password'.tr,
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
 
                       obsecure: controller.isPasswordHidden.value,
                       hintText: 'hint_text_enter_your_password'.tr,

@@ -96,42 +96,6 @@ class HomeView extends GetView<HomeController> {
               // ),
 
 
-
-// Somewhere in your page
-
-              ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    barrierColor: Colors.transparent,
-
-                    builder: (_) {
-                      return Stack(
-                        children: [
-                          Positioned(
-                            bottom: 80.h, // distance from bottom in pixels
-                            left: 0,
-                            right: 0,
-                            child: Container(
-                              height: 600.h, // exact height
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.all( Radius.circular(50.r)),
-                              ),
-                              child: FilterSheet(), // your custom widget
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-
-
-
-                },
-                child: const Text("Open Filter"),
-              )
-
             ],
           ),
         ],

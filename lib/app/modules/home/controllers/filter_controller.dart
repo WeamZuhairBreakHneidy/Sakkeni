@@ -2,28 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class FilterController extends GetxController {
-  // Your existing filter fields
   var selectedCountry = ''.obs;
   var selectedCity = ''.obs;
-  final RxList<String> countries = <String>['Country A', 'Country B'].obs;
-  final RxList<String> cities = <String>['City X', 'City Y'].obs;
-
+  final RxList<String> countries = ['Country A', 'Country B', 'Country C'].obs;
+  final RxList<String> cities = ['City X', 'City Y', 'City Z'].obs;
 
   var minArea = 0.0.obs;
-  var maxArea = 1000.0.obs;
+  var maxArea = 2000.0.obs;
 
   var minPrice = 0.0.obs;
   var maxPrice = 2000000.0.obs;
 
-  var bathrooms = 1.obs;
-  var balconies = 1.obs;
+  var bathrooms = 0.obs;
+  var balconies = 0.obs;
 
-  var amenities = ['Pool', 'Gym', 'Parking'].obs;
+  var amenities = <String>[
+    'Pool', 'Gym', 'Parking', 'Garden', 'Elevator', 'Sauna', 'Playground'
+  ].obs;
+
   var selectedAmenities = <String>[].obs;
 
   var isFurnished = false.obs;
 
-  // ✅ Added page controller logic
   final pageController = PageController();
   final currentPage = 0.obs;
 
@@ -50,6 +50,13 @@ class FilterController extends GetxController {
       selectedAmenities.add(amenity);
     }
   }
+
+  void addAmenity(String amenity) {
+    if (!amenities.contains(amenity)) {
+      amenities.add(amenity);
+    }
+  }
+
   void clearFilters() {
     selectedCountry.value = '';
     selectedCity.value = '';
@@ -62,5 +69,4 @@ class FilterController extends GetxController {
     selectedAmenities.clear();
     isFurnished.value = false;
   }
-
 }

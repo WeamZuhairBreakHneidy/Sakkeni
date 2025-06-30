@@ -45,8 +45,8 @@ class CustomBottomNavBar extends StatelessWidget {
       showUnselectedLabels: false,
       items: [
         _buildNavItem(Icons.content_paste_rounded, 0),
-        _buildNavItem(Icons.home, 1),
-        _buildLogoItem(), // الشعار في المنتصف
+        _buildNavItem(Icons.home_work_sharp, 1),
+        _buildLogoItem(),
         _buildNavItem(Icons.calendar_today, 3),
         _buildNavItem(Icons.person_outline_outlined, 4),
       ],

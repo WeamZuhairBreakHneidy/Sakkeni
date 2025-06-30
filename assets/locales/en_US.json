@@ -18,8 +18,10 @@
     "register": "Register",
     "register_to_continue_using_the_app": "Register to continue using the app",
     "user_name": "User Name",
-    "register_with_Google": "Register with Google",
-    "welcome_to": "Welcome to"
+    "register_with_Google": "Regist0er with Google",
+    "welcome_to": "Welcome to",
+    "first_name": "First Name",
+    "last_name": "Last Name"
   },
   "hint_text": {
     "enter_your_email": "Enter your email",

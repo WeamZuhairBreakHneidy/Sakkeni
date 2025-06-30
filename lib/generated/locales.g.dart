@@ -32,6 +32,8 @@ class LocaleKeys {
   static const labels_user_name = 'labels_user_name';
   static const labels_register_with_Google = 'labels_register_with_Google';
   static const labels_welcome_to = 'labels_welcome_to';
+  static const labels_first_name = 'labels_first_name';
+  static const labels_last_name = 'labels_last_name';
   static const hint_text_enter_your_email = 'hint_text_enter_your_email';
   static const hint_text_enter_your_password = 'hint_text_enter_your_password';
   static const hint_text_enter_your_user_name =
@@ -103,6 +105,8 @@ class Locales {
     'labels_user_name': 'اسم المستخدم',
     'labels_register_with_Google': 'تسجيل الدخول باستخدام Google',
     'labels_welcome_to': 'أهلاً بك في',
+    'labels_first_name': 'الاسم الأول',
+    'labels_last_name': 'الاسم الثاني',
     'hint_text_enter_your_email': 'أدخل البريد الإلكتروني',
     'hint_text_enter_your_password': 'أدخل كلمة السر',
     'hint_text_enter_your_user_name': 'أدخل اسم المستخدم',
@@ -163,8 +167,10 @@ class Locales {
     'labels_register_to_continue_using_the_app':
         'Register to continue using the app',
     'labels_user_name': 'User Name',
-    'labels_register_with_Google': 'Register with Google',
+    'labels_register_with_Google': 'Regist0er with Google',
     'labels_welcome_to': 'Welcome to',
+    'labels_first_name': 'First Name',
+    'labels_last_name': 'Last Name',
     'hint_text_enter_your_email': 'Enter your email',
     'hint_text_enter_your_password': 'Enter your password',
     'hint_text_enter_your_user_name': 'Enter your user name',

@@ -53,7 +53,7 @@ class InputTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color effectiveBorderColor = borderColor ?? Theme.of(context).colorScheme.primary; // اللون الافتراضي رمادي
+
 
     return Container(
       width: width,
@@ -82,7 +82,7 @@ class InputTextFormField extends StatelessWidget {
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.r),
                 borderSide: BorderSide(
-                  color: effectiveBorderColor,
+                  color: borderColor ?? Theme.of(context).colorScheme.primary,
                   width: 1,
                 ),
               ),

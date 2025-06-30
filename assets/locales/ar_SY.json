@@ -2,6 +2,7 @@
   "welcome": "أهلاً بك",
   "language": "ar",
   "labels": {
+
     "or": "أو",
     "login": "تسجيل الدخول",
     "login_with_Google": "تسجيل الدخول باستخدام غوغل",
@@ -19,8 +20,9 @@
     "register_to_continue_using_the_app": "قم بالتسجيل لمواصلة استخدام التطبيق",
     "user_name": "اسم المستخدم",
     "register_with_Google": "تسجيل الدخول باستخدام Google",
-    "welcome_to": "أهلاً بك في"
-
+    "welcome_to": "أهلاً بك في",
+    "first_name": "الاسم الأول",
+    "last_name": "الاسم الثاني"
 
   },
   "hint_text": {
