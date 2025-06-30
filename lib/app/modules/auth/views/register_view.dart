@@ -207,30 +207,30 @@ class RegisterView extends GetView<RegisterController> {
                 ),
 
                 //Button
-                Container(
-                  margin: EdgeInsets.only(top: 82.h, left: 48.w, right: 48.w),
-                  child: ResponsiveButton(
-                    onPressed: () {
-                      if (controller.registerFormKey.currentState!.validate()) {
-                        controller.signup();
-                      }
-                    },
-                    clickable: true,
+               Obx(()=> Container(
+                 margin: EdgeInsets.only(top: 82.h, left: 48.w, right: 48.w),
+                 child: ResponsiveButton(
+                   onPressed: () {
+                     if (controller.registerFormKey.currentState!.validate()) {
+                       controller.signup();
+                     }
+                   },
+                   clickable: !controller.isLoading.value,
 
-                    buttonStyle: ButtonStyle(
-                      shape: WidgetStatePropertyAll(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.r)),
-                        ),
-                      ),
-                    ),
-                    buttonWidth: Get.width,
-                    child: Text(
-                      'buttons_sign_up'.tr,
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                  ),
-                ),
+                   buttonStyle: ButtonStyle(
+                     shape: WidgetStatePropertyAll(
+                       RoundedRectangleBorder(
+                         borderRadius: BorderRadius.all(Radius.circular(10.r)),
+                       ),
+                     ),
+                   ),
+                   buttonWidth: Get.width,
+                   child: Text(
+                     'buttons_sign_up'.tr,
+                     style: Theme.of(context).textTheme.titleSmall,
+                   ),
+                 ),
+               ),)
               ],
             ),
           ),
