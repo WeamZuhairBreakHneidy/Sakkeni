@@ -70,25 +70,65 @@ abstract class HistoryController extends GetxController {
           backgroundColor: AppColors.white,
           title: "",
           content: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset(
                 'assets/logowithcolor.png',
-                width: 100,
-                height: 75,
+                width: 100.w,
+                height: 80.h,
               ),
-              SizedBox(height: 10.h),
+              SizedBox(height: 20.h),
               Text(
-                "You do not have permission to perform this action.\nYou need to be a seller to view this content.",
+                "You must upgrade to a seller to access this feature.",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: Colors.black87,
+                ),
+              ),
+              SizedBox(height: 25.h),
+
+              /// Upgrade Button
+              SizedBox(
+                width: 250.w,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Get.back();
+                    Get.toNamed('/upgrade-to-seller'); // غيّر المسار إذا لزم
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 12.h),
+                  ),
+                  child: Text(
+                    "Upgrade to Seller",
+                    style: TextStyle(color: Colors.white, fontSize: 14.sp),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 10.h),
+
+              /// Cancel Button
+              TextButton(
+                onPressed: () {
+                  Get.back();
+                  Get.offAllNamed('/profile'); // غيّر المسار حسب صفحة البروفايل عندك
+                },
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(
+                    color: AppColors.primary,
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
             ],
           ),
-          textConfirm: "OK",
-          confirmTextColor: AppColors.white,
-          buttonColor: AppColors.primary,
-          onConfirm: () {
-            Get.back();
-          },
           barrierDismissible: false,
         );
 
