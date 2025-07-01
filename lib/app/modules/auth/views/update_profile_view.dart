@@ -54,6 +54,7 @@ class UpdateProfileView extends StatelessWidget {
                     horizontal: 16.w,
                     vertical: 12.h,
                   ),
+
                   color: AppColors.white,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -82,7 +83,7 @@ class UpdateProfileView extends StatelessWidget {
                     ],
                   ),
                 ),
-
+                30.verticalSpace,
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: Divider(height: 1.h, thickness: 1, color: Colors.grey),

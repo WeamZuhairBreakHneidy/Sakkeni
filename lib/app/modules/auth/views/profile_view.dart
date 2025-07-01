@@ -28,11 +28,11 @@ class ProfileView extends StatelessWidget {
           ),
           child: Column(
             children: [
+              // HEADER
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 12.w),
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
                 color: AppColors.white,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "Profile",
@@ -40,7 +40,7 @@ class ProfileView extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    190.horizontalSpace,
+                    Spacer(),
                     Text(
                       "View History",
                       style: Theme.of(context).textTheme.labelSmall,
@@ -50,18 +50,17 @@ class ProfileView extends StatelessWidget {
                         Icons.history,
                         color: AppColors.background1,
                       ),
-                      onPressed: () {
-                        Get.toNamed(Routes.VIEWHISTORY);
-                      },
+                      onPressed: () => Get.toNamed(Routes.VIEWHISTORY),
                     ),
                   ],
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(left: 16.0.w, right: 16.0.w),
-                child: Divider(height: 1.h, thickness: 1, color: Colors.grey),
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: Divider(height: 1, color: Colors.grey),
               ),
               30.verticalSpace,
+              // BODY
               Expanded(
                 child: Obx(() {
                   if (controller.isLoading.value) {
@@ -84,97 +83,39 @@ class ProfileView extends StatelessWidget {
                     return const Center(child: Text("No profile data"));
                   }
 
-                  return Padding(
-                    padding: EdgeInsets.all(16),
+                  return SingleChildScrollView(
+                    padding: EdgeInsets.all(16.w),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         CircleAvatar(
                           radius: 100.r,
-                          backgroundImage:
-                              profile.profilePicturePath != null
-                                  ? NetworkImage(
-                                    '${ApiService().baseUrl}/${profile.profilePicturePath}',
-                                  )
-                                  : const AssetImage(
-                                        "assets/backgrounds/default.png",
-                                      )
-                                      as ImageProvider,
+                          backgroundImage: profile.profilePicturePath != null
+                              ? NetworkImage('${ApiService().baseUrl}/${profile.profilePicturePath}')
+                              : const AssetImage("assets/backgrounds/default.png") as ImageProvider,
                         ),
-                        45.verticalSpace,
-                        ProfileInfoTile(
-                          icon: Icons.person,
-                          text: '${profile.firstName} ${profile.lastName}',
-                        ),
-                        Padding(
-                          padding:  EdgeInsets.symmetric(horizontal: 20.w),
-                          child: Divider(
-                            thickness: 1,
-                            color: Colors.grey[300],
-                            height: 5.h, // يجعل الخط قريب من النص
-                          ),
-                        ),
-                        ProfileInfoTile(
-                          icon: Icons.phone,
-                          text: profile.phoneNumber ?? 'No Phone',
-                        ),
-                        Padding(
-                          padding:  EdgeInsets.symmetric(horizontal: 20.w),
-                          child: Divider(
-                            thickness: 1,
-                            color: Colors.grey[300],
-                            height: 5.h, // يجعل الخط قريب من النص
-                          ),
-                        ),
-
+                        30.verticalSpace,
+                        ProfileInfoTile(icon: Icons.person, text: '${profile.firstName} ${profile.lastName}'),
+                        _buildDivider(),
+                        ProfileInfoTile(icon: Icons.phone, text: profile.phoneNumber ?? 'No Phone'),
+                        _buildDivider(),
                         ProfileInfoTile(icon: Icons.email, text: profile.email),
-                        Padding(
-                          padding:  EdgeInsets.symmetric(horizontal: 20.w),
-                          child: Divider(
-                            thickness: 1,
-                            color: Colors.grey[300],
-                            height: 5.h, // يجعل الخط قريب من النص
-                          ),
-                        ),
-                        ProfileInfoTile(
-                          icon: Icons.location_on,
-                          text: profile.address ?? 'No Address',
-                        ),
-                        Padding(
-                          padding:  EdgeInsets.symmetric(horizontal: 20.w),
-                          child: Divider(
-                            thickness: 1,
-                            color: Colors.grey[300],
-                            height: 5.h, // يجعل الخط قريب من النص
-                          ),
-                        ),
-                        65.verticalSpace,
-                        Padding(
-                          padding:  EdgeInsets.only(right: 20.0.w),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  Get.toNamed(Routes.UPDATEPROFILE);
-                                },
-
-                                child: Text(
-                                  "Edit Profile",
-                                  style: Theme.of(context).textTheme.labelSmall,
-                                ),
-                              ),
-                              // SizedBox(width: 10.w),
-                              TextButton(
-                                onPressed: () {
-                                  Get.toNamed(Routes.RESETPASSWORD);
-                                },
-                                child: Text(
-                                  "Reset Password",
-                                  style: Theme.of(context).textTheme.labelSmall,
-                                ),
-                              ),
-                            ],
-                          ),
+                        _buildDivider(),
+                        ProfileInfoTile(icon: Icons.location_on, text: profile.address ?? 'No Address'),
+                        _buildDivider(),
+                        30.verticalSpace,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                              onPressed: () => Get.toNamed(Routes.UPDATEPROFILE),
+                              child: Text("Edit Profile", style: Theme.of(context).textTheme.labelSmall),
+                            ),
+                            TextButton(
+                              onPressed: () => Get.toNamed(Routes.RESETPASSWORD),
+                              child: Text("Reset Password", style: Theme.of(context).textTheme.labelSmall),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -188,6 +129,15 @@ class ProfileView extends StatelessWidget {
       bottomNavigationBar: CustomBottomNavBar(),
     );
   }
+
+  Widget _buildDivider() => Padding(
+    padding: EdgeInsets.symmetric(horizontal: 20.w),
+    child: Divider(
+      thickness: 1,
+      color: Colors.grey[300],
+      height: 5.h,
+    ),
+  );
 }
 
 class ProfileInfoTile extends StatelessWidget {
