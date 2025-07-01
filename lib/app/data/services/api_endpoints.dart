@@ -15,6 +15,12 @@ class ApiEndpoints {
   static const String offplanhistory = '/api/view-my-properties/off-plan';
 
 
+  //Helper
+  static const String viewAmenities = '/api/view-amenities';
+  static const String viewCountries = '/api/view-countries';
+
+
+
 
 
 

@@ -56,9 +56,9 @@ class FilterSheet extends StatelessWidget {
                             label: "Country",
                             value: controller.selectedCountry.value,
                             items: controller.countries,
-                            onChanged: (val) =>
-                            controller.selectedCountry.value = val!,
-                            context: context),
+                            onChanged: (val) => controller.onCountrySelected(val!),
+                            context: context
+                        ),
                         30.verticalSpace,
                         _buildCustomDropdown(
                             label: "City",
@@ -153,7 +153,7 @@ class FilterSheet extends StatelessWidget {
                                     BorderRadius.circular(10.r)),
                                 child: Text(
                                   isMore ? "More" : "$val",
-                                  style: isMore? Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white): Theme.of(context).textTheme.titleMedium,
+                                  style: isSelected? Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white): Theme.of(context).textTheme.titleSmall,
                                 ),
                               ),
                             );
@@ -187,7 +187,7 @@ class FilterSheet extends StatelessWidget {
                                     BorderRadius.circular(10.r)),
                                 child: Text(
                                   isMore ? "More" : "$val",
-                                  style: isMore? Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white): Theme.of(context).textTheme.titleMedium,
+                                  style: isSelected? Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white): Theme.of(context).textTheme.titleSmall,
                                 ),
                               ),
                             );
@@ -201,6 +201,8 @@ class FilterSheet extends StatelessWidget {
                           runSpacing: 10.h,
                           children: controller.amenities.map((amenity) {
                             return FilterChip(
+
+                              backgroundColor: Colors.grey.shade300,
                               label: Text(amenity, style: Theme.of(context).textTheme.titleMedium),
                               selected:
                               controller.selectedAmenities.contains(amenity),
@@ -274,17 +276,20 @@ class FilterSheet extends StatelessWidget {
             height: 28.h,
             margin: EdgeInsets.only(right: 20.w),
             decoration: BoxDecoration(
+
                 border: Border(
                     bottom:
-                    BorderSide(color: Theme.of(context).primaryColor))),
+                    BorderSide(color: Theme.of(context).primaryColor, width: 1))),
             child: DropdownButtonHideUnderline(
               child: DropdownButton<String>(
+                dropdownColor: Colors.grey.shade300,
                 isExpanded: true,
                 value: value.isEmpty ? null : value,
                 icon: const Icon(Icons.keyboard_arrow_down,
                     color: Colors.transparent),
                 items: items
                     .map((item) => DropdownMenuItem(
+
                   value: item,
                   child: Text(item,
                       style: Theme.of(context).textTheme.titleSmall),
