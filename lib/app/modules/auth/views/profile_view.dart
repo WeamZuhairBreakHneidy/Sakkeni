@@ -103,7 +103,7 @@ class ProfileView extends StatelessWidget {
                         _buildDivider(),
                         ProfileInfoTile(icon: Icons.location_on, text: profile.address ?? 'No Address'),
                         _buildDivider(),
-                        30.verticalSpace,
+                        50.verticalSpace,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [

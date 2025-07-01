@@ -1,11 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-
 import '../../../core/theme/colors.dart';
 import '../../../data/services/api_service.dart';
 import '../../../data/services/validator_service.dart';
@@ -28,7 +26,6 @@ class UpdateProfileView extends StatelessWidget {
 
     if (pickedFile != null) {
       controller.imageFile.value = File(pickedFile.path);
-      print('Selected image path: ${controller.imageFile.value!.path}');
     }
   }
 
@@ -37,7 +34,6 @@ class UpdateProfileView extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          height: Get.height,
           decoration: BoxDecoration(
             color: AppColors.white,
             borderRadius: BorderRadius.only(
@@ -45,85 +41,69 @@ class UpdateProfileView extends StatelessWidget {
               bottomRight: Radius.circular(30.r),
             ),
           ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                // Header
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.w,
-                    vertical: 12.h,
-                  ),
-
-                  color: AppColors.white,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Profile",
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+          child: Column(
+            children: [
+              // Header
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                color: AppColors.white,
+                child: Row(
+                  children: [
+                    Text(
+                      "Profile",
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            "View History",
-                            style: Theme.of(context).textTheme.labelSmall,
-                          ),
-                          IconButton(
-                            icon: Icon(
-                              Icons.history,
-                              color: AppColors.background1,
-                            ),
-                            onPressed: () {},
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                30.verticalSpace,
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: Divider(height: 1.h, thickness: 1, color: Colors.grey),
-                ),
-                31.verticalSpace,
-
-                // Avatar
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Center(
-                    child: GestureDetector(
-                      onTap: _pickImage,
-                      child: Obx(() {
-                        final user = controller.user.value;
-                        return CircleAvatar(
-                          radius: 100.r,
-                          backgroundImage:
-                              controller.imageFile.value != null
-                                  ? FileImage(controller.imageFile.value!)
-                                  : (user?.profilePicturePath != null &&
-                                      user!.profilePicturePath!.isNotEmpty)
-                                  ? NetworkImage(
-                                    '${ApiService().baseUrl}/${user!.profilePicturePath!}?v=${DateTime.now().millisecondsSinceEpoch}',
-                                  )
-                                  : const AssetImage(
-                                        "assets/backgrounds/default.png",
-                                      )
-                                      as ImageProvider,
-                        );
-                      }),
                     ),
-                  ),
+                    Spacer(),
+                    Text(
+                      "View History",
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.history,
+                        color: AppColors.background1,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ],
                 ),
-
-                // Form Fields
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 35.w),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: Divider(height: 1, color: Colors.grey),
+              ),
+              30.verticalSpace,
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(horizontal: 28.w),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // Avatar
+                      GestureDetector(
+                        onTap: _pickImage,
+                        child: Obx(() {
+                          final user = controller.user.value;
+                          return CircleAvatar(
+                            radius: 100.r,
+                            backgroundImage:
+                                controller.imageFile.value != null
+                                    ? FileImage(controller.imageFile.value!)
+                                    : (user?.profilePicturePath != null &&
+                                        user!.profilePicturePath!.isNotEmpty)
+                                    ? NetworkImage(
+                                      '${ApiService().baseUrl}/${user.profilePicturePath!}?v=${DateTime.now().millisecondsSinceEpoch}',
+                                    )
+                                    : const AssetImage(
+                                          "assets/backgrounds/default.png",
+                                        )
+                                        as ImageProvider,
+                          );
+                        }),
+                      ),
+                      30.verticalSpace,
+
                       // First & Last Name
                       Row(
                         children: [
@@ -146,7 +126,7 @@ class UpdateProfileView extends StatelessWidget {
                               textEditingController: controller.last_name,
                               labelTextAboveTextField: Text(
                                 "Last Name",
-                                style: Theme.of(context).textTheme.bodyMedium!,
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               validatorType: ValidatorType.Name,
                               obsecure: false,
@@ -158,7 +138,7 @@ class UpdateProfileView extends StatelessWidget {
                       ),
                       20.verticalSpace,
 
-                      // Email (read-only)
+                      // Email (Read-Only)
                       Obx(() {
                         final user = controller.user.value;
                         return InputTextFormField(
@@ -172,7 +152,6 @@ class UpdateProfileView extends StatelessWidget {
                           fillColor: AppColors.white,
                           decoration: InputDecoration(
                             labelText: "E-mail",
-                            labelStyle: TextStyle(),
                             enabled: false,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.r),
@@ -193,7 +172,7 @@ class UpdateProfileView extends StatelessWidget {
                         textEditingController: controller.phone_number,
                         labelTextAboveTextField: Text(
                           "Phone Number",
-                          style: Theme.of(context).textTheme.bodyMedium!,
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         validatorType: ValidatorType.PhoneNumber,
                         obsecure: false,
@@ -206,16 +185,16 @@ class UpdateProfileView extends StatelessWidget {
                         textEditingController: controller.address,
                         labelTextAboveTextField: Text(
                           "Address",
-                          style: Theme.of(context).textTheme.bodyMedium!,
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         validatorType: ValidatorType.Default,
                         fillColor: AppColors.white,
                         obsecure: false,
                         borderColor: AppColors.border,
                       ),
-                      55.verticalSpace,
+                      50.verticalSpace,
 
-                      // Save Button
+                      // Save Button or Loading
                       Align(
                         alignment: Alignment.centerRight,
                         child: Obx(() {
@@ -233,15 +212,6 @@ class UpdateProfileView extends StatelessWidget {
                               )
                               : TextButton(
                                 onPressed: controller.updateProfile,
-                                style: ElevatedButton.styleFrom(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 20.w,
-                                    vertical: 12.h,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.r),
-                                  ),
-                                ),
                                 child: Text(
                                   "Save Changes",
                                   style: Theme.of(context).textTheme.labelSmall,
@@ -253,12 +223,17 @@ class UpdateProfileView extends StatelessWidget {
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
       bottomNavigationBar: CustomBottomNavBar(),
     );
   }
+
+  Widget _buildDivider() => Padding(
+    padding: EdgeInsets.symmetric(horizontal: 5.w),
+    child: Divider(thickness: 1, color: Colors.grey[300], height: 5.h),
+  );
 }
