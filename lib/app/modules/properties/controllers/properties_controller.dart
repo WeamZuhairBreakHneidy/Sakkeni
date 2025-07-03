@@ -80,6 +80,54 @@ abstract class BasePropertiesController extends GetxController {
     }
   }
 
+  var isFiltered = false.obs;
+
+  Future<void> fetchFilteredProperties({
+    required int page,
+    required Map<String, dynamic> filterBody,
+  }) async {
+    if (isLoading.value || !hasMoreData.value) return;
+
+    isLoading.value = true;
+
+    try {
+      final token = await tokenService.token;
+
+      if (token == null || token.isEmpty) {
+        Get.snackbar('Unauthorized', 'User token not found.');
+        return;
+      }
+
+      final response = await ApiService().postApi(
+        url: '$endpoint?page=$page',
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: filterBody,
+      );
+
+      if (response.statusCode == 200) {
+        final model = PropertiesModel.fromJson(response.body);
+        propertiesModel.value = model;
+        final fetchedData = model.data?.data ?? [];
+
+        properties.value = fetchedData;
+
+        hasMoreData.value = model.data?.nextPageUrl != null;
+        currentPage.value = page;
+        isFiltered.value = true;  // set the flag
+      } else {
+        Get.snackbar('Error', 'Failed to load filtered properties');
+      }
+    } catch (e) {
+      Get.snackbar('Exception', e.toString());
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   void loadNextPage() {
     if (!isLoading.value && hasMoreData.value) {
       fetchProperties(page: currentPage.value + 1, isLoadMore: true);
