@@ -50,6 +50,9 @@ dependencies:
   smooth_page_indicator:
   loading_indicator:
   image_picker:
+  pull_to_refresh:
+  lottie:
+  liquid_pull_to_refresh:
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -86,6 +89,7 @@ flutter:
     - assets/backgrounds/
     - storage/property/
     - storage/profile/
+    - assets/animation/
 
 
 
