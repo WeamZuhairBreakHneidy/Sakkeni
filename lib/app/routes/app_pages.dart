@@ -6,7 +6,6 @@ import 'package:test1/app/modules/auth/views/update_profile_view.dart';
 import 'package:test1/app/modules/history/bindings/history_binding.dart';
 import 'package:test1/app/modules/properties/bindings/properties_binding.dart';
 
-
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/bindings/register_binding.dart';
 import '../modules/auth/bindings/update_profile_binding.dart';
@@ -68,6 +67,7 @@ class AppPages {
       page: () => PropertiesUnifiedView(),
       binding: PropertiesBinding(),
     ),
+
     GetPage(
       name: Routes.UPDATEPROFILE,
       page: () => UpdateProfileView(),
@@ -77,11 +77,11 @@ class AppPages {
       name: Routes.RESETPASSWORD,
       page: () => ResetPasswordView(),
       binding: ResetPasswordBinding(),
-    ), GetPage(
+    ),
+    GetPage(
       name: Routes.VIEWHISTORY,
       page: () => HistoryView(),
       binding: HistoryBinding(),
     ),
-
   ];
 }

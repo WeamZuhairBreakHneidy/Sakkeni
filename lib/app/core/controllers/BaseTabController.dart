@@ -3,21 +3,7 @@ import 'package:get/get.dart';
 class BaseTabController extends GetxController {
   RxInt selectedTab = 0.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    updateTabFromRoute();
-  }
-
-  @override
-  void onClose() {
-    selectedTab.value = 0;
-    super.onClose();
-  }
-
-  void updateTabFromRoute() {
-    final type = Get.parameters['type'];
-
+  void updateTabFromType(String? type) {
     switch (type) {
       case 'rent':
         selectedTab.value = 0;

@@ -34,8 +34,8 @@ abstract class BasePropertiesController extends GetxController {
     super.onInit();
   }
 
-  Future<void> fetchProperties({int page = 1, bool isLoadMore = false}) async {
-    if (isLoading.value || !hasMoreData.value) return;
+  Future<void> fetchProperties({int page = 1, bool isLoadMore = false, bool force = false}) async {
+    if (!force && (isLoading.value || (!hasMoreData.value && isLoadMore))) return;
 
     isLoading.value = true;
 

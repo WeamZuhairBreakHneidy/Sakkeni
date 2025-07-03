@@ -88,7 +88,6 @@ abstract class HistoryController extends GetxController {
               ),
               SizedBox(height: 25.h),
 
-              /// Upgrade Button
               SizedBox(
                 width: 250.w,
                 child: ElevatedButton(
@@ -111,7 +110,6 @@ abstract class HistoryController extends GetxController {
               ),
 
               SizedBox(height: 10.h),
-
               /// Cancel Button
               TextButton(
                 onPressed: () {
@@ -148,6 +146,7 @@ abstract class HistoryController extends GetxController {
   void loadNextPage() {
     if (!isLoading.value && hasMoreData.value) {
       fetchProperties(page: currentPage.value + 1, isLoadMore: true);
+
     }
   }
 

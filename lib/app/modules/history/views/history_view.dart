@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:test1/app/modules/history/controllers/history_tab_controller.dart';
 import '../../../core/theme/colors.dart';
+import '../../../data/services/api_service.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../../../widgets/properties_tab.dart';
@@ -76,20 +77,17 @@ class HistoryView extends StatelessWidget {
                 10.verticalSpace,
                 Divider(height: 1.h, color: Colors.grey),
                 20.verticalSpace,
-                buildHeaderTabs(
-                  tabController: tabController,
+                TabSelector(
+                  controller: tabController,
+                  tabs: ['For Rent', 'For Sale', 'Off plan'],
                   onTabSelected: (index) {
-                    switch (index) {
-                      case 0:
-                        Get.offNamed('${Routes.VIEWHISTORY}?type=rent');
-                        break;
-                      case 1:
-                        Get.offNamed('${Routes.VIEWHISTORY}?type=purchase');
-                        break;
-                      case 2:
-                        Get.offNamed('${Routes.VIEWHISTORY}?type=offplan');
-                        break;
-                    }
+                    final route = switch (index) {
+                      0 => '${Routes.VIEWHISTORY}?type=rent',
+                      1 => '${Routes.VIEWHISTORY}?type=purchase',
+                      2 => '${Routes.VIEWHISTORY}?type=offplan',
+                      _ => '${Routes.VIEWHISTORY}?type=rent',
+                    };
+                    Get.offNamed(route);
                   },
                 ),
               ],
@@ -132,12 +130,38 @@ class HistoryView extends StatelessWidget {
                   itemCount: props.length + 1,
                   itemBuilder: (context, index) {
                     if (index < props.length) {
-                      return Padding(
-                        padding: EdgeInsets.only(bottom: 20.h),
-                        child: SizedBox(
-                          height: 180.h,
-                          child: PropertyCard(property: props[index]),
-                        ),
+                      final property = props[index]; // Datum object
+
+                      final imageUrl =
+                          "${ApiService().baseUrl}/${property.coverImage?.imagePath ?? ''}";
+                      final price =
+                          property.rent?.price?.toStringAsFixed(0) ??
+                          property.purchase?.price?.toStringAsFixed(0) ??
+                          property.offplan?.overallPayment?.toStringAsFixed(
+                            0,
+                          ) ??
+                          '0';
+
+                      final location =
+                          "${property.location?.country?.name ?? ''}, ${property.location?.city?.name ?? ''}";
+                      final lease =
+                          property.rent?.leasePeriod?.toString() ?? '';
+                      final propertyType = property.propertyType?.name ?? '';
+                      final subType =
+                          property.residential?.residentialPropertyType?.name ??
+                          property.commercial?.commercialPropertyType?.name ??
+                          '';
+
+                      return PropertyCard(
+                        imageUrl: imageUrl,
+                        price: "\$$price",
+                        leasePeriod: lease,
+                        location: location,
+                        propertyType: propertyType,
+                        subType: subType,
+                        onTap: () {
+                          // فتح تفاصيل العقار
+                        },
                       );
                     } else {
                       return Obx(

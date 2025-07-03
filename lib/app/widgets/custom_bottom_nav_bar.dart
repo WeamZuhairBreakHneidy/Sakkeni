@@ -6,7 +6,7 @@ class BottomNavController extends GetxController {
   RxInt currentIndex = 0.obs;
 
   void changeTabIndex(int index) {
-    if (index == 2) return; // لا تفعل شيء عند الضغط على الشعار
+    if (index == 2) return;
 
     currentIndex.value = index;
 
