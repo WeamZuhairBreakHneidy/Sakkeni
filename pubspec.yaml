@@ -53,6 +53,7 @@ dependencies:
   pull_to_refresh:
   lottie:
   liquid_pull_to_refresh:
+  intl:
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -89,7 +90,6 @@ flutter:
     - assets/backgrounds/
     - storage/property/
     - storage/profile/
-    - assets/animation/
 
 
 

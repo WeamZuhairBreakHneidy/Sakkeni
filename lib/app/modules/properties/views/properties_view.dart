@@ -219,7 +219,7 @@ class PropertiesUnifiedView extends StatelessWidget {
                               left: 0,
                               right: 0,
                               child: Container(
-                                height: 560.h,
+                                height: 650.h,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.all(
