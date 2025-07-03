@@ -94,56 +94,60 @@ class FilterSheet extends StatelessWidget {
           ),
 
           // STATIC BUTTONS
-          Container(
-            padding: EdgeInsets.all(16.w),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                  onPressed: controller.clearFilters,
-                  child: Text("Clear", style: Theme.of(context).textTheme.titleSmall),
+          Obx(() {
+            final page = controller.currentPage.value;
+            if (page == 0) {
+              return const SizedBox.shrink();
+            } else {
+              return Container(
+                padding: EdgeInsets.all(16.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: controller.clearFilters,
+                      child: Text("Clear", style: Theme.of(context).textTheme.titleSmall),
+                    ),
+                    ResponsiveButton(
+                      buttonWidth: 150.w,
+                      buttonHeight: 40.h,
+                      buttonStyle: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(AppColors.background1),
+                      ),
+                      onPressed: () async {
+                        final filterBody = controller.buildFilterBody();
+                        switch (controller.selectedPropertyType.value) {
+                          case PropertyTypeEnum.rent:
+                            await Get.find<RentController>().fetchFilteredProperties(
+                              filterBody: filterBody,
+                              force: true,
+                            );
+                            break;
+                          case PropertyTypeEnum.purchase:
+                            await Get.find<PurchaseController>().fetchFilteredProperties(
+                              filterBody: filterBody,
+                              force: true,
+                            );
+                            break;
+                          case PropertyTypeEnum.offplan:
+                            await Get.find<OffPlanController>().fetchFilteredProperties(
+                              filterBody: filterBody,
+                              force: true,
+                            );
+                            break;
+                        }
+                        Get.back();
+                      },
+                      clickable: true,
+                      child: Text("Search", style: Theme.of(context).textTheme.bodySmall),
+                    ),
+                  ],
                 ),
-            // In the FilterSheet's build method, replace the current ResponsiveButton with:
-            ResponsiveButton(
-              buttonWidth: 150.w,
-              buttonHeight: 40.h,
-              buttonStyle: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(AppColors.background1),
-              ),
-              onPressed: () async {
-                // Get the filter body from the controller
-                final filterBody = controller.buildFilterBody();
+              );
+            }
+          }),
 
-                // Get the appropriate property controller based on selected type
-                switch (controller.selectedPropertyType.value) {
-                  case PropertyTypeEnum.rent:
-                    await Get.find<RentController>().fetchFilteredProperties(
-                      filterBody: filterBody,
-                      force: true,
-                    );
-                    break;
-                  case PropertyTypeEnum.purchase:
-                    await Get.find<PurchaseController>().fetchFilteredProperties(
-                      filterBody: filterBody,
-                      force: true,
-                    );
-                    break;
-                  case PropertyTypeEnum.offplan:
-                    await Get.find<OffPlanController>().fetchFilteredProperties(
-                      filterBody: filterBody,
-                      force: true,
-                    );
-                    break;
-                }
 
-                Get.back(); // Close the filter sheet
-              },
-              clickable: true,
-              child: Text("Search", style: Theme.of(context).textTheme.bodySmall),
-            ),
-              ],
-            ),
-          ),
         ],
       ),
     );
