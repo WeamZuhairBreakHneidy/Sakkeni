@@ -30,7 +30,6 @@ class PropertiesUnifiedView extends StatelessWidget {
       backgroundColor: AppColors.background1,
       body: Column(
         children: [
-          // Header with Logo and Search
           buildHeaderSection(context),
 
           // Main Content
@@ -95,78 +94,72 @@ class PropertiesUnifiedView extends StatelessWidget {
                       }
 
                       if (props.isEmpty && !isLoading) {
-                        return const Center(
+                        return  Center(
                           child: Text("No properties found."),
                         );
                       }
 
-                      return GridView.builder(
-                        controller: scrollController,
-                        itemCount: props.length + 1,
-                        padding:  EdgeInsets.only(bottom: 16.h),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              mainAxisSpacing: 20,
-                              crossAxisSpacing: 20,
-                              childAspectRatio: 0.65,
-                            ),
-                        itemBuilder: (context, index) {
-                          if (index < props.length) {
-                            final property = props[index]; // Datum object
-
-                            final imageUrl =
-                                "${ApiService().baseUrl}/${property.coverImage?.imagePath ?? ''}";
-                            final price =
-                                property.rent?.price?.toStringAsFixed(0) ??
-                                property.purchase?.price?.toStringAsFixed(0) ??
-                                property.offplan?.overallPayment
-                                    ?.toStringAsFixed(0) ??
-                                '0';
-
-                            final location =
-                                "${property.location?.country?.name ?? ''}, ${property.location?.city?.name ?? ''}";
-                            final lease =
-                                property.rent?.leasePeriod?.toString() ?? '';
-                            final propertyType =
-                                property.propertyType?.name ?? '';
-                            final subType =
-                                property
-                                    .residential
-                                    ?.residentialPropertyType
-                                    ?.name ??
-                                property
-                                    .commercial
-                                    ?.commercialPropertyType
-                                    ?.name ??
-                                '';
-
-                            return PropertyCard(
-                              imageUrl: imageUrl,
-                              price: "\$$price",
-                              leasePeriod: lease,
-                              location: location,
-                              propertyType: propertyType,
-                              subType: subType,
-                              onTap: () {
-                                // فتح تفاصيل العقار
-                              },
-                            );
-                          } else {
-                            return Obx(
-                              () =>
-                                  controller.isLoading.value
-                                      ? const Padding(
-                                        padding: EdgeInsets.all(16.0),
-                                        child: Center(
-                                          child: CircularProgressIndicator(),
-                                        ),
-                                      )
-                                      : const SizedBox(),
-                            );
-                          }
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          await controller.fetchProperties(force: true); //  إعادة تحميل من الصفر
                         },
+                        child: GridView.builder(
+                          controller: scrollController,
+                          physics:  AlwaysScrollableScrollPhysics(),
+                          itemCount: props.length + 1,
+                          padding: EdgeInsets.only(bottom: 16.h),
+                          gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            mainAxisSpacing: 20,
+                            crossAxisSpacing: 20,
+                            childAspectRatio: 0.65,
+                          ),
+                          itemBuilder: (context, index) {
+                            if (index < props.length) {
+                              final property = props[index];
+
+                              final imageUrl = "${ApiService().baseUrl}/${property.coverImage?.imagePath ?? ''}";
+                              final price = property.rent?.price?.toStringAsFixed(0)
+                                  ?? property.purchase?.price?.toStringAsFixed(0)
+                                  ?? property.offplan?.overallPayment?.toStringAsFixed(0)
+                                  ?? '0';
+
+                              final location = "${property.location?.country?.name ?? ''}, ${property.location?.city?.name ?? ''}";
+                              final lease = property.rent?.leasePeriod?.toString() ?? '';
+                              final propertyType = property.propertyType?.name ?? '';
+                              final subType = property.residential?.residentialPropertyType?.name
+                                  ?? property.commercial?.commercialPropertyType?.name ?? '';
+
+                              return PropertyCard(
+                                imageUrl: imageUrl,
+                                price: "\$$price",
+                                leasePeriod: lease,
+                                location: location,
+                                propertyType: propertyType,
+                                subType: subType,
+                                onTap: () {},
+                              );
+                            } else {
+                              return Obx(() => controller.isLoading.value
+                                  ? const Padding(
+                                padding: EdgeInsets.all(16.0),
+                                child: Center(
+                                  child: SizedBox(
+                                    height: 75,
+                                    width: 75,
+                                    child: LoadingIndicator(
+                                      indicatorType: Indicator.ballZigZagDeflect,
+                                      colors: [AppColors.primary],
+                                    ),
+                                  ),
+                                ),
+                              )
+                                  : const SizedBox());
+                            }
+                          },
+                        ),
                       );
+
                     }),
                   ),
                 ],

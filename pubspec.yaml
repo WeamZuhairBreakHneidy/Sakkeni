@@ -50,6 +50,9 @@ dependencies:
   smooth_page_indicator:
   loading_indicator:
   image_picker:
+  pull_to_refresh:
+  lottie:
+  liquid_pull_to_refresh:
   intl:
 dev_dependencies:
   flutter_test:
