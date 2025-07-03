@@ -1,10 +1,11 @@
 import 'package:get/get.dart';
+import '../../../data/enums/property_type_enum.dart';
 import '../../../data/models/properties-model.dart';
 import '../../../data/services/api_endpoints.dart';
 import '../../../data/services/api_service.dart';
 import '../../../data/services/token_service.dart';
 
-enum PropertyTypeEnum { rent, purchase, offplan }
+
 
 abstract class BasePropertiesController extends GetxController {
   abstract final PropertyTypeEnum type;
@@ -70,6 +71,8 @@ abstract class BasePropertiesController extends GetxController {
 
         hasMoreData.value = model.data?.nextPageUrl != null;
         currentPage.value = page;
+
+        isFiltered.value = false;
       } else {
         Get.snackbar('Error', 'Failed to load properties. Status: ${response.statusCode}');
       }
@@ -83,10 +86,12 @@ abstract class BasePropertiesController extends GetxController {
   var isFiltered = false.obs;
 
   Future<void> fetchFilteredProperties({
-    required int page,
+    int page = 1,
     required Map<String, dynamic> filterBody,
+    bool isLoadMore = false,
+    bool force = false,
   }) async {
-    if (isLoading.value || !hasMoreData.value) return;
+    if (!force && (isLoading.value || (!hasMoreData.value && isLoadMore))) return;
 
     isLoading.value = true;
 
@@ -113,18 +118,32 @@ abstract class BasePropertiesController extends GetxController {
         propertiesModel.value = model;
         final fetchedData = model.data?.data ?? [];
 
-        properties.value = fetchedData;
+        if (isLoadMore) {
+          properties.addAll(fetchedData);  // append to list on load more
+        } else {
+          properties.value = fetchedData;  // replace list on fresh fetch
+        }
 
         hasMoreData.value = model.data?.nextPageUrl != null;
         currentPage.value = page;
-        isFiltered.value = true;  // set the flag
+        isFiltered.value = true;  // mark as filtered
       } else {
-        Get.snackbar('Error', 'Failed to load filtered properties');
+        Get.snackbar('Error', 'Failed to load filtered properties. Status: ${response.statusCode}');
       }
     } catch (e) {
       Get.snackbar('Exception', e.toString());
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  void loadNextFilteredPage(Map<String, dynamic> filterBody) {
+    if (!isLoading.value && hasMoreData.value) {
+      fetchFilteredProperties(
+        page: currentPage.value + 1,
+        filterBody: filterBody,
+        isLoadMore: true,
+      );
     }
   }
 

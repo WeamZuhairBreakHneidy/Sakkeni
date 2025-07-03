@@ -4,7 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 import '../core/theme/colors.dart';
+import '../data/enums/property_type_enum.dart';
 import '../modules/home/controllers/filter_controller.dart';
+import '../modules/properties/controllers/properties_offplan_controller.dart';
+import '../modules/properties/controllers/properties_purchase_controller.dart';
+import '../modules/properties/controllers/properties_rent_controller.dart';
 import '../widgets/responsive_buttun.dart';
 
 class FilterSheet extends StatelessWidget {
@@ -13,7 +17,10 @@ class FilterSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(FilterController());
-
+// In your home screen or property listing screen:
+    Get.lazyPut(() => RentController());
+    Get.lazyPut(() => PurchaseController());
+    Get.lazyPut(() => OffPlanController());
     /// Build the list of pages dynamically based on property type,
     /// putting rent extras and offplan extras at the end.
     List<Widget> buildPages() {
@@ -42,77 +49,102 @@ class FilterSheet extends StatelessWidget {
     return Material(
       color: Colors.white,
       borderRadius: BorderRadius.circular(30.r),
-      child: SizedBox(
-        height: 620.h,
-        child: Column(
-          children: [
-            // HEADER
-            Padding(
-              padding: EdgeInsets.all(16.w),
-              child: Row(
-                children: [
-                  Text("Filter", style: Theme.of(context).textTheme.titleMedium),
-                  const Spacer(),
-                  Obx(() {
-                    final totalPages = pageCount();
-                    final currentPage = controller.currentPage.value;
-                    return Row(
-                      children: [
-                        Icon(Icons.arrow_left, size: 14.r),
-                        Text(
-                          (currentPage > 0 && currentPage <= totalPages)
-                              ? "$currentPage/$totalPages"
-                              : "",
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                        Icon(Icons.arrow_right, size: 14.r),
-                      ],
+      child: Column(
+        children: [
+          // HEADER
+          Padding(
+            padding: EdgeInsets.all(16.w),
+            child: Row(
+              children: [
+                Text("Filter", style: Theme.of(context).textTheme.titleMedium),
+                const Spacer(),
+                Obx(() {
+                  final totalPages = pageCount();
+                  final currentPage = controller.currentPage.value;
+                  return Row(
+                    children: [
+                      Icon(Icons.arrow_left, size: 14.r),
+                      Text(
+                        (currentPage > 0 && currentPage <= totalPages)
+                            ? "$currentPage/$totalPages"
+                            : "",
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                      Icon(Icons.arrow_right, size: 14.r),
+                    ],
+                  );
+                }),
+              ],
+            ),
+          ),
+
+          // PAGE VIEW
+          Expanded(
+            child: Obx(() {
+              final pages = buildPages();
+              return PageView(
+                controller: controller.pageController,
+                onPageChanged: (index) => controller.currentPage.value = index,
+                physics: controller.currentPage.value == 0
+                    ? const NeverScrollableScrollPhysics()
+                    : null,
+                children: pages,
+              );
+            }),
+          ),
+
+          // STATIC BUTTONS
+          Container(
+            padding: EdgeInsets.all(16.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: controller.clearFilters,
+                  child: Text("Clear", style: Theme.of(context).textTheme.titleSmall),
+                ),
+            // In the FilterSheet's build method, replace the current ResponsiveButton with:
+            ResponsiveButton(
+              buttonWidth: 150.w,
+              buttonHeight: 40.h,
+              buttonStyle: ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(AppColors.background1),
+              ),
+              onPressed: () async {
+                // Get the filter body from the controller
+                final filterBody = controller.buildFilterBody();
+
+                // Get the appropriate property controller based on selected type
+                switch (controller.selectedPropertyType.value) {
+                  case PropertyTypeEnum.rent:
+                    await Get.find<RentController>().fetchFilteredProperties(
+                      filterBody: filterBody,
+                      force: true,
                     );
-                  }),
-                ],
-              ),
-            ),
+                    break;
+                  case PropertyTypeEnum.purchase:
+                    await Get.find<PurchaseController>().fetchFilteredProperties(
+                      filterBody: filterBody,
+                      force: true,
+                    );
+                    break;
+                  case PropertyTypeEnum.offplan:
+                    await Get.find<OffPlanController>().fetchFilteredProperties(
+                      filterBody: filterBody,
+                      force: true,
+                    );
+                    break;
+                }
 
-            // PAGE VIEW
-            Expanded(
-              child: Obx(() {
-                final pages = buildPages();
-                return PageView(
-                  controller: controller.pageController,
-                  onPageChanged: (index) => controller.currentPage.value = index,
-                  physics: controller.currentPage.value == 0
-                      ? const NeverScrollableScrollPhysics()
-                      : null,
-                  children: pages,
-                );
-              }),
+                Get.back(); // Close the filter sheet
+              },
+              clickable: true,
+              child: Text("Search", style: Theme.of(context).textTheme.bodySmall),
             ),
-
-            // STATIC BUTTONS
-            Container(
-              padding: EdgeInsets.all(16.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                    onPressed: controller.clearFilters,
-                    child: Text("Clear", style: Theme.of(context).textTheme.titleSmall),
-                  ),
-                  ResponsiveButton(
-                    buttonWidth: 150.w,
-                    buttonHeight: 40.h,
-                    buttonStyle: ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(AppColors.background1),
-                    ),
-                    onPressed: () => Get.back(),
-                    clickable: true,
-                    child: Text("Search", style: Theme.of(context).textTheme.bodySmall),
-                  ),
-                ],
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -14,11 +14,6 @@ class ApiEndpoints {
   static const String purchasehistory = '/api/view-my-properties/purchase';
   static const String offplanhistory = '/api/view-my-properties/off-plan';
 
-  //Filter
-  static const String rentFilter = "/api/view-properties/rent";
-  static const String purchaseFilter = "/api/view-properties/purchase";
-  static const String offplanFilter = "/api/view-properties/off-plan";
-
 
   //Helper
   static const String viewAmenities = '/api/view-amenities';

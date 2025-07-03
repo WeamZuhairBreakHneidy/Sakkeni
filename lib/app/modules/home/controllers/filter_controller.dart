@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:test1/app/data/services/api_endpoints.dart';
+import '../../../data/enums/property_type_enum.dart';
 import '../../../data/services/api_service.dart';
-
-/// property type enum
-enum PropertyTypeEnum { rent, purchase, offplan }
+  // <-- Import the enum here
 
 class FilterController extends GetxController {
   // Property type
@@ -47,11 +46,9 @@ class FilterController extends GetxController {
   var leasePeriodLength = 12.obs; // default to 12
   var leasePeriodUnit = "Month".obs; // default unit
 
-
   // loading
   final isLoadingCountries = false.obs;
   final isLoadingAmenities = false.obs;
-
 
   final ApiService apiService = ApiService();
 
@@ -60,7 +57,6 @@ class FilterController extends GetxController {
     super.onInit();
     fetchCountriesAndCities();
     fetchAmenities();
-
   }
 
   void nextPage() {
@@ -203,8 +199,8 @@ class FilterController extends GetxController {
       'city_id': getSelectedCityId(),
       'min_area': minArea.value.toInt(),
       'max_area': maxArea.value.toInt(),
-      'bathrooms': bathrooms.value,
-      'balconies': balconies.value,
+      if (bathrooms.value != 0) 'bathrooms': bathrooms.value,
+      if (balconies.value != 0) 'balconies': balconies.value,
       'amenity_ids': selectedAmenities.map((e) => getAmenityIdByName(e)).toList(),
       'min_price': minPrice.value.toInt(),
       'max_price': maxPrice.value.toInt(),
@@ -227,18 +223,5 @@ class FilterController extends GetxController {
     }
 
     return body;
-  }
-
-
-  /// Get filter endpoint
-  String get filterEndpoint {
-    switch (selectedPropertyType.value) {
-      case PropertyTypeEnum.rent:
-        return ApiEndpoints.rentFilter;
-      case PropertyTypeEnum.purchase:
-        return ApiEndpoints.purchaseFilter;
-      case PropertyTypeEnum.offplan:
-        return ApiEndpoints.offplanFilter;
-    }
   }
 }
