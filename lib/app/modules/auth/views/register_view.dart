@@ -13,7 +13,7 @@ import '../../../widgets/responsive_buttun.dart';
 import '../controllers/register_controller.dart';
 
 class RegisterView extends GetView<RegisterController> {
-  RegisterView({super.key});
+  const RegisterView({super.key});
 
   // GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
 
@@ -76,7 +76,6 @@ class RegisterView extends GetView<RegisterController> {
                 Container(
                   margin: EdgeInsets.only(top: 15.h, left: 48.w, right: 48.w),
                   child: InputTextFormField(
-
                     suffixIcon: Icon(Icons.person, color: AppColors.primary),
                     obsecure: false,
                     hintText: 'hint_text_enter_your_first_name'.tr,
@@ -89,7 +88,6 @@ class RegisterView extends GetView<RegisterController> {
                 Container(
                   margin: EdgeInsets.only(top: 20.h, left: 48.w, right: 48.w),
                   child: InputTextFormField(
-
                     suffixIcon: Icon(
                       Icons.person_outline,
                       color: AppColors.primary,
@@ -101,29 +99,6 @@ class RegisterView extends GetView<RegisterController> {
                   ),
                 ),
 
-                // //Name
-                // Container(
-                //   margin:   EdgeInsets.only(top:5.h,left: 48.w,right: 48.w),
-                //   child: InputTextFormField(
-                //
-                //
-                //
-                //
-                //     labelTextAboveTextField: Text(
-                //       'labels_user_name'.tr,
-                //       style: Theme.of(context).textTheme.bodyLarge,
-                //     ),
-                //
-                //     suffixIcon: Icon(Icons.person, color: AppColors.primary),
-                //     obsecure: false,
-                //     hintText: 'hint_text_enter_your_user_name'.tr,
-                //
-                //     validatorType: ValidatorType.Name,
-                //     textEditingController: controller.nameController,
-                //   ),
-                // ),
-
-                //Email
                 Container(
                   margin: EdgeInsets.only(top: 20.h, left: 48.w, right: 48.w),
                   child: InputTextFormField(
@@ -133,7 +108,6 @@ class RegisterView extends GetView<RegisterController> {
                       height: 0,
                       color: Theme.of(context).colorScheme.error,
                     ),
-
 
                     suffixIcon: Icon(Icons.mail, color: AppColors.primary),
                     obsecure: false,
@@ -149,7 +123,6 @@ class RegisterView extends GetView<RegisterController> {
                   child: Obx(
                     () => InputTextFormField(
                       textEditingController: controller.passwordController,
-
 
                       obsecure: controller.isPasswordHidden.value,
                       hintText: 'hint_text_enter_your_password'.tr,
@@ -194,30 +167,35 @@ class RegisterView extends GetView<RegisterController> {
                 ),
 
                 //Button
-               Obx(()=> Container(
-                 margin: EdgeInsets.only(top: 82.h, left: 48.w, right: 48.w),
-                 child: ResponsiveButton(
-                   onPressed: () {
-                     if (controller.registerFormKey.currentState!.validate()) {
-                       controller.signup();
-                     }
-                   },
-                   clickable: !controller.isLoading.value,
+                Obx(
+                  () => Container(
+                    margin: EdgeInsets.only(top: 82.h, left: 48.w, right: 48.w),
+                    child: ResponsiveButton(
+                      onPressed: () {
+                        if (controller.registerFormKey.currentState!
+                            .validate()) {
+                          controller.signup();
+                        }
+                      },
+                      clickable: !controller.isLoading.value,
 
-                   buttonStyle: ButtonStyle(
-                     shape: WidgetStatePropertyAll(
-                       RoundedRectangleBorder(
-                         borderRadius: BorderRadius.all(Radius.circular(10.r)),
-                       ),
-                     ),
-                   ),
-                   buttonWidth: Get.width,
-                   child: Text(
-                     'buttons_sign_up'.tr,
-                     style: Theme.of(context).textTheme.titleSmall,
-                   ),
-                 ),
-               ),)
+                      buttonStyle: ButtonStyle(
+                        shape: WidgetStatePropertyAll(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10.r),
+                            ),
+                          ),
+                        ),
+                      ),
+                      buttonWidth: Get.width,
+                      child: Text(
+                        'buttons_sign_up'.tr,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

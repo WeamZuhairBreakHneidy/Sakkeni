@@ -6,7 +6,6 @@ class ThemeController extends GetxController {
   final _box = GetStorage();
   final _key = 'isDarkMode';
 
-  // Get the current theme based on the stored value (defaults to light)
   ThemeMode get theme => _loadTheme() ? ThemeMode.dark : ThemeMode.light;
 
   // Load theme from storage

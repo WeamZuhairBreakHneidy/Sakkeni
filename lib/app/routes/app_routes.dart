@@ -1,5 +1,4 @@
 part of 'app_pages.dart';
-// DO NOT EDIT. This is code generated via package:get_cli/get_cli.dart
 
 abstract class Routes {
   Routes._();
@@ -18,9 +17,8 @@ abstract class Routes {
   static const UPDATEPROFILE = _Paths.UPDATEPROFILE;
   static const RESETPASSWORD = _Paths.RESETPASSWORD;
   static const VIEWHISTORY = _Paths.VIEWHISTORY;
-  // static const VIEWRENTHISTORY = _Paths.VIEWRENTHISTORY;
-  // static const VIEWPURCHASEHISTORY = _Paths.VIEWPURCHASEHISTORY;
-  // static const VIEWOFFPLANHISTORY = _Paths.VIEWOFFPLANHISTORY;
+  static const ADDPROPERTY = _Paths.ADDPROPERTY;
+  static const ADDMAINPROPERTY = _Paths.ADDMAINPROPERTY;
 }
 
 abstract class _Paths {
@@ -40,8 +38,6 @@ abstract class _Paths {
   static const UPDATEPROFILE = '/updateprofile';
   static const RESETPASSWORD = '/resetpassword';
   static const VIEWHISTORY = '/history';
-  // static const VIEWRENTHISTORY = '/rent/history';
-  // static const VIEWPURCHASEHISTORY = 'PURCHASE/history';
-  // static const VIEWOFFPLANHISTORY = 'OFFPLAN/history';
-
+  static const ADDPROPERTY = '/addproperty';
+  static const ADDMAINPROPERTY = '/addproperty';
 }

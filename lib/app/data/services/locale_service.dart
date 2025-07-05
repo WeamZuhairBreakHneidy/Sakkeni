@@ -6,7 +6,6 @@ class LocaleService extends GetxService {
   final _box = GetStorage();
   final _key = 'locale';
 
-  // Default locale
   final defaultLocale = Get.deviceLocale ?? Locale('en', 'US');
 
   Locale getLocale() {
@@ -22,7 +21,6 @@ class LocaleService extends GetxService {
     Get.updateLocale(locale);
   }
 
-  // Toggle example: EN <=> AR
   void toggleLocale() {
     final current = Get.locale?.languageCode ?? defaultLocale.languageCode;
     final newLocale = (current == 'en') ? Locale('ar', 'SY') : Locale('en', 'US');

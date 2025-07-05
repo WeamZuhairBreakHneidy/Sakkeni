@@ -8,7 +8,6 @@ import '../../../data/services/token_service.dart';
 import '../../../routes/app_pages.dart';
 
 class RegisterController extends GetxController {
-  // final nameController = TextEditingController();
   final  firstNameController = TextEditingController();
   final  lastNameController = TextEditingController();
   final emailController = TextEditingController();
@@ -27,7 +26,6 @@ class RegisterController extends GetxController {
   void onClose() {
     firstNameController.dispose();
     lastNameController.dispose();
-    // nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     passwordConfirmationController.dispose();
@@ -35,7 +33,6 @@ class RegisterController extends GetxController {
   }
 
   Future<void> signup() async {
-    // final name = nameController.text.trim();
     final firstName = firstNameController.text.trim();
     final lastName = lastNameController.text.trim();
 
@@ -65,7 +62,6 @@ class RegisterController extends GetxController {
         if (status == true) {
           final data = body['data'];
 
-          // Add default fields if missing
           data['is_admin'] = 0;
           data['is_super_admin'] = 0;
           data['email_verified_at'] = null;
@@ -76,10 +72,8 @@ class RegisterController extends GetxController {
           // Convert JSON to model
           final user = UserModel.fromJson(data);
 
-          // Save token securely
           await tokenService.saveToken(user.token);
 
-          // Save user data to GetStorage
           box.write('user', user.toJson());
 
           Get.offAllNamed(Routes.AUTH);

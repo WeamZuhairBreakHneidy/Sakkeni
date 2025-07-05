@@ -40,10 +40,8 @@ class AuthController extends GetxController {
         if (status == true) {
           final userData = body['data'];
 
-          // Convert JSON to model
           final user = UserModel.fromJson(userData);
 
-          // Save token securely
           await tokenService.saveToken(user.token);
           print(user.token);
 
@@ -53,7 +51,6 @@ class AuthController extends GetxController {
             box.write('rememberMe', false);
           }
 
-          // Save user data to GetStorage
           box.write('user', user.toJson());
 
           Get.offAllNamed(Routes.HOME);

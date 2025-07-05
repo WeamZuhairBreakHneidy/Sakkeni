@@ -27,12 +27,10 @@ class OnboardingPage3 extends StatelessWidget {
                 ),
               ),
 
-              // طبقة شفافة
               Positioned.fill(
                 child: Container(color: AppColors.gray3),
               ),
 
-              // المحتوى الرئيسي
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24.w),
                 child: Column(
@@ -82,7 +80,7 @@ class OnboardingPage3 extends StatelessWidget {
                       ),
                     ),
 
-                    SizedBox(height: 275.h), // مساحة قبل الأزرار
+                    SizedBox(height: 275.h),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

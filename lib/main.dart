@@ -20,14 +20,13 @@ void main() async {
   await GetStorage.init();
 
 
-  // Set the system UI overlay style globally before running the app
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     systemNavigationBarContrastEnforced: true,
     systemStatusBarContrastEnforced: true,
-    statusBarColor: AppColors.primary, // Set your desired color here
-    statusBarIconBrightness: Brightness.light, // Icon brightness (light or dark)
-    systemNavigationBarColor: AppColors.primary, // Navigation bar color
-    systemNavigationBarIconBrightness: Brightness.light, // Navigation bar icon brightness
+    statusBarColor: AppColors.primary,
+    statusBarIconBrightness: Brightness.light,
+    systemNavigationBarColor: AppColors.primary,
+    systemNavigationBarIconBrightness: Brightness.light,
     statusBarBrightness: Brightness.light,
     systemNavigationBarDividerColor: AppColors.primary,
   ));
@@ -51,7 +50,7 @@ void main() async {
           translationsKeys: AppTranslation.translations,
           locale: localeService.getLocale(),
           fallbackLocale: const Locale('en', 'US'),
-          // Wrap MaterialApp with AnnotatedRegion to apply the system UI style globally
+
           builder: (context, child) {
             return AnnotatedRegion<SystemUiOverlayStyle>(
               value: SystemUiOverlayStyle(

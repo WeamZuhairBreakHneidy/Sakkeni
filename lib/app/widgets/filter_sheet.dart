@@ -16,13 +16,11 @@ class FilterSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final controller = Get.put(FilterController());
-// In your home screen or property listing screen:
     Get.lazyPut(() => RentController());
     Get.lazyPut(() => PurchaseController());
     Get.lazyPut(() => OffPlanController());
-    /// Build the list of pages dynamically based on property type,
-    /// putting rent extras and offplan extras at the end.
     List<Widget> buildPages() {
       final pages = <Widget>[
         _buildPropertyTypePage(controller, context), // Always first
@@ -30,12 +28,10 @@ class FilterSheet extends StatelessWidget {
         _buildAmenitiesPage(controller, context),
       ];
 
-      // Append rent extras at the end only if selected
       if (controller.selectedPropertyType.value == PropertyTypeEnum.rent) {
         pages.add(_buildRentExtrasPage(controller, context));
       }
 
-      // Append offplan extras at the end only if selected
       if (controller.selectedPropertyType.value == PropertyTypeEnum.offplan) {
         pages.add(_buildOffPlanExtrasPage(controller, context));
       }
@@ -43,7 +39,6 @@ class FilterSheet extends StatelessWidget {
       return pages;
     }
 
-    /// Count pages excluding the property type page (index 0)
     int pageCount() => buildPages().length - 1;
 
     return Material(
@@ -78,7 +73,6 @@ class FilterSheet extends StatelessWidget {
             ),
           ),
 
-          // PAGE VIEW
           Expanded(
             child: Obx(() {
               final pages = buildPages();
@@ -93,7 +87,6 @@ class FilterSheet extends StatelessWidget {
             }),
           ),
 
-          // STATIC BUTTONS
           Obx(() {
             final page = controller.currentPage.value;
             if (page == 0) {
@@ -116,6 +109,7 @@ class FilterSheet extends StatelessWidget {
                       ),
                       onPressed: () async {
                         final filterBody = controller.buildFilterBody();
+
                         switch (controller.selectedPropertyType.value) {
                           case PropertyTypeEnum.rent:
                             await Get.find<RentController>().fetchFilteredProperties(
@@ -136,8 +130,10 @@ class FilterSheet extends StatelessWidget {
                             );
                             break;
                         }
-                        Get.back();
+
+                        controller.applyFiltersAndNavigate();
                       },
+
                       clickable: true,
                       child: Text("Search", style: Theme.of(context).textTheme.bodySmall),
                     ),
@@ -153,7 +149,6 @@ class FilterSheet extends StatelessWidget {
     );
   }
 
-  /// Page 0: choose property type
   Widget _buildPropertyTypePage(FilterController controller, BuildContext ctx) {
     return Center(
       child: Column(
@@ -192,7 +187,6 @@ class FilterSheet extends StatelessWidget {
     );
   }
 
-  // --- The filter pages below remain unchanged ---
 
   Widget _buildCommonFiltersPage(FilterController controller, BuildContext context) {
     return SingleChildScrollView(

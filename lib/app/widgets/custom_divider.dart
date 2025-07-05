@@ -42,7 +42,7 @@ class CustomDivider extends StatelessWidget {
             color: dividerColor ?? Get.theme.dividerColor,
             height: height.h,
             indent: indent,
-            endIndent: 10.w, // Adds spacing between the line and text
+            endIndent: 10.w,
           ),
         ),
         Container(
@@ -63,7 +63,7 @@ class CustomDivider extends StatelessWidget {
             thickness: thickness.h,
             color: dividerColor ?? Get.theme.dividerColor,
             height: height.h,
-            indent: 10.w, // Adds spacing between the text and line
+            indent: 10.w,
             endIndent: endIndent,
           ),
         ),

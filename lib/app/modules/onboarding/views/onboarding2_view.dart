@@ -14,10 +14,11 @@ class OnboardingPage2 extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: ConstrainedBox(
-          constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height),
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height,
+          ),
           child: Stack(
             children: [
-              // الخلفية
               Positioned.fill(
                 child: Image.asset(
                   'assets/backgrounds/onboarding2.png',
@@ -25,10 +26,8 @@ class OnboardingPage2 extends StatelessWidget {
                 ),
               ),
 
-              // تغطية شفافة
               Positioned.fill(child: Container(color: AppColors.gray2)),
 
-              // المحتوى
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24.w),
                 child: Column(
@@ -75,7 +74,6 @@ class OnboardingPage2 extends StatelessWidget {
 
                     SizedBox(height: 205.h),
 
-                    // أزرار التنقل + المؤشر
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -110,8 +108,9 @@ class OnboardingPage2 extends StatelessWidget {
                             dotHeight: 10.h,
                             dotWidth: 10.w,
                             activeDotColor: AppColors.background1,
-                            dotColor:
-                            AppColors.SmoothPageIndicator.withOpacity(0.4),
+                            dotColor: AppColors.SmoothPageIndicator.withOpacity(
+                              0.4,
+                            ),
                           ),
                         ),
 

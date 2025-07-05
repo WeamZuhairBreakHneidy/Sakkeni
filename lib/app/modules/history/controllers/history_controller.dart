@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,7 +34,7 @@ abstract class HistoryController extends GetxController {
 
   @override
   void onInit() {
-    fetchProperties(); // Load first page
+    fetchProperties();
     super.onInit();
   }
 
@@ -93,7 +92,7 @@ abstract class HistoryController extends GetxController {
                 child: ElevatedButton(
                   onPressed: () {
                     Get.back();
-                    Get.toNamed('/upgrade-to-seller'); // غيّر المسار إذا لزم
+                    Get.toNamed('/upgrade-to-seller');
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
@@ -110,11 +109,11 @@ abstract class HistoryController extends GetxController {
               ),
 
               SizedBox(height: 10.h),
-              /// Cancel Button
+
               TextButton(
                 onPressed: () {
                   Get.back();
-                  Get.offAllNamed('/profile'); // غيّر المسار حسب صفحة البروفايل عندك
+                  Get.offAllNamed('/profile');
                 },
                 child: Text(
                   "Cancel",

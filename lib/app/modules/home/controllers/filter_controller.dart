@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:test1/app/data/services/api_endpoints.dart';
 import '../../../data/enums/property_type_enum.dart';
 import '../../../data/services/api_service.dart';
+import '../../../routes/app_pages.dart';
   // <-- Import the enum here
 
 class FilterController extends GetxController {
@@ -64,6 +65,20 @@ class FilterController extends GetxController {
       currentPage.value++;
       pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease);
     }
+  }
+  void applyFiltersAndNavigate() {
+    final selectedType = selectedPropertyType.value;
+
+    final route = switch (selectedType) {
+      PropertyTypeEnum.rent => '${Routes.PropertiesUnifiedView}?type=rent',
+      PropertyTypeEnum.purchase => '${Routes.PropertiesUnifiedView}?type=purchase',
+      PropertyTypeEnum.offplan => '${Routes.PropertiesUnifiedView}?type=offplan',
+    };
+
+    Get.back();
+    Future.delayed(Duration(milliseconds: 300), () {
+      Get.offNamed(route);
+    });
   }
 
   void prevPage() {
@@ -170,7 +185,6 @@ class FilterController extends GetxController {
     }
   }
 
-  /// Helper for ID
   int getSelectedCountryId() {
     final found = countriesData.firstWhereOrNull((c) => c['name'] == selectedCountry.value);
     return found?['id'] ?? 0;
@@ -187,12 +201,10 @@ class FilterController extends GetxController {
   }
 
   int getAmenityIdByName(String name) {
-    // if your backend returns amenity ids, you could store them in a Map
-    // for now, assume name == id 1:1 mapping for demonstration
+
     return amenities.indexOf(name) + 1;
   }
 
-  /// Generate filter request body
   Map<String, dynamic> buildFilterBody() {
     final Map<String, dynamic> body = {
       'country_id': getSelectedCountryId(),

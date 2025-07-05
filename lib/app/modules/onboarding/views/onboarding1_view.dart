@@ -14,11 +14,8 @@ class OnboardingPage1 extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // الخلفية
           Positioned.fill(child: Container(color: AppColors.white)),
           Positioned.fill(child: Container(color: AppColors.gray1)),
-
-          // المحتوى
           SafeArea(
             child: SingleChildScrollView(
               child: Column(
@@ -43,20 +40,16 @@ class OnboardingPage1 extends StatelessWidget {
                   Text(
                     "Buy sell or rent, your next move\nstarts here!",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: AppColors.surface,
-                      fontSize: 16.sp,
-                    ),
+                    style: TextStyle(color: AppColors.surface, fontSize: 16.sp),
                   ),
-                  // SizedBox(height: 20.h),
 
-                  // Stack للصورة والمؤشر
                   Stack(
                     children: [
                       Image.asset(
                         'assets/backgrounds/onboarding1.png',
-                        width: double.infinity,
-                        fit: BoxFit.fitHeight,
+                        width: 1.sw,
+                        fit: BoxFit.cover,
+                        height: 440.h,
                       ),
                       Positioned(
                         bottom: 24.h,
@@ -65,8 +58,6 @@ class OnboardingPage1 extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-
-                            // المؤشر
                             SmoothPageIndicator(
                               controller: controller,
                               count: 3,
@@ -74,7 +65,8 @@ class OnboardingPage1 extends StatelessWidget {
                                 dotHeight: 10.h,
                                 dotWidth: 10.w,
                                 activeDotColor: AppColors.background1,
-                                dotColor: AppColors.SmoothPageIndicator.withOpacity(0.4),
+                                dotColor: AppColors
+                                    .SmoothPageIndicator.withOpacity(0.4),
                               ),
                             ),
 
@@ -107,8 +99,6 @@ class OnboardingPage1 extends StatelessWidget {
                       ),
                     ],
                   ),
-
-
                 ],
               ),
             ),
