@@ -32,7 +32,7 @@ class CountriesController extends GetxController {
       }
 
       final response = await ApiService().getApi(
-        url: ApiEndpoints.countries,
+        url: ApiEndpoints.viewCountries,
         headers: {
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json',

@@ -9,6 +9,7 @@ import '../../../data/models/countries_model.dart';
 import '../../../data/services/validator_service.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../../../widgets/input_text_form_field.dart';
+import '../../../widgets/location_picker_preview.dart';
 import '../../../widgets/multiple_select_chip.dart';
 import '../bindings/add_property_binding.dart';
 import '../controllers/add_property_controller.dart';
@@ -219,7 +220,7 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
 
                       SizedBox(height: 25.h),
                       Text(
-                        "Location",
+                        "Adress",
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.bold,
@@ -229,11 +230,13 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
                       InputTextFormField(
                         hintText: 'Type an address',
                         textEditingController: controller.location,
-                        obsecure: true,
+                        obsecure: false,
                         validatorType: ValidatorType.Default,
                         fillColor: AppColors.white,
                         borderColor: AppColors.border,
                       ),
+
+                      MiniMapPicker()
                     ],
                   );
                 }),

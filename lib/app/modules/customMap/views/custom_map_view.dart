@@ -6,7 +6,10 @@ import '../controllers/custom_map_controller.dart';
 import '../widgets/custom_map.dart';
 
 class CustomMapView extends StatelessWidget {
+  final bool returnLocation; // Add this to optionally return LatLng
   final TextEditingController searchController = TextEditingController();
+
+  CustomMapView({this.returnLocation = false});
 
   @override
   Widget build(BuildContext context) {
@@ -14,19 +17,38 @@ class CustomMapView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Google Maps with GetX'),
+        title: Text('Select Location'),
         actions: [
           Obx(() => IconButton(
             icon: mapController.isLoading.value
                 ? SizedBox(
               width: 24,
               height: 24,
-              child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+              child: CircularProgressIndicator(
+                  color: Colors.white, strokeWidth: 2),
             )
                 : Icon(Icons.my_location),
             onPressed: () => mapController.getCurrentLocation(),
             tooltip: 'Take Me To My Location',
           )),
+          if (returnLocation)
+            Obx(() {
+              final hasSearchMarker = mapController.markers.any(
+                      (m) => m.markerId.value == 'searched_location');
+              return hasSearchMarker
+                  ? TextButton(
+                onPressed: () {
+                  final marker = mapController.markers.firstWhere(
+                          (m) => m.markerId.value == 'searched_location');
+                  Get.back(result: marker.position);
+                },
+                child: Text(
+                  "Submit",
+                  style: TextStyle(color: Colors.white),
+                ),
+              )
+                  : SizedBox.shrink();
+            }),
         ],
       ),
       body: Column(
