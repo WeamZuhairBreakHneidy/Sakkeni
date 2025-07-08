@@ -81,82 +81,73 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
               30.verticalSpace,
 
               // Dropdowns
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 28.w),
-                  child:  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Spacer(),
-
-                      // Step Navigation
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20.w,
-                          vertical: 10.h,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TabSelector(
-                              controller: tabController,
-                              tabs: ['For Rent', 'For Sale', 'Off plan'],
-                              onTabSelected: (index) {
-                                final route = switch (index) {
-                                  0 => '${Routes.PropertiesUnifiedView}?type=rent',
-                                  1 => '${Routes.PropertiesUnifiedView}?type=purchase',
-                                  2 => '${Routes.PropertiesUnifiedView}?type=offplan',
-                                  _ => '${Routes.PropertiesUnifiedView}?type=rent',
-                                };
-
-                              },
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Get.back();
-                              },
-                              child: Text(
-                                "Previous",
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  color: const Color(0xFF294741),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-
-                            Row(
-                              children: [
-                                _buildCheckCircle(),
-                                _buildStepLine(isFilled: true),
-                                _buildStepCircle(isFilled: true),
-                                _buildStepLine(isFilled: false),
-                                _buildStepCircle(isFilled: false),
-                              ],
-                            ),
-
-                            /// Next
-                            GestureDetector(
-                              onTap: () {
-                                // Get.to(() => SummaryView());
-                              },
-
-                              child: Text(
-                                "Next",
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  color: Colors.grey.shade400,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-
-                  )
-              )]
-          ),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: 28.w),
+              //     child:  Column(
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //
+              //
+              //         // Step Navigation
+              //         Padding(
+              //           padding: EdgeInsets.symmetric(
+              //             horizontal: 20.w,
+              //             vertical: 10.h,
+              //           ),
+              //         child:   Row(
+              //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //             children: [
+              //               Expanded( // ✅ يمنح TabSelector مساحة مناسبة
+              //                 child: TabSelector(
+              //                   controller: tabController,
+              //                   tabs: ['For Rent', 'For Sale', 'Off plan'],
+              //                   onTabSelected: (index) {
+              //                     final route = switch (index) {
+              //                       0 => '${Routes.PropertiesUnifiedView}?type=rent',
+              //                       1 => '${Routes.PropertiesUnifiedView}?type=purchase',
+              //                       2 => '${Routes.PropertiesUnifiedView}?type=offplan',
+              //                       _ => '${Routes.PropertiesUnifiedView}?type=rent',
+              //                     };
+              //                   },
+              //                 ),
+              //               ),
+              //               const SizedBox(width: 8), // للمسافة فقط
+              //               Text(
+              //                 "Previous",
+              //                 style: TextStyle(
+              //                   fontSize: 14.sp,
+              //                   color: const Color(0xFF294741),
+              //                   fontWeight: FontWeight.bold,
+              //                 ),
+              //               ),
+              //               const SizedBox(width: 8),
+              //               Row(
+              //                 mainAxisSize: MainAxisSize.min, // ✅ مهم لتقليل عرض هذا Row
+              //                 children: [
+              //                   _buildCheckCircle(),
+              //                   _buildStepLine(isFilled: true),
+              //                   _buildStepCircle(isFilled: true),
+              //                   _buildStepLine(isFilled: false),
+              //                   _buildStepCircle(isFilled: false),
+              //                 ],
+              //               ),
+              //               const SizedBox(width: 8),
+              //               Text(
+              //                 "Next",
+              //                 style: TextStyle(
+              //                   fontSize: 14.sp,
+              //                   color: Colors.grey.shade400,
+              //                   fontWeight: FontWeight.bold,
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //       ],
+              //
+              //     )
+              // )]
+          ]),
         ),
       ),
       bottomNavigationBar: CustomBottomNavBar(),
