@@ -18,7 +18,7 @@ abstract class Routes {
   static const RESETPASSWORD = _Paths.RESETPASSWORD;
   static const VIEWHISTORY = _Paths.VIEWHISTORY;
   static const ADDPROPERTY = _Paths.ADDPROPERTY;
-  static const ADDMAINPROPERTY = _Paths.ADDMAINPROPERTY;
+  static const ApartmentForRentView = _Paths.ApartmentForRentView;
 }
 
 abstract class _Paths {
@@ -40,4 +40,5 @@ abstract class _Paths {
   static const VIEWHISTORY = '/history';
   static const ADDPROPERTY = '/addproperty';
   static const ADDMAINPROPERTY = '/addproperty';
+  static const ApartmentForRentView = '/ApartmentForRentView';
 }

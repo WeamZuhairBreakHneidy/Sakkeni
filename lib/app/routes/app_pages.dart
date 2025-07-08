@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
-import 'package:test1/app/modules/addproperty/views/addmaininformation_veiw.dart';
+import 'package:test1/app/modules/addproperty/views/add_main_information_view.dart';
+import 'package:test1/app/modules/addproperty/views/apartment_for_rent_view.dart';
 
-import '../modules/addproperty/bindings/addproperty_binding.dart';
-import '../modules/addproperty/views/addproperty_view.dart';
+import '../modules/addproperty/bindings/add_property_binding.dart';
+import '../modules/addproperty/views/add_property_view.dart';
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/bindings/register_binding.dart';
 import '../modules/auth/bindings/reset_password_binding.dart';
@@ -93,6 +94,10 @@ class AppPages {
     ),  GetPage(
       name: _Paths.ADDMAINPROPERTY,
       page: () =>  AddmaininformationVeiw(),
+      binding: AddpropertyBinding(),
+    ), GetPage(
+      name: _Paths.ApartmentForRentView,
+      page: () =>  ApartmentForRentView(),
       binding: AddpropertyBinding(),
     ),
   ];

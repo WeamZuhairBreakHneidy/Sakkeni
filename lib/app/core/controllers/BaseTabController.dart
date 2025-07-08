@@ -1,34 +1,19 @@
 import 'package:get/get.dart';
 
-class BaseTabController extends GetxController {
-  RxInt selectedTab = 0.obs;
+class BaseTabController<T> extends GetxController {
+  final RxInt selectedTab = 0.obs;
+  late List<T> options;
 
-  void updateTabFromType(String? type) {
-    switch (type) {
-      case 'rent':
-        selectedTab.value = 0;
-        break;
-      case 'purchase':
-        selectedTab.value = 1;
-        break;
-      case 'offplan':
-        selectedTab.value = 2;
-        break;
-      default:
-        selectedTab.value = 0;
+  BaseTabController({required List<T> values}) {
+    options = values;
+  }
+
+  void updateTabFromValue(T? value) {
+    final index = options.indexOf(value as T);
+    if (index != -1) {
+      selectedTab.value = index;
     }
   }
 
-  String get currentType {
-    switch (selectedTab.value) {
-      case 0:
-        return 'rent';
-      case 1:
-        return 'purchase';
-      case 2:
-        return 'offplan';
-      default:
-        return 'rent';
-    }
-  }
+  T get currentValue => options[selectedTab.value];
 }

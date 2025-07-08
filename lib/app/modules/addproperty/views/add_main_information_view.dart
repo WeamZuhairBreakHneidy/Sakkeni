@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-import 'package:test1/app/modules/addproperty/controllers/addproperty_controller.dart';
+import 'package:test1/app/modules/addproperty/controllers/add_property_controller.dart';
+import 'package:test1/app/modules/addproperty/views/apartment_for_rent_view.dart';
 import '../../../core/theme/colors.dart';
 import '../../../data/models/countries_model.dart';
 import '../../../data/services/validator_service.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../../../widgets/input_text_form_field.dart';
+import '../../../widgets/multiple_select_chip.dart';
+import '../bindings/add_property_binding.dart';
 import '../controllers/countries_controller.dart';
 
 class AddmaininformationVeiw extends GetView<AddpropertyController> {
-   AddmaininformationVeiw({super.key});
+  AddmaininformationVeiw({super.key});
+
   final countriesController = Get.find<CountriesController>();
 
   @override
@@ -83,7 +87,7 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
                 padding: EdgeInsets.symmetric(horizontal: 28.w),
                 child: Obx(() {
                   if (countriesController.isLoading.value) {
-                    return  Center(
+                    return Center(
                       child: SizedBox(
                         width: 75,
                         height: 75,
@@ -97,32 +101,49 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
                   }
 
                   if (countriesController.countriesModel.value.data.isEmpty) {
-                    return Text("No countries found", style: TextStyle(fontSize: 14.sp));
+                    return Text(
+                      "No countries found",
+                      style: TextStyle(fontSize: 14.sp),
+                    );
                   }
 
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Dropdown للدول
-                      Text("Country Name", style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold)),
+                      Text(
+                        "Country Name",
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       SizedBox(height: 8.h),
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 12.w),
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey.shade400, width: 1),
-                          borderRadius: BorderRadius.circular(8.r),  // ممكن تغير القيمة للدائري أو المربع
+                          border: Border.all(
+                            color: Colors.grey.shade400,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(
+                            8.r,
+                          ), // ممكن تغير القيمة للدائري أو المربع
                         ),
                         child: DropdownButton<Datum>(
                           isExpanded: true,
                           value: countriesController.selectedCountry.value,
                           hint: const Text("Choose a country"),
-                          underline: SizedBox(), // لإخفاء الخط الافتراضي تحت Dropdown
-                          items: countriesController.countriesModel.value.data.map((country) {
-                            return DropdownMenuItem<Datum>(
-                              value: country,
-                              child: Text(country.name ?? ''),
-                            );
-                          }).toList(),
+                          underline: SizedBox(),
+                          // لإخفاء الخط الافتراضي تحت Dropdown
+                          items:
+                              countriesController.countriesModel.value.data.map(
+                                (country) {
+                                  return DropdownMenuItem<Datum>(
+                                    value: country,
+                                    child: Text(country.name ?? ''),
+                                  );
+                                },
+                              ).toList(),
                           onChanged: (value) {
                             countriesController.selectCountry(value);
                           },
@@ -131,12 +152,21 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
 
                       SizedBox(height: 20.h),
 
-                      Text("City Name", style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold)),
+                      Text(
+                        "City Name",
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       SizedBox(height: 8.h),
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 12.w),
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey.shade400, width: 1),
+                          border: Border.all(
+                            color: Colors.grey.shade400,
+                            width: 1,
+                          ),
                           borderRadius: BorderRadius.circular(8.r),
                         ),
                         child: DropdownButton<Datum>(
@@ -144,20 +174,56 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
                           value: countriesController.selectedCity.value,
                           hint: const Text("Choose a city"),
                           underline: SizedBox(),
-                          items: countriesController.selectedCountry.value?.cities.map((city) {
-                            return DropdownMenuItem<Datum>(
-                              value: city,
-                              child: Text(city.name ?? ''),
-                            );
-                          }).toList() ?? [],
+                          items:
+                              countriesController.selectedCountry.value?.cities
+                                  .map((city) {
+                                    return DropdownMenuItem<Datum>(
+                                      value: city,
+                                      child: Text(city.name ?? ''),
+                                    );
+                                  })
+                                  .toList() ??
+                              [],
                           onChanged: (value) {
                             countriesController.selectCity(value);
                           },
                         ),
                       ),
+                      SizedBox(height: 25.h),
+                      Text(
+                        "Exposure",
+                        style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 8.h),
 
-                      SizedBox(height: 100.h),
-                      Text("Location", style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold)),
+                      MultiSelectChips(
+                        options: [
+                          'North',
+                          'South',
+                          'East',
+                          'West',
+                          'Northeast',
+                          'Northwest',
+                          'Southeast',
+                          'Southwest',
+                        ],
+                        selectedItems: controller.selectedDirections,
+                        onItemToggle: controller.toggleDirection,
+                        selectedColor: AppColors.tabtextselected,
+                        unselectedColor: AppColors.tab,
+                        borderColor: AppColors.tab,
+                        textColor: AppColors.tabtext,
+                      ),
+
+
+                      SizedBox(height: 25.h),
+                      Text(
+                        "Location",
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       SizedBox(height: 8.h),
                       InputTextFormField(
                         hintText: 'Type an address',
@@ -167,15 +233,12 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
                         fillColor: AppColors.white,
                         borderColor: AppColors.border,
                       ),
-
                     ],
                   );
                 }),
               ),
 
-              const Spacer(),
-
-              // Step Navigation
+               Spacer(),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
                 child: Row(
@@ -210,7 +273,7 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
                     /// Next
                     GestureDetector(
                       onTap: () {
-                        // Get.to(() => SummaryView());
+                        Get.to(() => ApartmentForRentView(), binding: AddpropertyBinding());
                       },
                       child: Text(
                         "Next",
@@ -255,18 +318,19 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
         border: Border.all(color: const Color(0xFF294741), width: 2),
         shape: BoxShape.circle,
       ),
-      child: isFilled
-          ? Center(
-        child: Container(
-          width: 8.w,
-          height: 8.w,
-          decoration: const BoxDecoration(
-            color: Color(0xFF294741),
-            shape: BoxShape.circle,
-          ),
-        ),
-      )
-          : null,
+      child:
+          isFilled
+              ? Center(
+                child: Container(
+                  width: 8.w,
+                  height: 8.w,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF294741),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              )
+              : null,
     );
   }
 
