@@ -8,6 +8,8 @@ import '../widgets/custom_map.dart';
 class CustomMapView extends StatelessWidget {
   final TextEditingController searchController = TextEditingController();
 
+  CustomMapView({super.key});
+
   @override
   Widget build(BuildContext context) {
     final CustomMapController mapController = Get.put(CustomMapController());
@@ -44,10 +46,10 @@ class CustomMapView extends StatelessWidget {
                   }
                 },
                 items: [
-                  DropdownMenuItem(child: Text('Default'), value: MapType.normal),
-                  DropdownMenuItem(child: Text('Satellite'), value: MapType.satellite),
-                  DropdownMenuItem(child: Text('Terrain'), value: MapType.terrain),
-                  DropdownMenuItem(child: Text('Hybrid'), value: MapType.hybrid),
+                  DropdownMenuItem(value: MapType.normal, child: Text('Default')),
+                  DropdownMenuItem(value: MapType.satellite, child: Text('Satellite')),
+                  DropdownMenuItem(value: MapType.terrain, child: Text('Terrain')),
+                  DropdownMenuItem(value: MapType.hybrid, child: Text('Hybrid')),
                 ],
               ),
             );

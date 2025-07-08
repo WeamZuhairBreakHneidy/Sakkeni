@@ -19,20 +19,28 @@ import '../controllers/properties_rent_controller.dart';
 class PropertiesBinding extends Bindings {
   @override
   void dependencies() {
-    final typeParam = Get.parameters['type'];
-
-    switch (typeParam) {
-      case 'rent':
-        Get.lazyPut(() => RentController());
-        break;
-      case 'purchase':
-        Get.lazyPut(() => PurchaseController());
-        break;
-      case 'offplan':
-        Get.lazyPut(() => OffPlanController());
-        break;
-      default:
-        Get.lazyPut(() => RentController());
-    }
+    Get.lazyPut<OffPlanController>(() => OffPlanController());
+    Get.lazyPut<PurchaseController>(() => PurchaseController());
+    //
+    Get.lazyPut<RentController>(() => RentController(), fenix: true);
   }
+  //
+  // @override
+  // void dependencies() {
+  //   final typeParam = Get.parameters['type'];
+  //
+  //   switch (typeParam) {
+  //     case 'rent':
+  //       Get.lazyPut(() => RentController());
+  //       break;
+  //     case 'purchase':
+  //       Get.lazyPut(() => PurchaseController());
+  //       break;
+  //     case 'offplan':
+  //       Get.lazyPut(() => OffPlanController());
+  //       break;
+  //     default:
+  //       Get.lazyPut(() => RentController());
+  //   }
+  // }
 }

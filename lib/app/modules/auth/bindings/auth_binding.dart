@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 
 import '../controllers/auth_controller.dart';
+import '../controllers/forget_password_controller.dart';
 
 class AuthBinding extends Bindings {
   @override
@@ -11,5 +12,7 @@ class AuthBinding extends Bindings {
     Get.lazyPut<AuthController>(
       () => AuthController(),
     );
-  }
+    Get.lazyPut<ForgetPasswordController>(
+            () => ForgetPasswordController(),
+    );}
 }

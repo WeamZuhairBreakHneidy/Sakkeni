@@ -7,7 +7,8 @@ import '../../../data/services/token_service.dart';
 class CountriesController extends GetxController {
   var isLoading = false.obs;
 
-  var countriesModel = CountreiesModel(status: false, message: "", data: []).obs;
+  var countriesModel =
+      CountreiesModel(status: false, message: "", data: []).obs;
 
   var selectedCountry = Rxn<Datum>();
   var selectedCity = Rxn<Datum>();
@@ -43,7 +44,10 @@ class CountriesController extends GetxController {
       if (response.statusCode == 200) {
         countriesModel.value = CountreiesModel.fromJson(response.body);
       } else {
-        Get.snackbar('Error', 'Failed to load countries. Status code: ${response.statusCode}');
+        Get.snackbar(
+          'Error',
+          'Failed to load countries. Status code: ${response.statusCode}',
+        );
       }
     } catch (e) {
       Get.snackbar('Exception', e.toString());

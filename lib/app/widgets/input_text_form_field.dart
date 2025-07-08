@@ -25,6 +25,8 @@ class InputTextFormField extends StatelessWidget {
   final String? Function(String?)? validator;
   final Color? fillColor;
   final Color? borderColor;
+  final TextEditingController? controller;
+
   InputTextFormField({
     super.key,
     this.textEditingController,
@@ -47,6 +49,7 @@ class InputTextFormField extends StatelessWidget {
     this.helper,
     this.fillColor,
     this.borderColor,
+    this.controller,
   });
 
   final ValidationController validationController = Get.put(ValidationController());

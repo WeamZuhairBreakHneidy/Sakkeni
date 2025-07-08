@@ -13,6 +13,7 @@ import '../../../widgets/remember_me_checkbox.dart';
 import '../../../widgets/input_text_form_field.dart';
 import '../../../widgets/responsive_buttun.dart';
 import '../controllers/auth_controller.dart';
+import '../controllers/forget_password_controller.dart';
 
 class AuthView extends GetView<AuthController> {
   const AuthView({super.key});
@@ -142,23 +143,83 @@ class AuthView extends GetView<AuthController> {
                           isChecked: controller.rememberMe,
                         ),
                       ),
-
-                      // Forgot Password Button
+// Forgot Password Button - MODIFIED
                       Flexible(
                         flex: 1,
                         child: TextButton(
                           onPressed: () {
-                            // Forgot Password logic
+                            final enteredEmail = controller.emailController.text.trim();
+
+                            if (enteredEmail.isEmpty) {
+                              Get.snackbar(
+                                'Error',
+                                'Please enter your email to reset your password.',
+                                snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor: Colors.red.withOpacity(0.7),
+                                colorText: Colors.white,
+                              );
+                              return;
+                            }
+
+                            Get.defaultDialog(
+                              title: 'Confirm Password Reset',
+                              titleStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                              content: Column(
+                                children: [
+                                  Text(
+                                    'Do you want to send a password reset link to:',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    enteredEmail,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.primary,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                              textConfirm: 'Confirm',
+                              textCancel: 'Cancel',
+                              confirmTextColor: AppColors.white,
+                              cancelTextColor: AppColors.background1,
+                              buttonColor: AppColors.primary,
+                              onConfirm: () {
+                                Get.back(); // Close the dialog
+                                Get.find<ForgetPasswordController>().emailController.text = enteredEmail;
+                                Get.find<ForgetPasswordController>().resetPassword();
+                              },
+                              radius: 10,
+                            );
                           },
                           child: Text(
-                            'labels_forgot'.tr,
+                            'Forgot Password?',
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ),
                       ),
+
                     ],
                   ),
                 ),
+                //       // Forgot Password Button
+                //       Flexible(
+                //         flex: 1,
+                //         child: TextButton(
+                //           onPressed: () {
+                //             // Forgot Password logic
+                //           },
+                //           child: Text(
+                //             'labels_forgot'.tr,
+                //             style: Theme.of(context).textTheme.bodySmall,
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
 
                 //Button
                 Obx(
