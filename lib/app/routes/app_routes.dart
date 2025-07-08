@@ -21,6 +21,7 @@ abstract class Routes {
   // static const VIEWRENTHISTORY = _Paths.VIEWRENTHISTORY;
   // static const VIEWPURCHASEHISTORY = _Paths.VIEWPURCHASEHISTORY;
   // static const VIEWOFFPLANHISTORY = _Paths.VIEWOFFPLANHISTORY;
+  static const CUSTOM_MAP = _Paths.CUSTOM_MAP;
 }
 
 abstract class _Paths {
@@ -43,5 +44,5 @@ abstract class _Paths {
   // static const VIEWRENTHISTORY = '/rent/history';
   // static const VIEWPURCHASEHISTORY = 'PURCHASE/history';
   // static const VIEWOFFPLANHISTORY = 'OFFPLAN/history';
-
+  static const CUSTOM_MAP = '/custom-map';
 }

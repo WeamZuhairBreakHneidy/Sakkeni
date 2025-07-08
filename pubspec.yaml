@@ -54,6 +54,9 @@ dependencies:
   lottie:
   liquid_pull_to_refresh:
   intl:
+  google_maps_flutter:
+  geocoding:
+  geolocator:
 dev_dependencies:
   flutter_test:
     sdk: flutter
