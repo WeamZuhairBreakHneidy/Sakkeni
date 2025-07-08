@@ -279,7 +279,7 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
                         "Next",
                         style: TextStyle(
                           fontSize: 14.sp,
-                          color: Colors.grey.shade400,
+                          color: Color(0xFF294741),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
