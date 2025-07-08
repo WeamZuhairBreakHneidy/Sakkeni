@@ -8,25 +8,21 @@ import 'api_endpoints.dart';
 import 'token_service.dart';
 
 class ApiService extends GetConnect {
-  // Singleton pattern: Ensure only one instance of ApiService exists
   static final ApiService _instance = ApiService._internal();
   final TokenService tokenService = TokenService();
 
   @override
   String get baseUrl => ApiEndpoints.baseUrl;
 
-  // Internal constructor for singleton pattern
   ApiService._internal() {
     httpClient.baseUrl = baseUrl;
     httpClient.timeout = const Duration(seconds: 60);
   }
 
-  // Factory constructor for singleton pattern
   factory ApiService() {
     return _instance;
   }
 
-  // Logger for debugging and tracking requests and responses
   final Logger logger = Logger(
     printer: PrettyPrinter(
       methodCount: 0,
@@ -37,7 +33,6 @@ class ApiService extends GetConnect {
     ),
   );
 
-  // Method to get default headers asynchronously
   Future<Map<String, String>> _getDefaultHeaders() async {
     String? token = await tokenService.token;
     return {
@@ -58,7 +53,7 @@ class ApiService extends GetConnect {
   })
   async {
     final combinedHeaders = {
-      ...await _getDefaultHeaders(), // Asynchronously get the default headers
+      ...await _getDefaultHeaders(),
       ...?headers
     };
 
@@ -121,7 +116,6 @@ class ApiService extends GetConnect {
     }
   }
 
-  // Public method for GET requests
   Future<Response> getApi({
     required String url,
     Map<String, dynamic>? query,
@@ -130,7 +124,6 @@ class ApiService extends GetConnect {
     return await _makeRequest(method: 'GET', url: url, query: query, headers: headers);
   }
 
-  // Public method for POST requests
   Future<Response> postApi({
     required String url,
     dynamic body,
@@ -141,7 +134,6 @@ class ApiService extends GetConnect {
     return await _makeRequest(method: 'POST', url: url, query: query, body: body, headers: headers, files: files);
   }
 
-  // Public method for DELETE requests
   Future<Response> deleteApi({
     required String url,
     dynamic body,
@@ -204,7 +196,6 @@ class ApiService extends GetConnect {
     logger.v('${response.statusCode} \n $res');
   }
 
-// Helper function for splitting a long string
   List<String> _splitByLength(String str, int chunkSize) {
     final List<String> chunks = [];
     for (int i = 0; i < str.length; i += chunkSize) {

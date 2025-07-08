@@ -11,10 +11,7 @@ class PropertyDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('تفاصيل العقار')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Text("تفاصيل العقار: ${property.propertyType?.name ?? 'غير معروف'}"),
-      ),
+
     );
   }
 }

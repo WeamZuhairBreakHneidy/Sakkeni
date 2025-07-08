@@ -138,7 +138,6 @@ class UpdateProfileView extends StatelessWidget {
                       ),
                       20.verticalSpace,
 
-                      // Email (Read-Only)
                       Obx(() {
                         final user = controller.user.value;
                         return InputTextFormField(

@@ -9,14 +9,21 @@ class ProfileModel {
   final String message;
   final Data? data;
 
+  // factory ProfileModel.fromJson(Map<String, dynamic> json) {
+  //   final dataList = json["data"];
+  //   return ProfileModel(
+  //     status: json["status"] ?? false,
+  //     message: json["message"] ?? "",
+  //     data: (dataList != null && dataList is List && dataList.isNotEmpty)
+  //         ? Data.fromJson(dataList[0])
+  //         : null,
+  //   );
+  // }
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
-    final dataList = json["data"];
     return ProfileModel(
       status: json["status"] ?? false,
       message: json["message"] ?? "",
-      data: (dataList != null && dataList is List && dataList.isNotEmpty)
-          ? Data.fromJson(dataList[0])
-          : null,
+      data: json["data"] != null ? Data.fromJson(json["data"]) : null,
     );
   }
 

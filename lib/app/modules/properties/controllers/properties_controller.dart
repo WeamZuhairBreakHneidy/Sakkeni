@@ -35,8 +35,11 @@ abstract class BasePropertiesController extends GetxController {
     super.onInit();
   }
 
-  Future<void> fetchProperties({int page = 1, bool isLoadMore = false, bool force = false}) async {
-    if (!force && (isLoading.value || (!hasMoreData.value && isLoadMore))) return;
+  Future<void> fetchProperties(
+      {int page = 1, bool isLoadMore = false, bool force = false}) async {
+    if (!force && (isLoading.value || (!hasMoreData.value && isLoadMore))) {
+      return;
+    }
 
     isLoading.value = true;
 
@@ -74,7 +77,8 @@ abstract class BasePropertiesController extends GetxController {
 
         isFiltered.value = false;
       } else {
-        Get.snackbar('Error', 'Failed to load properties. Status: ${response.statusCode}');
+        Get.snackbar('Error',
+            'Failed to load properties. Status: ${response.statusCode}');
       }
     } catch (e) {
       Get.snackbar('Exception', e.toString());
@@ -91,7 +95,9 @@ abstract class BasePropertiesController extends GetxController {
     bool isLoadMore = false,
     bool force = false,
   }) async {
-    if (!force && (isLoading.value || (!hasMoreData.value && isLoadMore))) return;
+    if (!force && (isLoading.value || (!hasMoreData.value && isLoadMore))) {
+      return;
+    }
 
     isLoading.value = true;
 
@@ -119,16 +125,18 @@ abstract class BasePropertiesController extends GetxController {
         final fetchedData = model.data?.data ?? [];
 
         if (isLoadMore) {
-          properties.addAll(fetchedData);  // append to list on load more
+          properties.addAll(fetchedData);
         } else {
-          properties.value = fetchedData;  // replace list on fresh fetch
+          properties.value = fetchedData;
         }
 
         hasMoreData.value = model.data?.nextPageUrl != null;
         currentPage.value = page;
-        isFiltered.value = true;  // mark as filtered
+        isFiltered.value = true; // mark as filtered
       } else {
-        Get.snackbar('Error', 'Failed to load filtered properties. Status: ${response.statusCode}');
+        Get.snackbar('Error',
+            'Failed to load filtered properties. Status: ${response
+                .statusCode}');
       }
     } catch (e) {
       Get.snackbar('Exception', e.toString());
@@ -155,5 +163,12 @@ abstract class BasePropertiesController extends GetxController {
 
   Datum? getPropertyById(int id) {
     return properties.firstWhereOrNull((prop) => prop.id == id);
+  }
+
+  Future<void> fetchPropertiesWithFilter(Map<String, dynamic> filterData,
+      {bool force = false}) async {
+    // base or abstract implementation
+    throw UnimplementedError(
+        'fetchPropertiesWithFilter must be implemented by subclasses');
   }
 }

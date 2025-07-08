@@ -41,8 +41,6 @@ abstract class _Paths {
   static const UPDATEPROFILE = '/updateprofile';
   static const RESETPASSWORD = '/resetpassword';
   static const VIEWHISTORY = '/history';
-  // static const VIEWRENTHISTORY = '/rent/history';
-  // static const VIEWPURCHASEHISTORY = 'PURCHASE/history';
-  // static const VIEWOFFPLANHISTORY = 'OFFPLAN/history';
-  static const CUSTOM_MAP = '/custom-map';
+  static const ADDPROPERTY = '/addproperty';
+  static const ADDMAINPROPERTY = '/addproperty';
 }

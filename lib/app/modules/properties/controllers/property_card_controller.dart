@@ -14,11 +14,11 @@ class PropertyCardController extends GetxController {
 
   num get price {
     if (property.rent?.price != null) {
-      return property.rent!.price!;
+      return property.rent!.price;
     } else if (property.purchase?.price != null) {
-      return property.purchase!.price!;
+      return property.purchase!.price;
     } else if (property.offplan?.overallPayment != null) {
-      return property.offplan!.overallPayment!;
+      return property.offplan!.overallPayment;
     }
     return 0;
   }
