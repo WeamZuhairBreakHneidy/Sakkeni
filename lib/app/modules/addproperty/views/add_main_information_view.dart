@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-import 'package:test1/app/modules/addproperty/controllers/add_property_controller.dart';
+
 import 'package:test1/app/modules/addproperty/views/apartment_for_rent_view.dart';
 import '../../../core/theme/colors.dart';
 import '../../../data/models/countries_model.dart';
@@ -11,6 +11,7 @@ import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../../../widgets/input_text_form_field.dart';
 import '../../../widgets/multiple_select_chip.dart';
 import '../bindings/add_property_binding.dart';
+import '../controllers/add_property_controller.dart';
 import '../controllers/countries_controller.dart';
 
 class AddmaininformationVeiw extends GetView<AddpropertyController> {

@@ -9,6 +9,7 @@ import 'package:test1/app/modules/history/bindings/history_binding.dart';
 import 'package:test1/app/modules/properties/bindings/properties_binding.dart';
 
 
+import '../modules/addproperty/bindings/add_property_binding.dart';
 import '../modules/addproperty/views/add_property_view.dart';
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/bindings/register_binding.dart';
