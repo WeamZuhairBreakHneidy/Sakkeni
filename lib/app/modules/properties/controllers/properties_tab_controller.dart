@@ -1,6 +1,11 @@
 import '../../../core/controllers/BaseTabController.dart';
 
 class PropertiesTabController extends BaseTabController {
+
+  PropertiesTabController()
+      : super(values: ['rent', 'purchase', 'offplan']);
+
+
   @override
   void updateTabFromType(String? type) {
     switch (type) {

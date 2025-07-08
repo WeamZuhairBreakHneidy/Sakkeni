@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/colors.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
-import '../bindings/addproperty_binding.dart';
-import '../controllers/addproperty_controller.dart';
-import 'addmaininformation_veiw.dart';
+import '../bindings/add_property_binding.dart';
+import '../controllers/add_property_controller.dart';
+import 'add_main_information_view.dart';
 
 class AddPropertyView extends GetView<AddpropertyController> {
   const AddPropertyView({super.key});
@@ -109,7 +109,6 @@ class AddPropertyView extends GetView<AddpropertyController> {
                       ],
                     ),
 
-                    /// Next
                     GestureDetector(
                       onTap: () {
                         Get.to(() => AddmaininformationVeiw(), binding: AddpropertyBinding());

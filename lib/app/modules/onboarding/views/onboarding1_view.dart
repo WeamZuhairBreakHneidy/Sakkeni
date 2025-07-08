@@ -15,92 +15,94 @@ class OnboardingPage1 extends StatelessWidget {
       body: Stack(
         children: [
           Positioned.fill(child: Container(color: AppColors.white)),
+
           Positioned.fill(child: Container(color: AppColors.gray1)),
+
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Image.asset(
+              'assets/backgrounds/onboarding1.png',
+              width: 1.sw,
+              height: 340.h,
+              fit: BoxFit.cover,
+            ),
+          ),
+
           SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 80.h),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 76.w),
-                    child: Image.asset('assets/Logo.png', height: 58.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 80.h),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 76.w),
+                  child: Image.asset('assets/Logo.png', height: 58.h),
+                ),
+                SizedBox(height: 83.5.h),
+                Text(
+                  "One Platform,\nInfinite Property Possibilities",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: AppColors.surface,
+                    fontSize: 22.sp,
+                    fontWeight: FontWeight.w600,
                   ),
-                  SizedBox(height: 83.5.h),
-                  Text(
-                    "One Platform,\nInfinite Property Possibilities",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: AppColors.surface,
-                      fontSize: 22.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(height: 60.h),
-                  Text(
-                    "Buy sell or rent, your next move\nstarts here!",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: AppColors.surface, fontSize: 16.sp),
-                  ),
+                ),
+                SizedBox(height: 60.h),
+                Text(
+                  "Buy sell or rent, your next move\nstarts here!",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: AppColors.surface, fontSize: 16.sp),
+                ),
+                const Spacer(),
+                Padding(
+                  padding: EdgeInsets.only(
+                    bottom: 12.h,
+                    left: 170.w,
+                    right: 24.w,
 
-                  Stack(
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Image.asset(
-                        'assets/backgrounds/onboarding1.png',
-                        width: 1.sw,
-                        fit: BoxFit.cover,
-                        height: 440.h,
+                      SmoothPageIndicator(
+                        controller: controller,
+                        count: 3,
+                        effect: WormEffect(
+                          dotHeight: 10.h,
+                          dotWidth: 10.w,
+                          activeDotColor: AppColors.background1,
+                          dotColor: AppColors.SmoothPageIndicator.withOpacity(0.4),
+                        ),
                       ),
-                      Positioned(
-                        bottom: 24.h,
-                        left: 180.w,
-                        right: 24.w,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SmoothPageIndicator(
-                              controller: controller,
-                              count: 3,
-                              effect: WormEffect(
-                                dotHeight: 10.h,
-                                dotWidth: 10.w,
-                                activeDotColor: AppColors.background1,
-                                dotColor: AppColors
-                                    .SmoothPageIndicator.withOpacity(0.4),
+                      GestureDetector(
+                        onTap: () {
+                          controller.nextPage(
+                            duration: Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                        child: Text(
+                          "Next",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                            shadows: [
+                              Shadow(
+                                color: Colors.black45,
+                                blurRadius: 4,
+                                offset: Offset(1, 1),
                               ),
-                            ),
-
-                            // Next
-                            GestureDetector(
-                              onTap: () {
-                                controller.nextPage(
-                                  duration: Duration(milliseconds: 300),
-                                  curve: Curves.easeInOut,
-                                );
-                              },
-                              child: Text(
-                                "Next",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w500,
-                                  shadows: [
-                                    Shadow(
-                                      color: Colors.black45,
-                                      blurRadius: 4,
-                                      offset: Offset(1, 1),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],

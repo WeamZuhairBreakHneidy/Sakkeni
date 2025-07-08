@@ -30,27 +30,26 @@ class PropertyCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(16.r),
       onTap: onTap,
       child: Container(
-        height: double.infinity,
         decoration: _cardDecoration(),
         clipBehavior: Clip.antiAlias,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
           children: [
             if (imageUrl != null) _buildImage(imageUrl!),
-            Padding(
-              padding:  EdgeInsets.all(13.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (price != null) _buildPrice(),
-                  if (location != null) _buildTextLine(context, location!),
-                  if (propertyType != null)
-                    _buildTextLine(context, propertyType!),
-                  if (subType != null && subType!.isNotEmpty)
-                    _buildTextLine(context, subType!),
-                ],
+            Flexible(
+              child: Padding(
+                padding: EdgeInsets.all(13.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (price != null) _buildPrice(),
+                    if (location != null) _buildTextLine(context, location!),
+                    if (propertyType != null)
+                      _buildTextLine(context, propertyType!),
+                    if (subType != null && subType!.isNotEmpty)
+                      _buildTextLine(context, subType!),
+                  ],
+                ),
               ),
             ),
           ],
@@ -86,9 +85,8 @@ class PropertyCard extends StatelessWidget {
 
   Widget _buildPrice() {
     return Row(
-      mainAxisSize: MainAxisSize.min,
       children: [
-        Flexible(
+        Expanded(
           child: Text(
             price!,
             style: TextStyle(
@@ -102,7 +100,7 @@ class PropertyCard extends StatelessWidget {
         ),
         if (leasePeriod != null && leasePeriod!.isNotEmpty) ...[
           SizedBox(width: 4.w),
-          Flexible(
+          Expanded(
             child: Text(
               '/$leasePeriod',
               style: TextStyle(
@@ -120,13 +118,14 @@ class PropertyCard extends StatelessWidget {
   }
 
   Widget _buildTextLine(BuildContext context, String text) {
-    return Text(
-      text,
-      style: Theme.of(
-        context,
-      ).textTheme.bodySmall?.copyWith(color: Colors.grey),
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
+    return Padding(
+      padding: EdgeInsets.only(top: 4.h),
+      child: Text(
+        text,
+        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
     );
   }
 }

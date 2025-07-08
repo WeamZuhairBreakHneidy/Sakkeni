@@ -1,6 +1,6 @@
 
 class ApiEndpoints {
-  static const String baseUrl = 'http://192.168.43.228:8000';
+  static const String baseUrl = 'http://192.168.20.199:8000';
 
   static const String login = '/api/login';
   static const String signup = '/api/sign-up';
@@ -16,7 +16,7 @@ class ApiEndpoints {
   static const String countries = '/api/view-countries';
 
 
-  //Helper
+
   static const String viewAmenities = '/api/view-amenities';
   static const String viewCountries = '/api/view-countries';
 

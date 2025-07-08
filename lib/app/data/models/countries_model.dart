@@ -20,7 +20,7 @@ class CountreiesModel {
   Map<String, dynamic> toJson() => {
     "status": status,
     "message": message,
-    "data": data.map((x) => x?.toJson()).toList(),
+    "data": data.map((x) => x.toJson()).toList(),
   };
 
 }
@@ -58,7 +58,7 @@ class Datum {
     "name": name,
     "created_at": createdAt?.toIso8601String(),
     "updated_at": updatedAt?.toIso8601String(),
-    "cities": cities.map((x) => x?.toJson()).toList(),
+    "cities": cities.map((x) => x.toJson()).toList(),
     "country_id": countryId,
   };
 

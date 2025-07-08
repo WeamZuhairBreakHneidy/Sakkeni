@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:test1/app/modules/addproperty/views/add_main_information_view.dart';
+import 'package:test1/app/modules/addproperty/views/apartment_for_rent_view.dart';
 import 'package:test1/app/modules/auth/bindings/reset_password_binding.dart';
 import 'package:test1/app/modules/auth/views/profile_view.dart';
 import 'package:test1/app/modules/auth/views/reset_password_view.dart';
@@ -6,17 +8,27 @@ import 'package:test1/app/modules/auth/views/update_profile_view.dart';
 import 'package:test1/app/modules/history/bindings/history_binding.dart';
 import 'package:test1/app/modules/properties/bindings/properties_binding.dart';
 
+
+import '../modules/addproperty/views/add_property_view.dart';
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/bindings/register_binding.dart';
+import '../modules/auth/bindings/reset_password_binding.dart';
 import '../modules/auth/bindings/update_profile_binding.dart';
 import '../modules/auth/views/auth_view.dart';
+import '../modules/auth/views/profile_view.dart';
 import '../modules/auth/views/register_view.dart';
+import '../modules/auth/views/reset_password_view.dart';
+import '../modules/auth/views/update_profile_view.dart';
+import '../modules/customMap/bindings/custom_map_binding.dart';
+import '../modules/customMap/views/custom_map_view.dart';
 import '../modules/getstarted/views/getstarted_view.dart';
+import '../modules/history/bindings/history_binding.dart';
 import '../modules/history/views/history_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
+import '../modules/properties/bindings/properties_binding.dart';
 import '../modules/properties/views/properties_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
@@ -41,7 +53,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.HOME,
-      page: () => const HomeView(),
+      page: () =>  HomeView(),
       binding: HomeBinding(),
     ),
     //Auth
@@ -95,6 +107,10 @@ class AppPages {
     ),  GetPage(
       name: _Paths.ADDMAINPROPERTY,
       page: () =>  AddmaininformationVeiw(),
+      binding: AddpropertyBinding(),
+    ), GetPage(
+      name: _Paths.ApartmentForRentView,
+      page: () =>  ApartmentForRentView(),
       binding: AddpropertyBinding(),
     ),
   ];

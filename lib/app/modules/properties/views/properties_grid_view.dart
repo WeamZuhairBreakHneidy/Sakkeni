@@ -51,7 +51,7 @@ class PropertiesGridView extends StatelessWidget {
           crossAxisCount: 3,
           mainAxisSpacing: 20,
           crossAxisSpacing: 20,
-          childAspectRatio: 0.65,
+          childAspectRatio: 0.58,
         ),
         itemBuilder: (context, index) {
           final property = props[index];
