@@ -9,7 +9,7 @@ import '../../../data/models/countries_model.dart';
 import '../../../data/services/validator_service.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../../../widgets/input_text_form_field.dart';
-import '../../../widgets/location_picker_preview.dart';
+import '../../../widgets/mini_map_picker.dart';
 import '../../../widgets/multiple_select_chip.dart';
 import '../bindings/add_property_binding.dart';
 import '../controllers/add_property_controller.dart';

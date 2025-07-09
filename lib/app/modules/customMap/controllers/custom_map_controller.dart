@@ -9,6 +9,7 @@ class CustomMapController extends GetxController {
 
   var mapType = MapType.normal.obs; // Default map type
   var isLoading = false.obs;
+  var isSearching = false.obs;
   var myCurrentLocation = Rxn<LatLng>();
 
   @override
@@ -85,11 +86,8 @@ class CustomMapController extends GetxController {
 
   Future<void> addMarker(LatLng position) async {
     try {
-
       List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
 
-      print("Placemarks: $placemarks");
-      print("${position.latitude} + ${position.longitude}");
       if (placemarks.isNotEmpty) {
         Placemark place = placemarks.first;
         String title = '${place.locality}, ${place.administrativeArea}, ${place.country}';
@@ -112,6 +110,8 @@ class CustomMapController extends GetxController {
 
   Future<void> searchAndNavigate(String address) async {
     try {
+      isSearching.value = true;
+
       List<Location> locations = await locationFromAddress(address);
       if (locations.isNotEmpty) {
         Location location = locations.first;
@@ -129,6 +129,8 @@ class CustomMapController extends GetxController {
       }
     } catch (e) {
       print("Error occurred: $e");
+    } finally {
+      isSearching.value = false;
     }
   }
 }

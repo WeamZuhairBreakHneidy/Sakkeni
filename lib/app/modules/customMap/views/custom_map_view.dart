@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:test1/app/core/theme/colors.dart';
+import 'package:test1/app/widgets/responsive_buttun.dart';
 
 import '../controllers/custom_map_controller.dart';
 import '../widgets/custom_map.dart';
 
 class CustomMapView extends StatelessWidget {
-  final bool returnLocation; // Add this to optionally return LatLng
+  final bool returnLocation; // Whether to return picked location on submit
   final TextEditingController searchController = TextEditingController();
 
   CustomMapView({this.returnLocation = false});
@@ -18,79 +21,134 @@ class CustomMapView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Select Location'),
-        actions: [
-          Obx(() => IconButton(
-            icon: mapController.isLoading.value
-                ? SizedBox(
-              width: 24,
-              height: 24,
-              child: CircularProgressIndicator(
-                  color: Colors.white, strokeWidth: 2),
-            )
-                : Icon(Icons.my_location),
-            onPressed: () => mapController.getCurrentLocation(),
-            tooltip: 'Take Me To My Location',
-          )),
-          if (returnLocation)
-            Obx(() {
+        backgroundColor: Colors.transparent,
+
+      ),
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              // Search + dropdown row
+              Container(
+
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 7,
+                      child: TextField(
+                        controller: searchController,
+                        decoration: InputDecoration(
+                          hintText: 'Search for a place',
+                          hintStyle: Theme.of(context).textTheme.titleMedium,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          suffixIcon: Obx(() {
+                            if (mapController.isSearching.value) {
+                              return Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: SizedBox(
+                                  width: 16,
+                                  height: 16,
+                                  child: CircularProgressIndicator(strokeWidth: 2),
+                                ),
+                              );
+                            }
+                            return IconButton(
+                              icon: Icon(Icons.search),
+                              onPressed: () {
+                                mapController.searchAndNavigate(searchController.text);
+                              },
+                            );
+                          }),
+                        ),
+                      ),
+                    ),
+                  12.horizontalSpace,
+                    Expanded(
+                      flex: 3,
+                      child: Obx(() {
+                        return Container(
+                          padding: EdgeInsets.symmetric(horizontal: 12.w),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade200,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: Colors.grey.shade400),
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<MapType>(
+                              value: mapController.mapType.value,
+                              isExpanded: true,
+                              icon: Icon(Icons.map, color: AppColors.primary),
+                              onChanged: (MapType? newType) {
+                                if (newType != null) {
+                                  mapController.changeMapType(newType);
+                                }
+                              },
+                              items: [
+                                DropdownMenuItem(child: Text('Default'), value: MapType.normal),
+                                DropdownMenuItem(child: Text('Satellite'), value: MapType.satellite),
+                                DropdownMenuItem(child: Text('Terrain'), value: MapType.terrain),
+                                DropdownMenuItem(child: Text('Hybrid'), value: MapType.hybrid),
+                              ],
+                            ),
+                          ),
+                        );
+                      }),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(child: CustomMap()),
+            ],
+          ),
+
+          // Submit button floating above map at bottom
+          Positioned(
+            bottom: 24.h,
+            left: 60.w,
+            right: 60.w,
+            child: Obx(() {
               final hasSearchMarker = mapController.markers.any(
                       (m) => m.markerId.value == 'searched_location');
-              return hasSearchMarker
-                  ? TextButton(
-                onPressed: () {
-                  final marker = mapController.markers.firstWhere(
-                          (m) => m.markerId.value == 'searched_location');
-                  Get.back(result: marker.position);
-                },
+              if (!returnLocation || !hasSearchMarker) {
+                return SizedBox.shrink();
+              }
+              return ResponsiveButton(
+
                 child: Text(
                   "Submit",
-                  style: TextStyle(color: Colors.white),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
                 ),
-              )
-                  : SizedBox.shrink();
-            }),
-        ],
-      ),
-      body: Column(
-        children: [
-          Obx(() {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: DropdownButton<MapType>(
-                value: mapController.mapType.value,
-                isExpanded: true,
-                underline: Container(height: 1, color: Colors.grey),
-                onChanged: (MapType? newType) {
-                  if (newType != null) {
-                    mapController.changeMapType(newType);
-                  }
-                },
-                items: [
-                  DropdownMenuItem(child: Text('Default'), value: MapType.normal),
-                  DropdownMenuItem(child: Text('Satellite'), value: MapType.satellite),
-                  DropdownMenuItem(child: Text('Terrain'), value: MapType.terrain),
-                  DropdownMenuItem(child: Text('Hybrid'), value: MapType.hybrid),
-                ],
-              ),
-            );
-          }),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: TextField(
-              controller: searchController,
-              decoration: InputDecoration(
-                hintText: 'Search for a place',
-                border: OutlineInputBorder(),
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.search),
+                  buttonStyle:ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24)),
+                    elevation: 5,
+                    shadowColor: Colors.black54,
+                    backgroundColor: AppColors.primary
+                  ) ,
                   onPressed: () {
-                    mapController.searchAndNavigate(searchController.text);
-                  },
-                ),
-              ),
-            ),
+                final marker = mapController.markers.firstWhere(
+                        (m) => m.markerId.value == 'searched_location');
+                Get.back(result: marker.position);
+              } , clickable: true);
+            }),
           ),
-          Expanded(child: CustomMap()),
+
+          // Optional: show loading indicator overlay during location fetch
+          Obx(() {
+            if (mapController.isLoading.value) {
+              return Container(
+                color: Colors.black38,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+            return SizedBox.shrink();
+          }),
         ],
       ),
     );

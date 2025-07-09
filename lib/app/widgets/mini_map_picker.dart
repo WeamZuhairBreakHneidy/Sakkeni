@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../modules/addproperty/controllers/add_property_controller.dart';
 import '../modules/customMap/views/custom_map_view.dart';
-
 class MiniMapPicker extends StatelessWidget {
   final AddpropertyController controller = Get.find();
 
@@ -13,7 +13,8 @@ class MiniMapPicker extends StatelessWidget {
 
   Future<String> _getAddressFromLatLng(LatLng latLng) async {
     try {
-      List<Placemark> placemarks = await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
+      List<Placemark> placemarks =
+      await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
       if (placemarks.isNotEmpty) {
         final place = placemarks.first;
         return '${place.street}, ${place.administrativeArea}, ${place.country}';
@@ -24,15 +25,42 @@ class MiniMapPicker extends StatelessWidget {
     return 'Unknown location';
   }
 
+  Future<void> _initDefaultLocation() async {
+    if (controller.selectedLocation.value != null) return;
+
+    try {
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) return;
+
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied ||
+            permission == LocationPermission.deniedForever) return;
+      }
+
+      Position pos = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      LatLng current = LatLng(pos.latitude, pos.longitude);
+      controller.updateLocation(current);
+
+      final address = await _getAddressFromLatLng(current);
+      controller.location.text = address;
+    } catch (e) {
+      print("Error getting current location: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    _initDefaultLocation();
+
     return GestureDetector(
       onTap: () async {
-        LatLng? result = await Get.to(() => CustomMapView(returnLocation: true));
+        LatLng? result =
+        await Get.to(() => CustomMapView(returnLocation: true));
         if (result != null) {
           controller.updateLocation(result);
-
-          // Update the text field with address
           final address = await _getAddressFromLatLng(result);
           controller.location.text = address;
         }
@@ -49,21 +77,24 @@ class MiniMapPicker extends StatelessWidget {
             border: Border.all(color: Colors.grey.shade300, width: 2),
           ),
           child: latLng == null
-              ? const Center(child: Text("Tap to select location"))
+              ? const Center(child: Text("Fetching location..."))
               : ClipRRect(
             borderRadius: BorderRadius.circular(30),
             child: Stack(
               children: [
                 GoogleMap(
-                  initialCameraPosition: CameraPosition(target: latLng, zoom: 14),
+                  initialCameraPosition: CameraPosition(
+                      target: latLng, zoom: 14),
+                  onMapCreated: controller.setMapController,
                   markers: {
-                    Marker(markerId: MarkerId("selected"), position: latLng)
+                    Marker(
+                        markerId: const MarkerId("selected"),
+                        position: latLng),
                   },
                   zoomControlsEnabled: false,
-                  onMapCreated: (_) {},
-                  onTap: (_) {}, // disables interaction
                   myLocationEnabled: false,
-                  liteModeEnabled: true,
+                  liteModeEnabled: false, // ❗ allow camera animation
+                  onTap: (_) {}, // disable interaction
                 ),
                 Positioned(
                   bottom: 10,
