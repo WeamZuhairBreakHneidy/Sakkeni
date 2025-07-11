@@ -204,18 +204,43 @@ class ApiService extends GetConnect {
     return chunks;
   }
 
+  // REFACTORED: This method now directly creates and sends FormData
   Future<Response> uploadFiles({
-
     required String url,
     required List<File> files,
-    required String fileKey,
+    required String fileKey, // This is crucial for the backend field name
     Map<String, dynamic>? fields,
     Map<String, String>? headers,
   }) async {
-    final fileUploads = files.map((file) {
-      return MultipartFile(file, filename: file.path.split('/').last);
-    }).toList();
+    // Get default headers, but remove 'Content-Type' as it's handled by FormData for multipart
+    final combinedHeaders = {
+      ...await _getDefaultHeaders()..remove('Content-Type'),
+      ...?headers,
+    };
 
-    return await postApi(url: url, query: fields, headers: headers, files: fileUploads);
+    // Create FormData with fields
+    final formData = FormData(
+      (fields ?? {}).map((key, value) => MapEntry(key, value.toString())),
+    );
+
+    // Add files to FormData using the specified fileKey for each file
+    for (var file in files) {
+      formData.files.add(MapEntry(
+        '$fileKey[]', // <-- Notice the brackets here
+        MultipartFile(file, filename: file.path.split('/').last),
+      ));
+    }
+
+
+    logger.i('Uploading files request: POST $baseUrl$url');
+    logger.i('  Fields: ${jsonEncode(fields)}');
+    logger.i('  Files ($fileKey): ${files.map((f) => f.path.split('/').last).join(', ')}');
+
+    // Make the POST request directly using GetConnect's post method
+    final response = await post(url, formData, headers: combinedHeaders);
+
+    logResponse(url, response);
+
+    return response;
   }
 }
