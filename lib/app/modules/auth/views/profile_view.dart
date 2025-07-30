@@ -63,70 +63,79 @@ class ProfileView extends StatelessWidget {
               // BODY
               Expanded(
                 child: Obx(() {
-                  if (controller.isLoading.value) {
-                    return Center(
-                      child: SizedBox(
-                        width: 75,
-                        height: 75,
-                        child: LoadingIndicator(
-                          indicatorType: Indicator.lineSpinFadeLoader,
-                          colors: [AppColors.primary],
-                          strokeWidth: 1,
-                        ),
-                      ),
-                    );
-                  }
+    if (controller.isLoading.value) {
+    return Center(
+    child: SizedBox(
+    width: 75,
+    height: 75,
+    child: LoadingIndicator(
+    indicatorType: Indicator.lineSpinFadeLoader,
+    colors: [AppColors.primary],
+    strokeWidth: 1,
+    ),
+    ),
+    );
+    }
 
-                  final profile = controller.profileModel.value?.data;
+    // داخل الـ Obx وفي مكان عرض بيانات البروفايل:
+    final profile = controller.profileModel.value?.data;
 
-                  if (profile == null) {
-                    return const Center(child: Text("No profile data"));
-                  }
+    if (profile == null) {
+    return const Center(child: Text("No profile data"));
+    }
 
-                  return SingleChildScrollView(
-                    padding: EdgeInsets.all(16.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CircleAvatar(
-                          radius: 100.r,
-                          backgroundImage: profile.profilePicturePath != null
-                              ? NetworkImage('${ApiService().baseUrl}/${profile.profilePicturePath}')
-                              : const AssetImage("assets/backgrounds/default.png") as ImageProvider,
-                        ),
-                        30.verticalSpace,
-                        ProfileInfoTile(icon: Icons.person, text: '${profile.firstName} ${profile.lastName}'),
-                        _buildDivider(),
-                        ProfileInfoTile(icon: Icons.phone, text: profile.phoneNumber ?? 'No Phone'),
-                        _buildDivider(),
-                        ProfileInfoTile(icon: Icons.email, text: profile.email),
-                        _buildDivider(),
-                        ProfileInfoTile(icon: Icons.location_on, text: profile.address ?? 'No Address'),
-                        _buildDivider(),
-                        50.verticalSpace,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            TextButton(
-                              onPressed: () => Get.toNamed(Routes.UPDATEPROFILE),
-                              child: Text("Edit Profile", style: Theme.of(context).textTheme.labelSmall),
-                            ),
-                            TextButton(
-                              onPressed: () => Get.toNamed(Routes.RESETPASSWORD),
-                              child: Text("Reset Password", style: Theme.of(context).textTheme.labelSmall),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                }),
-              ),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: CustomBottomNavBar(),
+    return SingleChildScrollView(
+    padding: EdgeInsets.all(16.w),
+    child: Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+    CircleAvatar(
+    radius: 100.r,
+    backgroundImage: profile.profilePicturePath != null
+    ? NetworkImage('${ApiService().baseUrl}/${profile.profilePicturePath}')
+        : const AssetImage("assets/backgrounds/default.png") as ImageProvider,
+    ),
+    30.verticalSpace,
+    ProfileInfoTile(icon: Icons.person, text: '${profile.firstName} ${profile.lastName}'),
+    _buildDivider(),
+    ProfileInfoTile(icon: Icons.phone, text: profile.phoneNumber ?? 'No Phone'),
+    _buildDivider(),
+    ProfileInfoTile(icon: Icons.email, text: profile.email),
+    _buildDivider(),
+    ProfileInfoTile(icon: Icons.location_on, text: profile.address ?? 'No Address'),
+    _buildDivider(),
+
+    // عرض معلومات seller شرطياً فقط لو موجود
+    if (profile.seller != null) ...[
+    ProfileInfoTile(icon: Icons.store, text: "Seller Account"),
+    _buildDivider(),
+    // لو بدك تعرض تفاصيل أكتر من seller مثل نوع الحساب:
+    // ProfileInfoTile(icon: Icons.account_box, text: profile.seller.accountType?.name ?? ''),
+    // _buildDivider(),
+    ],
+
+    50.verticalSpace,
+    Row(
+    mainAxisAlignment: MainAxisAlignment.end,
+    children: [
+    TextButton(
+    onPressed: () => Get.toNamed(Routes.UPDATEPROFILE),
+    child: Text("Edit Profile", style: Theme.of(context).textTheme.labelSmall),
+    ),
+    TextButton(
+    onPressed: () => Get.toNamed(Routes.RESETPASSWORD),
+    child: Text("Reset Password", style: Theme.of(context).textTheme.labelSmall),
+    ),
+    ],
+    ),
+    ],
+    ),
+    );
+    })
+    ) ] )
+    )),
+
+    bottomNavigationBar: CustomBottomNavBar(),
     );
   }
 

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -7,20 +6,43 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../data/services/api_endpoints.dart';
 import '../../../data/services/api_service.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/amenties_controller.dart';
 
 class AddpropertyController extends GetxController {
   final RxList<File> selectedImages = <File>[].obs;
+  final Rx<File?> selectedVideo = Rx<File?>(null);
+
+  var isLoading = false.obs;
+  final TextEditingController payPlanDurationValue0Controller =
+  TextEditingController();
+  final TextEditingController payPlanDurationUnit0Controller =
+  TextEditingController();
+  final TextEditingController payPlanPercentage0Controller =
+  TextEditingController();
+  final TextEditingController payPlanDurationValue1Controller =
+  TextEditingController();
+  final TextEditingController payPlanDurationUnit1Controller =
+  TextEditingController();
+  final TextEditingController payPlanPercentage1Controller =
+  TextEditingController();
+  final TextEditingController payPlanDurationValue2Controller =
+  TextEditingController();
+  final TextEditingController payPlanDurationUnit2Controller =
+  TextEditingController();
+  final TextEditingController payPlanPercentage2Controller =
+  TextEditingController();
 
   final amenitiesController = Get.find<AmenitiesController>();
+  RxString leasePeriodUnit = ''.obs;
+  RxString furnishing = ''.obs;
 
-  // ---- Selection States ----
-  var selectedSellTypeIndex = 0.obs; // Rent, Sale, Off Plan
-  var selectedPropertyTypeIndex = 0.obs; // Apartment, Villa, Office
+  var selectedSellTypeIndex = 0.obs;
+  var selectedPropertyTypeIndex = 0.obs;
   final selectedCountryId = Rxn<int>();
   final selectedCityId = Rxn<int>();
 
-  // ---- Common Fields ----
+  // ---- Common Location Fields ----
   final location = TextEditingController();
   final selectedDirections = <String>[].obs;
   final selectedLocation = Rxn<LatLng>();
@@ -51,205 +73,219 @@ class AddpropertyController extends GetxController {
     }
   }
 
-  // ---- Apartment Fields ----
   final priceController = TextEditingController();
   final areaController = TextEditingController();
   final balconiesController = TextEditingController();
   final bathroomsController = TextEditingController();
   final leasePeriodValueController = TextEditingController();
-  final leasePeriodUnitController = TextEditingController();
-  final leasePeriodController = TextEditingController();
-  final paymentPalController = TextEditingController();
-  final furnishingController = TextEditingController();
-
-  final floorNumberRentController = TextEditingController();
-  final buildingNumberRentController = TextEditingController();
-  final apartmentNumberRentController = TextEditingController();
   final bedroomsController = TextEditingController();
+  final additionalInfo = TextEditingController();
 
-  final floorNumberSaleController = TextEditingController();
-  final buildingNumberSaleController = TextEditingController();
-  final apartmentNumberSaleController = TextEditingController();
+  final floorNumberController =
+  TextEditingController(); // For Apartment/Office/Villa
+  final buildingNumberController =
+  TextEditingController(); // For Apartment/Office
+  final apartmentNumberController =
+  TextEditingController(); // For Apartment/Office
 
+  // For Off Plan specific fields (delivery, first payment, overall payment)
   final deliveryDateController = TextEditingController();
   final firstPayController = TextEditingController();
   final overallPaymentController = TextEditingController();
-  final payPlanController = TextEditingController();
-  final floorNumberOffPlanController = TextEditingController();
-  final buildingNumberOffPlanController = TextEditingController();
-  final apartmentNumberOffPlanController = TextEditingController();
 
-  // ---- Villa Fields ----
-  final villaPaymentpalRentController = TextEditingController();
-  final villaFurnishingRentController = TextEditingController();
-  final villaBedroomsRentController = TextEditingController();
-  final villaFloorNumberRentController = TextEditingController();
+  // For Villa specific fields (yard, garage, maintenance)
+  final yardAreaController = TextEditingController();
+  final garageController = TextEditingController();
+  final maintenanceController =
+  TextEditingController(); // General maintenance field, primarily for Offices
 
-  final villaYardSaleController = TextEditingController();
-  final villaGarageSaleController = TextEditingController();
-  final villaBedroomSaleController = TextEditingController();
+  // --- Removed all specific controllers like floorNumberRentController, villaBedroomSaleController etc. ---
 
-  final villaBedroomOffplanController = TextEditingController();
+  // For Payment Plan PageView
+  late PageController paymentPageController;
+  final RxInt currentPaymentPageIndex = 0.obs;
 
-  // ---- Office Fields ----
-  final officeAreaRentController = TextEditingController();
-  final officeFurnishedSaleController = TextEditingController();
-  final officeMaintenanceOffplanController = TextEditingController();
-
-  // ---- Example Counter ----
-  final count = 0.obs;
+  final count = 0.obs; // Example counter
 
   void increment() => count.value++;
 
   // ---- Dispose All Controllers ----
   @override
   void onClose() {
-    // Common
+    // Consolidated fields
     location.dispose();
-
-    // Apartment
     priceController.dispose();
-    leasePeriodController.dispose();
-    paymentPalController.dispose();
-    furnishingController.dispose();
-    floorNumberRentController.dispose();
-    buildingNumberRentController.dispose();
-    apartmentNumberRentController.dispose();
-    floorNumberSaleController.dispose();
-    buildingNumberSaleController.dispose();
-    apartmentNumberSaleController.dispose();
+    areaController.dispose();
+    balconiesController.dispose();
+    bathroomsController.dispose();
+    leasePeriodValueController.dispose();
+    bedroomsController.dispose();
+    additionalInfo.dispose();
+    floorNumberController.dispose();
+    buildingNumberController.dispose();
+    apartmentNumberController.dispose();
     deliveryDateController.dispose();
     firstPayController.dispose();
     overallPaymentController.dispose();
-    payPlanController.dispose();
-    floorNumberOffPlanController.dispose();
-    buildingNumberOffPlanController.dispose();
-    apartmentNumberOffPlanController.dispose();
+    yardAreaController.dispose();
+    garageController.dispose();
+    maintenanceController.dispose();
 
-    // Villa
-    villaPaymentpalRentController.dispose();
-    villaFurnishingRentController.dispose();
-    villaBedroomsRentController.dispose();
-    villaFloorNumberRentController.dispose();
-    villaYardSaleController.dispose();
-    villaGarageSaleController.dispose();
-    villaBedroomSaleController.dispose();
-    villaBedroomOffplanController.dispose();
+    // Payment plan controllers
+    // Removed disposal of payPlanPhase0Controller, payPlanPhase1Controller, payPlanPhase2Controller
+    payPlanDurationValue0Controller.dispose();
+    payPlanDurationUnit0Controller.dispose();
+    payPlanPercentage0Controller.dispose();
+    payPlanDurationValue1Controller.dispose();
+    payPlanDurationUnit1Controller.dispose();
+    payPlanPercentage1Controller.dispose();
+    payPlanDurationValue2Controller.dispose();
+    payPlanDurationUnit2Controller.dispose();
+    payPlanPercentage2Controller.dispose();
 
-    // Office
-    officeAreaRentController.dispose();
-    officeFurnishedSaleController.dispose();
-    officeMaintenanceOffplanController.dispose();
+    // Dispose PageController
+    paymentPageController.dispose();
 
     super.onClose();
   }
 
-  // Properties to be sent in the API request
-  final countryId = 1.obs; // You need to get this from the CountriesController
-  final cityId = 1.obs; // You need to get this from the CountriesController
-  final additionalInfo = TextEditingController();
-  final area = TextEditingController();
-  final bathrooms = TextEditingController();
-  final balconies = TextEditingController();
-  final ownershipTypeId = 1.obs; // This might need to be dynamic as well
-  final exposureList =
-      <int>[].obs; // This needs to be populated from selectedDirections
+  @override
+  void onInit() {
+    super.onInit();
+    paymentPageController = PageController(); // تهيئة PageController
+  }
 
-  // Helper to convert selectedDirections (Strings) to exposureList (int)
+  // These are not Text Controllers; they are Rx variables for IDs
+  final countryId =
+      1.obs; // Consider if these should be `Rxn<int>` and updated from UI dropdowns
+  final cityId =
+      1.obs; // Consider if these should be `Rxn<int>` and updated from UI dropdowns
+  final ownershipTypeId =
+      1.obs; // Consider if this should be `Rxn<int>` and updated from UI dropdowns
+
+  final exposureList = <int>[].obs;
+
   void updateExposureList() {
     exposureList.clear();
-
     for (var direction in selectedDirections) {
       final d = direction.toLowerCase();
-
-      if (d == 'north') exposureList.add(1);
-      if (d == 'south') exposureList.add(2);
-      if (d == 'east') exposureList.add(3);
-      if (d == 'west') exposureList.add(4);
-      if (d == 'northeast') exposureList.add(5);
-      if (d == 'northwest') exposureList.add(6);
-      if (d == 'southeast') exposureList.add(7);
-      if (d == 'southwest') exposureList.add(8);
+      if (d == 'north') {
+        exposureList.add(1);
+      } else if (d == 'south')
+        exposureList.add(2);
+      else if (d == 'east')
+        exposureList.add(3);
+      else if (d == 'west')
+        exposureList.add(4);
+      else if (d == 'northeast')
+        exposureList.add(5);
+      else if (d == 'northwest')
+        exposureList.add(6);
+      else if (d == 'southeast')
+        exposureList.add(7);
+      else if (d == 'southwest')
+        exposureList.add(8);
     }
   }
 
-  // Helper to convert selected amenity names to amenity IDs
   void updateAmenitiesList() {
-    amenitiesController.selectedAmenities.clear();
+    amenitiesController.selectedAmenityIds
+        .clear(); // Ensure this is selectedAmenityIds not selectedAmenities
     final allAmenities = amenitiesController.amenitiesModel.value.data;
-    // Assuming amenitiesController.selectedAmenities holds selected amenity names
     for (var selectedAmenityName in amenitiesController.selectedAmenities) {
       final amenity = allAmenities.firstWhereOrNull(
-        (datum) => datum.name == selectedAmenityName,
+            (datum) => datum.name == selectedAmenityName,
       );
       if (amenity != null) {
-        amenitiesController.selectedAmenities.add(amenity.id as String);
+        amenitiesController.selectedAmenityIds.add(
+          amenity.id,
+        ); // Assuming amenity.id is int
       }
     }
   }
 
   Future<void> submitProperty() async {
-    print(priceController.text);
-    print(priceController.text);
-    print(priceController.text);
+    isLoading.value = true;
     final api = ApiService();
-    final sellType =
-        selectedSellTypeIndex.value; // 0: Rent, 1: Sale, 2: Off Plan
-    final propertyType =
-        selectedPropertyTypeIndex.value; // 0: Apartment, 1: Villa, 2: Office
+    final sellType = selectedSellTypeIndex.value;
+    final propertyType = selectedPropertyTypeIndex.value;
 
-    updateExposureList(); // Call this here!
-    updateAmenitiesList(); // Call this here!
+    updateExposureList();
+    updateAmenitiesList();
 
     int sellTypeValue;
     if (sellType == 0) {
-      sellTypeValue = 2;
+      sellTypeValue = 2; // Rent
     } else if (sellType == 1) {
-      sellTypeValue = 1;
+      sellTypeValue = 1; // Sale
     } else {
-      sellTypeValue = 3;
+      sellTypeValue = 3; // Off Plan
     }
-    // Map property type to API values
     int propertyTypeId;
     int? residentialPropertyTypeId;
     int? commercialPropertyTypeId;
 
-    if (propertyType == 0) {
-      // Apartment
-      propertyTypeId = 1;
-      residentialPropertyTypeId = 1;
-    } else if (propertyType == 1) {
-      // Villa
-      propertyTypeId = 1;
-      residentialPropertyTypeId = 2;
-    } else {
+    if (propertyType == 0 || propertyType == 1) {
+      // Apartment or Villa
+      propertyTypeId = 1; // Residential
+      if (propertyType == 0 && sellType == 0) {
+        residentialPropertyTypeId = 1;
+      } // Apartment for Rent
+      else if (propertyType == 1 && sellType == 0) {
+        residentialPropertyTypeId = 2;
+      } // Villa for Rent
+      else if (propertyType == 0 && sellType == 1) {
+        residentialPropertyTypeId = 1;
+      } // Apartment for Sale
+      else if (propertyType == 1 && sellType == 1) {
+        residentialPropertyTypeId = 2;
+      } // Villa for Sale
+      else if (propertyType == 0 && sellType == 2) {
+        residentialPropertyTypeId = 1;
+      } // Apartment for Off Plan
+      else if (propertyType == 1 && sellType == 2) {
+        residentialPropertyTypeId = 2;
+      } // Villa for Off Plan
+    } else if (propertyType == 2) {
       // Office
-      propertyTypeId = 2;
-      commercialPropertyTypeId = 1;
+      propertyTypeId = 2; // Commercial
+      commercialPropertyTypeId = 1; // Office Commercial Type ID (example)
+    } else {
+      propertyTypeId = 1; // Defaulting to residential if none matches
     }
 
-    dynamic safeParseInt(TextEditingController controller) {
-      return int.tryParse(controller.text);
+    // Helper to safely parse string to int, returning null if empty or invalid
+    int? safeParseInt(TextEditingController controller) {
+      final text = controller.text.trim();
+      if (text.isEmpty) return null;
+      return int.tryParse(text);
     }
 
-    dynamic safeParseDouble(TextEditingController controller) {
-      return double.tryParse(controller.text);
+    // Helper to safely parse string to double, returning null if empty or invalid
+    double? safeParseDouble(TextEditingController controller) {
+      final text = controller.text.trim();
+      if (text.isEmpty) return null;
+      return double.tryParse(text);
     }
 
+    // Base body includes common fields, ensuring numeric fields are parsed
     final Map<String, dynamic> baseBody = {
-      'country_id': selectedCountryId.value.toString(),
-      'city_id': selectedCityId.value.toString(),
+      'country_id': selectedCountryId.value?.toString() ?? '',
+      'city_id': selectedCityId.value?.toString() ?? '',
       'latitude': selectedLocation.value?.latitude.toString() ?? '',
       'longitude': selectedLocation.value?.longitude.toString() ?? '',
       'additional_info': additionalInfo.text,
-      'area': area.text,
-      'bathrooms': bathrooms.text,
-      'balconies': balconies.text,
+      'area': safeParseDouble(areaController),
+      // Using areaController from top
+      'bathrooms': safeParseInt(bathroomsController),
+      // Using bathroomsController from top
+      'balconies': safeParseInt(balconiesController),
+      // Using balconiesController from top
       'ownership_type_id': ownershipTypeId.value.toString(),
       'property_type_id': propertyTypeId.toString(),
       'sell_type_id': sellTypeValue.toString(),
     };
-    // Add residential or commercial property type based on selection
+
     if (residentialPropertyTypeId != null) {
       baseBody['residential_property_type_id'] =
           residentialPropertyTypeId.toString();
@@ -259,164 +295,293 @@ class AddpropertyController extends GetxController {
           commercialPropertyTypeId.toString();
     }
 
-    // Correctly add exposureList and amenitiesList for multipart form data
-    // Add each exposure element with an indexed key
+    // Add exposure list (if any)
     for (var i = 0; i < exposureList.length; i++) {
       baseBody['exposure[$i]'] = exposureList[i].toString();
     }
-    if (amenitiesController.selectedAmenityIds.isEmpty) {
-      baseBody['amenities[0]'] = ''; // إرسال قيمة فارغة تضمن وجود المفتاح
-    } else {
+
+    // Add amenities list (if any)
+    if (amenitiesController.selectedAmenityIds.isNotEmpty) {
       for (var i = 0; i < amenitiesController.selectedAmenityIds.length; i++) {
         baseBody['amenities[$i]'] =
             amenitiesController.selectedAmenityIds[i].toString();
       }
     }
 
-    print("Selected Directions: $selectedDirections");
-    print("Exposure List: $exposureList");
-    print(
-      "Amenities List (IDs): ${amenitiesController.selectedAmenities}",
-    ); // Added for debugging
+    final body = {...baseBody}; // Start with the base body
 
-    // Add specific fields based on property and sell type
-    final body = {
-      ...baseBody,
-    }; // Create 'body' from 'baseBody' after adding exposure and amenities
-
-    if (propertyType == 0||propertyType==1) {
+    if (propertyType == 0) {
       // Apartment
-      if (sellType == 0||sellType==1) {
-        // Rent
-        body.addAll({
-          'price': priceController.text,
-          'area': safeParseInt(areaController),
-          'lease_period_value': safeParseInt(leasePeriodValueController),
-          'lease_period_unit': leasePeriodUnitController.text,
-          'bathrooms': bathroomsController.text,
-          'bedrooms': bedroomsController.text,
-          'balconies': balconiesController.text,
-          'is_furnished': safeParseInt(furnishingController),
-          'floor': safeParseInt(floorNumberRentController),
-          'building_number': safeParseInt(buildingNumberRentController),
-          'apartment_number': safeParseInt(apartmentNumberRentController),
-        });
-      }
-      else if (sellType == 1) {
-        // Sale
-        body.addAll({
-          'price': priceController.text,
-          'area': safeParseInt(areaController),
-          'bathrooms': bathroomsController.text,
-          'bedrooms': bedroomsController.text,
-          'balconies': balconiesController.text,
-          'is_furnished': safeParseInt(furnishingController),
-          'floor': safeParseInt(floorNumberRentController),
-          'building_number': safeParseInt(buildingNumberRentController),
-          'apartment_number': safeParseInt(apartmentNumberRentController),
-        });
-      }
-      else if (sellType == 2) {
-        // Off Plan
-        body.addAll({
-          'delivery_date': deliveryDateController.text, // Assuming string
-          'first_pay': safeParseDouble(firstPayController),
-          'overall_payment': safeParseDouble(overallPaymentController),
-          'pay_plan': payPlanController.text, // Assuming string
-          'floor': safeParseInt(floorNumberOffPlanController),
-          'building_number': safeParseInt(buildingNumberOffPlanController),
-          'apartment_number': safeParseInt(apartmentNumberOffPlanController),
-        });
-      }
-    }
-    else if (propertyType == 1) {
-      // Villa
       if (sellType == 0) {
-        // Rent
+        // Rent (Apartment)
         body.addAll({
           'price': safeParseDouble(priceController),
-          'lease_period': leasePeriodController.text, // Assuming string
-          'payment_plan': villaPaymentpalRentController.text, // Assuming string
-          'furnishing': villaFurnishingRentController.text, // Assuming string
-          'bedrooms': safeParseInt(villaBedroomsRentController),
-          'floor': safeParseInt(villaFloorNumberRentController),
+          'lease_period_value': safeParseInt(leasePeriodValueController),
+          'lease_period_unit': leasePeriodUnit.value,
+          'is_furnished': furnishing.value.toLowerCase() == 'yes' ? '1' : '0',
+          'bedrooms': safeParseInt(bedroomsController),
+          'floor': safeParseInt(floorNumberController),
+          'building_number': safeParseInt(buildingNumberController),
+          'apartment_number': safeParseInt(apartmentNumberController),
         });
       } else if (sellType == 1) {
-        // Sale
+        // Sale (Apartment)
         body.addAll({
           'price': safeParseDouble(priceController),
-          'yard_area': safeParseDouble(villaYardSaleController),
-          'garage': safeParseInt(villaGarageSaleController),
-          'bedrooms': safeParseInt(villaBedroomSaleController),
+          'is_furnished': furnishing.value.toLowerCase() == 'yes' ? '1' : '0',
+          'bedrooms': safeParseInt(bedroomsController),
+          'floor': safeParseInt(floorNumberController),
+          'building_number': safeParseInt(buildingNumberController),
+          'apartment_number': safeParseInt(apartmentNumberController),
         });
       } else if (sellType == 2) {
-        // Off Plan
+        // Off Plan (Apartment)
         body.addAll({
-          'delivery_date': deliveryDateController.text, // Assuming string
+          'delivery_date': deliveryDateController.text,
           'first_pay': safeParseDouble(firstPayController),
           'overall_payment': safeParseDouble(overallPaymentController),
-          'pay_plan': payPlanController.text, // Assuming string
-          'bedrooms': safeParseInt(villaBedroomOffplanController),
-          'floor': safeParseInt(floorNumberOffPlanController),
+          // Structured payment_plan for Off Plan properties
+          // Check if at least the first payment plan phase is provided
+          if (payPlanDurationValue0Controller.text.isNotEmpty ||
+              payPlanDurationUnit0Controller.text.isNotEmpty ||
+              payPlanPercentage0Controller.text.isNotEmpty) ...{
+            'payment_plan[0][payment_phase_id]': '1', // Hardcoded
+            'payment_plan[0][duration_value]': safeParseInt(
+              payPlanDurationValue0Controller,
+            ),
+            'payment_plan[0][duration_unit]':
+            payPlanDurationUnit0Controller.text,
+            'payment_plan[0][payment_percentage]':
+            payPlanPercentage0Controller.text,
+          },
+          if (payPlanDurationValue1Controller.text.isNotEmpty ||
+              payPlanDurationUnit1Controller.text.isNotEmpty ||
+              payPlanPercentage1Controller.text.isNotEmpty) ...{
+            'payment_plan[1][payment_phase_id]': '2', // Hardcoded
+            'payment_plan[1][duration_value]': safeParseInt(
+              payPlanDurationValue1Controller,
+            ),
+            'payment_plan[1][duration_unit]':
+            payPlanDurationUnit1Controller.text,
+            'payment_plan[1][payment_percentage]':
+            payPlanPercentage1Controller.text,
+          },
+          if (payPlanDurationValue2Controller.text.isNotEmpty ||
+              payPlanDurationUnit2Controller.text.isNotEmpty ||
+              payPlanPercentage2Controller.text.isNotEmpty) ...{
+            'payment_plan[2][payment_phase_id]': '3', // Hardcoded
+            'payment_plan[2][duration_value]': safeParseInt(
+              payPlanDurationValue2Controller,
+            ),
+            'payment_plan[2][duration_unit]':
+            payPlanDurationUnit2Controller.text,
+            'payment_plan[2][payment_percentage]':
+            payPlanPercentage2Controller.text,
+          },
+          'bedrooms': safeParseInt(bedroomsController),
+          'floor': safeParseInt(floorNumberController),
+          'building_number': safeParseInt(buildingNumberController),
+          'apartment_number': safeParseInt(apartmentNumberController),
+        });
+      }
+    } else if (propertyType == 1) {
+      // Villa
+      if (sellType == 0) {
+        // Rent (Villa)
+        body.addAll({
+          'price': safeParseDouble(priceController),
+          'lease_period_value': safeParseInt(leasePeriodValueController),
+          'lease_period_unit': leasePeriodUnit.value,
+          'is_furnished': furnishing.value.toLowerCase() == 'yes' ? '1' : '0',
+          'bedrooms': safeParseInt(bedroomsController),
+          'floor': safeParseInt(floorNumberController),
+          'building_number': safeParseInt(buildingNumberController),
+          'apartment_number': safeParseInt(apartmentNumberController),
+          // For villas, floor number might be less common or handled differently
+        });
+      } else if (sellType == 1) {
+        // Sale (Villa)
+        body.addAll({
+          'price': safeParseDouble(priceController),
+          'lease_period_value': safeParseInt(leasePeriodValueController),
+          'lease_period_unit': leasePeriodUnit.value,
+          'is_furnished': furnishing.value.toLowerCase() == 'yes' ? '1' : '0',
+          'bedrooms': safeParseInt(bedroomsController),
+          'floors': safeParseInt(floorNumberController),
+          'building_number': safeParseInt(buildingNumberController),
+          'apartment_number': safeParseInt(apartmentNumberController),
+        });
+      } else if (sellType == 2) {
+        // Off Plan (Villa)
+        body.addAll({
+          'delivery_date': deliveryDateController.text,
+          'first_pay': safeParseDouble(firstPayController),
+          'overall_payment': safeParseDouble(overallPaymentController),
+          // Structured payment_plan for Off Plan properties
+          if (payPlanDurationValue0Controller.text.isNotEmpty ||
+              payPlanDurationUnit0Controller.text.isNotEmpty ||
+              payPlanPercentage0Controller.text.isNotEmpty) ...{
+            'payment_plan[0][payment_phase_id]': '1', // Hardcoded
+            'payment_plan[0][duration_value]': safeParseInt(
+              payPlanDurationValue0Controller,
+            ),
+            'payment_plan[0][duration_unit]':
+            payPlanDurationUnit0Controller.text,
+            'payment_plan[0][payment_percentage]':
+            payPlanPercentage0Controller.text,
+          },
+          if (payPlanDurationValue1Controller.text.isNotEmpty ||
+              payPlanDurationUnit1Controller.text.isNotEmpty ||
+              payPlanPercentage1Controller.text.isNotEmpty) ...{
+            'payment_plan[1][payment_phase_id]': '2', // Hardcoded
+            'payment_plan[1][duration_value]': safeParseInt(
+              payPlanDurationValue1Controller,
+            ),
+            'payment_plan[1][duration_unit]':
+            payPlanDurationUnit1Controller.text,
+            'payment_plan[1][payment_percentage]':
+            payPlanPercentage1Controller.text,
+          },
+          if (payPlanDurationValue2Controller.text.isNotEmpty ||
+              payPlanDurationUnit2Controller.text.isNotEmpty ||
+              payPlanPercentage2Controller.text.isNotEmpty) ...{
+            'payment_plan[2][payment_phase_id]': '3', // Hardcoded
+            'payment_plan[2][duration_value]': safeParseInt(
+              payPlanDurationValue2Controller,
+            ),
+            'payment_plan[2][duration_unit]':
+            payPlanDurationUnit2Controller.text,
+            'payment_plan[2][payment_percentage]':
+            payPlanPercentage2Controller.text,
+          },
+          'bedrooms': safeParseInt(bedroomsController),
+          'floors': safeParseInt(floorNumberController),
+          'building_number': safeParseInt(buildingNumberController),
+          'apartment_number': safeParseInt(apartmentNumberController),
         });
       }
     } else if (propertyType == 2) {
       // Office
       if (sellType == 0) {
-        // Rent
+        // Rent (Office)
         body.addAll({
           'price': safeParseDouble(priceController),
-          'lease_period': leasePeriodController.text, // Assuming string
-          'payment_plan': paymentPalController.text, // Assuming string
-          'furnishing': furnishingController.text, // Assuming string
-          'floor': safeParseInt(floorNumberRentController),
-          'building_number': safeParseInt(buildingNumberRentController),
-          'area': safeParseDouble(officeAreaRentController),
+          'lease_period_value': safeParseInt(leasePeriodValueController),
+          'lease_period_unit': leasePeriodUnit.value,
+          'is_furnished': furnishing.value.toLowerCase() == 'yes' ? '1' : '0',
+          'bathrooms': safeParseInt(bathroomsController),
+          // Offices usually have bathrooms, no bedrooms/balconies
+          'floor': safeParseInt(floorNumberController),
+          'building_number': safeParseInt(buildingNumberController),
+          'apartment_number': safeParseInt(apartmentNumberController),
         });
       } else if (sellType == 1) {
-        // Sale
+        // Sale (Office)
         body.addAll({
+          'area': safeParseDouble(priceController),
           'price': safeParseDouble(priceController),
-          'furnishing': officeFurnishedSaleController.text, // Assuming string
-          'floor': safeParseInt(floorNumberSaleController),
-          'building_number': safeParseInt(buildingNumberSaleController),
-          'apartment_number': safeParseInt(apartmentNumberSaleController),
+          'bathrooms': safeParseInt(bathroomsController),
+          'balconies': safeParseInt(balconiesController),
+          'floor': safeParseInt(floorNumberController),
+          'building_number': safeParseInt(buildingNumberController),
+          'apartment_number': safeParseInt(apartmentNumberController),
+          'is_furnished': furnishing.value.toLowerCase() == 'yes' ? '1' : '0',
+          'lease_period_value': safeParseInt(leasePeriodValueController),
+          'lease_period_unit': leasePeriodUnit.value,
         });
       } else if (sellType == 2) {
-        // Off Plan
+        // Off Plan (Office)
         body.addAll({
           'delivery_date': deliveryDateController.text,
-          // Assuming string
           'first_pay': safeParseDouble(firstPayController),
           'overall_payment': safeParseDouble(overallPaymentController),
-          'pay_plan': payPlanController.text,
-          // Assuming string
-          'maintenance': officeMaintenanceOffplanController.text,
-          // Assuming string
-          'floor': safeParseInt(floorNumberSaleController),
-          'building_number': safeParseInt(buildingNumberSaleController),
-          'apartment_number': safeParseInt(apartmentNumberSaleController),
+          if (payPlanDurationValue0Controller.text.isNotEmpty ||
+              payPlanDurationUnit0Controller.text.isNotEmpty ||
+              payPlanPercentage0Controller.text.isNotEmpty) ...{
+            'payment_plan[0][payment_phase_id]': '1', // Hardcode to '1'
+            'payment_plan[0][duration_value]': safeParseInt(
+              payPlanDurationValue0Controller,
+            ),
+            'payment_plan[0][duration_unit]':
+            payPlanDurationUnit0Controller.text,
+            'payment_plan[0][payment_percentage]':
+            payPlanPercentage0Controller.text,
+          },
+          // For Payment Plan Phase 1
+          if (payPlanDurationValue1Controller.text.isNotEmpty ||
+              payPlanDurationUnit1Controller.text.isNotEmpty ||
+              payPlanPercentage1Controller.text.isNotEmpty) ...{
+            'payment_plan[1][payment_phase_id]': '2', // Hardcode to '2'
+            'payment_plan[1][duration_value]': safeParseInt(
+              payPlanDurationValue1Controller,
+            ),
+            'payment_plan[1][duration_unit]':
+            payPlanDurationUnit1Controller.text,
+            'payment_plan[1][payment_percentage]':
+            payPlanPercentage1Controller.text,
+          },
+          // For Payment Plan Phase 2
+          if (payPlanDurationValue2Controller.text.isNotEmpty ||
+              payPlanDurationUnit2Controller.text.isNotEmpty ||
+              payPlanPercentage2Controller.text.isNotEmpty) ...{
+            'payment_plan[2][payment_phase_id]': '3', // Hardcode to '3'
+            'payment_plan[2][duration_value]': safeParseInt(
+              payPlanDurationValue2Controller,
+            ),
+            'payment_plan[2][duration_unit]':
+            payPlanDurationUnit2Controller.text,
+            'payment_plan[2][payment_percentage]':
+            payPlanPercentage2Controller.text,
+          },
+          'floor': safeParseInt(floorNumberController),
+          // Use off-plan floor controller for consistency
+          'building_number': safeParseInt(buildingNumberController),
+          'apartment_number': safeParseInt(apartmentNumberController),
         });
       }
     }
 
+    // Filter out null values.
+    body.removeWhere((key, value) => value == null);
+
+    print("--- FINAL BODY PAYLOAD SENT ---");
+    print(body);
+
     try {
-      String endpoint;
-      endpoint = ApiEndpoints.addProperty;
-      if (selectedImages.isEmpty) {
+      String endpoint = ApiEndpoints.addProperty;
+
+      if (selectedImages.length < 3) {
         Get.snackbar(
           'Error',
           'Please select at least 3 images for the property.',
         );
-        return; // Stop submission if no images
+        return;
+      }
+      if (selectedVideo.value == null) {
+        // Check if a video is selected
+        Get.snackbar(
+          'Error',
+          'Please select at least 1 video for the property.',
+        );
+
+
+        return;
+      }
+
+      // Combine images and video into a single list for upload, or handle separately if API expects different keys
+      final List<File> filesToUpload = [...selectedImages];
+      if (selectedVideo.value != null) {
+        filesToUpload.add(selectedVideo.value!);
       }
 
       final response = await api.uploadFiles(
         url: endpoint,
-        files: selectedImages.toList(), // List of selected files
-        fileKey: 'images', // Backend field name for images
-        fields:
-            body, // Use 'body' which now includes correctly formatted exposure and amenities
+        files: filesToUpload,
+        fileKey: 'images',
+        // You might need to change this if your API expects a different key for videos (e.g., 'media' or separate 'images' and 'video' keys)
+        fields: body.map(
+              (key, value) => MapEntry(key, value.toString()),
+        ), // Convert all values to string for multipart form data
       );
 
       if (response.statusCode == 200 && response.body['status'] == true) {
@@ -424,12 +589,22 @@ class AddpropertyController extends GetxController {
           'Success',
           response.body['message'] ?? 'Property added successfully',
         );
-        // Additional actions on success
+        Get.offAllNamed(Routes.PropertiesUnifiedView);
       } else {
+        String errorMessage =
+            response.body['message'] ?? 'Failed to add property';
+
+        if (response.body['errors'] != null) {
+          response.body['errors'].forEach((key, value) {
+            errorMessage += "\n$key: ${value.join(', ')}";
+          });
+        }
         Get.snackbar(
           'Error',
-          response.body['message'] ?? 'Failed to add property',
+          errorMessage,
+          duration: const Duration(seconds: 5),
         );
+        isLoading.value = false;
       }
     } catch (e) {
       Get.snackbar('Exception', e.toString());

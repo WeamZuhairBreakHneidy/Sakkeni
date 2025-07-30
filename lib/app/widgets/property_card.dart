@@ -122,7 +122,9 @@ class PropertyCard extends StatelessWidget {
       padding: EdgeInsets.only(top: 4.h),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey),
+        style: Theme.of(
+          context,
+        ).textTheme.bodySmall?.copyWith(color: Colors.grey),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),

@@ -57,6 +57,8 @@ dependencies:
   google_maps_flutter:
   geocoding:
   geolocator:
+#  video_thumbnail:
+  animated_text_kit:
 dev_dependencies:
   flutter_test:
     sdk: flutter

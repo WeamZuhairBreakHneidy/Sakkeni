@@ -13,8 +13,7 @@ class ApiEndpoints {
   static const String purchasehistory = '/api/view-my-properties/purchase';
   static const String offplanhistory = '/api/view-my-properties/off-plan';
   static const String addProperty = '/api/add-property';
-
-  //Helper
+  static const String upgradeAccount = '/api/upgrade-to-seller';
   static const String viewAmenities = '/api/view-amenities';
   static const String viewCountries = '/api/view-countries';
 }

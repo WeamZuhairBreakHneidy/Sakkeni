@@ -5,6 +5,8 @@ import 'package:test1/app/widgets/filter_sheet.dart';
 import '../../../core/theme/colors.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
+import '../../../widgets/upgrade-to-seller.dart';
+import '../../auth/controllers/profile_controller.dart';
 import '../controllers/properties_tab_controller.dart';
 import 'filtered_properties_view.dart';
 import 'tabbed_properties_view.dart';
@@ -71,6 +73,8 @@ class PropertiesUnifiedView extends StatelessWidget {
     Get.offNamed(route);
   }
 }
+
+final ProfileController profileController = Get.find<ProfileController>();
 
 Widget buildHeaderSection(BuildContext context) {
   return Container(
@@ -146,12 +150,30 @@ Widget buildHeaderSection(BuildContext context) {
               ),
             ),
             SizedBox(width: 8.w),
-            IconButton(
-              icon: Icon(Icons.add_circle_rounded, color: AppColors.search),
-              onPressed: () {
-                Get.toNamed(Routes.ADDPROPERTY);
-              },
-            ),
+            Obx(() {
+              final profileData = profileController.profileModel.value?.data;
+
+              // التحقق من أن 'seller' ليس null يعني أن المستخدم بائع
+              final isSeller = profileData?.seller != null;
+              print('Is Seller: $isSeller'); // طباعة لتتبع الحالة
+              print('Is Seller: $isSeller'); // طباعة لتتبع الحالة
+              print('Is Seller: $isSeller'); // طباعة لتتبع الحالة
+              print('Is Seller: $isSeller'); // طباعة لتتبع الحالة
+              return IconButton(
+                icon: Icon(
+                  Icons.add_circle_rounded,
+                  color: AppColors.search,
+                  size: 35.w,
+                ),
+                onPressed: () {
+                  if (isSeller) {
+                    Get.toNamed(Routes.ADDPROPERTY);
+                  } else {
+                    showUpgradeToSellerDialog();
+                  }
+                },
+              );
+            }),
           ],
         ),
       ],

@@ -6,13 +6,13 @@ import '../../../data/services/token_service.dart';
 
 class ProfileController extends GetxController {
   var isLoading = false.obs;
-  var profileModel = Rxn<ProfileModel>();
+  var profileModel = Rxn<ProfileModel>(); // Rxn لتمثيل قيمة يمكن أن تكون null
 
   final tokenService = TokenService();
 
   @override
   void onInit() {
-    fetchProfile();
+    fetchProfile(); // جلب الملف الشخصي عند تهيئة الكنترولر
     super.onInit();
   }
 
@@ -37,7 +37,10 @@ class ProfileController extends GetxController {
       );
 
       if (response.statusCode == 200) {
+        // 💡 مهم: تأكد أن ProfileModel.fromJson يستطيع التعامل مع حقل 'seller'
+        // سواء كان موجودًا أم لا، وأن وجوده يعني أن المستخدم بائع.
         profileModel.value = ProfileModel.fromJson(response.body);
+        print('Profile fetched successfully. Is Seller: ${profileModel.value?.data?.seller != null}');
       } else {
         Get.snackbar('Error', 'Failed to load profile. Status code: ${response.statusCode}');
       }

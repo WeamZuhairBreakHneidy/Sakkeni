@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+// Add this import
 import '../../../core/theme/colors.dart';
+
 import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../bindings/add_property_binding.dart';
 import '../controllers/add_property_controller.dart';
@@ -27,10 +29,22 @@ class AddPropertyView extends GetView<AddpropertyController> {
     }
   }
 
+  // New method to pick a video
+  Future<void> _pickVideo() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickVideo(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      controller.selectedVideo.value = File(pickedFile.path);
+    } else {
+      Get.snackbar("Note", "No video selected.");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background1,
       body: SafeArea(
         child: Container(
           decoration: BoxDecoration(
@@ -91,55 +105,102 @@ class AddPropertyView extends GetView<AddpropertyController> {
 
               30.verticalSpace,
 
-              Obx(() {
-                final images = controller.selectedImages;
-                return images.isNotEmpty
-                    ? Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 16.w, vertical: 10.h),
-                  child: SizedBox(
-                    height: 200.h, // ممكن تزيد الارتفاع إذا حبيت
-                    child: PageView.builder(
-                      itemCount: images.length,
-                      controller: PageController(viewportFraction: 0.8),
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.w),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12.r),
-                            child: Image.file(
-                              images[index],
-                              fit: BoxFit.cover,
+              // Image and Video Selection Area
+              Expanded(
+                // Use Expanded to give available space
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Obx(() {
+                        final images = controller.selectedImages;
+                        return images.isNotEmpty
+                            ? Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 10.h,
+                          ),
+                          child: SizedBox(
+                            height: 200.h, // ممكن تزيد الارتفاع إذا حبيت
+                            child: PageView.builder(
+                              itemCount: images.length,
+                              controller: PageController(
+                                viewportFraction: 0.8,
+                              ),
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 8.w,
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                      12.r,
+                                    ),
+                                    child: Image.file(
+                                      images[index],
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        )
+                            : GestureDetector(
+                          onTap: _pickImages,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 16.h),
+                            child: Text(
+                              "Upload at least 3 photos",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                         );
-                      },
-                    ),
+                      }),
+                      SizedBox(height: 20.h),
+                      Obx(() {
+                        final video = controller.selectedVideo.value;
+                        if (video != null) {
+                          return Column(
+                            children: [
+                              Text(
+                                "Video Selected: ${video.path
+                                    .split('/')
+                                    .last}",
+                              ),
+                              SizedBox(height: 10.h),
+                              // Optional: Display video thumbnail
+                            ],
+                          );
+                        } else {
+                          return GestureDetector(
+                            onTap: _pickVideo,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 16.h),
+                              child: Text(
+                                "Upload 1 video",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                      }),
+                      SizedBox(height: 20.h),
+                    ],
                   ),
-                )
-                    : GestureDetector(
-                  onTap: _pickImages,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16.h),
-                    child: Text(
-                      "Upload at least 3 photos and 1 video",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                );
-              }),
+                ),
+              ),
 
-              // Text(
-              //   "Upload photos and video \n at least 3 photos and  1 video",
-              //   textAlign: TextAlign.center,
-              //   style: TextStyle(fontSize: 14.sp),
-              // ),
-              const Spacer(),
+              // Spacer removed as Expanded takes care of space
 
               // Step Indicator and Navigation
               Padding(
@@ -147,8 +208,6 @@ class AddPropertyView extends GetView<AddpropertyController> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-
-
                     Text(
                       "Previous",
                       style: TextStyle(
@@ -173,9 +232,24 @@ class AddPropertyView extends GetView<AddpropertyController> {
 
                     GestureDetector(
                       onTap: () {
+                        if (controller.selectedImages.length < 3) {
+                          Get.snackbar(
+                            "Images Required",
+                            "Please upload at least 3 images before continuing.",
+                          );
+                          return;
+                        }
+                        if (controller.selectedVideo.value == null) {
+                          Get.snackbar(
+                            "Video Required",
+                            "Please upload 1 video before continuing.",
+                          );
+                          return;
+                        }
+
                         Get.to(
                               () => AddmaininformationVeiw(),
-                          binding: AddpropertyBinding(),
+                          binding: AddPropertyBinding(),
                         );
                       },
                       child: Text(
@@ -197,5 +271,4 @@ class AddPropertyView extends GetView<AddpropertyController> {
       bottomNavigationBar: CustomBottomNavBar(),
     );
   }
-
 }
