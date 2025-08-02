@@ -24,6 +24,7 @@ abstract class Routes {
   static const ADDPROPERTY = _Paths.ADDPROPERTY;
   static const ApartmentForRentView = _Paths.ApartmentForRentView;
   static const UPGRADETOSELLER = _Paths.UPGRADETOSELLER;
+  static const PROPERTY_DETAILS = _Paths.PROPERTY_DETAILS;
 }
 
 abstract class _Paths {
@@ -48,4 +49,5 @@ abstract class _Paths {
   static const ApartmentForRentView = '/ApartmentForRentView';
   static const CUSTOM_MAP = '/CUSTOM_MAP';
   static const UPGRADETOSELLER = '/upgradetoseller';
+  static const PROPERTY_DETAILS = '/property_details';
 }

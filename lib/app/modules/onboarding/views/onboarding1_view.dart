@@ -58,7 +58,7 @@ class OnboardingPage1 extends StatelessWidget {
                 const Spacer(),
                 Padding(
                   padding: EdgeInsets.only(
-                    bottom: 12.h,
+                    bottom: 35.h,
                     left: 170.w,
                     right: 24.w,
 

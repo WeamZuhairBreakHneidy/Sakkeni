@@ -151,14 +151,10 @@ Widget buildHeaderSection(BuildContext context) {
             ),
             SizedBox(width: 8.w),
             Obx(() {
-              final profileData = profileController.profileModel.value?.data;
+              if (profileController.isLoading.value) {
+                return CircularProgressIndicator(); // أو زر غير مفعل
+              }
 
-              // التحقق من أن 'seller' ليس null يعني أن المستخدم بائع
-              final isSeller = profileData?.seller != null;
-              print('Is Seller: $isSeller'); // طباعة لتتبع الحالة
-              print('Is Seller: $isSeller'); // طباعة لتتبع الحالة
-              print('Is Seller: $isSeller'); // طباعة لتتبع الحالة
-              print('Is Seller: $isSeller'); // طباعة لتتبع الحالة
               return IconButton(
                 icon: Icon(
                   Icons.add_circle_rounded,
@@ -166,6 +162,10 @@ Widget buildHeaderSection(BuildContext context) {
                   size: 35.w,
                 ),
                 onPressed: () {
+                  final isSeller = profileController.profileModel.value?.data?.seller != null;
+
+                  print('Is Seller (onPressed): $isSeller');
+
                   if (isSeller) {
                     Get.toNamed(Routes.ADDPROPERTY);
                   } else {
@@ -173,7 +173,8 @@ Widget buildHeaderSection(BuildContext context) {
                   }
                 },
               );
-            }),
+            })
+            ,
           ],
         ),
       ],

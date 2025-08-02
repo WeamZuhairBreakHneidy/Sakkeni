@@ -37,8 +37,6 @@ class ProfileController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        // 💡 مهم: تأكد أن ProfileModel.fromJson يستطيع التعامل مع حقل 'seller'
-        // سواء كان موجودًا أم لا، وأن وجوده يعني أن المستخدم بائع.
         profileModel.value = ProfileModel.fromJson(response.body);
         print('Profile fetched successfully. Is Seller: ${profileModel.value?.data?.seller != null}');
       } else {

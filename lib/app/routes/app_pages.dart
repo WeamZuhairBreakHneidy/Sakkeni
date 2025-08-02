@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/PropertyDetails/bindings/property_details_binding.dart';
+import '../modules/PropertyDetails/views/property_details_view.dart';
 import '../modules/addproperty/bindings/add_property_binding.dart';
 import '../modules/addproperty/views/add_main_information_view.dart';
 import '../modules/addproperty/views/add_property_view.dart';
@@ -115,6 +117,11 @@ class AppPages {
       name: _Paths.UPGRADETOSELLER,
       page: () => const UpgradeToSellerView(),
       binding: UpgradeToSellerBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROPERTY_DETAILS,
+      page: () =>  PropertyDetailsView(),
+      binding: PropertyDetailsBinding(),
     ),
   ];
 }

@@ -21,6 +21,9 @@ class PropertiesBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<ProfileController>(() => ProfileController());
+    Get.lazyPut<RentController>(() => RentController());
+    Get.lazyPut<PurchaseController>(() => PurchaseController());
+    Get.lazyPut<OffPlanController>(() => OffPlanController());
 
     final typeParam = Get.parameters['type'];
 
