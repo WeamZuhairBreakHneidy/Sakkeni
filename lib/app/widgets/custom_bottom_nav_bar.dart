@@ -37,7 +37,7 @@ class CustomBottomNavBar extends StatelessWidget {
     return Obx(() => BottomNavigationBar(
       currentIndex: navController.currentIndex.value,
       onTap: navController.changeTabIndex,
-      backgroundColor: AppColors.background1,
+      backgroundColor: AppColors.background,
       type: BottomNavigationBarType.fixed,
       selectedItemColor: AppColors.white,
       unselectedItemColor: AppColors.unselectedItemColor,

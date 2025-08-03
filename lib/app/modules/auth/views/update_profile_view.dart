@@ -32,10 +32,11 @@ class UpdateProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: SafeArea(
         child: Container(
           decoration: BoxDecoration(
-            color: AppColors.white,
+            color: Theme.of(context).colorScheme.background,
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(30.r),
               bottomRight: Radius.circular(30.r),
@@ -45,8 +46,9 @@ class UpdateProfileView extends StatelessWidget {
             children: [
               // Header
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-                color: AppColors.white,
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 19.h),
+                color: Theme.of(context).colorScheme.background,
+
                 child: Row(
                   children: [
                     Text(
@@ -56,17 +58,7 @@ class UpdateProfileView extends StatelessWidget {
                       ),
                     ),
                     Spacer(),
-                    Text(
-                      "View History",
-                      style: Theme.of(context).textTheme.labelSmall,
-                    ),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.history,
-                        color: AppColors.background1,
-                      ),
-                      onPressed: () {},
-                    ),
+
                   ],
                 ),
               ),
@@ -86,7 +78,7 @@ class UpdateProfileView extends StatelessWidget {
                         child: Obx(() {
                           final user = controller.user.value;
                           return CircleAvatar(
-                            radius: 100.r,
+                            radius: 75.r,
                             backgroundImage:
                                 controller.imageFile.value != null
                                     ? FileImage(controller.imageFile.value!)
@@ -95,14 +87,17 @@ class UpdateProfileView extends StatelessWidget {
                                     ? NetworkImage(
                                       '${ApiService().baseUrl}/${user.profilePicturePath!}?v=${DateTime.now().millisecondsSinceEpoch}',
                                     )
-                                    : const AssetImage(
-                                          "assets/backgrounds/default.png",
+                                    : AssetImage(
+                                          Theme.of(context).brightness ==
+                                                  Brightness.dark
+                                              ? "assets/backgrounds/default_black.png"
+                                              : "assets/backgrounds/default.png",
                                         )
                                         as ImageProvider,
                           );
                         }),
                       ),
-                      30.verticalSpace,
+                      50.verticalSpace,
 
                       // First & Last Name
                       Row(
@@ -116,7 +111,8 @@ class UpdateProfileView extends StatelessWidget {
                               ),
                               validatorType: ValidatorType.Name,
                               obsecure: false,
-                              fillColor: AppColors.white,
+                              fillColor:
+                                  Theme.of(context).colorScheme.background,
                               borderColor: AppColors.border,
                             ),
                           ),
@@ -130,7 +126,8 @@ class UpdateProfileView extends StatelessWidget {
                               ),
                               validatorType: ValidatorType.Name,
                               obsecure: false,
-                              fillColor: AppColors.white,
+                              fillColor:
+                                  Theme.of(context).colorScheme.background,
                               borderColor: AppColors.border,
                             ),
                           ),
@@ -148,13 +145,15 @@ class UpdateProfileView extends StatelessWidget {
                           hintText: "E-mail",
                           obsecure: false,
                           validatorType: ValidatorType.Email,
-                          fillColor: AppColors.white,
+                          fillColor: Theme.of(context).colorScheme.background,
                           decoration: InputDecoration(
                             labelText: "E-mail",
                             enabled: false,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.r),
-                              borderSide: BorderSide(color: AppColors.white),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).colorScheme.background,
+                              ),
                             ),
                             contentPadding: EdgeInsets.symmetric(
                               vertical: 12.h,
@@ -175,7 +174,7 @@ class UpdateProfileView extends StatelessWidget {
                         ),
                         validatorType: ValidatorType.PhoneNumber,
                         obsecure: false,
-                        fillColor: AppColors.white,
+                        fillColor: Theme.of(context).colorScheme.background,
                       ),
                       20.verticalSpace,
 
@@ -187,7 +186,7 @@ class UpdateProfileView extends StatelessWidget {
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         validatorType: ValidatorType.Default,
-                        fillColor: AppColors.white,
+                        fillColor: Theme.of(context).colorScheme.background,
                         obsecure: false,
                         borderColor: AppColors.border,
                       ),

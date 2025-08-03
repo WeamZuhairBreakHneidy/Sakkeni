@@ -22,22 +22,7 @@ class AuthView extends GetView<AuthController> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
 
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      //
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      //   elevation: 0, // Remove the shadow of the app bar
-      //   automaticallyImplyLeading: false,
-      //   leading: TextButton(
-      //     onPressed: () {
-      //       Get.find<LocaleService>().toggleLocale();
-      //     },
-      //     child: Text(
-      //       '${Get.locale?.languageCode}',
-      //       style: Theme.of(context).textTheme.bodyLarge,
-      //     ),
-      //   ),
-      // ),
+
       body: Stack(
         children: [
           Container(
@@ -53,7 +38,7 @@ class AuthView extends GetView<AuthController> {
             ),
           ),
           // Opacity Layer
-          Container(color: Theme.of(context).scaffoldBackgroundColor),
+          Container(color: AppColors.background1),
 
           Form(
             key: controller.loginFormKey,

@@ -12,7 +12,7 @@ class CustomMapView extends StatelessWidget {
   final bool returnLocation; // Whether to return picked location on submit
   final TextEditingController searchController = TextEditingController();
 
-  CustomMapView({this.returnLocation = false});
+  CustomMapView({super.key, this.returnLocation = false});
 
   @override
   Widget build(BuildContext context) {
@@ -87,10 +87,10 @@ class CustomMapView extends StatelessWidget {
                                 }
                               },
                               items: [
-                                DropdownMenuItem(child: Text('Default'), value: MapType.normal),
-                                DropdownMenuItem(child: Text('Satellite'), value: MapType.satellite),
-                                DropdownMenuItem(child: Text('Terrain'), value: MapType.terrain),
-                                DropdownMenuItem(child: Text('Hybrid'), value: MapType.hybrid),
+                                DropdownMenuItem(value: MapType.normal, child: Text('Default')),
+                                DropdownMenuItem(value: MapType.satellite, child: Text('Satellite')),
+                                DropdownMenuItem(value: MapType.terrain, child: Text('Terrain')),
+                                DropdownMenuItem(value: MapType.hybrid, child: Text('Hybrid')),
                               ],
                             ),
                           ),
@@ -117,11 +117,7 @@ class CustomMapView extends StatelessWidget {
               }
               return ResponsiveButton(
 
-                child: Text(
-                  "Submit",
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
-                ),
-                  buttonStyle:ElevatedButton.styleFrom(
+                buttonStyle:ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(24)),
@@ -133,7 +129,12 @@ class CustomMapView extends StatelessWidget {
                 final marker = mapController.markers.firstWhere(
                         (m) => m.markerId.value == 'searched_location');
                 Get.back(result: marker.position);
-              } , clickable: true);
+              } , clickable: true,
+
+                child: Text(
+                  "Submit",
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+                ));
             }),
           ),
 

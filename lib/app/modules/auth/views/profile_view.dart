@@ -20,7 +20,7 @@ class ProfileView extends StatelessWidget {
       body: SafeArea(
         child: Container(
           decoration: BoxDecoration(
-            color: AppColors.white,
+            color: Theme.of(context).colorScheme.background,
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(30.r),
               bottomRight: Radius.circular(30.r),
@@ -31,7 +31,7 @@ class ProfileView extends StatelessWidget {
               // HEADER
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-                color: AppColors.white,
+                color: Theme.of(context).colorScheme.background,
                 child: Row(
                   children: [
                     Text(
@@ -46,10 +46,7 @@ class ProfileView extends StatelessWidget {
                       style: Theme.of(context).textTheme.labelSmall,
                     ),
                     IconButton(
-                      icon: const Icon(
-                        Icons.history,
-                        color: AppColors.background1,
-                      ),
+                      icon: Icon(Icons.history),
                       onPressed: () => Get.toNamed(Routes.VIEWHISTORY),
                     ),
                   ],
@@ -89,31 +86,68 @@ class ProfileView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         CircleAvatar(
-                          radius: 100.r,
+                          radius: 75.r,
                           backgroundImage: profile.profilePicturePath != null
-                              ? NetworkImage('${ApiService().baseUrl}/${profile.profilePicturePath}')
-                              : const AssetImage("assets/backgrounds/default.png") as ImageProvider,
+                              ? NetworkImage(
+                            '${ApiService().baseUrl}/${profile.profilePicturePath}',
+                          )
+                              : AssetImage(
+                            Theme.of(context).brightness == Brightness.dark
+                                ? "assets/backgrounds/default_black.png"
+                                : "assets/backgrounds/default.png",
+                          ) as ImageProvider,
+
                         ),
-                        30.verticalSpace,
-                        ProfileInfoTile(icon: Icons.person, text: '${profile.firstName} ${profile.lastName}'),
+                        50.verticalSpace,
+                        ProfileInfoTile(
+                          icon: Icons.person,
+                          text: '${profile.firstName} ${profile.lastName}',
+                        ),
                         _buildDivider(),
-                        ProfileInfoTile(icon: Icons.phone, text: profile.phoneNumber ?? 'No Phone'),
+                        ProfileInfoTile(
+                          icon: Icons.phone,
+                          text: profile.phoneNumber ?? 'No Phone',
+                        ),
                         _buildDivider(),
                         ProfileInfoTile(icon: Icons.email, text: profile.email),
                         _buildDivider(),
-                        ProfileInfoTile(icon: Icons.location_on, text: profile.address ?? 'No Address'),
+                        ProfileInfoTile(
+                          icon: Icons.location_on,
+                          text: profile.address ?? 'No Address',
+                        ),
                         _buildDivider(),
+
+                        // عرض معلومات seller شرطياً فقط لو موجود
+                        if (profile.seller != null) ...[
+                          ProfileInfoTile(
+                            icon: Icons.store,
+                            text: "Seller Account",
+                          ),
+                          _buildDivider(),
+                          // لو بدك تعرض تفاصيل أكتر من seller مثل نوع الحساب:
+                          // ProfileInfoTile(icon: Icons.account_box, text: profile.seller.accountType?.name ?? ''),
+                          // _buildDivider(),
+                        ],
+
                         50.verticalSpace,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             TextButton(
-                              onPressed: () => Get.toNamed(Routes.UPDATEPROFILE),
-                              child: Text("Edit Profile", style: Theme.of(context).textTheme.labelSmall),
+                              onPressed:
+                                  () => Get.toNamed(Routes.UPDATEPROFILE),
+                              child: Text(
+                                "Edit Profile",
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
                             ),
                             TextButton(
-                              onPressed: () => Get.toNamed(Routes.RESETPASSWORD),
-                              child: Text("Reset Password", style: Theme.of(context).textTheme.labelSmall),
+                              onPressed:
+                                  () => Get.toNamed(Routes.RESETPASSWORD),
+                              child: Text(
+                                "Reset Password",
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
                             ),
                           ],
                         ),
@@ -126,17 +160,14 @@ class ProfileView extends StatelessWidget {
           ),
         ),
       ),
+
       bottomNavigationBar: CustomBottomNavBar(),
     );
   }
 
   Widget _buildDivider() => Padding(
     padding: EdgeInsets.symmetric(horizontal: 20.w),
-    child: Divider(
-      thickness: 1,
-      color: Colors.grey[300],
-      height: 5.h,
-    ),
+    child: Divider(thickness: 1, color: Colors.grey[300], height: 5.h),
   );
 }
 

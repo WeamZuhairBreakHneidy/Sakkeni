@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -14,7 +13,8 @@ abstract class HistoryController extends GetxController {
   abstract final HistoryTypeEnum type;
 
   final isLoading = false.obs;
-  final properties = <Datum>[].obs;
+  // **KEY CHANGE HERE: Allow properties to be nullable Datum objects**
+  final properties = <Datum?>[].obs;
   final propertiesModel = Rxn<PropertiesModel>();
   final currentPage = 1.obs;
   final hasMoreData = true.obs;
@@ -48,15 +48,17 @@ abstract class HistoryController extends GetxController {
         url: '$endpoint?page=$page',
       );
 
-      // إذا وصل هنا، response.statusCode == 200
       final model = PropertiesModel.fromJson(response.body);
       propertiesModel.value = model;
-      final fetchedData = model.data?.data ?? [];
+      // Ensure fetchedData can handle nulls if the API returns them in the list
+      final fetchedData = model.data?.data;
 
       if (isLoadMore) {
-        properties.addAll(fetchedData);
+        // Only add non-null items if fetchedData contains nulls, or if you expect it to
+        properties.addAll(fetchedData?.whereType<Datum>().toList() ?? []);
       } else {
-        properties.value = fetchedData;
+        // Assign only non-null items
+        properties.value = fetchedData?.whereType<Datum>().toList() ?? [];
       }
 
       hasMoreData.value = model.data?.nextPageUrl != null;
@@ -129,7 +131,8 @@ abstract class HistoryController extends GetxController {
           barrierDismissible: false,
         );
 
-    } else {
+      }
+      else {
         Get.snackbar(
           'Error',
           errorMessage,
@@ -150,6 +153,6 @@ abstract class HistoryController extends GetxController {
   }
 
   Datum? getPropertyById(int id) {
-    return properties.firstWhereOrNull((prop) => prop.id == id);
+    return properties.firstWhereOrNull((prop) => prop?.id == id);
   }
 }

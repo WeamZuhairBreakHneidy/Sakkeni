@@ -5,6 +5,8 @@ import 'package:test1/app/widgets/filter_sheet.dart';
 import '../../../core/theme/colors.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
+import '../../../widgets/upgrade-to-seller.dart';
+import '../../auth/controllers/profile_controller.dart';
 import '../controllers/properties_tab_controller.dart';
 import 'filtered_properties_view.dart';
 import 'tabbed_properties_view.dart';
@@ -24,14 +26,13 @@ class PropertiesUnifiedView extends StatelessWidget {
     });
 
     return Scaffold(
-      backgroundColor: AppColors.background1,
       body: Column(
         children: [
           buildHeaderSection(context),
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.background,
                 borderRadius: BorderRadius.all(Radius.circular(30.r)),
               ),
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
@@ -72,9 +73,10 @@ class PropertiesUnifiedView extends StatelessWidget {
   }
 }
 
+final ProfileController profileController = Get.find<ProfileController>();
+
 Widget buildHeaderSection(BuildContext context) {
   return Container(
-    color: AppColors.background1,
     padding: EdgeInsets.only(top: 61.h, left: 16.w, right: 16.w, bottom: 16.h),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,7 +94,7 @@ Widget buildHeaderSection(BuildContext context) {
               child: Container(
                 height: 45.h,
                 decoration: BoxDecoration(
-                  color: AppColors.white,
+                  color: Theme.of(context).colorScheme.background,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 padding: EdgeInsets.symmetric(horizontal: 12.w),
@@ -127,7 +129,7 @@ Widget buildHeaderSection(BuildContext context) {
                                   child: Container(
                                     height: 650.h,
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      color: Theme.of(context).colorScheme.background,
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(50.r),
                                       ),
@@ -146,12 +148,31 @@ Widget buildHeaderSection(BuildContext context) {
               ),
             ),
             SizedBox(width: 8.w),
-            IconButton(
-              icon: Icon(Icons.add_circle_rounded, color: AppColors.search),
-              onPressed: () {
-                Get.toNamed(Routes.ADDPROPERTY);
-              },
-            ),
+            Obx(() {
+              if (profileController.isLoading.value) {
+                return CircularProgressIndicator(); // أو زر غير مفعل
+              }
+
+              return IconButton(
+                icon: Icon(
+                  Icons.add_circle_rounded,
+                  color: AppColors.search,
+                  size: 35.w,
+                ),
+                onPressed: () {
+                  final isSeller = profileController.profileModel.value?.data?.seller != null;
+
+                  print('Is Seller (onPressed): $isSeller');
+
+                  if (isSeller) {
+                    Get.toNamed(Routes.ADDPROPERTY);
+                  } else {
+                    showUpgradeToSellerDialog();
+                  }
+                },
+              );
+            })
+            ,
           ],
         ),
       ],

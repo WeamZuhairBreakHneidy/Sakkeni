@@ -9,7 +9,8 @@ class MultiSelectChips extends StatelessWidget {
   final Color selectedColor;
   final Color unselectedColor;
   final Color borderColor;
-  final Color textColor;
+  final TextStyle ?textStyle;
+
 
   const MultiSelectChips({
     super.key,
@@ -19,7 +20,7 @@ class MultiSelectChips extends StatelessWidget {
     required this.selectedColor,
     required this.unselectedColor,
     required this.borderColor,
-    required this.textColor,
+    required this.textStyle,
   });
 
   @override
@@ -44,10 +45,7 @@ class MultiSelectChips extends StatelessWidget {
                     ),
                     child: Text(
                       option,
-                      style: TextStyle(
-                        color: textColor,
-                        fontSize: 13.sp,
-                      ),
+                      style: textStyle
                     ),
                   ),
                 ),

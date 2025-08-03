@@ -1,14 +1,45 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+// Add this import
 import '../../../core/theme/colors.dart';
+
 import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../bindings/add_property_binding.dart';
 import '../controllers/add_property_controller.dart';
+import '../widgets/buildStepCircle.dart';
+import '../widgets/buildStepLine.dart';
 import 'add_main_information_view.dart';
 
 class AddPropertyView extends GetView<AddpropertyController> {
   const AddPropertyView({super.key});
+
+  Future<void> _pickImages() async {
+    final picker = ImagePicker();
+    final pickedFiles = await picker.pickMultiImage(imageQuality: 75);
+
+    if (pickedFiles.length >= 3) {
+      controller.selectedImages.value =
+          pickedFiles.map((x) => File(x.path)).toList();
+    } else {
+      Get.snackbar("Note", "Please select at least 3 images.");
+    }
+  }
+
+  // New method to pick a video
+  Future<void> _pickVideo() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickVideo(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      controller.selectedVideo.value = File(pickedFile.path);
+    } else {
+      Get.snackbar("Note", "No video selected.");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +47,7 @@ class AddPropertyView extends GetView<AddpropertyController> {
       body: SafeArea(
         child: Container(
           decoration: BoxDecoration(
-            color: AppColors.white,
+            color: Theme.of(context).colorScheme.background,
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(30.r),
               bottomRight: Radius.circular(30.r),
@@ -32,7 +63,7 @@ class AddPropertyView extends GetView<AddpropertyController> {
                   top: 24.h,
                   bottom: 10.h,
                 ),
-                color: AppColors.white,
+                color: Theme.of(context).colorScheme.background,
                 child: Row(
                   children: [
                     Container(
@@ -48,7 +79,7 @@ class AddPropertyView extends GetView<AddpropertyController> {
                           height: 25.h,
                           child: Image.asset(
                             'assets/icons/property_icon.png',
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.background,
                             fit: BoxFit.contain,
                           ),
                         ),
@@ -57,7 +88,11 @@ class AddPropertyView extends GetView<AddpropertyController> {
                     SizedBox(width: 12.w),
                     Text(
                       "Add New Property",
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 16.sp,
                         color: const Color(0xFF294741),
@@ -67,20 +102,98 @@ class AddPropertyView extends GetView<AddpropertyController> {
                 ),
               ),
 
-              Padding(
-                padding: EdgeInsets.only(left: 50.w, right: 16.w),
-                child: Divider(height: 1, color: Colors.grey.shade300),
-              ),
-
               30.verticalSpace,
 
-              Text(
-                "Upload photos and video \n at least 3 photos and  1 video",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14.sp),
+              // Image and Video Selection Area
+              Expanded(
+                // Use Expanded to give available space
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Obx(() {
+                        final images = controller.selectedImages;
+                        return images.isNotEmpty
+                            ? Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 10.h,
+                          ),
+                          child: SizedBox(
+                            height: 200.h, // ممكن تزيد الارتفاع إذا حبيت
+                            child: PageView.builder(
+                              itemCount: images.length,
+                              controller: PageController(
+                                viewportFraction: 0.8,
+                              ),
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 8.w,
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                      12.r,
+                                    ),
+                                    child: Image.file(
+                                      images[index],
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        )
+                            : GestureDetector(
+                          onTap: _pickImages,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 16.h),
+                            child: Text(
+                              "Upload at least 3 photos",
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ),
+                        );
+                      }),
+                      SizedBox(height: 20.h),
+                      Obx(() {
+                        final video = controller.selectedVideo.value;
+                        if (video != null) {
+                          return Column(
+                            children: [
+                              Text(
+                                "Video Selected: ${video.path
+                                    .split('/')
+                                    .last}",
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+
+                              SizedBox(height: 10.h),
+                              // Optional: Display video thumbnail
+                            ],
+                          );
+                        } else {
+                          return GestureDetector(
+                            onTap: _pickVideo,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 16.h),
+                              child: Text(
+                                "Upload 1 video",
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ),
+                          );
+                        }
+                      }),
+                      SizedBox(height: 20.h),
+                    ],
+                  ),
+                ),
               ),
 
-              const Spacer(),
+              // Spacer removed as Expanded takes care of space
 
               // Step Indicator and Navigation
               Padding(
@@ -88,7 +201,6 @@ class AddPropertyView extends GetView<AddpropertyController> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    /// Previous (غير مفعّل هنا)
                     Text(
                       "Previous",
                       style: TextStyle(
@@ -101,17 +213,37 @@ class AddPropertyView extends GetView<AddpropertyController> {
                     /// Step Progress
                     Row(
                       children: [
-                        _buildStepCircle(isFilled: true),
-                        _buildStepLine(isFilled: true),
-                        _buildStepCircle(isFilled: false),
-                        _buildStepLine(isFilled: false),
-                        _buildStepCircle(isFilled: false),
+                        buildStepCircle(isFilled: true),
+                        buildStepLine(isFilled: true),
+                        buildStepCircle(isFilled: false),
+                        buildStepLine(isFilled: false),
+                        buildStepCircle(isFilled: false),
+                        buildStepLine(isFilled: false),
+                        buildStepCircle(isFilled: false),
                       ],
                     ),
 
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => AddmaininformationVeiw(), binding: AddpropertyBinding());
+                        if (controller.selectedImages.length < 3) {
+                          Get.snackbar(
+                            "Images Required",
+                            "Please upload at least 3 images before continuing.",
+                          );
+                          return;
+                        }
+                        if (controller.selectedVideo.value == null) {
+                          Get.snackbar(
+                            "Video Required",
+                            "Please upload 1 video before continuing.",
+                          );
+                          return;
+                        }
+
+                        Get.to(
+                              () => AddmaininformationVeiw(),
+                          binding: AddPropertyBinding(),
+                        );
                       },
                       child: Text(
                         "Next",
@@ -130,40 +262,6 @@ class AddPropertyView extends GetView<AddpropertyController> {
         ),
       ),
       bottomNavigationBar: CustomBottomNavBar(),
-    );
-  }
-
-  Widget _buildStepCircle({required bool isFilled}) {
-    return Container(
-      width: 20.w,
-      height: 20.w,
-      decoration: BoxDecoration(
-        color: Colors.transparent,
-        border: Border.all(color: const Color(0xFF294741), width: 2),
-        shape: BoxShape.circle,
-      ),
-      child: isFilled
-          ? Center(
-        child: Container(
-          width: 8.w,
-          height: 8.w,
-          decoration: const BoxDecoration(
-            color: Color(0xFF294741),
-            shape: BoxShape.circle,
-          ),
-        ),
-      )
-          : null,
-    );
-  }
-
-
-  Widget _buildStepLine({required bool isFilled}) {
-    return Container(
-      width: 20.w,
-      height: 2.h,
-      color: isFilled ? const Color(0xFF294741) : Colors.grey.shade300,
-      margin: EdgeInsets.symmetric(horizontal: 4.w),
     );
   }
 }

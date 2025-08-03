@@ -36,7 +36,9 @@ class MiniMapPicker extends StatelessWidget {
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied ||
-            permission == LocationPermission.deniedForever) return;
+            permission == LocationPermission.deniedForever) {
+          return;
+        }
       }
 
       Position pos = await Geolocator.getCurrentPosition(

@@ -6,6 +6,7 @@ abstract class Routes {
   static const GETSTARTED = _Paths.GETSTARTED;
   static const AUTH = _Paths.AUTH;
   static const REGISTER = _Paths.REGISTER;
+  static const LOGOUT = _Paths.LOGOUT;
   static const SPLASH = _Paths.SPLASH;
   static const ONBOARDING = _Paths.ONBOARDING;
   static const RENT = _Paths.RENT;
@@ -23,6 +24,8 @@ abstract class Routes {
   static const CUSTOM_MAP = _Paths.CUSTOM_MAP;
   static const ADDPROPERTY = _Paths.ADDPROPERTY;
   static const ApartmentForRentView = _Paths.ApartmentForRentView;
+  static const UPGRADETOSELLER = _Paths.UPGRADETOSELLER;
+  static const PROPERTY_DETAILS = _Paths.PROPERTY_DETAILS;
 }
 
 abstract class _Paths {
@@ -30,6 +33,7 @@ abstract class _Paths {
   static const HOME = '/home';
   static const GETSTARTED = '/getstarted';
   static const AUTH = '/auth';
+  static const LOGOUT = '/logout';
   static const REGISTER = '/register';
   static const SPLASH = '/splash';
   static const ONBOARDING = '/Onboarding';
@@ -46,5 +50,6 @@ abstract class _Paths {
   static const ADDMAINPROPERTY = '/addproperty';
   static const ApartmentForRentView = '/ApartmentForRentView';
   static const CUSTOM_MAP = '/CUSTOM_MAP';
-
+  static const UPGRADETOSELLER = '/upgradetoseller';
+  static const PROPERTY_DETAILS = '/property_details';
 }

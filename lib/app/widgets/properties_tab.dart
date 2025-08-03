@@ -37,6 +37,7 @@ class TabSelector extends StatelessWidget {
     final isSelected = controller.selectedTab.value == index;
     return GestureDetector(
       onTap: () {
+        controller.selectedTab.value = index;
         onTabSelected?.call(index);
       },
       child: Container(

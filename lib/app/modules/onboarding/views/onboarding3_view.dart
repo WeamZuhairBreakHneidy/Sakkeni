@@ -115,7 +115,7 @@ class OnboardingPage3 extends StatelessWidget {
                           effect: WormEffect(
                             dotHeight: 10.h,
                             dotWidth: 10.w,
-                            activeDotColor: AppColors.background1,
+                            activeDotColor: AppColors.background,
                             dotColor: AppColors.SmoothPageIndicator.withOpacity(0.4),
                           ),
                         ),

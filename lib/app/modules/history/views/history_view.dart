@@ -12,23 +12,22 @@ import '../../../widgets/property_card.dart';
 import '../controllers/history_rent_controller.dart';
 import '../controllers/history_purchase_controller.dart';
 import '../controllers/history_offplan_controller.dart';
+import '../../../data/models/properties-model.dart'; // Ensure Datum is imported if it's not already
 
 class HistoryView extends StatelessWidget {
   final ScrollController scrollController = ScrollController();
   final tabController = Get.put(HistoryTabController(), permanent: true);
+  late final dynamic _controller; // Declared as late final
 
   HistoryView({super.key}) {
-    final controller = getControllerForCurrentRoute();
-
+    _controller = getControllerForCurrentRoute(); // Initialized in the constructor
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
           scrollController.position.maxScrollExtent - 100) {
-        controller.loadNextPage();
+        _controller.loadNextPage();
       }
     });
   }
-
-  late final dynamic controller = getControllerForCurrentRoute();
 
   dynamic getControllerForCurrentRoute() {
     final typeParam = Get.parameters['type'] ?? 'rent';
@@ -47,12 +46,11 @@ class HistoryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background1,
       body: Column(
         children: [
           // Header
           Container(
-            color: AppColors.white,
+            color:  Theme.of(context).colorScheme.background,
             padding: EdgeInsets.only(
               top: 50.h,
               left: 20.w,
@@ -98,7 +96,7 @@ class HistoryView extends StatelessWidget {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: AppColors.white,
+                color:  Theme.of(context).colorScheme.background,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(30.r),
                   bottomRight: Radius.circular(30.r),
@@ -106,8 +104,9 @@ class HistoryView extends StatelessWidget {
               ),
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
               child: Obx(() {
-                final props = controller.properties;
-                final isLoading = controller.isLoading.value;
+                final props = _controller.properties;
+                final isLoading = _controller.isLoading.value;
+                final hasMoreData = _controller.hasMoreData.value;
 
                 if (props.isEmpty && isLoading) {
                   return Center(
@@ -126,54 +125,65 @@ class HistoryView extends StatelessWidget {
                   return const Center(child: Text("No properties found."));
                 }
                 return ListView.builder(
+                  itemCount: props.length + (hasMoreData ? 1 : 0),
                   controller: scrollController,
-                  itemCount: props.length + 1,
                   itemBuilder: (context, index) {
                     if (index < props.length) {
-                      final property = props[index]; // Datum object
+                      final Datum? property = props[index];
 
-                      final imageUrl =
-                          "${ApiService().baseUrl}/${property.coverImage?.imagePath ?? ''}";
+                      if (property == null) {
+                        print('Warning: Found a null property object at index $index. Skipping.');
+                        return const SizedBox.shrink();
+                      }
+
+                      final String imageUrl;
+                      String? imagePath = property.coverImage?.imagePath;
+                      if (imagePath != null && imagePath.isNotEmpty) {
+                        imageUrl = "${ApiService().baseUrl}/$imagePath";
+                      } else {
+                        imageUrl = 'https://via.placeholder.com/150';
+                      }
+
                       final price =
-                          property.rent?.price?.toStringAsFixed(0) ??
-                          property.purchase?.price?.toStringAsFixed(0) ??
-                          property.offplan?.overallPayment?.toStringAsFixed(
-                            0,
-                          ) ??
-                          '0';
+                          property.rent?.price.toStringAsFixed(0) ??
+                              property.purchase?.price.toStringAsFixed(0) ??
+                              property.offplan?.overallPayment.toStringAsFixed(0) ??
+                              '0';
 
                       final location =
                           "${property.location?.country?.name ?? ''}, ${property.location?.city?.name ?? ''}";
-                      final lease =
-                          property.rent?.leasePeriod?.toString() ?? '';
+                      final lease = property.rent?.leasePeriod.toString() ?? '';
                       final propertyType = property.propertyType?.name ?? '';
                       final subType =
                           property.residential?.residentialPropertyType?.name ??
-                          property.commercial?.commercialPropertyType?.name ??
-                          '';
+                              property.commercial?.commercialPropertyType?.name ??
+                              '';
 
-                      return PropertyCard(
-                        imageUrl: imageUrl,
-                        price: "\$$price",
-                        leasePeriod: lease,
-                        location: location,
-                        propertyType: propertyType,
-                        subType: subType,
-                        onTap: () {
-                          // فتح تفاصيل العقار
-                        },
+                      // **هنا التعديل: نغلف PropertyCard بـ SizedBox لتعيين ارتفاع محدد**
+                      return SizedBox(
+                        height: 200.h, // يمكنك تعديل هذا الارتفاع ليناسب تصميم بطاقتك
+                        child: PropertyCard(
+                          imageUrl: imageUrl,
+                          price: "\$$price",
+                          leasePeriod: lease,
+                          location: location,
+                          propertyType: propertyType,
+                          subType: subType,
+                          onTap: () {
+                            // Navigate to property details if needed
+                          },
+                        ),
                       );
                     } else {
                       return Obx(
-                        () =>
-                            controller.isLoading.value
-                                ? const Padding(
-                                  padding: EdgeInsets.all(16.0),
-                                  child: Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                )
-                                : const SizedBox(),
+                            () => _controller.isLoading.value && _controller.hasMoreData.value
+                            ? const Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        )
+                            : const SizedBox(),
                       );
                     }
                   },

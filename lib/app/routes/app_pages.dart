@@ -1,16 +1,11 @@
 import 'package:get/get.dart';
-import 'package:test1/app/modules/addproperty/views/add_main_information_view.dart';
-import 'package:test1/app/modules/addproperty/views/apartment_for_rent_view.dart';
-import 'package:test1/app/modules/auth/bindings/reset_password_binding.dart';
-import 'package:test1/app/modules/auth/views/profile_view.dart';
-import 'package:test1/app/modules/auth/views/reset_password_view.dart';
-import 'package:test1/app/modules/auth/views/update_profile_view.dart';
-import 'package:test1/app/modules/history/bindings/history_binding.dart';
-import 'package:test1/app/modules/properties/bindings/properties_binding.dart';
 
-
+import '../modules/PropertyDetails/bindings/property_details_binding.dart';
+import '../modules/PropertyDetails/views/property_details_view.dart';
 import '../modules/addproperty/bindings/add_property_binding.dart';
+import '../modules/addproperty/views/add_main_information_view.dart';
 import '../modules/addproperty/views/add_property_view.dart';
+import '../modules/addproperty/views/apartment_for_rent_view.dart';
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/bindings/register_binding.dart';
 import '../modules/auth/bindings/reset_password_binding.dart';
@@ -33,6 +28,8 @@ import '../modules/properties/bindings/properties_binding.dart';
 import '../modules/properties/views/properties_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
+import '../modules/upgradetoseller/bindings/upgradetoseller_binding.dart';
+import '../modules/upgradetoseller/views/upgradetoseller_view.dart';
 
 part 'app_routes.dart';
 
@@ -54,7 +51,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.HOME,
-      page: () =>  HomeView(),
+      page: () => HomeView(),
       binding: HomeBinding(),
     ),
     //Auth
@@ -98,21 +95,34 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CUSTOM_MAP,
-      page: () =>  CustomMapView(),
+      page: () => CustomMapView(),
       binding: CustomMapBinding(),
     ),
     GetPage(
       name: _Paths.ADDPROPERTY,
-      page: () =>  AddPropertyView(),
-      binding: AddpropertyBinding(),
-    ),  GetPage(
-      name: _Paths.ADDMAINPROPERTY,
-      page: () =>  AddmaininformationVeiw(),
-      binding: AddpropertyBinding(),
-    ), GetPage(
-      name: _Paths.ApartmentForRentView,
-      page: () =>  ApartmentForRentView(),
-      binding: AddpropertyBinding(),
+      page: () => AddPropertyView(),
+      binding: AddPropertyBinding(),
     ),
+    GetPage(
+      name: _Paths.ADDMAINPROPERTY,
+      page: () => AddmaininformationVeiw(),
+      binding: AddPropertyBinding(),
+    ),
+    GetPage(
+      name: _Paths.ApartmentForRentView,
+      page: () => ApartmentForRentView(),
+      binding: AddPropertyBinding(),
+    ),
+    GetPage(
+      name: _Paths.UPGRADETOSELLER,
+      page: () => const UpgradeToSellerView(),
+      binding: UpgradeToSellerBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROPERTY_DETAILS,
+      page: () =>  PropertyDetailsView(),
+      binding: PropertyDetailsBinding(),
+    ),
+
   ];
 }

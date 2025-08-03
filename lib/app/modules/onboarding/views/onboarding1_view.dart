@@ -58,7 +58,7 @@ class OnboardingPage1 extends StatelessWidget {
                 const Spacer(),
                 Padding(
                   padding: EdgeInsets.only(
-                    bottom: 12.h,
+                    bottom: 35.h,
                     left: 170.w,
                     right: 24.w,
 
@@ -72,7 +72,7 @@ class OnboardingPage1 extends StatelessWidget {
                         effect: WormEffect(
                           dotHeight: 10.h,
                           dotWidth: 10.w,
-                          activeDotColor: AppColors.background1,
+                          activeDotColor: AppColors.background,
                           dotColor: AppColors.SmoothPageIndicator.withOpacity(0.4),
                         ),
                       ),

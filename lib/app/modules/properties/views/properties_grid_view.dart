@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import '../../../core/theme/colors.dart';
 import '../../../data/services/api_service.dart';
+import '../../../routes/app_pages.dart';
 import '../../../widgets/property_card.dart';
 
 class PropertiesGridView extends StatelessWidget {
@@ -59,17 +61,17 @@ class PropertiesGridView extends StatelessWidget {
               "${ApiService().baseUrl}/${property.coverImage?.imagePath ?? ''}";
           final price =
               property.rent?.price?.toStringAsFixed(0) ??
-                  property.purchase?.price?.toStringAsFixed(0) ??
-                  property.offplan?.overallPayment?.toStringAsFixed(0) ??
-                  '0';
+              property.purchase?.price?.toStringAsFixed(0) ??
+              property.offplan?.overallPayment?.toStringAsFixed(0) ??
+              '0';
           final location =
               "${property.location?.country?.name ?? ''}, ${property.location?.city?.name ?? ''}";
           final lease = property.rent?.leasePeriod?.toString() ?? '';
           final propertyType = property.propertyType?.name ?? '';
           final subType =
               property.residential?.residentialPropertyType?.name ??
-                  property.commercial?.commercialPropertyType?.name ??
-                  '';
+              property.commercial?.commercialPropertyType?.name ??
+              '';
 
           return PropertyCard(
             imageUrl: imageUrl,
@@ -78,7 +80,14 @@ class PropertiesGridView extends StatelessWidget {
             location: location,
             propertyType: propertyType,
             subType: subType,
-            onTap: () {},
+            onTap: () {
+              print(property.id);
+              print(property.id);
+              print(property.id);
+              print(property.id);
+
+              Get.toNamed(Routes.PROPERTY_DETAILS, arguments: property.id);
+            },
           );
         },
       ),

@@ -12,33 +12,34 @@ class SplashView extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(OnboardingController());
 
-    return  Stack(
-          children: [
-            Positioned.fill(
-              child: Image.asset(
-                DeviceUtils.isPhone()
-                    ? 'assets/backgrounds/phone_background.jpeg'
-                    : 'assets/backgrounds/tablet_background.jpeg',
-                fit: BoxFit.fitHeight,
+    return Stack(
+            children: [
+              Positioned.fill(
+                child: Image.asset(
+                  DeviceUtils.isPhone()
+                      ? 'assets/backgrounds/phone_background.jpeg'
+                      : 'assets/backgrounds/tablet_background.jpeg',
+                  fit: BoxFit.fitHeight,
+                ),
               ),
-            ),
 
-            Positioned.fill(
-              child: Container(
-                color: AppColors.background,
+              Positioned.fill(
+                child: Container(
+                  color: AppColors.background1,
+                ),
               ),
-            ),
 
-            SizedBox(height: 20.h),
+              SizedBox(height: 20.h),
 
-            // شعار التطبيق
-            Center(
-              child: Image.asset(
-                'assets/Logo.png',
-                height: 100.h,
+              // شعار التطبيق
+              Center(
+                child: Image.asset(
+                  'assets/Logo.png',
+                  height: 100.h,
+                ),
               ),
-            ),
-          ],
+            ],
+
 
 
     );

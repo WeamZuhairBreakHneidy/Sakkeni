@@ -5,6 +5,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../controllers/custom_map_controller.dart';
 
 class CustomMap extends StatelessWidget {
+  const CustomMap({super.key});
+
   @override
   Widget build(BuildContext context) {
     final CustomMapController mapController = Get.find();
