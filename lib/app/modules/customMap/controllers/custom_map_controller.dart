@@ -94,7 +94,7 @@ class CustomMapController extends GetxController {
 
         // Clear only search markers, keep my_location marker
         markers.removeWhere((m) => m.markerId.value == 'searched_location');
-
+        print("Tapped at: $position");
         markers.add(
           Marker(
             markerId: MarkerId('searched_location'),
