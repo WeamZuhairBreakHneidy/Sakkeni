@@ -105,7 +105,7 @@ class FilterSheet extends StatelessWidget {
                       buttonWidth: 150.w,
                       buttonHeight: 40.h,
                       buttonStyle: ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(AppColors.background1),
+                        backgroundColor: WidgetStatePropertyAll(AppColors.background),
                       ),
                       onPressed: () async {
                         final filterBody = controller.buildFilterBody();
@@ -178,7 +178,7 @@ class FilterSheet extends StatelessWidget {
         controller.currentPage.value = 1;
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.background1,
+        backgroundColor: AppColors.background,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.r),
         ),
@@ -281,7 +281,7 @@ class FilterSheet extends StatelessWidget {
                   height: 40.w,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: isSelected ? AppColors.background1 : Colors.grey.shade300,
+                      color: isSelected ? AppColors.background: Colors.grey.shade300,
                       borderRadius: BorderRadius.circular(10.r)),
                   child: Text(
                     isMore ? "More" : "$val",
@@ -312,7 +312,7 @@ class FilterSheet extends StatelessWidget {
                   height: 40.w,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: isSelected ? AppColors.background1 : Colors.grey.shade300,
+                      color: isSelected ? AppColors.background : Colors.grey.shade300,
                       borderRadius: BorderRadius.circular(10.r)),
                   child: Text(
                     isMore ? "More" : "$val",

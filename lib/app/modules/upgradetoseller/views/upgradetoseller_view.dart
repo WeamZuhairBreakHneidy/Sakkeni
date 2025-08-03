@@ -19,7 +19,6 @@ class UpgradeToSellerView extends GetView<UpgradeToSellerController> {
     double contentHeight =
         screenHeight - 260.h; // 200 تقريبًا لحجم الشعار + الهوامش
     return Scaffold(
-      backgroundColor: AppColors.background1,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,7 +68,7 @@ class UpgradeToSellerView extends GetView<UpgradeToSellerController> {
                               textStyle: TextStyle(
                                 fontSize: 26.sp,
                                 fontWeight: FontWeight.bold,
-                                color: AppColors.background1,
+                                color: AppColors.background,
                               ),
                               speed: const Duration(milliseconds: 100),
                             ),
@@ -227,7 +226,7 @@ class UpgradeToSellerView extends GetView<UpgradeToSellerController> {
                   style: TextStyle(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.background1,
+                    color: AppColors.background,
                   ),
                   overflow: TextOverflow.ellipsis, // لو طويل جدًا، نقط
                 ),

@@ -29,7 +29,6 @@ class HistoryView extends StatelessWidget {
     });
   }
 
-  // Helper method to get the correct controller based on route parameters.
   dynamic getControllerForCurrentRoute() {
     final typeParam = Get.parameters['type'] ?? 'rent';
     switch (typeParam) {
@@ -47,12 +46,11 @@ class HistoryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background1,
       body: Column(
         children: [
           // Header
           Container(
-            color: AppColors.white,
+            color:  Theme.of(context).colorScheme.background,
             padding: EdgeInsets.only(
               top: 50.h,
               left: 20.w,
@@ -98,7 +96,7 @@ class HistoryView extends StatelessWidget {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: AppColors.white,
+                color:  Theme.of(context).colorScheme.background,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(30.r),
                   bottomRight: Radius.circular(30.r),
@@ -147,14 +145,14 @@ class HistoryView extends StatelessWidget {
                       }
 
                       final price =
-                          property.rent?.price?.toStringAsFixed(0) ??
-                              property.purchase?.price?.toStringAsFixed(0) ??
-                              property.offplan?.overallPayment?.toStringAsFixed(0) ??
+                          property.rent?.price.toStringAsFixed(0) ??
+                              property.purchase?.price.toStringAsFixed(0) ??
+                              property.offplan?.overallPayment.toStringAsFixed(0) ??
                               '0';
 
                       final location =
                           "${property.location?.country?.name ?? ''}, ${property.location?.city?.name ?? ''}";
-                      final lease = property.rent?.leasePeriod?.toString() ?? '';
+                      final lease = property.rent?.leasePeriod.toString() ?? '';
                       final propertyType = property.propertyType?.name ?? '';
                       final subType =
                           property.residential?.residentialPropertyType?.name ??

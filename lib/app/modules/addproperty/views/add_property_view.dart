@@ -44,11 +44,10 @@ class AddPropertyView extends GetView<AddpropertyController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background1,
       body: SafeArea(
         child: Container(
           decoration: BoxDecoration(
-            color: AppColors.white,
+            color: Theme.of(context).colorScheme.background,
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(30.r),
               bottomRight: Radius.circular(30.r),
@@ -64,7 +63,7 @@ class AddPropertyView extends GetView<AddpropertyController> {
                   top: 24.h,
                   bottom: 10.h,
                 ),
-                color: AppColors.white,
+                color: Theme.of(context).colorScheme.background,
                 child: Row(
                   children: [
                     Container(
@@ -80,7 +79,7 @@ class AddPropertyView extends GetView<AddpropertyController> {
                           height: 25.h,
                           child: Image.asset(
                             'assets/icons/property_icon.png',
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.background,
                             fit: BoxFit.contain,
                           ),
                         ),
@@ -152,11 +151,7 @@ class AddPropertyView extends GetView<AddpropertyController> {
                             child: Text(
                               "Upload at least 3 photos",
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
-                              ),
+                              style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ),
                         );
@@ -171,7 +166,9 @@ class AddPropertyView extends GetView<AddpropertyController> {
                                 "Video Selected: ${video.path
                                     .split('/')
                                     .last}",
+                                style: Theme.of(context).textTheme.bodySmall,
                               ),
+
                               SizedBox(height: 10.h),
                               // Optional: Display video thumbnail
                             ],
@@ -184,11 +181,7 @@ class AddPropertyView extends GetView<AddpropertyController> {
                               child: Text(
                                 "Upload 1 video",
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                                style: Theme.of(context).textTheme.bodySmall,
                               ),
                             ),
                           );

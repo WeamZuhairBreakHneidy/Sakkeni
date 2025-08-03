@@ -36,8 +36,7 @@ class RegisterView extends GetView<RegisterController> {
             ),
           ),
           // Opacity Layer
-          Container(color: Theme.of(context).scaffoldBackgroundColor),
-
+          Container(color: AppColors.background1),
           Form(
             key: controller.registerFormKey,
             child: ListView(

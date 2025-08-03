@@ -26,14 +26,13 @@ class PropertiesUnifiedView extends StatelessWidget {
     });
 
     return Scaffold(
-      backgroundColor: AppColors.background1,
       body: Column(
         children: [
           buildHeaderSection(context),
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.background,
                 borderRadius: BorderRadius.all(Radius.circular(30.r)),
               ),
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
@@ -78,7 +77,6 @@ final ProfileController profileController = Get.find<ProfileController>();
 
 Widget buildHeaderSection(BuildContext context) {
   return Container(
-    color: AppColors.background1,
     padding: EdgeInsets.only(top: 61.h, left: 16.w, right: 16.w, bottom: 16.h),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,7 +94,7 @@ Widget buildHeaderSection(BuildContext context) {
               child: Container(
                 height: 45.h,
                 decoration: BoxDecoration(
-                  color: AppColors.white,
+                  color: Theme.of(context).colorScheme.background,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 padding: EdgeInsets.symmetric(horizontal: 12.w),
@@ -131,7 +129,7 @@ Widget buildHeaderSection(BuildContext context) {
                                   child: Container(
                                     height: 650.h,
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      color: Theme.of(context).colorScheme.background,
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(50.r),
                                       ),

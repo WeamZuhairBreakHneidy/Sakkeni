@@ -123,5 +123,6 @@ class AppPages {
       page: () =>  PropertyDetailsView(),
       binding: PropertyDetailsBinding(),
     ),
+
   ];
 }

@@ -10,7 +10,6 @@ class GetstartedView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background1,
       body: Stack(
         children: [
           Column(
@@ -76,10 +75,10 @@ class GetstartedView extends StatelessWidget {
 
                           buttonStyle: ButtonStyle(
                             backgroundColor: WidgetStatePropertyAll(
-                              AppColors.background1,
+                              AppColors.background,
                             ),
                             overlayColor: WidgetStatePropertyAll(
-                              AppColors.background1,
+                              AppColors.background,
                             ),
                             padding: WidgetStatePropertyAll(
                               EdgeInsets.symmetric(vertical: 10.r),

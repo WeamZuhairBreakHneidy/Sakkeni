@@ -44,12 +44,12 @@ class PropertyDetailsView extends GetView<PropertyDetailsController> {
                         height: 250.h,
                         child: PageView.builder(
                           controller: controller.pageController,
-                          itemCount: property.images!.length,
+                          itemCount: property.images.length,
                           onPageChanged: (index) {
                             controller.currentImageIndex.value = index;
                           },
                           itemBuilder: (context, index) {
-                            final imagePath = property.images![index].imagePath;
+                            final imagePath = property.images[index].imagePath;
                             return Padding(
                               padding: EdgeInsets.symmetric(
                                 horizontal: 16.w,
@@ -78,12 +78,12 @@ class PropertyDetailsView extends GetView<PropertyDetailsController> {
                           },
                         ),
                       ),
-                      if (property.images!.length > 1)
+                      if (property.images.length > 1)
                         Obx(
                           () => Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children:
-                                property.images!.asMap().entries.map((entry) {
+                                property.images.asMap().entries.map((entry) {
                                   return Container(
                                     width: 8.w,
                                     height: 8.h,
@@ -116,7 +116,7 @@ class PropertyDetailsView extends GetView<PropertyDetailsController> {
                     children: [
                       if (property.purchase?.price != null)
                         Text(
-                          '\$${property.purchase?.price?.toStringAsFixed(0) ?? 'N/A'}',
+                          '\$${property.purchase?.price.toStringAsFixed(0) ?? 'N/A'}',
                           style: TextStyle(
                             fontSize: 28.sp,
                             fontWeight: FontWeight.bold,
@@ -198,13 +198,13 @@ class PropertyDetailsView extends GetView<PropertyDetailsController> {
                           _buildFurnishedStatus(property.purchase!.isFurnished),
                         SizedBox(height: 16.h),
                       ],
-                      if (property.amenities!.isNotEmpty) ...[
+                      if (property.amenities.isNotEmpty) ...[
                         _buildSectionTitle('Amenities'),
                         Wrap(
                           spacing: 8.w,
                           runSpacing: 8.h,
                           children:
-                              property.amenities!
+                              property.amenities
                                   .map(
                                     (amenity) => Chip(
                                       label: Text(amenity.name ?? ''),
@@ -217,12 +217,12 @@ class PropertyDetailsView extends GetView<PropertyDetailsController> {
                         ),
                         SizedBox(height: 16.h),
                       ],
-                      if (property.directions!.isNotEmpty) ...[
+                      if (property.directions.isNotEmpty) ...[
                         _buildSectionTitle('Directions'),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children:
-                              property.directions!
+                              property.directions
                                   .map(
                                     (direction) => Padding(
                                       padding: EdgeInsets.only(bottom: 4.h),

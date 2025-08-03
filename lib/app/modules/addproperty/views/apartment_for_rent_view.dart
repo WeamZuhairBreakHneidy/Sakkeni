@@ -26,11 +26,10 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background1,
       body: SafeArea(
         child: Container(
           decoration: BoxDecoration(
-            color: AppColors.white,
+            color: Theme.of(context).colorScheme.background,
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(30.r)),
           ),
           child: SingleChildScrollView(
@@ -40,7 +39,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
                 30.verticalSpace,
                 _buildTabSection(context),
                 30.verticalSpace,
-                Obx(() => _buildDynamicFields()),
+                Obx(() => _buildDynamicFields(context)),
                 40.verticalSpace,
                 _buildNavigationButtons(),
               ],
@@ -64,7 +63,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
               'assets/icons/property_icon.png',
               width: 25.w,
               height: 25.h,
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.background,
             ),
           ),
           12.horizontalSpace,
@@ -129,7 +128,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
     );
   }
 
-  Widget _buildDynamicFields() {
+  Widget _buildDynamicFields(BuildContext context) {
     final sellType = controller.selectedSellTypeIndex.value;
     final propertyType = controller.selectedPropertyTypeIndex.value;
 
@@ -140,12 +139,14 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
         return _buildFields(
           isApartment: true,
           showBuildingAndApartment: true,
+            context: context
         );
       } else if (propertyType == 1) {
         // Villa for Rent
         return _buildFields(
           isApartment: true,
           showBuildingAndApartment: true,
+            context: context
         );
       } else if (propertyType == 2) {
         // Office for Rent
@@ -153,6 +154,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
           isApartment: true,
           showBuildingAndApartment: true,
           isOffice: true,
+            context: context
         );
       }
     } else if (sellType == 1) {
@@ -162,6 +164,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
         return _buildFields(
           isApartment: true,
           showBuildingAndApartment: true,
+            context: context
         );
       }
       else if (propertyType == 1) {
@@ -169,25 +172,27 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
         return _buildFields(
           isApartment: true,
           showBuildingAndApartment: true,
+          context: context
         );      } else if (propertyType == 2) {
         // Office for Sale
         return _buildFields(
           isApartment: true,
           showBuildingAndApartment: true,
           isOffice: true,
+            context: context
         );
       }
     } else if (sellType == 2) {
       // Off Plan
       if (propertyType == 0) {
         // Apartment Off Plan
-        return _buildOffPlanApartmentFields();
+        return _buildOffPlanApartmentFields(context);
       } else if (propertyType == 1) {
         // Villa Off Plan
-        return _buildOffPlanApartmentFields();
+        return _buildOffPlanApartmentFields(context);
       } else if (propertyType == 2) {
         // Office Off Plan
-        return _buildOffPlanOfficeFields();
+        return _buildOffPlanOfficeFields(context);
       }
     }
 
@@ -198,6 +203,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
     required bool isApartment,
     required bool showBuildingAndApartment,
     bool isOffice = false,
+    required BuildContext context
   }) {
     List<String> labels = ["Price", "Area", "Floor Number"];
     List<TextEditingController> controllers = [
@@ -237,7 +243,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
           20.verticalSpace,
           _buildLeasePeriodUnitDropdown(),
           20.verticalSpace,
-          _buildFurnishingToggle(),
+          _buildFurnishingToggle(context),
         ],
       ),
     );
@@ -264,7 +270,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
   }
 
 
-  Widget _buildOffPlanApartmentFields() {
+  Widget _buildOffPlanApartmentFields(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
@@ -331,14 +337,14 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
             controller: controller.apartmentNumberController,
             keyboardType: TextInputType.number,
           ),
-          _buildPaymentPlanPageView(),
+          _buildPaymentPlanPageView(context),
         ],
       ),
     );
   }
 
 
-  Widget _buildOffPlanOfficeFields() {
+  Widget _buildOffPlanOfficeFields(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
@@ -398,17 +404,18 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
             controller: controller.balconiesController,
             keyboardType: TextInputType.number,
           ),
-          _buildPaymentPlanPageView(),
+          _buildPaymentPlanPageView(context),
         ],
       ),
     );
   }
 
 
-  Widget _buildPaymentPlanPageView() {
+  Widget _buildPaymentPlanPageView(BuildContext context) {
     // قائمة بويدجت كل مرحلة دفع
     final List<Widget> paymentPhases = [
       _buildPaymentPhaseFields(
+        context: context,
         phaseName: "Phase 0 (Down Payment)",
         // phaseController: controller.payPlanPhase0Controller, // Removed
         durationValueController: controller.payPlanDurationValue0Controller,
@@ -417,6 +424,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
         controller.payPlanPercentage0Controller,
       ),
       _buildPaymentPhaseFields(
+        context: context,
         phaseName: "Phase 1 (During Construction)",
         // phaseController: controller.payPlanPhase1Controller, // Removed
         durationValueController: controller.payPlanDurationValue1Controller,
@@ -424,6 +432,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
         percentageController: controller.payPlanPercentage1Controller,
       ),
       _buildPaymentPhaseFields(
+        context: context,
         phaseName: "Phase 2 (On Completion)",
         // phaseController: controller.payPlanPhase2Controller, // Removed
         durationValueController: controller.payPlanDurationValue2Controller,
@@ -533,6 +542,8 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
     required TextEditingController durationValueController,
     required TextEditingController durationUnitController,
     required TextEditingController percentageController,
+    required BuildContext context
+
   }) {
     return Card(
       elevation: 2,
@@ -549,7 +560,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.background1,
+                  color: AppColors.background,
                 ),
               ),
               10.verticalSpace,
@@ -571,7 +582,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
                   DropdownButtonFormField<String>(
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: AppColors.white,
+                      fillColor:Theme.of(context).colorScheme.background,
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: AppColors.border),
                         borderRadius: BorderRadius.circular(8.r),
@@ -761,7 +772,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
     );
   }
 
-  Widget _buildFurnishingToggle() {
+  Widget _buildFurnishingToggle( BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -773,9 +784,9 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
         Obx(
               () => Row(
             children: [
-              _buildFurnishingOption("Yes"),
+              _buildFurnishingOption("Yes",context),
               12.horizontalSpace,
-              _buildFurnishingOption("No"),
+              _buildFurnishingOption("No",context),
             ],
           ),
         ),
@@ -783,7 +794,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
     );
   }
 
-  Widget _buildFurnishingOption(String value) {
+  Widget _buildFurnishingOption(String value,BuildContext context) {
     final isSelected = controller.furnishing.value == value;
 
     return Expanded(
@@ -792,7 +803,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 12.h),
           decoration: BoxDecoration(
-            color: isSelected ? const Color(0xFF294741) : AppColors.white,
+            color: isSelected ? const Color(0xFF294741) :Theme.of(context).colorScheme.background,
             borderRadius: BorderRadius.circular(8.r),
             border: Border.all(color: AppColors.border),
           ),

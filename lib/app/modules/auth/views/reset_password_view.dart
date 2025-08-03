@@ -17,11 +17,12 @@ class ResetPasswordView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: SafeArea(
         child: Container(
           height: Get.height,
           decoration: BoxDecoration(
-            color: AppColors.white,
+            color: Theme.of(context).colorScheme.background,
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(30.r),
               bottomRight: Radius.circular(30.r),
@@ -37,7 +38,8 @@ class ResetPasswordView extends StatelessWidget {
                       horizontal: 20.w,
                       vertical: 25.h,
                     ),
-                    color: AppColors.white,
+              color: Theme.of(context).colorScheme.background,
+
                     child: Text(
                       "Reset Password",
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -66,7 +68,7 @@ class ResetPasswordView extends StatelessWidget {
                       ),
                       obsecure: true,
                       validatorType: ValidatorType.Password,
-                      fillColor: AppColors.white,
+                      fillColor: Theme.of(context).colorScheme.background,
                       borderColor: AppColors.border,
                     ),
                   ),
@@ -82,7 +84,8 @@ class ResetPasswordView extends StatelessWidget {
                       ),
                       obsecure: true,
                       validatorType: ValidatorType.Password,
-                      fillColor: AppColors.white,
+                      fillColor:Theme.of(context).colorScheme.background,
+
                       borderColor: AppColors.border,
                     ),
                   ),
@@ -98,7 +101,8 @@ class ResetPasswordView extends StatelessWidget {
                       ),
                       obsecure: true,
                       validatorType: ValidatorType.Password,
-                      fillColor: AppColors.white,
+                      fillColor:            Theme.of(context).colorScheme.background,
+
                       borderColor: AppColors.border,
                     ),
                   ),

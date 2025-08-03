@@ -28,7 +28,7 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
       body: SafeArea(
         child: Container(
           decoration: BoxDecoration(
-            color: AppColors.white,
+            color:Theme.of(context).colorScheme.background,
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(30.r),
               bottomRight: Radius.circular(30.r),
@@ -69,10 +69,7 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
                         20.verticalSpace,
                         Text(
                           "Country Name",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         SizedBox(height: 8.h),
                         _buildDropdown(
@@ -87,10 +84,7 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
                         SizedBox(height: 20.h),
                         Text(
                           "City Name",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         SizedBox(height: 8.h),
                         _buildDropdown(
@@ -109,10 +103,7 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
                         SizedBox(height: 25.h),
                         Text(
                           "Exposure",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         SizedBox(height: 8.h),
                         MultiSelectChips(
@@ -129,17 +120,14 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
                           selectedItems: controller.selectedDirections,
                           onItemToggle: controller.toggleDirection,
                           selectedColor: AppColors.tabtextselected,
-                          unselectedColor: AppColors.tab,
+                          unselectedColor: Theme.of(context).colorScheme.background,
                           borderColor: AppColors.tab,
-                          textColor: AppColors.tabtext,
+                          textStyle:Theme.of(context).textTheme.bodySmall,
                         ),
                         SizedBox(height: 25.h),
                         Text(
                           "Address",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         SizedBox(height: 8.h),
                         InputTextFormField(
@@ -147,7 +135,7 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
                           textEditingController: controller.location,
                           obsecure: false,
                           validatorType: ValidatorType.Default,
-                          fillColor: AppColors.white,
+                          fillColor: Theme.of(context).colorScheme.background,
                           borderColor: AppColors.border,
                         ),
                         SizedBox(height: 10.h),
@@ -274,7 +262,7 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
                   'assets/icons/property_icon.png',
                   width: 25.w,
                   height: 25.h,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.background,
                 ),
               ),
               12.horizontalSpace,

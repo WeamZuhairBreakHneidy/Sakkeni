@@ -30,7 +30,7 @@ class PropertyCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(16.r),
       onTap: onTap,
       child: Container(
-        decoration: _cardDecoration(),
+        decoration: _cardDecoration(context),
         clipBehavior: Clip.antiAlias,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,8 +58,8 @@ class PropertyCard extends StatelessWidget {
     );
   }
 
-  BoxDecoration _cardDecoration() => BoxDecoration(
-    color: Colors.white,
+  BoxDecoration _cardDecoration(BuildContext context) => BoxDecoration(
+    color: Theme.of(context).colorScheme.background,
     borderRadius: BorderRadius.circular(16.r),
     boxShadow: [
       BoxShadow(

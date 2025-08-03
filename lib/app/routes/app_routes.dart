@@ -6,6 +6,7 @@ abstract class Routes {
   static const GETSTARTED = _Paths.GETSTARTED;
   static const AUTH = _Paths.AUTH;
   static const REGISTER = _Paths.REGISTER;
+  static const LOGOUT = _Paths.LOGOUT;
   static const SPLASH = _Paths.SPLASH;
   static const ONBOARDING = _Paths.ONBOARDING;
   static const RENT = _Paths.RENT;
@@ -32,6 +33,7 @@ abstract class _Paths {
   static const HOME = '/home';
   static const GETSTARTED = '/getstarted';
   static const AUTH = '/auth';
+  static const LOGOUT = '/logout';
   static const REGISTER = '/register';
   static const SPLASH = '/splash';
   static const ONBOARDING = '/Onboarding';

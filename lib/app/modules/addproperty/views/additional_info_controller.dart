@@ -22,7 +22,6 @@ class AdditionalInfoView extends GetView<AddpropertyController> {
     double screenHeight = MediaQuery.of(context).size.height;
     double contentHeight = screenHeight - 100.h; //
     return Scaffold(
-      backgroundColor: AppColors.background1,
       body: SafeArea(
         child: Container(
           height: contentHeight,
