@@ -151,7 +151,7 @@ class AddPropertyView extends GetView<AddpropertyController> {
                             child: Text(
                               "Upload at least 3 photos",
                               textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.bodySmall,
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
                         );
@@ -166,7 +166,7 @@ class AddPropertyView extends GetView<AddpropertyController> {
                                 "Video Selected: ${video.path
                                     .split('/')
                                     .last}",
-                                style: Theme.of(context).textTheme.bodySmall,
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
 
                               SizedBox(height: 10.h),
@@ -181,7 +181,7 @@ class AddPropertyView extends GetView<AddpropertyController> {
                               child: Text(
                                 "Upload 1 video",
                                 textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.bodySmall,
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
                             ),
                           );

@@ -28,7 +28,7 @@ class AppTheme {
         bodyMedium: TextStyle(fontSize: 16.r, color: AppColors.primary),
         titleMedium: TextStyle(fontSize: 14.r, color: AppColors.background, fontWeight: FontWeight.w600),
         titleSmall: TextStyle(fontSize: 12.r, color: AppColors.background, fontWeight: FontWeight.w400),
-        bodySmall: TextStyle(fontSize: 12.r, color: AppColors.background, fontWeight: FontWeight.w400), // Note: This is for a dark background
+        bodySmall: TextStyle(fontSize: 12.r, color: AppColors.white, fontWeight: FontWeight.w400), // Note: This is for a dark background
         labelLarge: TextStyle(fontSize: 16.r, fontWeight: FontWeight.bold, color: AppColors.primary),
         labelSmall: TextStyle(fontSize: 10.r, color: AppColors.primary),
       ),
