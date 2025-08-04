@@ -11,6 +11,8 @@ class OnboardingPage2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: ConstrainedBox(
@@ -72,7 +74,7 @@ class OnboardingPage2 extends StatelessWidget {
                       ),
                     ),
 
-                    SizedBox(height: 205.h),
+                    SizedBox(height: 199.h),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

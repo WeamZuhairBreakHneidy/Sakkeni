@@ -31,7 +31,7 @@ abstract class Routes {
 abstract class _Paths {
   _Paths._();
   static const HOME = '/home';
-  static const GETSTARTED = '/getstarted';
+  static const GETSTARTED = '/getStarted';
   static const AUTH = '/auth';
   static const LOGOUT = '/logout';
   static const REGISTER = '/register';
@@ -46,10 +46,10 @@ abstract class _Paths {
   static const UPDATEPROFILE = '/updateprofile';
   static const RESETPASSWORD = '/resetpassword';
   static const VIEWHISTORY = '/history';
-  static const ADDPROPERTY = '/addproperty';
-  static const ADDMAINPROPERTY = '/addproperty';
+  static const ADDPROPERTY = '/addProperty';
+  static const ADDMAINPROPERTY = '/addProperty';
   static const ApartmentForRentView = '/ApartmentForRentView';
   static const CUSTOM_MAP = '/CUSTOM_MAP';
-  static const UPGRADETOSELLER = '/upgradetoseller';
+  static const UPGRADETOSELLER = '/upgradeToSeller';
   static const PROPERTY_DETAILS = '/property_details';
 }

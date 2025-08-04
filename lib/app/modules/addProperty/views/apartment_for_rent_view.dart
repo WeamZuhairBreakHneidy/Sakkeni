@@ -280,7 +280,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
             label: "Area",
             hint: "Select Area",
             controller: controller.areaController,
-            keyboardType: TextInputType.number,
+            keyboardType: ValidatorType.Number,
           ),
           _buildDateField(
             label: "Delivery Date",
@@ -291,25 +291,25 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
             label: "First Payment",
             hint: "First Payment",
             controller: controller.firstPayController,
-            keyboardType: TextInputType.number,
+            keyboardType: ValidatorType.Number,
           ),
           _buildTextField(
             label: "Overall Payment",
             hint: "Overall Payment",
             controller: controller.overallPaymentController,
-            keyboardType: TextInputType.number,
+            keyboardType: ValidatorType.Number,
           ),
           _buildTextField(
             label: "Bathrooms",
             hint: "",
             controller: controller.bathroomsController,
-            keyboardType: TextInputType.number, // Ensure numeric input
+            keyboardType:ValidatorType.Number, // Ensure numeric input
           ),
           _buildTextField(
             label: "Balconies",
             hint: "",
             controller: controller.balconiesController,
-            keyboardType: TextInputType.number, // Ensure numeric input
+            keyboardType:ValidatorType.Number, // Ensure numeric input
           ),
 
           // استبدال حقول Payment Plan الفردية بـ PageView
@@ -317,25 +317,25 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
             label: "Bedrooms",
             hint: "Bedrooms",
             controller: controller.bedroomsController,
-            keyboardType: TextInputType.number,
+            keyboardType: ValidatorType.Number,
           ),
           _buildTextField(
             label: "Floor Number",
             hint: "Floor Number",
             controller: controller.floorNumberController,
-            keyboardType: TextInputType.number,
+            keyboardType:ValidatorType.Number,
           ),
           _buildTextField(
             label: "Building Number",
             hint: "Building Number",
             controller: controller.buildingNumberController,
-            keyboardType: TextInputType.number,
+            keyboardType:ValidatorType.Number,
           ),
           _buildTextField(
             label: "Apartment Number",
             hint: "Apartment Number",
             controller: controller.apartmentNumberController,
-            keyboardType: TextInputType.number,
+            keyboardType: ValidatorType.Number,
           ),
           _buildPaymentPlanPageView(context),
         ],
@@ -354,7 +354,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
             label: "Area",
             hint: "Select Area",
             controller: controller.areaController,
-            keyboardType: TextInputType.number,
+            keyboardType: ValidatorType.Number,
           ),
           _buildDateField(
             label: "Delivery Date",
@@ -365,13 +365,13 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
             label: "First Payment",
             hint: "First Payment",
             controller: controller.firstPayController,
-            keyboardType: TextInputType.number,
+            keyboardType:ValidatorType.Number,
           ),
           _buildTextField(
             label: "Overall Payment",
             hint: "Overall Payment",
             controller: controller.overallPaymentController,
-            keyboardType: TextInputType.number,
+            keyboardType: ValidatorType.Number,
           ),
 
 
@@ -380,29 +380,29 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
             label: "Floor Number",
             hint: "Floor Number",
             controller: controller.floorNumberController,
-            keyboardType: TextInputType.number,
+            keyboardType: ValidatorType.Number,
           ),
           _buildTextField(
             label: "Building Number",
             hint: "Building Number",
             controller: controller.buildingNumberController,
-            keyboardType: TextInputType.number,
+            keyboardType: ValidatorType.Number,
           ),
           _buildTextField(
             label: "Apartment Number",
             hint: "Apartment Number",
             controller: controller.apartmentNumberController,
-            keyboardType: TextInputType.number,
+            keyboardType: ValidatorType.Number,
           ),  _buildTextField(
             label: "bathrooms",
             hint: "bathrooms ",
             controller: controller.bathroomsController,
-            keyboardType: TextInputType.number,
+            keyboardType: ValidatorType.Number,
           ), _buildTextField(
             label: "balconies",
             hint: "balconies ",
             controller: controller.balconiesController,
-            keyboardType: TextInputType.number,
+            keyboardType: ValidatorType.Number,
           ),
           _buildPaymentPlanPageView(context),
         ],
@@ -569,7 +569,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
                 label: "Duration Value",
                 hint: "e.g., 1 (for 1 month)",
                 controller: durationValueController,
-                keyboardType: TextInputType.number,
+                keyboardType:ValidatorType.Number,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -610,7 +610,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
                 label: "Percentage",
                 hint: "e.g., 60%",
                 controller: percentageController,
-                keyboardType: TextInputType.number,
+                keyboardType: ValidatorType.Number,
               ),
             ],
           ),
@@ -632,18 +632,18 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
           hint: labels[i],
           controller: controllers[i],
           // تحديد نوع لوحة المفاتيح بناءً على التسمية
-          keyboardType:
-          (labels[i].contains("Price") ||
-              labels[i].contains("Area") ||
-              labels[i].contains("Number") ||
-              labels[i].contains("Bedrooms") ||
-              labels[i].contains("Bathrooms") ||
-              labels[i].contains("Balconies") ||
-              labels[i].contains("Lease Period value") ||
-              labels[i].contains("Garage") ||
-              labels[i].contains("Yard Area"))
-              ? TextInputType.number
-              : TextInputType.text,
+          keyboardType:  ValidatorType.Number
+          // (labels[i].contains("Price") ||
+          //     labels[i].contains("Area") ||
+          //     labels[i].contains("Number") ||
+          //     labels[i].contains("Bedrooms") ||
+          //     labels[i].contains("Bathrooms") ||
+          //     labels[i].contains("Balconies") ||
+          //     labels[i].contains("Lease Period value") ||
+          //     labels[i].contains("Garage") ||
+          //     labels[i].contains("Yard Area"))
+
+              // : TextInputType.text,
         ),
       ),
     );
@@ -653,7 +653,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
     required String label,
     required String hint,
     required TextEditingController controller,
-    TextInputType keyboardType = TextInputType.text,
+    required ValidatorType keyboardType ,
   }) {
     return Padding(
       padding: EdgeInsets.only(bottom: 15.h),
@@ -669,9 +669,9 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
             textEditingController: controller,
             obsecure: false,
             hintText: hint,
-            validatorType: ValidatorType.Default,
             fillColor: AppColors.white,
             borderColor: AppColors.border,
+            validatorType: keyboardType,
           ),
         ],
       ),
