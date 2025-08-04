@@ -13,6 +13,7 @@ class MiniMapPicker extends StatelessWidget {
 
   Future<String> _getAddressFromLatLng(LatLng latLng) async {
     try {
+
       List<Placemark> placemarks =
       await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
       if (placemarks.isNotEmpty) {
