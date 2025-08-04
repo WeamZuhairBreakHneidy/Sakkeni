@@ -122,7 +122,7 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
                           selectedColor: AppColors.tabtextselected,
                           unselectedColor: Theme.of(context).colorScheme.background,
                           borderColor: AppColors.tab,
-                          textStyle:Theme.of(context).textTheme.bodySmall,
+                          textStyle:Theme.of(context).textTheme.bodyMedium,
                         ),
                         SizedBox(height: 25.h),
                         Text(

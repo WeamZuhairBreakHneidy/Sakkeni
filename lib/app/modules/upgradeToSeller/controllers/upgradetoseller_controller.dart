@@ -68,22 +68,20 @@ class UpgradeToSellerController extends GetxController {
           Get.snackbar(
             'Success',
             message ?? 'Account upgraded successfully',
-            snackPosition: SnackPosition.BOTTOM,
+            snackPosition: SnackPosition.TOP,
             colorText: Colors.white,
           );
           box.write('userType', selectedAccountType.value);
           Get.find<ProfileController>().fetchProfile();
           final profileData = profileController.profileModel.value?.data;
           final isSeller = profileData?.seller != null;
-print(isSeller);
-
+          print(isSeller);
 
           Get.offAllNamed(Routes.HOME);
         } else {
           _handleErrorMessage(message, body);
         }
-      }
-      else {
+      } else {
         Get.snackbar(
           'Upgrade Failed',
           'Something went wrong (${response.statusCode}). Please try again.',
@@ -99,7 +97,7 @@ print(isSeller);
           "please fill the address and phone number fields in your profile first") {
         Get.snackbar(
           'Incomplete Profile',
-          '',  // خلي النص الفارغ عشان نستخدم messageText بدل message
+          '', // خلي النص الفارغ عشان نستخدم messageText بدل message
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: AppColors.primary,
           margin: EdgeInsets.all(16),
@@ -112,7 +110,11 @@ print(isSeller);
             children: [
               Text(
                 'Please fill the address and phone number fields in your profile first.',
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: Colors.white),
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 8),
@@ -120,17 +122,21 @@ print(isSeller);
                 onPressed: () => Get.toNamed(Routes.UPDATEPROFILE),
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.white24,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6),
+                  ),
                 ),
                 child: Text(
                   'Update Profile',
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         );
-
       }
       print("j"); // يمكن إزالة هذا السطر إذا لم يكن ضروريًا للتصحيح
 
