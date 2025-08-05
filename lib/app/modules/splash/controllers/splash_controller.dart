@@ -10,15 +10,22 @@ class SplashController extends GetxController {
   }
 
   void _navigate() async {
-    await Future.delayed(Duration(seconds: 2)); // optional delay
+    await Future.delayed(Duration(seconds: 2)); // Optional splash delay
 
     final box = GetStorage();
+    final seenOnboarding = box.read('seenOnboarding') ?? false;
     final rememberMe = box.read('rememberMe') ?? false;
-    final hasUser= box.read('hasUser') ?? false;
-    if (rememberMe && hasUser) {
-      Get.toNamed(Routes.HOME);
-    } else {
+    final hasUser = box.hasData('user'); // safer than manual flag
+
+    if (!seenOnboarding) {
+      // First time user → show onboarding
       Get.offAllNamed(Routes.ONBOARDING);
+    } else if (rememberMe && hasUser) {
+      // Already logged in → go to home
+      Get.offAllNamed(Routes.HOME);
+    } else {
+      // Seen onboarding but not logged in
+      Get.offAllNamed(Routes.AUTH);
     }
   }
 }

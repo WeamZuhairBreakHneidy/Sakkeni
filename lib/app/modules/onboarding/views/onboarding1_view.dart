@@ -14,117 +14,142 @@ class OnboardingPage1 extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned.fill(child: Container(color: AppColors.white)),
-          Positioned.fill(child: Container(color: AppColors.gray1)),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
+          // Background image + overlay
+          Positioned.fill(
             child: Image.asset(
               'assets/backgrounds/onboarding1.png',
-              width: 1.sw,
-              height: 340.h,
               fit: BoxFit.cover,
             ),
           ),
-          SafeArea(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 80.h),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 76.w),
-                    child: Image.asset('assets/Logo.png', height: 58.h),
-                  ),
-                  SizedBox(height: 83.5.h),
-                  Text(
-                    "One Platform,\nInfinite Property Possibilities",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: AppColors.surface,
-                      fontSize: 22.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(height: 60.h),
-                  Text(
-                    "Buy sell or rent, your next move\nstarts here!",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: AppColors.surface, fontSize: 16.sp),
-                  ),
-                ],
-              ),
-            ),
+          Positioned.fill(
+            child: Container(color: AppColors.gray1),
           ),
 
-          Positioned(
-            bottom: 44.h,
-            left: 24.w,
-            right: 24.w,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Opacity(
-                  opacity: 0.0,
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Text(
-                      "Previous",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w500,
-                        shadows: [
-                          Shadow(
-                            color: Colors.black45,
-                            blurRadius: 4,
-                            offset: Offset(1, 1),
+          SafeArea(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 24.w),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // Top content
+                          Padding(
+                            padding: EdgeInsets.only(top: 40.h),
+                            child: Column(
+                              children: [
+                                Image.asset(
+                                  'assets/Logo.png',
+                                  height: 90.h,
+                                  fit: BoxFit.contain,
+                                ),
+                                SizedBox(height: 40.h),
+                                Text(
+                                  "One Platform,\nInfinite Property Possibilities",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: AppColors.surface,
+                                    fontSize: 30.sp,
+                                    fontWeight: FontWeight.w600,
+                                    shadows: [
+                                      Shadow(
+                                        color: Colors.black54,
+                                        blurRadius: 4,
+                                        offset: Offset(1, 1),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 20.h),
+                                Text(
+                                  "Buy sell or rent, your next move\nstarts here!",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: AppColors.surface,
+                                    fontSize: 16.sp,
+                                    shadows: [
+                                      Shadow(
+                                        color: Colors.black45,
+                                        blurRadius: 4,
+                                        offset: Offset(1, 1),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          // Bottom buttons
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 24.h, top: 32.h),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Opacity(
+                                  opacity: 0.0,
+                                  child: Text(
+                                    "Previous",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w500,
+                                      shadows: [
+                                        Shadow(
+                                          color: Colors.black45,
+                                          blurRadius: 4,
+                                          offset: Offset(1, 1),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SmoothPageIndicator(
+                                  controller: controller,
+                                  count: 3,
+                                  effect: WormEffect(
+                                    dotHeight: 10.h,
+                                    dotWidth: 10.w,
+                                    activeDotColor: AppColors.background,
+                                    dotColor: AppColors.SmoothPageIndicator.withOpacity(0.4),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    controller.nextPage(
+                                      duration: Duration(milliseconds: 300),
+                                      curve: Curves.easeInOut,
+                                    );
+                                  },
+                                  child: Text(
+                                    "Next",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w500,
+                                      shadows: [
+                                        Shadow(
+                                          color: Colors.black45,
+                                          blurRadius: 4,
+                                          offset: Offset(1, 1),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ),
-                ),
-
-                // مؤشر الصفحات
-                SmoothPageIndicator(
-                  controller: controller,
-                  count: 3,
-                  effect: WormEffect(
-                    dotHeight: 10.h,
-                    dotWidth: 10.w,
-                    activeDotColor: AppColors.background,
-                    dotColor: AppColors.SmoothPageIndicator.withOpacity(0.4),
-                  ),
-                ),
-
-                // زر "Next"
-                GestureDetector(
-                  onTap: () {
-                    controller.nextPage(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
-                  },
-                  child: Text(
-                    "Next",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w500,
-                      shadows: [
-                        Shadow(
-                          color: Colors.black45,
-                          blurRadius: 4,
-                          offset: Offset(1, 1),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+                );
+              },
             ),
           ),
         ],
