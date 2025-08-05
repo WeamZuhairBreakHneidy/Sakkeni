@@ -9,7 +9,7 @@ class PropertyDetail {
   final String message;
   final Data? data;
 
-  factory PropertyDetail.fromJson(Map<String, dynamic> json){
+  factory PropertyDetail.fromJson(Map<String, dynamic> json) {
     return PropertyDetail(
       status: json["status"] ?? false,
       message: json["message"] ?? "",
@@ -22,7 +22,6 @@ class PropertyDetail {
     "message": message,
     "data": data?.toJson(),
   };
-
 }
 
 class Data {
@@ -52,6 +51,9 @@ class Data {
     required this.location,
     required this.residential,
     required this.purchase,
+    // تم إضافة هذه الحقول الجديدة من الـ JSON
+    required this.commercial,
+    required this.offPlan,
   });
 
   final int id;
@@ -66,7 +68,7 @@ class Data {
   final int propertyTypeId;
   final int sellTypeId;
   final int availabilityStatusId;
-  final dynamic description;
+  final String description; // تم تعديل النوع إلى String
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final List<AvailabilityStatus> amenities;
@@ -80,7 +82,11 @@ class Data {
   final Residential? residential;
   final Purchase? purchase;
 
-  factory Data.fromJson(Map<String, dynamic> json){
+  // تم إضافة هذه الحقول الجديدة من الـ JSON
+  final Commercial? commercial;
+  final OffPlan? offPlan;
+
+  factory Data.fromJson(Map<String, dynamic> json) {
     return Data(
       id: json["id"] ?? 0,
       locationId: json["location_id"] ?? 0,
@@ -94,19 +100,56 @@ class Data {
       propertyTypeId: json["property_type_id"] ?? 0,
       sellTypeId: json["sell_type_id"] ?? 0,
       availabilityStatusId: json["availability_status_id"] ?? 0,
-      description: json["description"],
+      description: json["description"] ?? "",
+      // تم تعديل النوع هنا أيضاً
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
       updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
-      amenities: json["amenities"] == null ? [] : List<AvailabilityStatus>.from(json["amenities"]!.map((x) => AvailabilityStatus.fromJson(x))),
-      directions: json["directions"] == null ? [] : List<AvailabilityStatus>.from(json["directions"]!.map((x) => AvailabilityStatus.fromJson(x))),
-      images: json["images"] == null ? [] : List<Image1>.from(json["images"]!.map((x) => Image1.fromJson(x))),
-      propertyType: json["property_type"] == null ? null : AvailabilityStatus.fromJson(json["property_type"]),
-      availabilityStatus: json["availability_status"] == null ? null : AvailabilityStatus.fromJson(json["availability_status"]),
-      ownershipType: json["ownership_type"] == null ? null : AvailabilityStatus.fromJson(json["ownership_type"]),
+      amenities:
+          json["amenities"] == null
+              ? []
+              : List<AvailabilityStatus>.from(
+                json["amenities"]!.map((x) => AvailabilityStatus.fromJson(x)),
+              ),
+      directions:
+          json["directions"] == null
+              ? []
+              : List<AvailabilityStatus>.from(
+                json["directions"]!.map((x) => AvailabilityStatus.fromJson(x)),
+              ),
+      images:
+          json["images"] == null
+              ? []
+              : List<Image1>.from(
+                json["images"]!.map((x) => Image1.fromJson(x)),
+              ),
+      propertyType:
+          json["property_type"] == null
+              ? null
+              : AvailabilityStatus.fromJson(json["property_type"]),
+      availabilityStatus:
+          json["availability_status"] == null
+              ? null
+              : AvailabilityStatus.fromJson(json["availability_status"]),
+      ownershipType:
+          json["ownership_type"] == null
+              ? null
+              : AvailabilityStatus.fromJson(json["ownership_type"]),
       owner: json["owner"] == null ? null : Owner.fromJson(json["owner"]),
-      location: json["location"] == null ? null : Location.fromJson(json["location"]),
-      residential: json["residential"] == null ? null : Residential.fromJson(json["residential"]),
-      purchase: json["purchase"] == null ? null : Purchase.fromJson(json["purchase"]),
+      location:
+          json["location"] == null ? null : Location.fromJson(json["location"]),
+      residential:
+          json["residential"] == null
+              ? null
+              : Residential.fromJson(json["residential"]),
+      purchase:
+          json["purchase"] == null ? null : Purchase.fromJson(json["purchase"]),
+      // تم إضافة هذه الحقول الجديدة من الـ JSON
+      commercial:
+          json["commercial"] == null
+              ? null
+              : Commercial.fromJson(json["commercial"]),
+      offPlan:
+          json["off_plan"] == null ? null : OffPlan.fromJson(json["off_plan"]),
     );
   }
 
@@ -136,8 +179,10 @@ class Data {
     "location": location?.toJson(),
     "residential": residential?.toJson(),
     "purchase": purchase?.toJson(),
+    // تم إضافة هذه الحقول الجديدة
+    "commercial": commercial?.toJson(),
+    "off_plan": offPlan?.toJson(),
   };
-
 }
 
 class AvailabilityStatus {
@@ -146,8 +191,8 @@ class AvailabilityStatus {
     required this.name,
     required this.createdAt,
     required this.updatedAt,
-    required this.pivot,
-    required this.countryId,
+    this.pivot, // Pivot أصبح قابلاً للتفريغ (nullable) لأنه لا يظهر في كل الحالات
+    this.countryId, // countryId أصبح قابلاً للتفريغ
   });
 
   final int id;
@@ -155,16 +200,16 @@ class AvailabilityStatus {
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final Pivot? pivot;
-  final int countryId;
+  final int? countryId;
 
-  factory AvailabilityStatus.fromJson(Map<String, dynamic> json){
+  factory AvailabilityStatus.fromJson(Map<String, dynamic> json) {
     return AvailabilityStatus(
       id: json["id"] ?? 0,
       name: json["name"] ?? "",
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
       updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
       pivot: json["pivot"] == null ? null : Pivot.fromJson(json["pivot"]),
-      countryId: json["country_id"] ?? 0,
+      countryId: json["country_id"],
     );
   }
 
@@ -176,25 +221,20 @@ class AvailabilityStatus {
     "pivot": pivot?.toJson(),
     "country_id": countryId,
   };
-
 }
 
 class Pivot {
-  Pivot({
-    required this.propertyId,
-    required this.amenityId,
-    required this.directionId,
-  });
+  Pivot({required this.propertyId, this.amenityId, this.directionId});
 
   final int propertyId;
-  final int amenityId;
-  final int directionId;
+  final int? amenityId;
+  final int? directionId;
 
-  factory Pivot.fromJson(Map<String, dynamic> json){
+  factory Pivot.fromJson(Map<String, dynamic> json) {
     return Pivot(
       propertyId: json["property_id"] ?? 0,
-      amenityId: json["amenity_id"] ?? 0,
-      directionId: json["direction_id"] ?? 0,
+      amenityId: json["amenity_id"],
+      directionId: json["direction_id"],
     );
   }
 
@@ -203,7 +243,6 @@ class Pivot {
     "amenity_id": amenityId,
     "direction_id": directionId,
   };
-
 }
 
 class Image1 {
@@ -221,7 +260,7 @@ class Image1 {
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
-  factory Image1.fromJson(Map<String, dynamic> json){
+  factory Image1.fromJson(Map<String, dynamic> json) {
     return Image1(
       id: json["id"] ?? 0,
       propertyId: json["property_id"] ?? 0,
@@ -238,7 +277,6 @@ class Image1 {
     "created_at": createdAt?.toIso8601String(),
     "updated_at": updatedAt?.toIso8601String(),
   };
-
 }
 
 class Location {
@@ -266,7 +304,7 @@ class Location {
   final AvailabilityStatus? country;
   final AvailabilityStatus? city;
 
-  factory Location.fromJson(Map<String, dynamic> json){
+  factory Location.fromJson(Map<String, dynamic> json) {
     return Location(
       id: json["id"] ?? 0,
       countryId: json["country_id"] ?? 0,
@@ -276,8 +314,14 @@ class Location {
       additionalInfo: json["additional_info"] ?? "",
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
       updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
-      country: json["country"] == null ? null : AvailabilityStatus.fromJson(json["country"]),
-      city: json["city"] == null ? null : AvailabilityStatus.fromJson(json["city"]),
+      country:
+          json["country"] == null
+              ? null
+              : AvailabilityStatus.fromJson(json["country"]),
+      city:
+          json["city"] == null
+              ? null
+              : AvailabilityStatus.fromJson(json["city"]),
     );
   }
 
@@ -293,7 +337,6 @@ class Location {
     "country": country?.toJson(),
     "city": city?.toJson(),
   };
-
 }
 
 class Owner {
@@ -321,7 +364,7 @@ class Owner {
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
-  factory Owner.fromJson(Map<String, dynamic> json){
+  factory Owner.fromJson(Map<String, dynamic> json) {
     return Owner(
       id: json["id"] ?? 0,
       firstName: json["first_name"] ?? "",
@@ -348,7 +391,6 @@ class Owner {
     "created_at": createdAt?.toIso8601String(),
     "updated_at": updatedAt?.toIso8601String(),
   };
-
 }
 
 class Purchase {
@@ -368,7 +410,7 @@ class Purchase {
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
-  factory Purchase.fromJson(Map<String, dynamic> json){
+  factory Purchase.fromJson(Map<String, dynamic> json) {
     return Purchase(
       id: json["id"] ?? 0,
       propertyId: json["property_id"] ?? 0,
@@ -387,7 +429,6 @@ class Purchase {
     "created_at": createdAt?.toIso8601String(),
     "updated_at": updatedAt?.toIso8601String(),
   };
-
 }
 
 class Residential {
@@ -409,7 +450,7 @@ class Residential {
   final DateTime? updatedAt;
   final AvailabilityStatus? residentialPropertyType;
 
-  factory Residential.fromJson(Map<String, dynamic> json){
+  factory Residential.fromJson(Map<String, dynamic> json) {
     return Residential(
       id: json["id"] ?? 0,
       propertyId: json["property_id"] ?? 0,
@@ -417,7 +458,10 @@ class Residential {
       residentialPropertyTypeId: json["residential_property_type_id"] ?? 0,
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
       updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
-      residentialPropertyType: json["residential_property_type"] == null ? null : AvailabilityStatus.fromJson(json["residential_property_type"]),
+      residentialPropertyType:
+          json["residential_property_type"] == null
+              ? null
+              : AvailabilityStatus.fromJson(json["residential_property_type"]),
     );
   }
 
@@ -430,5 +474,106 @@ class Residential {
     "updated_at": updatedAt?.toIso8601String(),
     "residential_property_type": residentialPropertyType?.toJson(),
   };
+}
 
+class Commercial {
+  Commercial({
+    required this.id,
+    required this.propertyId,
+    required this.floor,
+    required this.buildingNumber,
+    required this.apartmentNumber,
+    required this.commercialPropertyTypeId,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.commercialPropertyType,
+  });
+
+  final int id;
+  final int propertyId;
+  final int floor;
+  final int buildingNumber;
+  final int apartmentNumber;
+  final int commercialPropertyTypeId;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final AvailabilityStatus? commercialPropertyType;
+
+  factory Commercial.fromJson(Map<String, dynamic> json) {
+    return Commercial(
+      id: json["id"] ?? 0,
+      propertyId: json["property_id"] ?? 0,
+      floor: json["floor"] ?? 0,
+      buildingNumber: json["building_number"] ?? 0,
+      apartmentNumber: json["apartment_number"] ?? 0,
+      commercialPropertyTypeId: json["commercial_property_type_id"] ?? 0,
+      createdAt: DateTime.tryParse(json["created_at"] ?? ""),
+      updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
+      commercialPropertyType:
+          json["commercial_property_type"] == null
+              ? null
+              : AvailabilityStatus.fromJson(json["commercial_property_type"]),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "property_id": propertyId,
+    "floor": floor,
+    "building_number": buildingNumber,
+    "apartment_number": apartmentNumber,
+    "commercial_property_type_id": commercialPropertyTypeId,
+    "created_at": createdAt?.toIso8601String(),
+    "updated_at": updatedAt?.toIso8601String(),
+    "commercial_property_type": commercialPropertyType?.toJson(),
+  };
+}
+
+class OffPlan {
+  OffPlan({
+    required this.id,
+    required this.propertyId,
+    required this.deliveryDate,
+    required this.overallPayment,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.paymentPhases,
+  });
+
+  final int id;
+  final int propertyId;
+  final DateTime? deliveryDate;
+  final num overallPayment;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final List<AvailabilityStatus> paymentPhases;
+
+  factory OffPlan.fromJson(Map<String, dynamic> json) {
+    return OffPlan(
+      id: json["id"] ?? 0,
+      propertyId: json["property_id"] ?? 0,
+      deliveryDate: DateTime.tryParse(json["delivery_date"] ?? ""),
+      overallPayment: json["overall_payment"] ?? 0,
+      createdAt: DateTime.tryParse(json["created_at"] ?? ""),
+      updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
+      paymentPhases:
+          json["payment_phases"] == null
+              ? []
+              : List<AvailabilityStatus>.from(
+                json["payment_phases"]!.map(
+                  (x) => AvailabilityStatus.fromJson(x),
+                ),
+              ),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "property_id": propertyId,
+    "delivery_date": deliveryDate?.toIso8601String(),
+    "overall_payment": overallPayment,
+    "created_at": createdAt?.toIso8601String(),
+    "updated_at": updatedAt?.toIso8601String(),
+    "payment_phases": paymentPhases.map((x) => x.toJson()).toList(),
+  };
 }

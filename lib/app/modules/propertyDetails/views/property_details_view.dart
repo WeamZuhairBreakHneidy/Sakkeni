@@ -1,8 +1,10 @@
+//... الكود في الأعلى كما هو
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:test1/app/core/theme/colors.dart';
 import '../../../data/services/api_service.dart';
+import '../controllers/expandable_text_controller.dart';
 import '../controllers/property_details_controller.dart';
 import '../models/property_details_model.dart' as property_model;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,7 +33,7 @@ class PropertyDetailsView extends GetView<PropertyDetailsController> {
           return const Center(child: Text('No property details found.'));
         } else {
           final property_model.Data property =
-              controller.propertyDetails.value!.data!;
+          controller.propertyDetails.value!.data!;
 
           return CustomScrollView(
             slivers: [
@@ -58,21 +60,21 @@ class PropertyDetailsView extends GetView<PropertyDetailsController> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(12.r),
                                 child:
-                                    imagePath.isNotEmpty
-                                        ? Image.network(
-                                          '${ApiService().baseUrl}/${imagePath.trim()}',
-                                          fit: BoxFit.cover,
-                                          errorBuilder:
-                                              (context, error, stackTrace) =>
-                                                  const Icon(
-                                                    Icons.broken_image,
-                                                    size: 100,
-                                                  ),
-                                        )
-                                        : Image.asset(
-                                          'assets/Logo.png',
-                                          fit: BoxFit.cover,
-                                        ),
+                                imagePath.isNotEmpty
+                                    ? Image.network(
+                                  '${ApiService().baseUrl}/${imagePath.trim()}',
+                                  fit: BoxFit.cover,
+                                  errorBuilder:
+                                      (context, error, stackTrace) =>
+                                  const Icon(
+                                    Icons.broken_image,
+                                    size: 100,
+                                  ),
+                                )
+                                    : Image.asset(
+                                  'assets/Logo.png',
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             );
                           },
@@ -80,27 +82,27 @@ class PropertyDetailsView extends GetView<PropertyDetailsController> {
                       ),
                       if (property.images.length > 1)
                         Obx(
-                          () => Row(
+                              () => Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children:
-                                property.images.asMap().entries.map((entry) {
-                                  return Container(
-                                    width: 8.w,
-                                    height: 8.h,
-                                    margin: EdgeInsets.symmetric(
-                                      horizontal: 4.w,
-                                      vertical: 4.h,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color:
-                                          controller.currentImageIndex.value ==
-                                                  entry.key
-                                              ? Colors.blue
-                                              : Colors.grey,
-                                    ),
-                                  );
-                                }).toList(),
+                            property.images.asMap().entries.map((entry) {
+                              return Container(
+                                width: 8.w,
+                                height: 8.h,
+                                margin: EdgeInsets.symmetric(
+                                  horizontal: 4.w,
+                                  vertical: 4.h,
+                                ),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color:
+                                  controller.currentImageIndex.value ==
+                                      entry.key
+                                      ? Colors.blue
+                                      : Colors.grey,
+                                ),
+                              );
+                            }).toList(),
                           ),
                         ),
                     ],
@@ -204,16 +206,16 @@ class PropertyDetailsView extends GetView<PropertyDetailsController> {
                           spacing: 8.w,
                           runSpacing: 8.h,
                           children:
-                              property.amenities
-                                  .map(
-                                    (amenity) => Chip(
-                                      label: Text(amenity.name ?? ''),
-                                      backgroundColor: Colors.blue.withOpacity(
-                                        0.1,
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
+                          property.amenities
+                              .map(
+                                (amenity) => Chip(
+                              label: Text(amenity.name ?? ''),
+                              backgroundColor: Colors.blue.withOpacity(
+                                0.1,
+                              ),
+                            ),
+                          )
+                              .toList(),
                         ),
                         SizedBox(height: 16.h),
                       ],
@@ -222,17 +224,34 @@ class PropertyDetailsView extends GetView<PropertyDetailsController> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children:
-                              property.directions
-                                  .map(
-                                    (direction) => Padding(
-                                      padding: EdgeInsets.only(bottom: 4.h),
-                                      child: Text(
-                                        '- ${direction.name ?? ''}',
-                                        style: TextStyle(fontSize: 14.sp),
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
+                          property.directions
+                              .map(
+                                (direction) => Padding(
+                              padding: EdgeInsets.only(bottom: 4.h),
+                              child: Text(
+                                '- ${direction.name ?? ''}',
+                                style: TextStyle(fontSize: 14.sp),
+                              ),
+                            ),
+                          )
+                              .toList(),
+                        ),
+                        SizedBox(height: 16.h),
+                      ],
+                      if (property.description != null && property.description.isNotEmpty) ...[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _buildSectionTitle('Description'),
+                            Text(
+                              'Ai generated',
+                              style: Theme.of(context).textTheme.labelMedium,
+                            ),
+                          ],
+                        ),
+                        ExpandableText(
+                          property.description,
+                          trimLines: 3,
                         ),
                         SizedBox(height: 16.h),
                       ],
@@ -311,20 +330,84 @@ class PropertyDetailsView extends GetView<PropertyDetailsController> {
 Widget _buildFurnishedStatus(num isFurnished) {
   final bool furnished = isFurnished == 1;
   final String label = furnished ? 'Furnished' : 'Unfurnished';
-  final IconData icon =
-      furnished ? Icons.chair : Icons.bed; // استخدم أيقونة مناسبة
+  final IconData icon = furnished ? Icons.chair : Icons.bed;
   final Color color = furnished ? AppColors.primary : Colors.grey;
 
   return Row(
     children: [
       Text(label, style: TextStyle(fontSize: 14.sp, color: Colors.black87)),
       Text(
-        '', // يمكن ترك هذا فارغًا أو إضافة نص إضافي إذا لزم الأمر
+        '',
         style: TextStyle(fontSize: 14.sp, color: Colors.black87),
       ),
       SizedBox(width: 4.h),
-
-      // Icon(icon, size: 24.sp, color: color),
     ],
   );
+}
+
+class ExpandableText extends GetView<ExpandableTextController> {
+  final String text;
+  final int trimLines;
+
+  const ExpandableText(
+      this.text, {
+        super.key,
+        this.trimLines = 3,
+      }) : super();
+
+  @override
+  Widget build(BuildContext context) {
+    if (!Get.isRegistered<ExpandableTextController>(tag: text)) {
+      Get.put(ExpandableTextController(), tag: text);
+    }
+
+    final controller = Get.find<ExpandableTextController>(tag: text);
+
+    final defaultTextStyle = TextStyle(
+      fontSize: 14.sp,
+      color: Colors.black87,
+      height: 1.5,
+    );
+
+    final TextPainter textPainter = TextPainter(
+      text: TextSpan(text: text, style: defaultTextStyle),
+      maxLines: trimLines,
+      textDirection: TextDirection.rtl,
+    );
+    textPainter.layout(maxWidth: MediaQuery.of(context).size.width - 32.w);
+
+    final bool hasMoreText = textPainter.didExceedMaxLines;
+
+    return Obx(() {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (controller.isExpanded.value)
+            Text(
+              text,
+              style: defaultTextStyle,
+            )
+          else
+            Text(
+              text,
+              style: defaultTextStyle,
+              maxLines: trimLines,
+              overflow: TextOverflow.ellipsis,
+            ),
+          if (hasMoreText)
+            GestureDetector(
+              onTap: controller.toggleExpanded,
+              child: Text(
+                controller.isExpanded.value ? 'Show Less' : 'Read More',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primary,
+                ),
+              ),
+            ),
+        ],
+      );
+    });
+  }
 }

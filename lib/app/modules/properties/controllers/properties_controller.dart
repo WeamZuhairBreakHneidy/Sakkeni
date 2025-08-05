@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../data/enums/property_type_enum.dart';
 import '../../../data/models/properties-model.dart';
@@ -9,6 +10,7 @@ import '../../../data/services/token_service.dart';
 
 abstract class BasePropertiesController extends GetxController {
   abstract final PropertyTypeEnum type;
+  final scrollController = ScrollController();
 
   final isLoading = false.obs;
   final properties = <Datum>[].obs;
@@ -167,6 +169,7 @@ abstract class BasePropertiesController extends GetxController {
 
   Future<void> fetchPropertiesWithFilter(Map<String, dynamic> filterData,
       {bool force = false}) async {
+    // base or abstract implementation
     // base or abstract implementation
     throw UnimplementedError(
         'fetchPropertiesWithFilter must be implemented by subclasses');

@@ -75,7 +75,7 @@ class PropertyCard extends StatelessWidget {
       borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
       child: Image.network(
         url,
-        height: 79.h,
+        height: 150.h,
         width: double.infinity,
         fit: BoxFit.cover,
         errorBuilder: (_, __, ___) => const Icon(Icons.broken_image),

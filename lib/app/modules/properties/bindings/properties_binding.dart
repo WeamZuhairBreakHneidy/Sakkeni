@@ -13,6 +13,7 @@
 // }
 import 'package:get/get.dart';
 import 'package:test1/app/modules/auth/controllers/profile_controller.dart';
+import '../controllers/properties_controller.dart';
 import '../controllers/properties_offplan_controller.dart';
 import '../controllers/properties_purchase_controller.dart';
 import '../controllers/properties_rent_controller.dart';

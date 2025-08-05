@@ -120,7 +120,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PROPERTY_DETAILS,
-      page: () =>  PropertyDetailsView(),
+      page: () => PropertyDetailsView(),
       binding: PropertyDetailsBinding(),
     ),
 

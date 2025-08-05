@@ -50,17 +50,33 @@ class PropertiesGridView extends StatelessWidget {
         itemCount: props.length,
         padding: EdgeInsets.only(bottom: 16.h),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
+          crossAxisCount: 2,
           mainAxisSpacing: 20,
           crossAxisSpacing: 20,
-          childAspectRatio: 0.58,
+          childAspectRatio: 0.65,
         ),
         itemBuilder: (context, index) {
+          if (index == props.length) {
+            return SizedBox(
+              height: 50,
+              width: 50,
+              child: LoadingIndicator(
+                indicatorType: Indicator.ballClipRotateMultiple,
+                colors: [AppColors.primary],
+              ),
+            );
+          }
+
+          if (index == props.length - 1 && controller.hasMoreData.value) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              controller.loadNextPage();
+            });
+          }
+
           final property = props[index];
           final imageUrl =
               "${ApiService().baseUrl}/${property.coverImage?.imagePath ?? ''}";
-          final price =
-              property.rent?.price?.toStringAsFixed(0) ??
+          final price = property.rent?.price?.toStringAsFixed(0) ??
               property.purchase?.price?.toStringAsFixed(0) ??
               property.offplan?.overallPayment?.toStringAsFixed(0) ??
               '0';
@@ -68,8 +84,7 @@ class PropertiesGridView extends StatelessWidget {
               "${property.location?.country?.name ?? ''}, ${property.location?.city?.name ?? ''}";
           final lease = property.rent?.leasePeriod?.toString() ?? '';
           final propertyType = property.propertyType?.name ?? '';
-          final subType =
-              property.residential?.residentialPropertyType?.name ??
+          final subType = property.residential?.residentialPropertyType?.name ??
               property.commercial?.commercialPropertyType?.name ??
               '';
 
@@ -81,15 +96,11 @@ class PropertiesGridView extends StatelessWidget {
             propertyType: propertyType,
             subType: subType,
             onTap: () {
-              print(property.id);
-              print(property.id);
-              print(property.id);
-              print(property.id);
-
               Get.toNamed(Routes.PROPERTY_DETAILS, arguments: property.id);
             },
           );
         },
+
       ),
     );
   }
