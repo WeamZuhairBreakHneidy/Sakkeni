@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:test1/app/core/theme/colors.dart';
+import 'package:test1/app/modules/home/controllers/home_controller.dart';
 import '../routes/app_pages.dart';
 
 class BottomNavController extends GetxController {
@@ -17,7 +18,8 @@ class BottomNavController extends GetxController {
         Get.toNamed(Routes.PropertiesUnifiedView);
         break;
       case 2:
-        Get.toNamed(Routes.HOME);
+        Get.offNamed(Routes.HOME);
+     
         break;
       case 3:
         Get.toNamed(Routes.REGISTER);
@@ -81,6 +83,7 @@ class CustomBottomNavBar extends StatelessWidget {
       }),
     );
   }
+
   BottomNavigationBarItem _buildLogoNavItem() {
     return BottomNavigationBarItem(
       label: '',
@@ -109,6 +112,7 @@ class CustomBottomNavBar extends StatelessWidget {
     );
   }
 }
+
 // BottomNavigationBarItem _buildLogoNavItem() {
 //   return BottomNavigationBarItem(
 //     label: '',

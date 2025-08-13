@@ -5,7 +5,7 @@ import '../controllers/home_controller.dart';
 class HomeBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<HomeController>(() => HomeController());
+    Get.lazyPut<RecommendedPropertiesController>(() => RecommendedPropertiesController());
     Get.lazyPut<LogoutController>(() => LogoutController());
   }
 }

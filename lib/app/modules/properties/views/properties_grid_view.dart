@@ -6,14 +6,16 @@ import '../../../core/theme/colors.dart';
 import '../../../data/services/api_service.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/property_card.dart';
+import '../controllers/delete-property.dart';
 
 class PropertiesGridView extends StatelessWidget {
   final dynamic controller;
   final List props;
   final bool isLoading;
   final ScrollController scrollController;
+  final deleteController = Get.put(DeletePropertyController());
 
-  const PropertiesGridView({
+   PropertiesGridView({
     super.key,
     required this.controller,
     required this.props,
@@ -98,6 +100,22 @@ class PropertiesGridView extends StatelessWidget {
             onTap: () {
               Get.toNamed(Routes.PROPERTY_DETAILS, arguments: property.id);
             },
+              onDelete: () {
+                Get.defaultDialog(
+                  title: "Confirm Deletion",
+                  middleText: "Are you sure you want to delete this property?",
+                  onConfirm: () {
+                    deleteController.deleteProperty(property.id);
+                    Get.back(); // Close the dialog
+                  },
+                  onCancel: () {},
+                  textConfirm: "Delete",
+                  textCancel: "Cancel",
+                  confirmTextColor: AppColors.white,
+                  cancelTextColor: AppColors.primary,
+                  buttonColor: AppColors.primary,
+                );
+              }
           );
         },
 

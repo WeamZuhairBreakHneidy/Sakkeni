@@ -62,7 +62,6 @@ class PropertiesUnifiedView extends StatelessWidget {
     // تحديث التاب المختار حسب النوع
     tabController.updateTabFromType(type);
 
-    // تنقل إلى الواجهة مع البراميتر الصحيح
     final route = switch (type) {
       'rent' => '${Routes.PropertiesUnifiedView}?type=rent',
       'purchase' => '${Routes.PropertiesUnifiedView}?type=purchase',

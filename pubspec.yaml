@@ -59,6 +59,8 @@ dependencies:
   geolocator:
 #  video_thumbnail:
   animated_text_kit:
+  flutter_animate:
+  shimmer:
 dev_dependencies:
   flutter_test:
     sdk: flutter

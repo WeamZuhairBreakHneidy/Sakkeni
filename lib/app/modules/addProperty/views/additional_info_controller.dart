@@ -14,13 +14,11 @@ import '../widgets/buildStepLine.dart';
 
 class AdditionalInfoView extends GetView<AddpropertyController> {
   AdditionalInfoView({super.key});
-
-  final amenitiesController = Get.put(AmenitiesController()); // أعلى الصفحة
-
+  final amenitiesController = Get.put(AmenitiesController());
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
-    double contentHeight = screenHeight - 100.h; //
+    double contentHeight = screenHeight - 100.h;
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -163,11 +161,10 @@ class AdditionalInfoView extends GetView<AddpropertyController> {
               ),
             ),
           ),
-          // هذا هو الجزء الذي يتسبب في التجاوز غالباً
-          // سنقوم بلفه بـ Expanded لجعلها تتكيف مع المساحة المتاحة
+
           Expanded(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center, // لتوسيط الدوائر والمؤشرات
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 buildCheckCircle(),
                 buildStepLine(isFilled: true),
@@ -182,7 +179,7 @@ class AdditionalInfoView extends GetView<AddpropertyController> {
           Obx(
                 () => GestureDetector(
               onTap: controller.isLoading.value
-                  ? null // إذا كان التحميل جارياً، اجعل onTap فارغاً لتعطيله
+                  ? null
                   : () {
                 final hasEmptyFields =
                     controller.additionalInfo.text.trim().isEmpty ||
@@ -193,24 +190,23 @@ class AdditionalInfoView extends GetView<AddpropertyController> {
                     "Missing Fields",
                     "Please complete all required fields before finishing.",
                   );
-                  return; // لا تكمل التنفيذ
+                  return;
                 }
 
                 controller
-                    .submitProperty(); // إذا كله تمام، نفّذ الإرسال
+                    .submitProperty();
               },
               child: Padding(
-                // تم إبقاء الـ padding هنا لتوفير مسافة على اليمين
-                padding: EdgeInsets.only(right: 0.w), // تم ضبطه لـ 0.w للمساعدة في الاحتواء
+                padding: EdgeInsets.only(right: 0.w),
                 child: TextButton(
                   onPressed: controller.isLoading.value
                       ? null
                       : controller
-                      .submitProperty, // تم تعديلها لتكون submitProperty
+                      .submitProperty,
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.symmetric(
                       horizontal:
-                      12.w, // تم تقليلها أكثر للمساعدة في حل مشكلة التجاوز
+                      12.w,
                       vertical: 12.h,
                     ),
                     shape: RoundedRectangleBorder(

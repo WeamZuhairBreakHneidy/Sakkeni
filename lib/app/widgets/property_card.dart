@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../core/theme/colors.dart';
 import '../core/theme/themes.dart';
+import '../data/services/api_service.dart';
 
 class PropertyCard extends StatelessWidget {
   final String? imageUrl;
@@ -12,6 +13,8 @@ class PropertyCard extends StatelessWidget {
   final String? propertyType;
   final String? subType;
   final VoidCallback? onTap;
+  final VoidCallback? onDelete;
+
 
   const PropertyCard({
     super.key,
@@ -22,6 +25,7 @@ class PropertyCard extends StatelessWidget {
     this.propertyType,
     this.subType,
     this.onTap,
+    this.onDelete,
   });
 
   @override
@@ -35,7 +39,46 @@ class PropertyCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (imageUrl != null) _buildImage(imageUrl!),
+            // The Stack widget allows for overlapping children
+            if (imageUrl != null)
+              Stack(
+                children: [
+                  _buildImage(imageUrl!),
+                  if (onDelete != null)
+                    if (onDelete != null)
+                      Positioned(
+                        // يمكنك تقليل هذه القيم لتقريب الزر من الزاوية
+                        top: 6.h,
+                        right: 6.w,
+                        child: SizedBox(
+                          // حدد حجمًا أصغر لـ IconButton
+                          width: 32.w,
+                          height: 32.h,
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.remove,
+                              color: AppColors.primary,
+                              // قم بتصغير حجم الأيقونة أيضًا
+                              size: 16.w,
+                            ),
+                            onPressed: onDelete,
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                Colors.white.withOpacity(0.8),
+                              ),
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50.r),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+
+                ],
+              ),
             Flexible(
               child: Padding(
                 padding: EdgeInsets.all(13.h),
@@ -57,7 +100,6 @@ class PropertyCard extends StatelessWidget {
       ),
     );
   }
-
   BoxDecoration _cardDecoration(BuildContext context) => BoxDecoration(
     color: Theme.of(context).colorScheme.background,
     borderRadius: BorderRadius.circular(16.r),
@@ -70,19 +112,43 @@ class PropertyCard extends StatelessWidget {
     ],
   );
 
-  Widget _buildImage(String url) {
+// property_card.dart
+
+  // property_card.dart
+
+  Widget _buildImage(String? url) {
+    const String defaultImagePath = 'assets/backgrounds/default_placeholder.png';
+    final bool hasImage = url != null && url.isNotEmpty;
+
+    // Check if the URL is already a full, valid URL
+    final bool isFullUrl = url != null && (url.startsWith('http://') || url.startsWith('https://'));
+    final String finalUrl = isFullUrl ? url! : "${ApiService().baseUrl}/$url";
+
     return ClipRRect(
       borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-      child: Image.network(
-        url,
+      child: hasImage
+          ? Image.network(
+        finalUrl,
         height: 150.h,
         width: double.infinity,
         fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) => const Icon(Icons.broken_image),
+        errorBuilder: (_, __, ___) => Image.asset( // Show default image on network error
+          defaultImagePath,
+          height: 150.h,
+          width: double.infinity,
+          fit: BoxFit.cover,
+        ),
+      )
+          : Image.asset( // Show default image if url is null or empty
+        defaultImagePath,
+        height: 150.h,
+        width: double.infinity,
+        fit: BoxFit.cover,
       ),
     );
   }
 
+// ... الكود الباقي لويدجت PropertyCard ...
   Widget _buildPrice() {
     return Row(
       children: [

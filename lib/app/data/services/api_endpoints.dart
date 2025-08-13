@@ -1,6 +1,5 @@
 class ApiEndpoints {
-  static const String baseUrl = 'http://192.168.1.41:8000';
-
+  static const String baseUrl = 'http://192.168.1.102:8000';
   static const String login = '/api/login';
   static const String logout = '/api/logout';
   static const String signup = '/api/sign-up';
@@ -17,6 +16,8 @@ class ApiEndpoints {
   static const String upgradeAccount = '/api/upgrade-to-seller';
   static const String viewAmenities = '/api/view-amenities';
   static const String viewPropertyDetails = '/api/view-property-details';
-  static const String viewrecommendedProperties = '/api/view-property-details';
+  static const String viewrecommendedProperties =
+      '/api/view-recommended-properties';
   static const String viewCountries = '/api/view-countries';
+  static const String deleteProperty = '/api/delete-property';
 }
