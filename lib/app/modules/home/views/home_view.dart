@@ -82,35 +82,35 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                         child: Builder(
                           builder:
                               (context) => GestureDetector(
-                                onTap: () {
-                                  if (Get.locale?.languageCode == 'ar') {
-                                    Scaffold.of(context).openDrawer();
-                                  } else {
-                                    Scaffold.of(context).openEndDrawer();
-                                  }
-                                },
-                                child: Container(
-                                  width: 35.w,
-                                  height: 35.h,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.withOpacity(0.4),
-                                    borderRadius:
-                                        Get.locale?.languageCode == 'en'
-                                            ? BorderRadius.horizontal(
-                                              left: Radius.circular(10.r),
-                                            )
-                                            : BorderRadius.horizontal(
-                                              right: Radius.circular(10.r),
-                                            ),
-                                  ),
-                                  child: Icon(
-                                    Icons.menu_open_sharp,
-                                    size: 20.sp,
-                                    color: Colors.black54,
-                                  ),
+                            onTap: () {
+                              if (Get.locale?.languageCode == 'ar') {
+                                Scaffold.of(context).openDrawer();
+                              } else {
+                                Scaffold.of(context).openEndDrawer();
+                              }
+                            },
+                            child: Container(
+                              width: 35.w,
+                              height: 35.h,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: Colors.grey.withOpacity(0.4),
+                                borderRadius:
+                                Get.locale?.languageCode == 'en'
+                                    ? BorderRadius.horizontal(
+                                  left: Radius.circular(10.r),
+                                )
+                                    : BorderRadius.horizontal(
+                                  right: Radius.circular(10.r),
                                 ),
                               ),
+                              child: Icon(
+                                Icons.menu_open_sharp,
+                                size: 20.sp,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -120,7 +120,6 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                 Container(
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.background,
-
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(30.r),
                       topRight: Radius.circular(30.r),
@@ -131,26 +130,29 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 15.w,
-                          vertical: 35.h,
+                        padding: EdgeInsets.only(
+                          top: 40.h,
+                          left: 10.w,
+                          right: 45.w,
                         ),
                         child: Container(
-                          // width: double.infinity,
-                          padding: EdgeInsets.only(right: 15.w),
+                          alignment: Alignment.centerLeft,
+                          // يخلي النص من بداية السطر
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 15.w,
+                            vertical: 8.h,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.primary.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(12.r),
                           ),
                           child: Text(
-                            'Recommended Properties',
+                            'Properties You Might Like',
                             style: Theme.of(context).textTheme.headlineSmall,
-
-                            // textAlign: TextAlign.center,
                           ),
                         ),
                       ),
-
+                      15.verticalSpace,
                       Obx(() {
                         if (controller.isLoading.value &&
                             controller.properties.isEmpty) {
@@ -191,11 +193,11 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                                             .residential
                                             ?.residentialPropertyType
                                             ?.name ??
-                                        property
-                                            .commercial
-                                            ?.commercialPropertyType
-                                            ?.name ??
-                                        '';
+                                            property
+                                                .commercial
+                                                ?.commercialPropertyType
+                                                ?.name ??
+                                            '';
 
                                     return GestureDetector(
                                       onTap: () {
@@ -205,174 +207,197 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                                         );
                                       },
                                       child: Stack(
-                                            children: [
-                                              Container(
-                                                margin: EdgeInsets.symmetric(
-                                                  horizontal: 8.w,
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.symmetric(
+                                              horizontal: 8.w,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                              BorderRadius.circular(
+                                                20.r,
+                                              ),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: Colors.black12,
+                                                  blurRadius: 8,
+                                                  offset: Offset(0, 4),
                                                 ),
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                        20.r,
-                                                      ),
-                                                  boxShadow: const [
-                                                    BoxShadow(
-                                                      color: Colors.black12,
-                                                      blurRadius: 8,
-                                                      offset: Offset(0, 4),
-                                                    ),
-                                                  ],
-                                                ),
-                                                child: Stack(
-                                                  children: [
-                                                    ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                            20.r,
-                                                          ),
-                                                      child: Image.network(
-                                                        imageUrl,
-                                                        fit: BoxFit.cover,
-                                                        width: double.infinity,
-                                                        height: double.infinity,
-                                                        errorBuilder: (
-                                                          context,
-                                                          error,
-                                                          stackTrace,
-                                                        ) {
-                                                          return Image.asset(
-                                                            'assets/backgrounds/default_placeholder.png',
-                                                            fit: BoxFit.cover,
-                                                            width:
-                                                                double.infinity,
-                                                            height:
-                                                                double.infinity,
-                                                          );
-                                                        },
-                                                      ),
-                                                    ),
+                                              ],
+                                            ),
+                                            child: Stack(
+                                              children: [
 
-                                                    /// Gradient overlay
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                              20.r,
-                                                            ),
-                                                        gradient: LinearGradient(
-                                                          colors: [
-                                                            Colors.black
-                                                                .withOpacity(
-                                                                  0.6,
-                                                                ),
-                                                            Colors.transparent,
-                                                          ],
-                                                          begin:
-                                                              Alignment
-                                                                  .bottomCenter,
-                                                          end:
-                                                              Alignment
-                                                                  .topCenter,
+                                                ClipRRect(
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                    20.r,
+                                                  ),
+                                                  child: Image.network(
+                                                    imageUrl,
+                                                    fit: BoxFit.cover,
+                                                    width: double.infinity,
+                                                    height: double.infinity,
+                                                    errorBuilder: (
+                                                        context,
+                                                        error,
+                                                        stackTrace,
+                                                        ) {
+                                                      return Image.asset(
+                                                        'assets/backgrounds/default_placeholder.png',
+                                                        fit: BoxFit.cover,
+                                                        width:
+                                                        double.infinity,
+                                                        height:
+                                                        double.infinity,
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+
+                                                /// Gradient overlay
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                    BorderRadius.circular(
+                                                      20.r,
+                                                    ),
+                                                    gradient: LinearGradient(
+                                                      colors: [
+                                                        Colors.black
+                                                            .withOpacity(
+                                                          0.6,
+                                                        ),
+                                                        Colors.transparent,
+                                                      ],
+                                                      begin:
+                                                      Alignment
+                                                          .bottomCenter,
+                                                      end:
+                                                      Alignment
+                                                          .topCenter,
+                                                    ),
+                                                  ),
+                                                ),
+
+                                                /// Text Info
+                                                Positioned(
+                                                  bottom: 16.h,
+                                                  left: 12.w,
+                                                  right: 12.w,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment
+                                                        .start,
+                                                    children: [
+                                                      Text(
+                                                        location,
+                                                        style: TextStyle(
+                                                          color:
+                                                          Colors.white,
+                                                          fontSize: 16.sp,
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .bold,
                                                         ),
                                                       ),
-                                                    ),
-
-                                                    /// Text Info
-                                                    Positioned(
-                                                      bottom: 16.h,
-                                                      left: 12.w,
-                                                      right: 12.w,
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            location,
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 16.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            "$propertyType • $subType",
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors
-                                                                      .white70,
-                                                              fontSize: 12.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                            ),
-                                                          ),
-                                                        ],
+                                                      Text(
+                                                        "$propertyType • $subType",
+                                                        style: TextStyle(
+                                                          color:
+                                                          Colors
+                                                              .white70,
+                                                          fontSize: 12.sp,
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .w500,
+                                                        ),
                                                       ),
-                                                    ),
-
-                                                    /// Floating Animated Heart
-                                                    /// Floating Animated Heart
-                                                    Positioned(
-                                                      top: 16.h,
-                                                      right: 16.w,
-                                                      child: Icon(
-                                                            Icons
-                                                                .favorite_border,
-                                                            color: Colors.white
-                                                                .withOpacity(
-                                                                  0.8,
-                                                                ),
-                                                            size: 28.sp,
-                                                          )
-                                                          .animate(
-                                                            onPlay:
-                                                                (
-                                                                  controller,
-                                                                ) => controller
-                                                                    .repeat(
-                                                                      reverse:
-                                                                          true,
-                                                                    ),
-                                                          )
-                                                          .scale(
-                                                            begin: const Offset(
-                                                              0.8,
-                                                              0.8,
-                                                            ),
-                                                            end: const Offset(
-                                                              1.1,
-                                                              1.1,
-                                                            ),
-                                                            duration: 800.ms,
-                                                            curve:
-                                                                Curves
-                                                                    .easeInOut,
-                                                          ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
-                                          )
+
+                                                /// Floating Animated Heart
+                                                Positioned(
+                                                  top: 16.h,
+                                                  right: 16.w,
+                                                  child: Icon(
+                                                    Icons
+                                                        .favorite_border,
+                                                    color: Colors.white
+                                                        .withOpacity(
+                                                      0.8,
+                                                    ),
+                                                    size: 28.sp,
+                                                  )
+                                                      .animate(
+                                                    onPlay:
+                                                        (
+                                                        controller,
+                                                        ) => controller
+                                                        .repeat(
+                                                      reverse:
+                                                      true,
+                                                    ),
+                                                  )
+                                                      .scale(
+                                                    begin: const Offset(
+                                                      0.8,
+                                                      0.8,
+                                                    ),
+                                                    end: const Offset(
+                                                      1.1,
+                                                      1.1,
+                                                    ),
+                                                    duration: 800.ms,
+                                                    curve:
+                                                    Curves
+                                                        .easeInOut,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      )
                                           .animate()
                                           .fadeIn(
-                                            duration: 500.ms,
-                                            delay: (index * 100).ms,
-                                          )
+                                        duration: 500.ms,
+                                        delay: (index * 100).ms,
+                                      )
                                           .scale(
-                                            begin: const Offset(0.95, 0.95),
-                                            curve: Curves.easeOut,
-                                          ),
+                                        begin: const Offset(0.95, 0.95),
+                                        curve: Curves.easeOut,
+                                      ),
                                     );
                                   },
                                 ),
                               ),
                             ),
-                            50.verticalSpace,
+                            Padding(
+                              padding: EdgeInsets.only(
+                                top: 25.h,
+                                left: 10.w,
+                                right: 45.w,
+                              ),
+                              child: Container(
+                                alignment: Alignment.centerLeft,
+                                // يخلي النص من بداية السطر
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 15.w,
+                                  vertical: 8.h,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppColors.primary.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(12.r),
+                                ),
+                                child: Text(
+                                  'Quick Actions', // This is the changed text
+                                  style: Theme.of(context).textTheme.headlineSmall,
+                                ),
+                              ),
+                            ),
+                            10.verticalSpace,
                             _buildQuickActions(), // <-- The new method call
                             20.verticalSpace,
                           ],
@@ -401,33 +426,33 @@ class HomeView extends GetView<RecommendedPropertiesController> {
         itemCount: 3,
         itemBuilder:
             (_, __) => Container(
-              margin: EdgeInsets.symmetric(horizontal: 8.w),
-              padding: EdgeInsets.all(12.w),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.r),
-                color: AppColors.primary,
-              ),
-              child: Shimmer.fromColors(
-                baseColor: Colors.grey[300]!,
-                highlightColor: Colors.grey[100]!,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 200.h,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15.r),
-                      ),
-                    ),
-                    20.verticalSpace,
-                    Container(width: 150.w, height: 16.h, color: Colors.white),
-                    10.verticalSpace,
-                    Container(width: 100.w, height: 12.h, color: Colors.white),
-                  ],
+          margin: EdgeInsets.symmetric(horizontal: 8.w),
+          padding: EdgeInsets.all(12.w),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.r),
+            color: AppColors.primary,
+          ),
+          child: Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 200.h,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15.r),
+                  ),
                 ),
-              ),
+                20.verticalSpace,
+                Container(width: 150.w, height: 16.h, color: Colors.white),
+                10.verticalSpace,
+                Container(width: 100.w, height: 12.h, color: Colors.white),
+              ],
             ),
+          ),
+        ),
       ),
     );
   }
@@ -459,6 +484,7 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                       borderRadius: BorderRadius.circular(15.r),
                       child: Stack(
                         children: [
+
                           Image.asset(
                             'assets/backgrounds/background1.jpeg',
                             fit: BoxFit.cover,
