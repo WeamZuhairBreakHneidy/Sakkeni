@@ -26,6 +26,8 @@ import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/properties/bindings/properties_binding.dart';
 import '../modules/properties/views/properties_view.dart';
+import '../modules/serviceProviders/bindings/service_providers_binding.dart';
+import '../modules/serviceProviders/views/service_providers_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/upgradetoseller/bindings/upgradetoseller_binding.dart';
@@ -123,6 +125,10 @@ class AppPages {
       page: () => PropertyDetailsView(),
       binding: PropertyDetailsBinding(),
     ),
-
+    GetPage(
+      name: _Paths.SERVICE_PROVIDERS,
+      page: () => const ServiceProvidersView(),
+      binding: ServiceProvidersBinding(),
+    ),
   ];
 }

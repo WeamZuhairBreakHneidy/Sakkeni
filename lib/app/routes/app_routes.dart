@@ -27,6 +27,7 @@ abstract class Routes {
   static const UPGRADETOSELLER = _Paths.UPGRADETOSELLER;
   static const PROPERTY_DETAILS = _Paths.PROPERTY_DETAILS;
   static const RECOMMENDED_PROPERTIES = _Paths.RECOMMENDED_PROPERTIES;
+  static const SERVICE_PROVIDERS = _Paths.SERVICE_PROVIDERS;
 }
 
 abstract class _Paths {
@@ -54,4 +55,5 @@ abstract class _Paths {
   static const UPGRADETOSELLER = '/upgradeToSeller';
   static const PROPERTY_DETAILS = '/property_details';
   static const RECOMMENDED_PROPERTIES = '/recommended-properties';
+  static const SERVICE_PROVIDERS = '/service-providers';
 }
