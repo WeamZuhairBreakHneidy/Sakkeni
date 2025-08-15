@@ -16,8 +16,7 @@ class ApiEndpoints {
   static const String upgradeAccount = '/api/upgrade-to-seller';
   static const String viewAmenities = '/api/view-amenities';
   static const String viewPropertyDetails = '/api/view-property-details';
-  static const String viewrecommendedProperties =
-      '/api/view-recommended-properties';
+  static const String viewrecommendedProperties = '/api/view-recommended-properties';
   static const String viewCountries = '/api/view-countries';
   static const String deleteProperty = '/api/delete-property';
 }
