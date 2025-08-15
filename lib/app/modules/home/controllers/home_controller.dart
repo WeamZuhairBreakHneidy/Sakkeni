@@ -9,6 +9,7 @@ class RecommendedPropertiesController extends GetxController {
   final RxBool isLoading = false.obs;
   final RxBool hasMoreData = true.obs;
   final RxList<Data> properties = <Data>[].obs;
+  RxInt currentPage = 0.obs;
 
   int _currentPage = 1;
 
