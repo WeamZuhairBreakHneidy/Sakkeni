@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:test1/app/core/theme/colors.dart';
-import 'package:test1/app/modules/home/controllers/home_controller.dart';
+
 import '../routes/app_pages.dart';
 
 class BottomNavController extends GetxController {
