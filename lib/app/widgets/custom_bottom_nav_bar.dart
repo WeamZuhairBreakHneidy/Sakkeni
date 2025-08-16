@@ -34,7 +34,7 @@ class BottomNavController extends GetxController {
 class CustomBottomNavBar extends StatelessWidget {
   CustomBottomNavBar({super.key});
 
-  final BottomNavController navController = Get.put(BottomNavController());
+  final BottomNavController navController = Get.put(BottomNavController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
