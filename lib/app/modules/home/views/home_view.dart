@@ -43,8 +43,8 @@ class HomeView extends GetView<RecommendedPropertiesController> {
     });
     return Scaffold(
       // backgroundColor: Theme.of(context).colorScheme.background,
-      drawer: Get.locale?.languageCode == 'ar' ? AppDrawer() : null,
-      endDrawer: Get.locale?.languageCode == 'en' ? AppDrawer() : null,
+      drawer:  AppDrawer(),
+
       body: ListView(
         children: [
           buildHeaderSection(context),
@@ -73,7 +73,7 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                           // width: double.infinity,
                           padding: EdgeInsets.only(right: 15.w),
                           decoration: BoxDecoration(
-                            color: AppColors.primary.withOpacity(0.1),
+                              color: AppColors.search,
                             borderRadius: BorderRadius.circular(12.r),
                           ),
                           child: Text(
@@ -490,7 +490,7 @@ class HomeView extends GetView<RecommendedPropertiesController> {
     return Container(
       padding: EdgeInsets.only(top: 61.h, bottom: 16.h),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+
         children: [
           Center(
             child: SizedBox(
@@ -499,32 +499,32 @@ class HomeView extends GetView<RecommendedPropertiesController> {
               child: Image.asset('assets/Logo.png'),
             ),
           ),
+
+
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Builder(
                 builder:
                     (context) => GestureDetector(
                   onTap: () {
-                    if (Get.locale?.languageCode == 'ar') {
+
                       Scaffold.of(context).openDrawer();
-                    } else {
-                      Scaffold.of(context).openEndDrawer();
-                    }
+
                   },
                   child: Container(
                     width: 35.w,
                     height: 35.h,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.4),
+                      color: AppColors.search,
                       borderRadius:
                       Get.locale?.languageCode == 'en'
                           ? BorderRadius.horizontal(
-                        left: Radius.circular(10.r),
+                        right: Radius.circular(10.r),
                       )
                           : BorderRadius.horizontal(
-                        right: Radius.circular(10.r),
+                        left: Radius.circular(10.r),
                       ),
                     ),
                     child: Icon(
@@ -534,12 +534,10 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                     ),
                   ),
                 ),
-              )
-
-
-
+              ),
             ],
           ),
+
         ],
       ),
     );

@@ -131,7 +131,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SERVICE_PROVIDERS,
-      page: () => const ServiceProvidersView(),
+      page: () =>  ServiceProvidersView(),
       binding: ServiceProvidersBinding(),
     ),
     GetPage(
