@@ -43,8 +43,8 @@ class HomeView extends GetView<RecommendedPropertiesController> {
     });
     return Scaffold(
       // backgroundColor: Theme.of(context).colorScheme.background,
-      endDrawer: AppDrawer() ,
-
+      drawer: Get.locale?.languageCode == 'ar' ? AppDrawer() : null,
+      endDrawer: Get.locale?.languageCode == 'en' ? AppDrawer() : null,
       body: ListView(
         children: [
           buildHeaderSection(context),
@@ -56,256 +56,266 @@ class HomeView extends GetView<RecommendedPropertiesController> {
               ),
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 15.w,
-                      vertical: 35.h,
-                    ),
-                    child: Container(
-                      // width: double.infinity,
-                      padding: EdgeInsets.only(right: 15.w),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      child: Text(
-                        'Recommended Properties',
-                        style: Theme.of(context).textTheme.headlineSmall,
 
-                        // textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
 
-                  Obx(() {
-                    if (controller.isLoading.value &&
-                        controller.properties.isEmpty) {
-                      return _buildShimmerList();
-                    }
 
-                    final props = controller.properties;
 
-                    return Column(
-                      children: [
-                        Container(
+                  Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 15.w,
+                          vertical: 35.h,
+                        ),
+                        child: Container(
+                          // width: double.infinity,
+                          padding: EdgeInsets.only(right: 15.w),
                           decoration: BoxDecoration(
-                            // color: Theme.of(context).scaffoldBackgroundColor, // This is the 'white screen'
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30.r),
-                              topRight: Radius.circular(30.r),
-                            ),
+                            color: AppColors.primary.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(12.r),
                           ),
-                          child: SizedBox(
-                            height: 300.h,
-                            child: PageView.builder(
-                              controller: pageController,
-                              itemCount: props.length,
-                              onPageChanged: (index) {
-                                controller.currentPage.value =
-                                    index; // جديد
-                              },
-                              itemBuilder: (context, index) {
-                                final property = props[index];
-                                final imageUrl =
-                                    "${ApiService().baseUrl}/${property.coverImage?.imagePath ?? ''}";
-                                final location =
-                                    "${property.location?.country?.name ?? ''}, ${property.location?.city?.name ?? ''}";
-                                final propertyType =
-                                    property.propertyType?.name ?? '';
-                                final subType =
-                                    property
-                                        .residential
-                                        ?.residentialPropertyType
-                                        ?.name ??
-                                        property
-                                            .commercial
-                                            ?.commercialPropertyType
-                                            ?.name ??
-                                        '';
+                          child: Text(
+                            'Recommended Properties',
+                            style: Theme.of(context).textTheme.headlineSmall,
 
-                                return GestureDetector(
-                                  onTap: () {
-                                    Get.toNamed(
-                                      Routes.PROPERTY_DETAILS,
-                                      arguments: property.id,
-                                    );
+                            // textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+
+                      Obx(() {
+                        if (controller.isLoading.value &&
+                            controller.properties.isEmpty) {
+                          return _buildShimmerList();
+                        }
+
+                        final props = controller.properties;
+
+                        return Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                // color: Theme.of(context).scaffoldBackgroundColor, // This is the 'white screen'
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(30.r),
+                                  topRight: Radius.circular(30.r),
+                                ),
+                              ),
+                              child: SizedBox(
+                                height: 300.h,
+                                child: PageView.builder(
+                                  controller: pageController,
+                                  itemCount: props.length,
+                                  onPageChanged: (index) {
+                                    controller.currentPage.value =
+                                        index; // جديد
                                   },
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.symmetric(
-                                          horizontal: 8.w,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                          BorderRadius.circular(
-                                            20.r,
-                                          ),
-                                          boxShadow: const [
-                                            BoxShadow(
-                                              color: Colors.black12,
-                                              blurRadius: 8,
-                                              offset: Offset(0, 4),
+                                  itemBuilder: (context, index) {
+                                    final property = props[index];
+                                    final imageUrl =
+                                        "${ApiService().baseUrl}/${property.coverImage?.imagePath ?? ''}";
+                                    final location =
+                                        "${property.location?.country?.name ?? ''}, ${property.location?.city?.name ?? ''}";
+                                    final propertyType =
+                                        property.propertyType?.name ?? '';
+                                    final subType =
+                                        property
+                                            .residential
+                                            ?.residentialPropertyType
+                                            ?.name ??
+                                            property
+                                                .commercial
+                                                ?.commercialPropertyType
+                                                ?.name ??
+                                            '';
+
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Get.toNamed(
+                                          Routes.PROPERTY_DETAILS,
+                                          arguments: property.id,
+                                        );
+                                      },
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.symmetric(
+                                              horizontal: 8.w,
                                             ),
-                                          ],
-                                        ),
-                                        child: Stack(
-                                          children: [
-                                            ClipRRect(
+                                            decoration: BoxDecoration(
                                               borderRadius:
                                               BorderRadius.circular(
                                                 20.r,
                                               ),
-                                              child: Image.network(
-                                                imageUrl,
-                                                fit: BoxFit.cover,
-                                                width: double.infinity,
-                                                height: double.infinity,
-                                                errorBuilder: (
-                                                    context,
-                                                    error,
-                                                    stackTrace,
-                                                    ) {
-                                                  return Image.asset(
-                                                    'assets/backgrounds/default_placeholder.png',
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: Colors.black12,
+                                                  blurRadius: 8,
+                                                  offset: Offset(0, 4),
+                                                ),
+                                              ],
+                                            ),
+                                            child: Stack(
+                                              children: [
+                                                ClipRRect(
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                    20.r,
+                                                  ),
+                                                  child: Image.network(
+                                                    imageUrl,
                                                     fit: BoxFit.cover,
-                                                    width:
-                                                    double.infinity,
-                                                    height:
-                                                    double.infinity,
-                                                  );
-                                                },
-                                              ),
-                                            ),
-
-                                            /// Gradient overlay
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                BorderRadius.circular(
-                                                  20.r,
+                                                    width: double.infinity,
+                                                    height: double.infinity,
+                                                    errorBuilder: (
+                                                        context,
+                                                        error,
+                                                        stackTrace,
+                                                        ) {
+                                                      return Image.asset(
+                                                        'assets/backgrounds/default_placeholder.png',
+                                                        fit: BoxFit.cover,
+                                                        width:
+                                                        double.infinity,
+                                                        height:
+                                                        double.infinity,
+                                                      );
+                                                    },
+                                                  ),
                                                 ),
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    Colors.black
+
+                                                /// Gradient overlay
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                    BorderRadius.circular(
+                                                      20.r,
+                                                    ),
+                                                    gradient: LinearGradient(
+                                                      colors: [
+                                                        Colors.black
+                                                            .withOpacity(
+                                                          0.6,
+                                                        ),
+                                                        Colors.transparent,
+                                                      ],
+                                                      begin:
+                                                      Alignment
+                                                          .bottomCenter,
+                                                      end:
+                                                      Alignment
+                                                          .topCenter,
+                                                    ),
+                                                  ),
+                                                ),
+
+                                                /// Text Info
+                                                Positioned(
+                                                  bottom: 16.h,
+                                                  left: 12.w,
+                                                  right: 12.w,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment
+                                                        .start,
+                                                    children: [
+                                                      Text(
+                                                        location,
+                                                        style: TextStyle(
+                                                          color:
+                                                          Colors.white,
+                                                          fontSize: 16.sp,
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .bold,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        "$propertyType • $subType",
+                                                        style: TextStyle(
+                                                          color:
+                                                          Colors
+                                                              .white70,
+                                                          fontSize: 12.sp,
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .w500,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+
+                                                /// Floating Animated Heart
+                                                /// Floating Animated Heart
+                                                Positioned(
+                                                  top: 16.h,
+                                                  right: 16.w,
+                                                  child: Icon(
+                                                    Icons
+                                                        .favorite_border,
+                                                    color: Colors.white
                                                         .withOpacity(
-                                                      0.6,
+                                                      0.8,
                                                     ),
-                                                    Colors.transparent,
-                                                  ],
-                                                  begin:
-                                                  Alignment
-                                                      .bottomCenter,
-                                                  end:
-                                                  Alignment
-                                                      .topCenter,
-                                                ),
-                                              ),
-                                            ),
-
-                                            /// Text Info
-                                            Positioned(
-                                              bottom: 16.h,
-                                              left: 12.w,
-                                              right: 12.w,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                CrossAxisAlignment
-                                                    .start,
-                                                children: [
-                                                  Text(
-                                                    location,
-                                                    style: TextStyle(
-                                                      color:
-                                                      Colors.white,
-                                                      fontSize: 16.sp,
-                                                      fontWeight:
-                                                      FontWeight
-                                                          .bold,
+                                                    size: 28.sp,
+                                                  )
+                                                      .animate(
+                                                    onPlay:
+                                                        (
+                                                        controller,
+                                                        ) => controller
+                                                        .repeat(
+                                                      reverse:
+                                                      true,
                                                     ),
+                                                  )
+                                                      .scale(
+                                                    begin: const Offset(
+                                                      0.8,
+                                                      0.8,
+                                                    ),
+                                                    end: const Offset(
+                                                      1.1,
+                                                      1.1,
+                                                    ),
+                                                    duration: 800.ms,
+                                                    curve:
+                                                    Curves
+                                                        .easeInOut,
                                                   ),
-                                                  Text(
-                                                    "$propertyType • $subType",
-                                                    style: TextStyle(
-                                                      color:
-                                                      Colors
-                                                          .white70,
-                                                      fontSize: 12.sp,
-                                                      fontWeight:
-                                                      FontWeight
-                                                          .w500,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
+                                                ),
+                                              ],
                                             ),
-
-                                            /// Floating Animated Heart
-                                            /// Floating Animated Heart
-                                            Positioned(
-                                              top: 16.h,
-                                              right: 16.w,
-                                              child: Icon(
-                                                Icons
-                                                    .favorite_border,
-                                                color: Colors.white
-                                                    .withOpacity(
-                                                  0.8,
-                                                ),
-                                                size: 28.sp,
-                                              )
-                                                  .animate(
-                                                onPlay:
-                                                    (
-                                                    controller,
-                                                    ) => controller
-                                                    .repeat(
-                                                  reverse:
-                                                  true,
-                                                ),
-                                              )
-                                                  .scale(
-                                                begin: const Offset(
-                                                  0.8,
-                                                  0.8,
-                                                ),
-                                                end: const Offset(
-                                                  1.1,
-                                                  1.1,
-                                                ),
-                                                duration: 800.ms,
-                                                curve:
-                                                Curves
-                                                    .easeInOut,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
+                                      )
+                                          .animate()
+                                          .fadeIn(
+                                        duration: 500.ms,
+                                        delay: (index * 100).ms,
+                                      )
+                                          .scale(
+                                        begin: const Offset(0.95, 0.95),
+                                        curve: Curves.easeOut,
                                       ),
-                                    ],
-                                  )
-                                      .animate()
-                                      .fadeIn(
-                                    duration: 500.ms,
-                                    delay: (index * 100).ms,
-                                  )
-                                      .scale(
-                                    begin: const Offset(0.95, 0.95),
-                                    curve: Curves.easeOut,
-                                  ),
-                                );
-                              },
+                                    );
+                                  },
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        50.verticalSpace,
-                        _buildQuickActions(), // <-- The new method call
-                        20.verticalSpace,
-                      ],
-                    );
-                  }),
-                  20.verticalSpace,
+                            50.verticalSpace,
+                            _buildQuickActions(), // <-- The new method call
+                            20.verticalSpace,
+                          ],
+                        );
+                      }),
+                      20.verticalSpace,
+                    ],
+                  )
+
                 ],
               ),
             ),
@@ -477,57 +487,61 @@ class HomeView extends GetView<RecommendedPropertiesController> {
   }
 
   Widget buildHeaderSection(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Center(
-          child: SizedBox(
-            width: 110.76.w,
-            height: 60.h,
-            child: Image.asset('assets/Logo.png'),
+    return Container(
+      padding: EdgeInsets.only(top: 61.h, bottom: 16.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: SizedBox(
+              width: 110.76.w,
+              height: 90.h,
+              child: Image.asset('assets/Logo.png'),
+            ),
           ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Builder(
-              builder:
-                  (context) => GestureDetector(
-                onTap: () {
-
-                    Scaffold.of(context).openDrawer();
-
-
-                },
-                child: Container(
-                  width: 35.w,
-                  height: 35.h,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.4),
-                    borderRadius:
-                    Get.locale?.languageCode == 'en'
-                        ? BorderRadius.horizontal(
-                      left: Radius.circular(10.r),
-                    )
-                        : BorderRadius.horizontal(
-                      right: Radius.circular(10.r),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Builder(
+                builder:
+                    (context) => GestureDetector(
+                  onTap: () {
+                    if (Get.locale?.languageCode == 'ar') {
+                      Scaffold.of(context).openDrawer();
+                    } else {
+                      Scaffold.of(context).openEndDrawer();
+                    }
+                  },
+                  child: Container(
+                    width: 35.w,
+                    height: 35.h,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.withOpacity(0.4),
+                      borderRadius:
+                      Get.locale?.languageCode == 'en'
+                          ? BorderRadius.horizontal(
+                        left: Radius.circular(10.r),
+                      )
+                          : BorderRadius.horizontal(
+                        right: Radius.circular(10.r),
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.menu_open_sharp,
+                      size: 20.sp,
+                      color: Colors.black54,
                     ),
                   ),
-                  child: Icon(
-                    Icons.menu_open_sharp,
-                    size: 20.sp,
-                    color: Colors.black54,
-                  ),
                 ),
-              ),
-            )
+              )
 
 
 
-          ],
-        ),
-      ],
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
