@@ -15,17 +15,17 @@ class BottomNavController extends GetxController {
         Get.toNamed(Routes.REGISTER);
         break;
       case 1:
-        Get.toNamed(Routes.PropertiesUnifiedView);
+        Get.offAllNamed(Routes.PropertiesUnifiedView);
         break;
       case 2:
-        Get.offNamed(Routes.HOME);
+        Get.offAllNamed(Routes.HOME);
      
         break;
       case 3:
-        Get.toNamed(Routes.REGISTER);
+        Get.toNamed(Routes.SERVICE_PROVIDERS);
         break;
       case 4:
-        Get.toNamed(Routes.PROFILE);
+        Get.offAllNamed(Routes.PROFILE);
         break;
     }
   }
@@ -52,7 +52,7 @@ class CustomBottomNavBar extends StatelessWidget {
           _buildNavItem(Icons.content_paste_rounded, 0),
           _buildNavItem(Icons.home_work_sharp, 1),
           _buildLogoNavItem(),
-          _buildNavItem(Icons.calendar_today, 3),
+          _buildNavItem(Icons.work, 3),
           _buildNavItem(Icons.person_outline_outlined, 4),
         ],
       ),

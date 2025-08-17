@@ -17,7 +17,7 @@ class HomeView extends GetView<RecommendedPropertiesController> {
   @override
   Widget build(BuildContext context) {
     final PageController pageController = PageController(
-      viewportFraction: 0.85,
+      viewportFraction: 0.90,
     );
 
     Timer? carouselTimer;
@@ -137,14 +137,8 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                         ),
                         child: Container(
                           alignment: Alignment.centerLeft,
-                          // يخلي النص من بداية السطر
                           padding: EdgeInsets.symmetric(
-                            horizontal: 15.w,
-                            vertical: 8.h,
-                          ),
-                          decoration: BoxDecoration(
-                            color: AppColors.primary.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(12.r),
+                            horizontal: 10.w, vertical: 8.h,
                           ),
                           child: Text(
                             'Properties You Might Like',
@@ -165,20 +159,18 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                           children: [
                             Container(
                               decoration: BoxDecoration(
-                                // color: Theme.of(context).scaffoldBackgroundColor, // This is the 'white screen'
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(30.r),
                                   topRight: Radius.circular(30.r),
                                 ),
                               ),
                               child: SizedBox(
-                                height: 300.h,
+                                height: 250.h,
                                 child: PageView.builder(
                                   controller: pageController,
                                   itemCount: props.length,
                                   onPageChanged: (index) {
-                                    controller.currentPage.value =
-                                        index; // جديد
+                                    controller.currentPage.value = index;
                                   },
                                   itemBuilder: (context, index) {
                                     final property = props[index];
@@ -186,37 +178,26 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                                         "${ApiService().baseUrl}/${property.coverImage?.imagePath ?? ''}";
                                     final location =
                                         "${property.location?.country?.name ?? ''}, ${property.location?.city?.name ?? ''}";
-                                    final propertyType =
-                                        property.propertyType?.name ?? '';
+                                    final propertyType = property.propertyType?.name ?? '';
                                     final subType =
-                                        property
-                                            .residential
-                                            ?.residentialPropertyType
-                                            ?.name ??
-                                            property
-                                                .commercial
-                                                ?.commercialPropertyType
-                                                ?.name ??
-                                            '';
+                                        property.residential?.residentialPropertyType?.name ??
+                                            property.commercial?.commercialPropertyType?.name ?? '';
 
-                                    return GestureDetector(
-                                      onTap: () {
-                                        Get.toNamed(
-                                          Routes.PROPERTY_DETAILS,
-                                          arguments: property.id,
-                                        );
-                                      },
-                                      child: Stack(
-                                        children: [
-                                          Container(
+                                    return Stack(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            Get.toNamed(
+                                              Routes.PROPERTY_DETAILS,
+                                              arguments: property.id,
+                                            );
+                                          },
+                                          child: Container(
                                             margin: EdgeInsets.symmetric(
                                               horizontal: 8.w,
                                             ),
                                             decoration: BoxDecoration(
-                                              borderRadius:
-                                              BorderRadius.circular(
-                                                20.r,
-                                              ),
+                                              borderRadius: BorderRadius.circular(20.r),
                                               boxShadow: const [
                                                 BoxShadow(
                                                   color: Colors.black12,
@@ -227,148 +208,110 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                                             ),
                                             child: Stack(
                                               children: [
-
                                                 ClipRRect(
-                                                  borderRadius:
-                                                  BorderRadius.circular(
-                                                    20.r,
-                                                  ),
+                                                  borderRadius: BorderRadius.circular(20.r),
                                                   child: Image.network(
                                                     imageUrl,
                                                     fit: BoxFit.cover,
                                                     width: double.infinity,
                                                     height: double.infinity,
-                                                    errorBuilder: (
-                                                        context,
-                                                        error,
-                                                        stackTrace,
-                                                        ) {
+                                                    errorBuilder: (context, error, stackTrace) {
                                                       return Image.asset(
                                                         'assets/backgrounds/default_placeholder.png',
                                                         fit: BoxFit.cover,
-                                                        width:
-                                                        double.infinity,
-                                                        height:
-                                                        double.infinity,
+                                                        width: double.infinity,
+                                                        height: double.infinity,
                                                       );
                                                     },
                                                   ),
                                                 ),
-
                                                 /// Gradient overlay
                                                 Container(
                                                   decoration: BoxDecoration(
-                                                    borderRadius:
-                                                    BorderRadius.circular(
-                                                      20.r,
-                                                    ),
+                                                    borderRadius: BorderRadius.circular(20.r),
                                                     gradient: LinearGradient(
                                                       colors: [
-                                                        Colors.black
-                                                            .withOpacity(
-                                                          0.6,
-                                                        ),
+                                                        Colors.black.withOpacity(0.6),
                                                         Colors.transparent,
                                                       ],
-                                                      begin:
-                                                      Alignment
-                                                          .bottomCenter,
-                                                      end:
-                                                      Alignment
-                                                          .topCenter,
+                                                      begin: Alignment.bottomCenter,
+                                                      end: Alignment.topCenter,
                                                     ),
                                                   ),
                                                 ),
-
                                                 /// Text Info
                                                 Positioned(
                                                   bottom: 16.h,
                                                   left: 12.w,
                                                   right: 12.w,
                                                   child: Column(
-                                                    crossAxisAlignment:
-                                                    CrossAxisAlignment
-                                                        .start,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Text(
                                                         location,
                                                         style: TextStyle(
-                                                          color:
-                                                          Colors.white,
+                                                          color: Colors.white,
                                                           fontSize: 16.sp,
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .bold,
+                                                          fontWeight: FontWeight.bold,
                                                         ),
                                                       ),
                                                       Text(
                                                         "$propertyType • $subType",
                                                         style: TextStyle(
-                                                          color:
-                                                          Colors
-                                                              .white70,
+                                                          color: Colors.white70,
                                                           fontSize: 12.sp,
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .w500,
+                                                          fontWeight: FontWeight.w500,
                                                         ),
                                                       ),
                                                     ],
                                                   ),
                                                 ),
-
                                                 /// Floating Animated Heart
                                                 Positioned(
                                                   top: 16.h,
                                                   right: 16.w,
                                                   child: Icon(
-                                                    Icons
-                                                        .favorite_border,
-                                                    color: Colors.white
-                                                        .withOpacity(
-                                                      0.8,
-                                                    ),
+                                                    Icons.favorite_border,
+                                                    color: Colors.white.withOpacity(0.8),
                                                     size: 28.sp,
-                                                  )
-                                                      .animate(
-                                                    onPlay:
-                                                        (
-                                                        controller,
-                                                        ) => controller
-                                                        .repeat(
-                                                      reverse:
-                                                      true,
-                                                    ),
-                                                  )
-                                                      .scale(
-                                                    begin: const Offset(
-                                                      0.8,
-                                                      0.8,
-                                                    ),
-                                                    end: const Offset(
-                                                      1.1,
-                                                      1.1,
-                                                    ),
+                                                  ).animate(
+                                                    onPlay: (controller) => controller.repeat(reverse: true),
+                                                  ).scale(
+                                                    begin: const Offset(0.8, 0.8),
+                                                    end: const Offset(1.1, 1.1),
                                                     duration: 800.ms,
-                                                    curve:
-                                                    Curves
-                                                        .easeInOut,
+                                                    curve: Curves.easeInOut,
                                                   ),
                                                 ),
                                               ],
                                             ),
                                           ),
-                                        ],
-                                      )
-                                          .animate()
-                                          .fadeIn(
-                                        duration: 500.ms,
-                                        delay: (index * 100).ms,
-                                      )
-                                          .scale(
-                                        begin: const Offset(0.95, 0.95),
-                                        curve: Curves.easeOut,
-                                      ),
+                                        ),
+                                        // إضافة نص "Properties" فوق أول كارد فقط
+                                        if (index == 0)
+                                          Positioned(
+                                            top: 0, // يمكنك تعديل الموضع حسب الحاجة
+                                            left: 16.w,
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+                                              decoration: BoxDecoration(
+                                                color: AppColors.primary,
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(15.r),
+                                                  topRight: Radius.circular(15.r),
+                                                ),
+                                              ),
+                                              child: Text(
+                                                'Properties',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                      ],
                                     );
                                   },
                                 ),
@@ -382,7 +325,6 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                               ),
                               child: Container(
                                 alignment: Alignment.centerLeft,
-                                // يخلي النص من بداية السطر
                                 padding: EdgeInsets.symmetric(
                                   horizontal: 15.w,
                                   vertical: 8.h,
@@ -392,13 +334,13 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                                   borderRadius: BorderRadius.circular(12.r),
                                 ),
                                 child: Text(
-                                  'Quick Actions', // This is the changed text
+                                  'Explore More Properties', // تم تغيير النص هنا
                                   style: Theme.of(context).textTheme.headlineSmall,
                                 ),
                               ),
                             ),
                             10.verticalSpace,
-                            _buildQuickActions(), // <-- The new method call
+                            _buildQuickActions(),
                             20.verticalSpace,
                           ],
                         );
@@ -407,7 +349,6 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                     ],
                   ),
                 ),
-
                 10.verticalSpace,
               ],
             ),
@@ -424,8 +365,7 @@ class HomeView extends GetView<RecommendedPropertiesController> {
       height: 300.h,
       child: PageView.builder(
         itemCount: 3,
-        itemBuilder:
-            (_, __) => Container(
+        itemBuilder: (_, __) => Container(
           margin: EdgeInsets.symmetric(horizontal: 8.w),
           padding: EdgeInsets.all(12.w),
           decoration: BoxDecoration(
@@ -484,7 +424,6 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                       borderRadius: BorderRadius.circular(15.r),
                       child: Stack(
                         children: [
-
                           Image.asset(
                             'assets/backgrounds/background1.jpeg',
                             fit: BoxFit.cover,
@@ -508,7 +447,6 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                   ),
                 ),
               ),
-
             10.horizontalSpace,
             Expanded(
               child: GestureDetector(
