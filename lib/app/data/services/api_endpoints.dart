@@ -19,4 +19,6 @@ class ApiEndpoints {
   static const String viewrecommendedProperties = '/api/view-recommended-properties';
   static const String viewCountries = '/api/view-countries';
   static const String deleteProperty = '/api/delete-property';
+  static const String viewServiceCategories = '/api/view-service-categories';
+
 }
