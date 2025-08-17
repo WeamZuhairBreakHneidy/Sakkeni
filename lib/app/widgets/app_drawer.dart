@@ -6,7 +6,7 @@ import '../modules/auth/controllers/logout_controller.dart';
 class AppDrawer extends StatelessWidget {
   AppDrawer({super.key});
 
-  final LogoutController controller = Get.find<LogoutController>();
+  final LogoutController controller = Get.put<LogoutController>(LogoutController());
 
   @override
   Widget build(BuildContext context) {

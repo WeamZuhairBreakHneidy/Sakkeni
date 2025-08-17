@@ -12,20 +12,20 @@ class BottomNavController extends GetxController {
 
     switch (index) {
       case 0:
-        Get.toNamed(Routes.REGISTER);
+        Get.offNamed(Routes.FAVORITE);
         break;
       case 1:
-        Get.offAllNamed(Routes.PropertiesUnifiedView);
+        Get.offNamed(Routes.PropertiesUnifiedView);
         break;
       case 2:
-        Get.offAllNamed(Routes.HOME);
+        Get.offNamed(Routes.HOME);
      
         break;
       case 3:
-        Get.toNamed(Routes.SERVICE_PROVIDERS);
+        Get.offNamed(Routes.SERVICE_PROVIDERS);
         break;
       case 4:
-        Get.offAllNamed(Routes.PROFILE);
+        Get.offNamed(Routes.PROFILE);
         break;
     }
   }

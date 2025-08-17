@@ -17,6 +17,10 @@ import '../modules/auth/views/reset_password_view.dart';
 import '../modules/auth/views/update_profile_view.dart';
 import '../modules/customMap/bindings/custom_map_binding.dart';
 import '../modules/customMap/views/custom_map_view.dart';
+import '../modules/favorite/bindings/favorite_binding.dart';
+import '../modules/favorite/bindings/favorite_binding.dart';
+import '../modules/favorite/views/favorite_view.dart';
+import '../modules/favorite/views/favorite_view.dart';
 import '../modules/getstarted/views/getstarted_view.dart';
 import '../modules/history/bindings/history_binding.dart';
 import '../modules/history/views/history_view.dart';
@@ -129,6 +133,14 @@ class AppPages {
       name: _Paths.SERVICE_PROVIDERS,
       page: () => const ServiceProvidersView(),
       binding: ServiceProvidersBinding(),
+    ),
+    GetPage(
+      name: _Paths.FAVORITE,
+      page: () => const FavoriteView(),
+      binding: FavoriteBinding(),
+      children: [
+
+      ],
     ),
   ];
 }
