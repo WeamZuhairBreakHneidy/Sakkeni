@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:test1/app/core/theme/colors.dart';
-import 'package:test1/app/modules/home/controllers/home_controller.dart';
+
 import '../routes/app_pages.dart';
 
 class BottomNavController extends GetxController {
@@ -12,20 +12,20 @@ class BottomNavController extends GetxController {
 
     switch (index) {
       case 0:
-        Get.toNamed(Routes.REGISTER);
+        Get.offNamed(Routes.FAVORITE);
         break;
       case 1:
-        Get.offAllNamed(Routes.PropertiesUnifiedView);
+        Get.offNamed(Routes.PropertiesUnifiedView);
         break;
       case 2:
-        Get.offAllNamed(Routes.HOME);
+        Get.offNamed(Routes.HOME);
      
         break;
       case 3:
-        Get.toNamed(Routes.SERVICE_PROVIDERS);
+        Get.offNamed(Routes.SERVICE_PROVIDERS);
         break;
       case 4:
-        Get.offAllNamed(Routes.PROFILE);
+        Get.offNamed(Routes.PROFILE);
         break;
     }
   }
@@ -34,7 +34,7 @@ class BottomNavController extends GetxController {
 class CustomBottomNavBar extends StatelessWidget {
   CustomBottomNavBar({super.key});
 
-  final BottomNavController navController = Get.put(BottomNavController());
+  final BottomNavController navController = Get.put(BottomNavController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {

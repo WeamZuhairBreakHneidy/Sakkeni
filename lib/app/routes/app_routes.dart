@@ -28,6 +28,8 @@ abstract class Routes {
   static const PROPERTY_DETAILS = _Paths.PROPERTY_DETAILS;
   static const RECOMMENDED_PROPERTIES = _Paths.RECOMMENDED_PROPERTIES;
   static const SERVICE_PROVIDERS = _Paths.SERVICE_PROVIDERS;
+  static const FAVORITE = _Paths.FAVORITE;
+
 }
 
 abstract class _Paths {
@@ -56,4 +58,6 @@ abstract class _Paths {
   static const PROPERTY_DETAILS = '/property_details';
   static const RECOMMENDED_PROPERTIES = '/recommended-properties';
   static const SERVICE_PROVIDERS = '/service-providers';
+  static const FAVORITE = '/favorite';
+
 }
