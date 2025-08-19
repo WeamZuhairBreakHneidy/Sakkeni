@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:test1/app/core/theme/colors.dart';
 
 import '../../../data/services/api_service.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
+import '../../../widgets/upgrade-to-seller.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends StatelessWidget {
@@ -47,7 +49,20 @@ class ProfileView extends StatelessWidget {
                     ),
                     IconButton(
                       icon: Icon(Icons.history),
-                      onPressed: () => Get.toNamed(Routes.VIEWHISTORY),
+                      onPressed: () {
+                        final localStorage = GetStorage();
+                        final seller = localStorage.read('seller');
+
+                        final isSeller = seller != null;
+
+                        print('Is Seller (onPressed): $isSeller');
+
+                        if (isSeller) {
+                          Get.toNamed(Routes.VIEWHISTORY);                        } else {
+                          showUpgradeToSellerDialog();
+                        }
+                      },
+
                     ),
                   ],
                 ),

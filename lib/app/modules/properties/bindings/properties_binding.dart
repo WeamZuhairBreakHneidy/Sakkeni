@@ -13,6 +13,7 @@
 // }
 import 'package:get/get.dart';
 import 'package:test1/app/modules/auth/controllers/profile_controller.dart';
+import '../../auth/controllers/logout_controller.dart';
 import '../controllers/delete-property.dart';
 import '../controllers/properties_controller.dart';
 import '../controllers/properties_offplan_controller.dart';
@@ -27,6 +28,7 @@ class PropertiesBinding extends Bindings {
     Get.lazyPut<PurchaseController>(() => PurchaseController());
     Get.lazyPut<OffPlanController>(() => OffPlanController());
     Get.lazyPut<DeletePropertyController>(() => DeletePropertyController());
+    Get.lazyPut<LogoutController>(() => LogoutController());
 
 
     final typeParam = Get.parameters['type'];

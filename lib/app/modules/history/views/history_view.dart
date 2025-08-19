@@ -9,6 +9,7 @@ import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../../../widgets/properties_tab.dart';
 import '../../../widgets/property_card.dart';
+import '../../properties/controllers/delete-property.dart';
 import '../controllers/history_rent_controller.dart';
 import '../controllers/history_purchase_controller.dart';
 import '../controllers/history_offplan_controller.dart';
@@ -17,10 +18,12 @@ import '../../../data/models/properties-model.dart'; // Ensure Datum is imported
 class HistoryView extends StatelessWidget {
   final ScrollController scrollController = ScrollController();
   final tabController = Get.put(HistoryTabController(), permanent: true);
-  late final dynamic _controller; // Declared as late final
+  late final dynamic _controller;
+  final deleteController = Get.put(DeletePropertyController());
 
   HistoryView({super.key}) {
-    _controller = getControllerForCurrentRoute(); // Initialized in the constructor
+    _controller =
+        getControllerForCurrentRoute(); // Initialized in the constructor
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
           scrollController.position.maxScrollExtent - 100) {
@@ -50,7 +53,7 @@ class HistoryView extends StatelessWidget {
         children: [
           // Header
           Container(
-            color:  Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.background,
             padding: EdgeInsets.only(
               top: 50.h,
               left: 20.w,
@@ -96,7 +99,7 @@ class HistoryView extends StatelessWidget {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color:  Theme.of(context).colorScheme.background,
+                color: Theme.of(context).colorScheme.background,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(30.r),
                   bottomRight: Radius.circular(30.r),
@@ -124,69 +127,103 @@ class HistoryView extends StatelessWidget {
                 if (props.isEmpty && !isLoading) {
                   return const Center(child: Text("No properties found."));
                 }
-                return ListView.builder(
-                  itemCount: props.length + (hasMoreData ? 1 : 0),
-                  controller: scrollController,
-                  itemBuilder: (context, index) {
-                    if (index < props.length) {
-                      final Datum? property = props[index];
+                return RefreshIndicator(
+                onRefresh: () async {
+                  _controller.currentPage.value = 1;
+                  _controller.hasMoreData.value = true;
+                  _controller.properties.clear();
+                  await _controller.fetchProperties(page: 1, isLoadMore: false);
+                },
+                child: ListView.builder(
+                itemCount: props.length + (hasMoreData ? 1 : 0),
+                controller: scrollController,
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                      if (index < props.length) {
+                        final Datum? property = props[index];
 
-                      if (property == null) {
-                        print('Warning: Found a null property object at index $index. Skipping.');
-                        return const SizedBox.shrink();
-                      }
+                        if (property == null) {
+                          print(
+                            'Warning: Found a null property object at index $index. Skipping.',
+                          );
+                          return const SizedBox.shrink();
+                        }
 
-                      final String imageUrl;
-                      String? imagePath = property.coverImage?.imagePath;
-                      if (imagePath != null && imagePath.isNotEmpty) {
-                        imageUrl = "${ApiService().baseUrl}/$imagePath";
-                      } else {
-                        imageUrl = 'https://via.placeholder.com/150';
-                      }
+                        final String imageUrl;
+                        String? imagePath = property.coverImage?.imagePath;
+                        if (imagePath != null && imagePath.isNotEmpty) {
+                          imageUrl = "${ApiService().baseUrl}/$imagePath";
+                        } else {
+                          imageUrl = 'https://via.placeholder.com/150';
+                        }
 
-                      final price =
-                          property.rent?.price.toStringAsFixed(0) ??
-                              property.purchase?.price.toStringAsFixed(0) ??
-                              property.offplan?.overallPayment.toStringAsFixed(0) ??
-                              '0';
+                        final price =
+                            property.rent?.price.toStringAsFixed(0) ??
+                            property.purchase?.price.toStringAsFixed(0) ??
+                            property.offplan?.overallPayment.toStringAsFixed(
+                              0,
+                            ) ??
+                            '0';
 
-                      final location =
-                          "${property.location?.country?.name ?? ''}, ${property.location?.city?.name ?? ''}";
-                      final lease = property.rent?.leasePeriod.toString() ?? '';
-                      final propertyType = property.propertyType?.name ?? '';
-                      final subType =
-                          property.residential?.residentialPropertyType?.name ??
-                              property.commercial?.commercialPropertyType?.name ??
-                              '';
+                        final location =
+                            "${property.location?.country?.name ?? ''}, ${property.location?.city?.name ?? ''}";
+                        final lease =
+                            property.rent?.leasePeriod.toString() ?? '';
+                        final propertyType = property.propertyType?.name ?? '';
+                        final subType =
+                            property
+                                .residential
+                                ?.residentialPropertyType
+                                ?.name ??
+                            property.commercial?.commercialPropertyType?.name ??
+                            '';
 
-                      // **هنا التعديل: نغلف PropertyCard بـ SizedBox لتعيين ارتفاع محدد**
-                      return SizedBox(
-                        height: 200.h, // يمكنك تعديل هذا الارتفاع ليناسب تصميم بطاقتك
-                        child: PropertyCard(
-                          imageUrl: imageUrl,
-                          price: "\$$price",
-                          leasePeriod: lease,
-                          location: location,
-                          propertyType: propertyType,
-                          subType: subType,
-                          onTap: () {
-                            // Navigate to property details if needed
-                          },
-                        ),
-                      );
-                    } else {
-                      return Obx(
-                            () => _controller.isLoading.value && _controller.hasMoreData.value
-                            ? const Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Center(
-                            child: CircularProgressIndicator(),
+                        return SizedBox(
+                          child: PropertyCard(
+                            imageUrl: imageUrl,
+                            price: "\$$price",
+                            leasePeriod: lease,
+                            location: location,
+                            propertyType: propertyType,
+                            subType: subType,
+                            onTap: () {
+                              // Navigate to property details if needed
+                            },
+                            onDelete: () {
+                              Get.defaultDialog(
+                                title: "Confirm Deletion",
+                                middleText:
+                                    "Are you sure you want to delete this property?",
+                                onConfirm: () {
+                                  deleteController.deleteProperty(property.id);
+                                  Get.back(); // Close the dialog
+                                },
+                                onCancel: () {},
+                                textConfirm: "Delete",
+                                textCancel: "Cancel",
+                                confirmTextColor: AppColors.white,
+                                cancelTextColor: AppColors.primary,
+                                buttonColor: AppColors.primary,
+                              );
+                            },
                           ),
-                        )
-                            : const SizedBox(),
-                      );
-                    }
-                  },
+                        );
+                      } else {
+                        return Obx(
+                          () =>
+                              _controller.isLoading.value &&
+                                      _controller.hasMoreData.value
+                                  ? const Padding(
+                                    padding: EdgeInsets.all(16.0),
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  )
+                                  : const SizedBox(),
+                        );
+                      }
+                    },
+                  ),
                 );
               }),
             ),

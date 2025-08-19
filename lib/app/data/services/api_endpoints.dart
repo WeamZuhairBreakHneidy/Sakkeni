@@ -16,9 +16,16 @@ class ApiEndpoints {
   static const String upgradeAccount = '/api/upgrade-to-seller';
   static const String viewAmenities = '/api/view-amenities';
   static const String viewPropertyDetails = '/api/view-property-details';
-  static const String viewrecommendedProperties = '/api/view-recommended-properties';
+  static const String viewrecommendedProperties =
+      '/api/view-recommended-properties';
   static const String viewCountries = '/api/view-countries';
   static const String deleteProperty = '/api/delete-property';
   static const String viewServiceCategories = '/api/view-service-categories';
-
+  static const String addToFavorite = '/api/add-property-to-favorite';
+  static const String removeFromFavorite = '/api/remove-property-from-favorite';
+  static const String favoriteRent = '/api/view-favorite-properties/rent';
+  static const String favoritePurchase =
+      '/api/view-favorite-properties/purchase';
+  static const String favoriteOffplan =
+      '/api/view-favorite-properties/off-plan';
 }

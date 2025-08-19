@@ -53,11 +53,7 @@ class AppPages {
       page: () => OnboardingView(),
       binding: OnboardingBinding(),
     ),
-    GetPage(
-      name: _Paths.HOME,
-      page: () => HomeView(),
-      binding: HomeBinding(),
-    ),
+    GetPage(name: _Paths.HOME, page: () => HomeView(), binding: HomeBinding()),
     //Auth
     GetPage(name: _Paths.AUTH, page: () => AuthView(), binding: AuthBinding()),
     //Auth.Register
@@ -129,16 +125,14 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SERVICE_PROVIDERS,
-      page: () =>  ServiceProvidersView(),
+      page: () => ServiceProvidersView(),
       binding: ServiceProvidersBinding(),
     ),
     GetPage(
       name: _Paths.FAVORITE,
-      page: () => const FavoriteView(),
+      page: () =>  FavoriteView(),
       binding: FavoriteBinding(),
-      children: [
-
-      ],
+      children: [],
     ),
   ];
 }

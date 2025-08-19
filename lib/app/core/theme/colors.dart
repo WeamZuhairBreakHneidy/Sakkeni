@@ -10,8 +10,13 @@ class AppColors {
 
   static const Color white = Color.fromRGBO(252, 253, 253, 1);
 
-  static const Color background = Color.fromRGBO(39, 57, 58,1);
+  static const Color background = Color.fromRGBO(39, 57, 58, 1);
   static const Color background1 = Color.fromRGBO(39, 57, 58, 0.8);
+
+  static const Color lighterColor1 = Color.fromRGBO(60, 80, 82, 0.8); // لون أفتح قليلاً
+  static const Color lighterColor2 = Color.fromRGBO(80, 100, 102, 0.8); // لون أفتح أكثر
+  static const Color lighterColor3 = Color.fromRGBO(160, 180, 182, 0.8); // لون فاتح جداً
+
   static const Color orange = Color.fromRGBO(255, 238, 126, 28);
   static const Color gray1 = Color.fromRGBO(39, 57, 58, 0.75);
   static const Color gray2 = Color.fromRGBO(39, 57, 58, 0.55);

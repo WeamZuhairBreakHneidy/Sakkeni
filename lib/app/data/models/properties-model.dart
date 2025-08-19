@@ -79,6 +79,7 @@ class Data {
 class Datum {
   Datum({
     required this.id,
+    required this.property_id,
     required this.locationId,
     required this.propertyTypeId,
     required this.ownerId,
@@ -96,6 +97,7 @@ class Datum {
   });
 
   final int id;
+  final int property_id;
   final int locationId;
   final int propertyTypeId;
   final int ownerId;
@@ -114,6 +116,7 @@ class Datum {
   factory Datum.fromJson(Map<String, dynamic> json) {
     return Datum(
       id: json["id"] ?? 0,
+      property_id: json["property_id"] ?? 0,
       locationId: json["location_id"] ?? 0,
       propertyTypeId: json["property_type_id"] ?? 0,
       ownerId: json["owner_id"] ?? 0,

@@ -6,6 +6,7 @@ import '../../../core/theme/colors.dart';
 import '../../../data/services/api_service.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/property_card.dart';
+import '../../favorite/controllers/favorite_controller.dart';
 import '../controllers/delete-property.dart';
 
 class PropertiesGridView extends StatelessWidget {
@@ -13,9 +14,9 @@ class PropertiesGridView extends StatelessWidget {
   final List props;
   final bool isLoading;
   final ScrollController scrollController;
-  final deleteController = Get.put(DeletePropertyController());
+  final FavoriteController favController = Get.put(FavoriteController());
 
-   PropertiesGridView({
+  PropertiesGridView({
     super.key,
     required this.controller,
     required this.props,
@@ -58,27 +59,11 @@ class PropertiesGridView extends StatelessWidget {
           childAspectRatio: 0.65,
         ),
         itemBuilder: (context, index) {
-          if (index == props.length) {
-            return SizedBox(
-              height: 50,
-              width: 50,
-              child: LoadingIndicator(
-                indicatorType: Indicator.ballClipRotateMultiple,
-                colors: [AppColors.primary],
-              ),
-            );
-          }
-
-          if (index == props.length - 1 && controller.hasMoreData.value) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              controller.loadNextPage();
-            });
-          }
-
           final property = props[index];
           final imageUrl =
               "${ApiService().baseUrl}/${property.coverImage?.imagePath ?? ''}";
-          final price = property.rent?.price?.toStringAsFixed(0) ??
+          final price =
+              property.rent?.price?.toStringAsFixed(0) ??
               property.purchase?.price?.toStringAsFixed(0) ??
               property.offplan?.overallPayment?.toStringAsFixed(0) ??
               '0';
@@ -86,39 +71,84 @@ class PropertiesGridView extends StatelessWidget {
               "${property.location?.country?.name ?? ''}, ${property.location?.city?.name ?? ''}";
           final lease = property.rent?.leasePeriod?.toString() ?? '';
           final propertyType = property.propertyType?.name ?? '';
-          final subType = property.residential?.residentialPropertyType?.name ??
+          final subType =
+              property.residential?.residentialPropertyType?.name ??
               property.commercial?.commercialPropertyType?.name ??
               '';
 
-          return PropertyCard(
-            imageUrl: imageUrl,
-            price: "\$$price",
-            leasePeriod: lease,
-            location: location,
-            propertyType: propertyType,
-            subType: subType,
-            onTap: () {
-              Get.toNamed(Routes.PROPERTY_DETAILS, arguments: property.id);
-            },
-              onDelete: () {
-                Get.defaultDialog(
-                  title: "Confirm Deletion",
-                  middleText: "Are you sure you want to delete this property?",
-                  onConfirm: () {
-                    deleteController.deleteProperty(property.id);
-                    Get.back(); // Close the dialog
-                  },
-                  onCancel: () {},
-                  textConfirm: "Delete",
-                  textCancel: "Cancel",
-                  confirmTextColor: AppColors.white,
-                  cancelTextColor: AppColors.primary,
-                  buttonColor: AppColors.primary,
-                );
-              }
+          return Stack(
+            children: [
+              PropertyCard(
+                imageUrl: imageUrl,
+                price: "\$$price",
+                leasePeriod: lease,
+                location: location,
+                propertyType: propertyType,
+                subType: subType,
+                onTap: () {
+                  Get.toNamed(Routes.PROPERTY_DETAILS, arguments: property.id);
+                },
+              ),
+              // Favorite button
+              Positioned(
+                top: 8.h,
+                right: 8.w,
+                child: Obx(() {
+                  final isLoading = favController.loadingStatus[property.id] ?? false;
+                  final isFavorited =
+                      favController.favoriteStatus[property.id] ?? false;
+
+                  return GestureDetector(
+                    onTap:
+                        isLoading
+                            ? null
+                            : () {
+                              if (isFavorited) {
+                                favController.removePropertyFromFavorite(
+                                  property.id,
+                                );
+                              } else {
+                                favController.addPropertyToFavorite(
+                                  property.id,
+                                );
+                              }
+                            },
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      transitionBuilder:
+                          (child, animation) =>
+                              ScaleTransition(scale: animation, child: child),
+                      child:
+                          isLoading
+                              ? const SizedBox(
+                                key: ValueKey('loading'),
+                                width: 28,
+                                height: 28,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2.5,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.white,
+                                  ),
+                                ),
+                              )
+                              : Icon(
+                                isFavorited
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                key: ValueKey(isFavorited),
+                                color:
+                                    isFavorited
+                                        ? Colors.red
+                                        : Colors.white.withOpacity(0.9),
+                                size: 28.sp,
+                              ),
+                    ),
+                  );
+                }),
+              ),
+            ],
           );
         },
-
       ),
     );
   }

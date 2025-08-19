@@ -2,22 +2,30 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
 import '../../../data/services/api_service.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/app_drawer.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
+import '../../../widgets/upgrade-to-seller.dart';
+import '../../favorite/controllers/favorite_controller.dart';
 import '../controllers/home_controller.dart';
-import 'package:test1/app/core/theme/colors.dart';
+import '../../../core/theme/colors.dart';
 
 class HomeView extends GetView<RecommendedPropertiesController> {
-  const HomeView({super.key});
+  HomeView({super.key});
+
+  final FavoriteController favController = Get.put(FavoriteController());
 
   @override
   Widget build(BuildContext context) {
-    final PageController pageController = PageController(viewportFraction: 0.90);
+    final PageController pageController = PageController(
+      viewportFraction: 0.90,
+    );
     Timer? carouselTimer;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -25,13 +33,16 @@ class HomeView extends GetView<RecommendedPropertiesController> {
         if (pageController.hasClients) {
           final currentPage = pageController.page?.round() ?? 0;
           if (currentPage == controller.properties.length - 1) {
-            pageController.animateToPage(0,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeInOut);
+            pageController.animateToPage(
+              0,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+            );
           } else {
             pageController.nextPage(
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeInOut);
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+            );
           }
         }
       });
@@ -42,12 +53,11 @@ class HomeView extends GetView<RecommendedPropertiesController> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(bottomRight: Radius.circular(20.r),bottomLeft: Radius.circular(20.r)),
-          gradient: LinearGradient(
-            colors: [AppColors.background1, Colors.white],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+          borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(20.r),
+            bottomLeft: Radius.circular(20.r),
           ),
+          color: AppColors.white,
         ),
         child: SafeArea(
           child: Padding(
@@ -61,7 +71,6 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        /// Title Section
                         _buildSectionTitle(
                           context,
                           "Properties You Might Like",
@@ -69,7 +78,6 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                         ),
                         25.verticalSpace,
 
-                        /// Carousel
                         Obx(() {
                           if (controller.isLoading.value &&
                               controller.properties.isEmpty) {
@@ -96,11 +104,15 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                                     final propertyType =
                                         property.propertyType?.name ?? '';
                                     final subType =
-                                        property.residential
-                                            ?.residentialPropertyType?.name ??
-                                            property.commercial
-                                                ?.commercialPropertyType?.name ??
-                                            '';
+                                        property
+                                            .residential
+                                            ?.residentialPropertyType
+                                            ?.name ??
+                                        property
+                                            .commercial
+                                            ?.commercialPropertyType
+                                            ?.name ??
+                                        '';
 
                                     return GestureDetector(
                                       onTap: () {
@@ -115,6 +127,7 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                                         propertyType,
                                         subType,
                                         index,
+                                        property.id!,
                                       ),
                                     );
                                   },
@@ -133,10 +146,7 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                             ],
                           );
                         }),
-
                         30.verticalSpace,
-
-                        /// Quick Actions Section
                         _buildSectionTitle(
                           context,
                           "Start Your Property Journey",
@@ -196,167 +206,249 @@ class HomeView extends GetView<RecommendedPropertiesController> {
       height: 300.h,
       child: PageView.builder(
         itemCount: 3,
-        itemBuilder: (_, __) => Container(
-          margin: EdgeInsets.symmetric(horizontal: 8.w),
-          padding: EdgeInsets.all(12.w),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.r),
-            color: AppColors.primary,
-          ),
-          child: Shimmer.fromColors(
-            baseColor: Colors.grey[300]!,
-            highlightColor: Colors.grey[100]!,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 200.h,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15.r),
-                  ),
+        itemBuilder:
+            (_, __) => Container(
+              margin: EdgeInsets.symmetric(horizontal: 8.w),
+              padding: EdgeInsets.all(12.w),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.r),
+                color: AppColors.primary,
+              ),
+              child: Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 200.h,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15.r),
+                      ),
+                    ),
+                    20.verticalSpace,
+                    Container(width: 150.w, height: 16.h, color: Colors.white),
+                    10.verticalSpace,
+                    Container(width: 100.w, height: 12.h, color: Colors.white),
+                  ],
                 ),
-                20.verticalSpace,
-                Container(width: 150.w, height: 16.h, color: Colors.white),
-                10.verticalSpace,
-                Container(width: 100.w, height: 12.h, color: Colors.white),
-              ],
+              ),
             ),
-          ),
-        ),
       ),
     );
   }
 
   /// Property Card
   Widget _buildPropertyCard(
-      String imageUrl, String location, String propertyType, String subType, int index) {
+    String imageUrl,
+    String location,
+    String propertyType,
+    String subType,
+    int index,
+    int propertyId,
+  ) {
     return Stack(
-      children: [
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 8.w),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.r),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 8,
-                offset: Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Stack(
-            children: [
-              ClipRRect(
+          children: [
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 8.w),
+              decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.r),
-                child: Image.network(
-                  imageUrl,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: double.infinity,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Image.asset(
-                      'assets/backgrounds/default_placeholder.png',
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 8,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20.r),
+                    child: Image.network(
+                      imageUrl,
                       fit: BoxFit.cover,
                       width: double.infinity,
                       height: double.infinity,
-                    );
-                  },
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.r),
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.black.withOpacity(0.6),
-                      Colors.transparent,
-                    ],
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          'assets/backgrounds/default_placeholder.png',
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: double.infinity,
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ),
-              Positioned(
-                bottom: 16.h,
-                left: 12.w,
-                right: 12.w,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(location,
-                        style: TextStyle(
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.r),
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.black.withOpacity(0.6),
+                          Colors.transparent,
+                        ],
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 16.h,
+                    left: 12.w,
+                    right: 12.w,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          location,
+                          style: TextStyle(
                             color: Colors.white,
                             fontSize: 16.sp,
-                            fontWeight: FontWeight.bold)),
-                    Text("$propertyType • $subType",
-                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          "$propertyType • $subType",
+                          style: TextStyle(
                             color: Colors.white70,
                             fontSize: 12.sp,
-                            fontWeight: FontWeight.w500)),
-                  ],
-                ),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  Positioned(
+                    top: 16.h,
+                    right: 16.w,
+                    child: Obx(() {
+                      final isLoading = favController.loadingStatus[propertyId] ?? false;
+                      final isFavorited =
+                          favController.favoriteStatus[propertyId] ?? false;
+print(isFavorited);
+print(isFavorited);
+print(isFavorited);
+print(isFavorited);
+print(isFavorited);
+print(isFavorited);
+                      return GestureDetector(
+                        onTap:
+                            isLoading
+                                ? null
+                                : () {
+                                  if (isFavorited) {
+                                    favController.removePropertyFromFavorite(
+                                      propertyId,
+                                    );
+                                  } else {
+                                    favController.addPropertyToFavorite(
+                                      propertyId,
+                                    );
+                                  }
+                                },
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 300),
+                          transitionBuilder: (child, animation) {
+                            return ScaleTransition(
+                              scale: animation,
+                              child: child,
+                            );
+                          },
+                          child:
+                              isLoading
+                                  ? const SizedBox(
+                                    key: ValueKey('loading'),
+                                    width: 28,
+                                    height: 28,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2.5,
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.white,
+                                      ),
+                                    ),
+                                  )
+                                  : Icon(
+                                    isFavorited
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    key: ValueKey(isFavorited),
+                                    color:
+                                        isFavorited
+                                            ? Colors.red
+                                            : Colors.white.withOpacity(0.9),
+                                    size: 28.sp,
+                                  ),
+                        ),
+                      );
+                    }),
+                  ),
+                ],
               ),
-              Positioned(
-                top: 16.h,
-                right: 16.w,
-                child: Icon(Icons.favorite_border,
-                    color: Colors.white.withOpacity(0.8), size: 28.sp)
-                    .animate(onPlay: (c) => c.repeat(reverse: true))
-                    .scale(begin: const Offset(0.8, 0.8), end: const Offset(1.1, 1.1), duration: 800.ms, curve: Curves.easeInOut),
-              ),
-            ],
-          ),
-        ),
-      ],
-    ).animate().fadeIn(duration: 500.ms, delay: (index * 100).ms).scale(begin: const Offset(0.95, 0.95), curve: Curves.easeOut);
+            ),
+          ],
+        )
+        .animate()
+        .fadeIn(duration: 500.ms, delay: (index * 100).ms)
+        .scale(begin: const Offset(0.95, 0.95), curve: Curves.easeOut);
   }
 
   /// Quick Actions
   Widget _buildQuickActions() {
-    return Obx(() {
-      final hasProperties = controller.properties.isNotEmpty;
-      return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15.w),
-        child: Row(
-          children: [
-            if (hasProperties)
-              Expanded(
-                child: _buildQuickActionCard(
-                  icon: Icons.list_alt_rounded,
-                  label: "View Properties",
-                  onTap: () => Get.toNamed(
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 15.w),
+      child: Row(
+        children: [
+          Expanded(
+            child: _buildQuickActionCard(
+              imagePath: 'assets/backgrounds/properties.png',
+              icon: Icons.list_alt_rounded,
+              label: "View Properties",
+              onTap:
+                  () => Get.toNamed(
                     Routes.PropertiesUnifiedView,
                     arguments: controller.properties.first.id,
                   ),
-                ),
-              ),
-            10.horizontalSpace,
-            Expanded(
-              child: _buildQuickActionCard(
-                icon: Icons.add_circle_outline,
-                label: "Add New Property",
-                onTap: () => Get.toNamed(Routes.ADDPROPERTY),
-              ),
             ),
-          ],
-        ),
-      );
-    });
+          ),
+          10.horizontalSpace,
+          Expanded(
+            child: _buildQuickActionCard(
+              imagePath: 'assets/backgrounds/add.png',
+              icon: Icons.add_circle_outline,
+              label: "Add New Property",
+              onTap: () {
+                final localStorage = GetStorage();
+                final seller = localStorage.read('seller');
+                final isSeller = seller != null;
+
+                if (isSeller) {
+                  Get.toNamed(Routes.ADDPROPERTY);
+                } else {
+                  showUpgradeToSellerDialog();
+                }
+              },
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
-  Widget _buildQuickActionCard({required IconData icon, required String label, required VoidCallback onTap}) {
+  Widget _buildQuickActionCard({
+    IconData? icon,
+    String? imagePath,
+    required String label,
+    required VoidCallback onTap,
+  }) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
         height: 135.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.r),
-          gradient: LinearGradient(
-            colors: [AppColors.primary.withOpacity(0.8), AppColors.primary.withOpacity(0.4)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
           boxShadow: [
             BoxShadow(
               color: AppColors.primary.withOpacity(0.3),
@@ -365,18 +457,48 @@ class HomeView extends GetView<RecommendedPropertiesController> {
             ),
           ],
         ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15.r),
+          child: Stack(
             children: [
-              Icon(icon, size: 35.sp, color: Colors.white),
-              10.verticalSpace,
-              Text(label,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 14.sp,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600)),
+              if (imagePath != null)
+                Image.asset(
+                  imagePath,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
+                ),
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.black.withOpacity(0.5),
+                      Colors.black.withOpacity(0.2),
+                    ],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                  ),
+                ),
+              ),
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (icon != null)
+                      Icon(icon, size: 35.sp, color: Colors.white),
+                    10.verticalSpace,
+                    Text(
+                      label,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -390,27 +512,40 @@ class HomeView extends GetView<RecommendedPropertiesController> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Builder(
-          builder: (context) => GestureDetector(
-            onTap: () => Scaffold.of(context).openDrawer(),
-            child: Container(
-              width: 40.w,
-              height: 40.h,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: AppColors.search,
-                borderRadius: BorderRadius.circular(12.r),
+          builder:
+              (context) => GestureDetector(
+                onTap: () => Scaffold.of(context).openDrawer(),
+                child: Container(
+                  width: 40.w,
+                  height: 40.h,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: AppColors.search,
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  child: Icon(
+                    Icons.menu_open_sharp,
+                    size: 22.sp,
+                    color: Colors.black54,
+                  ),
+                ),
               ),
-              child: Icon(Icons.menu_open_sharp, size: 22.sp, color: Colors.black54),
-            ),
-          ),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text("Welcome Back 👋",
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.black54)),
-            Text("Find Your Dream Home",
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+            Text(
+              "Welcome Back 👋",
+              style: Theme.of(
+                context,
+              ).textTheme.titleSmall?.copyWith(color: Colors.black54),
+            ),
+            Text(
+              "Find Your Dream Home",
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+            ),
           ],
         ),
       ],

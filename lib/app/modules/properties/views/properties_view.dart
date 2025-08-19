@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:test1/app/widgets/filter_sheet.dart';
-
 import '../../../core/theme/colors.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/app_drawer.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../../../widgets/upgrade-to-seller.dart';
-import '../../auth/controllers/profile_controller.dart';
 import '../controllers/properties_tab_controller.dart';
 import 'filtered_properties_view.dart';
 import 'tabbed_properties_view.dart';
-
 class PropertiesUnifiedView extends StatelessWidget {
   final scrollController = ScrollController();
   final tabController = Get.put(PropertiesTabController(), permanent: true);
   final isFiltering = false.obs;
   final filteredData = <Map<String, dynamic>>[].obs;
-  final ProfileController profileController = Get.find<ProfileController>();
 
   PropertiesUnifiedView({super.key});
 
@@ -46,13 +43,13 @@ class PropertiesUnifiedView extends StatelessWidget {
               child: Obx(() {
                 return isFiltering.value
                     ? FilteredPropertiesView(
-                  scrollController: scrollController,
-                  filteredData: filteredData,
-                )
+                      scrollController: scrollController,
+                      filteredData: filteredData,
+                    )
                     : TabbedPropertiesView(
-                  scrollController: scrollController,
-                  tabController: tabController,
-                );
+                      scrollController: scrollController,
+                      tabController: tabController,
+                    );
               }),
             ),
           ),
@@ -99,29 +96,33 @@ class PropertiesUnifiedView extends StatelessWidget {
             children: [
               /// Drawer Button
               Builder(
-                builder: (context) => GestureDetector(
-                  onTap: () {
-
-                      Scaffold.of(context).openDrawer();
-
-                  },
-                  child: Container(
-                    width: 35.w,
-                    height: 35.h,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: AppColors.search,
-                      borderRadius: Get.locale?.languageCode == 'en'
-                          ? BorderRadius.horizontal(right: Radius.circular(10.r))
-                          : BorderRadius.horizontal(left: Radius.circular(10.r)),
+                builder:
+                    (context) => GestureDetector(
+                      onTap: () {
+                        Scaffold.of(context).openDrawer();
+                      },
+                      child: Container(
+                        width: 35.w,
+                        height: 35.h,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: AppColors.search,
+                          borderRadius:
+                              Get.locale?.languageCode == 'en'
+                                  ? BorderRadius.horizontal(
+                                    right: Radius.circular(10.r),
+                                  )
+                                  : BorderRadius.horizontal(
+                                    left: Radius.circular(10.r),
+                                  ),
+                        ),
+                        child: Icon(
+                          Icons.menu_open_sharp,
+                          size: 20.sp,
+                          color: Colors.black54,
+                        ),
+                      ),
                     ),
-                    child: Icon(
-                      Icons.menu_open_sharp,
-                      size: 20.sp,
-                      color: Colors.black54,
-                    ),
-                  ),
-                ),
               ),
 
               8.horizontalSpace,
@@ -165,9 +166,10 @@ class PropertiesUnifiedView extends StatelessWidget {
                                     child: Container(
                                       height: 650.h,
                                       decoration: BoxDecoration(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .background,
+                                        color:
+                                            Theme.of(
+                                              context,
+                                            ).colorScheme.background,
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(50.r),
                                         ),
@@ -185,8 +187,6 @@ class PropertiesUnifiedView extends StatelessWidget {
                   ),
                 ),
               ),
-
-              /// Add Property Button
               IconButton(
                 icon: Icon(
                   Icons.add_circle_rounded,
@@ -194,7 +194,10 @@ class PropertiesUnifiedView extends StatelessWidget {
                   size: 35.w,
                 ),
                 onPressed: () {
-                  final isSeller = profileController.profileModel.value?.data?.seller != null;
+                  final localStorage = GetStorage();
+                  final seller = localStorage.read('seller');
+
+                  final isSeller = seller != null;
 
                   print('Is Seller (onPressed): $isSeller');
 

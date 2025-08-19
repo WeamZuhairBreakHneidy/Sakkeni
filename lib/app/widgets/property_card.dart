@@ -37,6 +37,8 @@ class PropertyCard extends StatelessWidget {
         decoration: _cardDecoration(context),
         clipBehavior: Clip.antiAlias,
         child: Column(
+          mainAxisSize: MainAxisSize.min, // 👈 يضبط الحجم على قد المحتوى
+
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // The Stack widget allows for overlapping children
@@ -79,22 +81,21 @@ class PropertyCard extends StatelessWidget {
 
                 ],
               ),
-            Flexible(
-              child: Padding(
-                padding: EdgeInsets.all(13.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (price != null) _buildPrice(),
-                    if (location != null) _buildTextLine(context, location!),
-                    if (propertyType != null)
-                      _buildTextLine(context, propertyType!),
-                    if (subType != null && subType!.isNotEmpty)
-                      _buildTextLine(context, subType!),
-                  ],
-                ),
+            Padding(
+              padding: EdgeInsets.all(13.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min, // 👈 يخلي الكولمن ياخذ قد العناصر فقط
+                children: [
+                  if (price != null) _buildPrice(),
+                  if (location != null) _buildTextLine(context, location!),
+                  if (propertyType != null) _buildTextLine(context, propertyType!),
+                  if (subType != null && subType!.isNotEmpty)
+                    _buildTextLine(context, subType!),
+                ],
               ),
             ),
+
           ],
         ),
       ),
@@ -148,35 +149,31 @@ class PropertyCard extends StatelessWidget {
     );
   }
 
-// ... الكود الباقي لويدجت PropertyCard ...
   Widget _buildPrice() {
     return Row(
+      mainAxisSize: MainAxisSize.min, // 👈 يخلي الرو ياخذ قد العناصر فقط
       children: [
-        Expanded(
-          child: Text(
-            price!,
-            style: TextStyle(
-              fontFamily: AppTheme.primaryFont,
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w400,
-              color: AppColors.tabtext,
-            ),
-            overflow: TextOverflow.ellipsis,
+        Text(
+          price!,
+          style: TextStyle(
+            fontFamily: AppTheme.primaryFont,
+            fontSize: 12.sp,
+            fontWeight: FontWeight.w400,
+            color: AppColors.tabtext,
           ),
+          overflow: TextOverflow.ellipsis,
         ),
         if (leasePeriod != null && leasePeriod!.isNotEmpty) ...[
           SizedBox(width: 4.w),
-          Expanded(
-            child: Text(
-              '/$leasePeriod',
-              style: TextStyle(
-                fontFamily: AppTheme.primaryFont,
-                fontSize: 8.sp,
-                fontWeight: FontWeight.w400,
-                color: Colors.grey[600],
-              ),
-              overflow: TextOverflow.ellipsis,
+          Text(
+            '/$leasePeriod',
+            style: TextStyle(
+              fontFamily: AppTheme.primaryFont,
+              fontSize: 8.sp,
+              fontWeight: FontWeight.w400,
+              color: Colors.grey[600],
             ),
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ],
