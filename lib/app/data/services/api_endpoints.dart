@@ -28,4 +28,6 @@ class ApiEndpoints {
       '/api/view-favorite-properties/purchase';
   static const String favoriteOffplan =
       '/api/view-favorite-properties/off-plan';
+  static const String bestServiceProviders =
+      '/api/view-best-service-providers';
 }

@@ -13,6 +13,7 @@ import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../../../widgets/upgrade-to-seller.dart';
 import '../../auth/controllers/auth_controller.dart';
 import '../../favorite/controllers/favorite_controller.dart';
+import '../controllers/best_service_providers_controller.dart';
 import '../controllers/home_controller.dart';
 import '../../../core/theme/colors.dart';
 
@@ -20,13 +21,17 @@ class HomeView extends GetView<RecommendedPropertiesController> {
   HomeView({super.key});
 
   final FavoriteController favController = Get.put(FavoriteController());
-  final authController = Get.find<AuthController>();
+  final BestServiceProvidersController providersController = Get.put(
+    BestServiceProvidersController(),
+  );
 
   @override
   Widget build(BuildContext context) {
     final PageController pageController = PageController(
       viewportFraction: 0.90,
     );
+    final PageController providersPageController = PageController(viewportFraction: 0.90,);
+
     Timer? carouselTimer;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -41,6 +46,25 @@ class HomeView extends GetView<RecommendedPropertiesController> {
             );
           } else {
             pageController.nextPage(
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+            );
+          }
+        }
+      });
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Timer.periodic(const Duration(seconds: 4), (timer) {
+        if (providersPageController.hasClients) {
+          final currentPage = providersPageController.page?.round() ?? 0;
+          if (currentPage == providersController.providers.length - 1) {
+            providersPageController.animateToPage(
+              0,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+            );
+          } else {
+            providersPageController.nextPage(
               duration: const Duration(milliseconds: 500),
               curve: Curves.easeInOut,
             );
@@ -145,7 +169,6 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                                     dotWidth: 8,
                                   ),
                                 ),
-
                             ],
                           );
                         }),
@@ -156,7 +179,151 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                           Icons.explore,
                         ),
                         25.verticalSpace,
-                        _buildQuickActions(),
+                        buildQuickActions([
+                          {
+                            'imagePath': 'assets/backgrounds/properties.png',
+                            'icon': Icons.list_alt_rounded,
+                            'label': 'View Properties',
+                            'onTap':
+                                () => Get.toNamed(
+                                  Routes.PropertiesUnifiedView,
+                                  arguments: controller.properties.first.id,
+                                ),
+                          },
+                          {
+                            'imagePath': 'assets/backgrounds/add.png',
+                            'icon': Icons.add_circle_outline,
+                            'label': 'Add New Property',
+                            'onTap': () {
+                              final authController = Get.find<AuthController>();
+                              final isSeller =
+                                  authController.isSellerFromStorage;
+
+                              if (isSeller) {
+                                Get.toNamed(Routes.ADDPROPERTY);
+                              } else {
+                                showUpgradeToSellerDialog();
+                              }
+                            },
+                          },
+                        ]),
+                        30.verticalSpace,
+                        _buildSectionTitle(
+                          context,
+                          "Top Service Providers",
+                          Icons.handshake_rounded,
+                        ),
+                        25.verticalSpace,
+
+                        Obx(() {
+                          if (providersController.isLoading.value && providersController.providers.isEmpty) {
+                            return _buildShimmerList();
+                          }
+                          final providers = providersController.providers;
+                          return Column(
+                            children: [
+                              SizedBox(
+                                height: 150.h,
+                                child: PageView.builder(
+                                  controller: providersPageController,
+
+                                  itemCount: providers.length,
+                                  onPageChanged: (index) {
+                                    providersController.currentPage.value =
+                                        index;
+                                  },
+                                  itemBuilder: (context, index) {
+                                    final provider = providers[index];
+                                    final imageUrl =
+                                        "${ApiService().baseUrl}/${provider.id ?? ''}";
+                                    final serviceName =
+                                        provider.firstServiceName; // اسم الخدمة
+                                    final serviceCategory =
+                                        provider
+                                            .firstServiceCategoryName; // فئة ال
+                                    return GestureDetector(
+                                      onTap: () {},
+                                      child: _buildProviderCard(
+                                        imageUrl,
+                                        "$serviceName - $serviceCategory",
+
+                                        // عرض الفئة والاسم معًا
+                                        index,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: TextButton.icon(
+                                    onPressed: () {
+                                      // Get.toNamed(Routes.AllServiceProviders);
+                                    },
+                                    icon: Icon(Icons.arrow_forward_ios, size: 16.sp),
+                                    label: Text(
+                                      "More Service Providers",
+                                      style: TextStyle(
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.primary,
+                                      ),
+                                    ),)),
+                              10.verticalSpace,
+                              if (providers.isNotEmpty)
+                                SmoothPageIndicator(
+                                  controller: providersPageController, // وهنا استخدم نفس الـ controller
+
+                                  count: providers.length,
+                                  effect: ExpandingDotsEffect(
+                                    activeDotColor: AppColors.primary,
+                                    dotHeight: 8,
+                                    dotWidth: 8,
+                                  ),
+                                ),
+                              30.verticalSpace,
+                              _buildSectionTitle(
+                                context,
+                                "Step Into Services",
+                                Icons.medical_services_outlined,
+                              ),
+                              25.verticalSpace,
+                              buildQuickActions([
+                                {
+                                  'imagePath':
+                                      'assets/backgrounds/services.png',
+                                  'icon': Icons.list_alt_rounded,
+                                  'label': 'View Services',
+                                  'onTap':
+                                      () => Get.toNamed(
+                                        Routes.SERVICE_PROVIDERS,
+                                        arguments:
+                                            controller.properties.first.id,
+                                      ),
+                                },
+                                {
+                                  'imagePath':
+                                      'assets/backgrounds/addservice.png',
+                                  'icon': Icons.add_circle_outline,
+                                  'label': 'Add New Service',
+                                  'onTap': () {
+                                    final authController =
+                                        Get.find<AuthController>();
+                                    final isSeller =
+                                        authController.isSellerFromStorage;
+
+                                    if (isSeller) {
+                                      // Get.toNamed(Routes.ADDPROPERTY);
+                                    } else {
+                                      showUpgradeToSellerDialog();
+                                    }
+                                  },
+                                },
+                              ]),
+                            10.verticalSpace
+                            ],
+                          );
+                        }),
                       ],
                     ),
                   ),
@@ -394,43 +561,24 @@ class HomeView extends GetView<RecommendedPropertiesController> {
         .scale(begin: const Offset(0.95, 0.95), curve: Curves.easeOut);
   }
 
-  /// Quick Actions
-  Widget _buildQuickActions() {
+  Widget buildQuickActions(List<Map<String, dynamic>> actions) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15.w),
       child: Row(
-        children: [
-          Expanded(
+        children: List.generate(actions.length * 2 - 1, (index) {
+          if (index.isOdd) {
+            return 10.horizontalSpace; // الفراغ بين العناصر
+          }
+          final action = actions[index ~/ 2];
+          return Expanded(
             child: _buildQuickActionCard(
-              imagePath: 'assets/backgrounds/properties.png',
-              icon: Icons.list_alt_rounded,
-              label: "View Properties",
-              onTap:
-                  () => Get.toNamed(
-                    Routes.PropertiesUnifiedView,
-                    arguments: controller.properties.first.id,
-                  ),
+              imagePath: action['imagePath'],
+              icon: action['icon'],
+              label: action['label'],
+              onTap: action['onTap'],
             ),
-          ),
-          10.horizontalSpace,
-          Expanded(
-            child: _buildQuickActionCard(
-              imagePath: 'assets/backgrounds/add.png',
-              icon: Icons.add_circle_outline,
-              label: "Add New Property",
-              onTap: () {
-                final isSeller = authController.isSellerFromStorage;
-print(isSeller);
-                if (isSeller) {
-                  Get.toNamed(Routes.ADDPROPERTY);
-                } else {
-                  showUpgradeToSellerDialog();
-                }
-              },
-
-            ),
-          ),
-        ],
+          );
+        }),
       ),
     );
   }
@@ -548,5 +696,80 @@ print(isSeller);
         ),
       ],
     );
+  }
+
+  Widget _buildProviderCard(String imageUrl, String category, int index) {
+    return Stack(
+          children: [
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 8.w),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.r),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 8,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20.r),
+                    child: Image.network(
+                      imageUrl,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          'assets/backgrounds/serviceprovider.png',
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: double.infinity,
+                        );
+                      },
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.r),
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.black.withOpacity(0.6),
+                          Colors.transparent,
+                        ],
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 16.h,
+                    left: 12.w,
+                    right: 12.w,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          category,
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        )
+        .animate()
+        .fadeIn(duration: 500.ms, delay: (index * 100).ms)
+        .scale(begin: const Offset(0.95, 0.95), curve: Curves.easeOut);
   }
 }
