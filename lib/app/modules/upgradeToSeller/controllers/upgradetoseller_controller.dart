@@ -6,7 +6,6 @@ import 'package:test1/app/core/theme/colors.dart';
 import '../../../data/services/api_endpoints.dart';
 import '../../../data/services/api_service.dart';
 import '../../../routes/app_pages.dart';
-import '../../auth/controllers/auth_controller.dart'; // ✅ بدل profile بـ auth
 
 class UpgradeToSellerController extends GetxController {
   var isLoading = false.obs;

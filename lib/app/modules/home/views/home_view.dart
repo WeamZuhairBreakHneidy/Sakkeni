@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:test1/app/widgets/upgrade_to_service_provider.dart';
 
 import '../../../data/services/api_service.dart';
 import '../../../routes/app_pages.dart';
@@ -259,7 +260,7 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                                 alignment: Alignment.centerRight,
                                 child: TextButton.icon(
                                     onPressed: () {
-                                      // Get.toNamed(Routes.AllServiceProviders);
+                                      Get.toNamed(Routes.SERVICE_PROVIDERS);
                                     },
                                     icon: Icon(Icons.arrow_forward_ios, size: 16.sp),
                                     label: Text(
@@ -296,8 +297,7 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                                   'icon': Icons.list_alt_rounded,
                                   'label': 'View Services',
                                   'onTap':
-                                      () => Get.toNamed(
-                                        Routes.SERVICE_PROVIDERS,
+                                      () =>  Get.offNamed(Routes.SERVICES,
                                         arguments:
                                             controller.properties.first.id,
                                       ),
@@ -308,14 +308,15 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                                   'icon': Icons.add_circle_outline,
                                   'label': 'Add New Service',
                                   'onTap': () {
-                                    // ✅ use storage directly
-                                    final isSeller = box.read('isSeller') ?? false;
-
-                                    if (isSeller) {
-                                      Get.toNamed(Routes.ADDPROPERTY);
-                                    } else {
-                                      showUpgradeToSellerDialog();
-                                    }
+                                    showUpgradeToServiceProviderDialog();
+                                    // // ✅ use storage directly
+                                    // final isSeller = box.read('isSeller') ?? false;
+                                    //
+                                    // if (isSeller) {
+                                    //   Get.toNamed(Routes.ADDPROPERTY);
+                                    // } else {
+                                    //   showUpgradeToSellerDialog();
+                                    // }
                                   },
                                 },
                               ]),

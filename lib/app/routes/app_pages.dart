@@ -34,6 +34,10 @@ import '../modules/services/bindings/services_binding.dart';
 import '../modules/services/views/services_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
+import '../modules/upgradeToServiceProvider/bindings/upgrade_to_service_provider_binding.dart';
+import '../modules/upgradeToServiceProvider/bindings/upgrade_to_service_provider_binding.dart';
+import '../modules/upgradeToServiceProvider/views/upgrade_to_service_provider_view.dart';
+import '../modules/upgradeToServiceProvider/views/upgrade_to_service_provider_view.dart';
 import '../modules/upgradetoseller/bindings/upgradetoseller_binding.dart';
 import '../modules/upgradetoseller/views/upgradetoseller_view.dart';
 
@@ -140,6 +144,11 @@ class AppPages {
       name: _Paths.SERVICES,
       page: () => const ServicesView(),
       binding: ServicesBinding(),
+    ),
+    GetPage(
+      name: _Paths.UPGRADE_TO_SERVICE_PROVIDER,
+      page: () => UpgradeToServiceProviderView(),
+      binding: UpgradeToServiceProviderBinding(),
     ),
   ];
 }
