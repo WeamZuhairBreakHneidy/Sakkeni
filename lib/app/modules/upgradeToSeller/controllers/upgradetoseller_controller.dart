@@ -6,11 +6,9 @@ import 'package:test1/app/core/theme/colors.dart';
 import '../../../data/services/api_endpoints.dart';
 import '../../../data/services/api_service.dart';
 import '../../../routes/app_pages.dart';
-import '../../auth/controllers/profile_controller.dart';
+import '../../auth/controllers/auth_controller.dart'; // ✅ بدل profile بـ auth
 
 class UpgradeToSellerController extends GetxController {
-  final profileController = Get.find<ProfileController>();
-
   var isLoading = false.obs;
   final box = GetStorage();
   final RxString selectedAccountType = ''.obs;
@@ -65,17 +63,16 @@ class UpgradeToSellerController extends GetxController {
         final status = body['status'];
 
         if (status == true) {
+          // تحديث المستخدم من السيرفر
+
+          GetStorage().write('isSeller', true);
+
           Get.snackbar(
             'Success',
             message ?? 'Account upgraded successfully',
             snackPosition: SnackPosition.TOP,
             colorText: Colors.white,
           );
-          box.write('userType', selectedAccountType.value);
-          Get.find<ProfileController>().fetchProfile();
-          final profileData = profileController.profileModel.value?.data;
-          final isSeller = profileData?.seller != null;
-          print(isSeller);
 
           Get.offAllNamed(Routes.HOME);
         } else {
@@ -97,7 +94,7 @@ class UpgradeToSellerController extends GetxController {
           "please fill the address and phone number fields in your profile first") {
         Get.snackbar(
           'Incomplete Profile',
-          '', // خلي النص الفارغ عشان نستخدم messageText بدل message
+          '',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: AppColors.primary,
           margin: EdgeInsets.all(16),
@@ -138,16 +135,6 @@ class UpgradeToSellerController extends GetxController {
           ),
         );
       }
-      print("j"); // يمكن إزالة هذا السطر إذا لم يكن ضروريًا للتصحيح
-
-      // Get.snackbar(
-      //   'Error',
-      //   'An error occurred: ${e.toString()}',
-      //   snackPosition: SnackPosition.BOTTOM,
-      //   backgroundColor: Colors.red.withOpacity(0.8),
-      //   colorText: Colors.white,
-      // );
-      // print(e.toString());
     } finally {
       isLoading.value = false;
     }

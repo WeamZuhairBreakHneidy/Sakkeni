@@ -1,4 +1,3 @@
-// user_model.dart
 class UserModel {
   final int id;
   final String firstName;
@@ -8,10 +7,10 @@ class UserModel {
   final String? profilePicturePath;
   final String? address;
   final String? phoneNumber;
-  final bool isAdmin;
-  final bool isSuperAdmin;
-
   final String token;
+
+  // Seller flag
+  final bool isSeller;
 
   UserModel({
     required this.id,
@@ -22,26 +21,23 @@ class UserModel {
     this.profilePicturePath,
     this.address,
     this.phoneNumber,
-    required this.isAdmin,
-    required this.isSuperAdmin,
-
     required this.token,
+    required this.isSeller,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       id: json['id'],
-      firstName: json['first_name'],
-      lastName: json['last_name'],
-      email: json['email'],
+      firstName: json['first_name'] ?? '',
+      lastName: json['last_name'] ?? '',
+      email: json['email'] ?? '',
       emailVerifiedAt: json['email_verified_at'],
       profilePicturePath: json['profile_picture_path'],
       address: json['address'],
       phoneNumber: json['phone_number'],
-      isAdmin: json['is_admin'] == 1,
-      isSuperAdmin: json['is_super_admin'] == 1,
-
-      token: json['token'],
+      token: json['token'] ?? '',
+      isSeller: json['account_type'] != null &&
+          (json['account_type'] as List).contains("Seller"),
     );
   }
 
@@ -55,12 +51,11 @@ class UserModel {
       'profile_picture_path': profilePicturePath,
       'address': address,
       'phone_number': phoneNumber,
-      'is_admin': isAdmin ? 1 : 0,
-      'is_super_admin': isSuperAdmin ? 1 : 0,
-
       'token': token,
+      'is_seller': isSeller,
     };
   }
+
   UserModel copyWith({
     String? firstName,
     String? lastName,
@@ -69,6 +64,7 @@ class UserModel {
     String? address,
     String? token,
     String? profilePicturePath,
+    bool? isSeller,  emailVerifiedAt,
   }) {
     return UserModel(
       id: id,
@@ -79,11 +75,7 @@ class UserModel {
       address: address ?? this.address,
       token: token ?? this.token,
       profilePicturePath: profilePicturePath ?? this.profilePicturePath,
-      isAdmin: isAdmin,
-      isSuperAdmin: isSuperAdmin,
-      emailVerifiedAt: emailVerifiedAt,
+      isSeller: isSeller ?? this.isSeller,
     );
   }
-
-
 }

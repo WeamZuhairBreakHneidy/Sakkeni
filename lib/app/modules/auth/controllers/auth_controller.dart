@@ -16,7 +16,22 @@ class AuthController extends GetxController {
   final tokenService = TokenService();
   var rememberMe = false.obs;
   var isLoading = false.obs;
-  GlobalKey<FormState> loginFormKey=GlobalKey();
+  GlobalKey<FormState> loginFormKey = GlobalKey();
+
+  final Rx<UserModel?> user = Rx<UserModel?>(null);
+
+  @override
+  void onInit() {
+    super.onInit();
+    _loadUserFromStorage();
+  }
+
+  void _loadUserFromStorage() {
+    final json = box.read('user');
+    if (json != null) {
+      user.value = UserModel.fromJson(Map<String, dynamic>.from(json));
+    }
+  }
 
   Future<void> login() async {
     final email = emailController.text.trim();
@@ -30,58 +45,49 @@ class AuthController extends GetxController {
         body: {'email': email, 'password': password},
       );
 
-      print(response.statusCode);
       if (response.statusCode == 200) {
         final body = response.body;
 
-        final status = body['status'];
-        final message = body['message'];
-
-        if (status == true) {
+        if (body['status'] == true) {
           final userData = body['data'];
+          final newUser = UserModel.fromJson(userData);
 
-          final user = UserModel.fromJson(userData);
+          await tokenService.saveToken(newUser.token);
 
-          await tokenService.saveToken(user.token);
-          print(user.token);
+          box.write('user', newUser.toJson());
+          user.value = newUser;
 
-          if (rememberMe.value) {
-            await box.write('rememberMe', true);
-          } else {
-            await box.write('rememberMe', false);
-          }
+          GetStorage().write('isSeller', newUser.isSeller);
 
-          box.write('user', user.toJson());
+          box.write('rememberMe', rememberMe.value);
 
           Get.offAllNamed(Routes.HOME);
-          Get.snackbar('Success', message ?? 'Login successful');
+          Get.snackbar('Success', body['message'] ?? 'Login successful');
         } else {
-          Get.snackbar('Login Failed', message ?? 'Unknown error');
+          Get.snackbar('Login Failed', body['message'] ?? 'Unknown error');
         }
       } else {
         Get.snackbar('Login Failed', 'Something went wrong. Please try again.');
       }
     } catch (e) {
       Get.snackbar('Error', e.toString());
-      print(e.toString());
     } finally {
       isLoading.value = false;
     }
   }
 
-  UserModel? get currentUser {
-    final json = box.read('user');
-    if (json != null) {
-      return UserModel.fromJson(Map<String, dynamic>.from(json));
-    }
-    return null;
-  }
+  UserModel? get currentUser => user.value;
+
+  bool get isSeller => currentUser?.isSeller ?? false;
+
+  bool get isSellerFromStorage => box.read('isSeller') ?? false;
 
   Future<void> logout() async {
     await tokenService.removeToken();
-    box.erase(); // clears GetStorage
+    box.erase();
+    user.value = null;
     Get.offAllNamed(Routes.AUTH);
   }
 
-  bool get isLoggedIn => box.hasData('user');
+  bool get isLoggedIn => user.value != null;
 }

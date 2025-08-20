@@ -61,6 +61,7 @@ dependencies:
   animated_text_kit:
   flutter_animate:
   shimmer:
+  cached_network_image:
 dev_dependencies:
   flutter_test:
     sdk: flutter

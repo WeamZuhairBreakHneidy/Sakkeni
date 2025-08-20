@@ -25,7 +25,6 @@ class AuthView extends GetView<AuthController> {
 
       body: Stack(
         children: [
-          // ✅ Static Background Image
           Positioned.fill(
             child: Image.asset(
               DeviceUtils.isPhone()

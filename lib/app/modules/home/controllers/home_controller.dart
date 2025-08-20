@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import '../../../data/services/api_endpoints.dart';
 import '../../../data/services/api_service.dart';
@@ -40,17 +42,23 @@ class RecommendedPropertiesController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        final data = PropertyListModel.fromJson(response.body);
-        if (data.data.data.isNotEmpty) {
-          properties.addAll(data.data.data);
-          _currentPage++;
+        if (response.body is Map<String, dynamic>) {
+          final data = PropertyListModel.fromJson(response.body);
+
+          if (data.data.data.isNotEmpty) {
+            properties.addAll(data.data.data);
+            _currentPage++;
+          } else {
+            hasMoreData.value = false;
+          }
         } else {
-          hasMoreData.value = false;
+          Get.snackbar('Error', 'Invalid data format from server');
         }
       } else {
-        Get.snackbar('Error', 'Failed to load properties. Status: ${response.statusCode}');
+        Get.snackbar('Error', 'Failed with status: ${response.statusCode}');
       }
-    } catch (e) {
+    }
+      catch (e) {
       Get.snackbar('Exception', e.toString());
       print(e.toString());
     } finally {

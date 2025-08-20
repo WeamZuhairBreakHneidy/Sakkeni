@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -12,6 +11,7 @@ import '../../../routes/app_pages.dart';
 import '../../../widgets/app_drawer.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../../../widgets/upgrade-to-seller.dart';
+import '../../auth/controllers/auth_controller.dart';
 import '../../favorite/controllers/favorite_controller.dart';
 import '../controllers/home_controller.dart';
 import '../../../core/theme/colors.dart';
@@ -20,6 +20,7 @@ class HomeView extends GetView<RecommendedPropertiesController> {
   HomeView({super.key});
 
   final FavoriteController favController = Get.put(FavoriteController());
+  final authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -134,15 +135,17 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                                 ),
                               ),
                               10.verticalSpace,
-                              SmoothPageIndicator(
-                                controller: pageController,
-                                count: props.length,
-                                effect: ExpandingDotsEffect(
-                                  activeDotColor: AppColors.primary,
-                                  dotHeight: 8,
-                                  dotWidth: 8,
+                              if (props.isNotEmpty)
+                                SmoothPageIndicator(
+                                  controller: pageController,
+                                  count: props.length,
+                                  effect: ExpandingDotsEffect(
+                                    activeDotColor: AppColors.primary,
+                                    dotHeight: 8,
+                                    dotWidth: 8,
+                                  ),
                                 ),
-                              ),
+
                             ],
                           );
                         }),
@@ -325,15 +328,11 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                     top: 16.h,
                     right: 16.w,
                     child: Obx(() {
-                      final isLoading = favController.loadingStatus[propertyId] ?? false;
+                      final isLoading =
+                          favController.loadingStatus[propertyId] ?? false;
                       final isFavorited =
                           favController.favoriteStatus[propertyId] ?? false;
-print(isFavorited);
-print(isFavorited);
-print(isFavorited);
-print(isFavorited);
-print(isFavorited);
-print(isFavorited);
+
                       return GestureDetector(
                         onTap:
                             isLoading
@@ -420,16 +419,15 @@ print(isFavorited);
               icon: Icons.add_circle_outline,
               label: "Add New Property",
               onTap: () {
-                final localStorage = GetStorage();
-                final seller = localStorage.read('seller');
-                final isSeller = seller != null;
-
+                final isSeller = authController.isSellerFromStorage;
+print(isSeller);
                 if (isSeller) {
                   Get.toNamed(Routes.ADDPROPERTY);
                 } else {
                   showUpgradeToSellerDialog();
                 }
               },
+
             ),
           ),
         ],

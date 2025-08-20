@@ -42,10 +42,6 @@ class ProfileController extends GetxController {
       if (response.statusCode == 200) {
         profileModel.value = ProfileModel.fromJson(response.body);
 
-        if (profileModel.value?.data?.seller != null) {
-          localStorage.write('seller', profileModel.value!.data!.seller);
-        }
-
         print(
           'Profile fetched successfully. Is Seller: ${profileModel.value?.data?.seller != null}',
         );
@@ -63,5 +59,5 @@ class ProfileController extends GetxController {
     }
   }
 
-  Data? get userData => profileModel.value?.data; // لا حاجة لتغيير هنا
+  Data? get userData => profileModel.value?.data;
 }

@@ -2,13 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:test1/app/modules/auth/controllers/auth_controller.dart';
 
 import '../core/theme/colors.dart';
 import '../modules/auth/controllers/profile_controller.dart'; // تأكد من استيراد الـ ProfileController
 import '../routes/app_pages.dart';
 
 void showUpgradeToSellerDialog() {
-  final profileController = Get.find<ProfileController>();
+  final authController = Get.find<AuthController>();
 
   Get.defaultDialog(
     backgroundColor: AppColors.white,
@@ -35,14 +36,9 @@ void showUpgradeToSellerDialog() {
           width: 250.w,
           child: ElevatedButton(
             onPressed: () {
-              Get.back(); // إغلاق مربع الحوار الحالي
-              // الانتقال إلى شاشة الترقية، وعند العودة منها (بعد الانتهاء من الترقية)
-              // يتم استدعاء fetchProfile لتحديث بيانات المستخدم.
+              Get.back();
               Get.toNamed(Routes.UPGRADETOSELLER)?.then((result) {
-                // يمكنك تمرير 'true' من شاشة الترقية إذا كانت ناجحة
                 if (result == true) {
-                  profileController.fetchProfile();
-                  print('ooooooo');// ⬅️ يحدث البيانات تلقائيًا بعد الرجوع
                 }
               });
             },
