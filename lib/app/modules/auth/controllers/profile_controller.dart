@@ -42,9 +42,9 @@ class ProfileController extends GetxController {
       if (response.statusCode == 200) {
         profileModel.value = ProfileModel.fromJson(response.body);
 
-        print(
-          'Profile fetched successfully. Is Seller: ${profileModel.value?.data?.seller != null}',
-        );
+
+
+        print("Profile fetched. Is Seller: $isSeller");
       } else {
         Get.snackbar(
           'Error',
@@ -57,6 +57,11 @@ class ProfileController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  // ✅ Simple helper function you can use anywhere
+  bool get isSeller {
+    return localStorage.read('isSeller') ?? false;
   }
 
   Data? get userData => profileModel.value?.data;

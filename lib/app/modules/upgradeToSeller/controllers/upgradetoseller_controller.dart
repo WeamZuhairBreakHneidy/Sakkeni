@@ -65,7 +65,7 @@ class UpgradeToSellerController extends GetxController {
         if (status == true) {
           // تحديث المستخدم من السيرفر
 
-          GetStorage().write('isSeller', true);
+          await GetStorage().write('isSeller', true);
 
           Get.snackbar(
             'Success',

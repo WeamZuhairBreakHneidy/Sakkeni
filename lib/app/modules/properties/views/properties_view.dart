@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:test1/app/widgets/filter_sheet.dart';
 import '../../../core/theme/colors.dart';
 import '../../../routes/app_pages.dart';
@@ -22,7 +23,7 @@ class PropertiesUnifiedView extends StatelessWidget {
   final authController = Get.find<AuthController>();
 
   PropertiesUnifiedView({super.key});
-
+  final box = GetStorage();
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -196,8 +197,8 @@ class PropertiesUnifiedView extends StatelessWidget {
                   size: 35.w,
                 ),
                 onPressed: () {
-                  final isSeller = authController.isSellerFromStorage;
-                  print('Is Seller (from Storage): $isSeller');
+                  // ✅ use storage directly
+                  final isSeller = box.read('isSeller') ?? false;
 
                   if (isSeller) {
                     Get.toNamed(Routes.ADDPROPERTY);

@@ -22,7 +22,7 @@ class BottomNavController extends GetxController {
      
         break;
       case 3:
-        Get.offNamed(Routes.SERVICE_PROVIDERS);
+        Get.offNamed(Routes.SERVICES);
         break;
       case 4:
         Get.offNamed(Routes.PROFILE);

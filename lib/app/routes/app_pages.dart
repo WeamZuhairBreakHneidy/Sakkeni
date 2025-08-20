@@ -30,6 +30,8 @@ import '../modules/properties/bindings/properties_binding.dart';
 import '../modules/properties/views/properties_view.dart';
 import '../modules/serviceProviders/bindings/service_providers_binding.dart';
 import '../modules/serviceProviders/views/service_providers_view.dart';
+import '../modules/services/bindings/services_binding.dart';
+import '../modules/services/views/services_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/upgradetoseller/bindings/upgradetoseller_binding.dart';
@@ -130,9 +132,14 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.FAVORITE,
-      page: () =>  FavoriteView(),
+      page: () => FavoriteView(),
       binding: FavoriteBinding(),
       children: [],
+    ),
+    GetPage(
+      name: _Paths.SERVICES,
+      page: () => const ServicesView(),
+      binding: ServicesBinding(),
     ),
   ];
 }

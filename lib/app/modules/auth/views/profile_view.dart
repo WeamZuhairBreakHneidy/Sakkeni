@@ -15,6 +15,7 @@ class ProfileView extends StatelessWidget {
   ProfileView({super.key});
 
   final controller = Get.put(ProfileController());
+  final box = GetStorage(); // ✅ initialize GetStorage
 
   @override
   Widget build(BuildContext context) {
@@ -50,19 +51,15 @@ class ProfileView extends StatelessWidget {
                     IconButton(
                       icon: Icon(Icons.history),
                       onPressed: () {
-                        final localStorage = GetStorage();
-                        final seller = localStorage.read('seller');
-
-                        final isSeller = seller != null;
-
-                        print('Is Seller (onPressed): $isSeller');
+                        // ✅ use storage directly
+                        final isSeller = box.read('isSeller') ?? false;
 
                         if (isSeller) {
-                          Get.toNamed(Routes.VIEWHISTORY);                        } else {
+                          Get.toNamed(Routes.ADDPROPERTY);
+                        } else {
                           showUpgradeToSellerDialog();
                         }
                       },
-
                     ),
                   ],
                 ),
@@ -107,11 +104,11 @@ class ProfileView extends StatelessWidget {
                             '${ApiService().baseUrl}/${profile.profilePicturePath}',
                           )
                               : AssetImage(
-                            Theme.of(context).brightness == Brightness.dark
+                            Theme.of(context).brightness ==
+                                Brightness.dark
                                 ? "assets/backgrounds/default_black.png"
                                 : "assets/backgrounds/default.png",
                           ) as ImageProvider,
-
                         ),
                         50.verticalSpace,
                         ProfileInfoTile(
@@ -124,7 +121,8 @@ class ProfileView extends StatelessWidget {
                           text: profile.phoneNumber ?? 'No Phone',
                         ),
                         _buildDivider(),
-                        ProfileInfoTile(icon: Icons.email, text: profile.email),
+                        ProfileInfoTile(
+                            icon: Icons.email, text: profile.email),
                         _buildDivider(),
                         ProfileInfoTile(
                           icon: Icons.location_on,
@@ -132,16 +130,12 @@ class ProfileView extends StatelessWidget {
                         ),
                         _buildDivider(),
 
-                        // عرض معلومات seller شرطياً فقط لو موجود
                         if (profile.seller != null) ...[
                           ProfileInfoTile(
                             icon: Icons.store,
                             text: "Seller Account",
                           ),
                           _buildDivider(),
-                          // لو بدك تعرض تفاصيل أكتر من seller مثل نوع الحساب:
-                          // ProfileInfoTile(icon: Icons.account_box, text: profile.seller.accountType?.name ?? ''),
-                          // _buildDivider(),
                         ],
 
                         50.verticalSpace,
@@ -149,16 +143,16 @@ class ProfileView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             TextButton(
-                              onPressed:
-                                  () => Get.toNamed(Routes.UPDATEPROFILE),
+                              onPressed: () =>
+                                  Get.toNamed(Routes.UPDATEPROFILE),
                               child: Text(
                                 "Edit Profile",
                                 style: Theme.of(context).textTheme.labelSmall,
                               ),
                             ),
                             TextButton(
-                              onPressed:
-                                  () => Get.toNamed(Routes.RESETPASSWORD),
+                              onPressed: () =>
+                                  Get.toNamed(Routes.RESETPASSWORD),
                               child: Text(
                                 "Reset Password",
                                 style: Theme.of(context).textTheme.labelSmall,
@@ -175,7 +169,6 @@ class ProfileView extends StatelessWidget {
           ),
         ),
       ),
-
       bottomNavigationBar: CustomBottomNavBar(),
     );
   }

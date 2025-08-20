@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -19,11 +20,12 @@ import '../../../core/theme/colors.dart';
 
 class HomeView extends GetView<RecommendedPropertiesController> {
   HomeView({super.key});
-
+  final box = GetStorage();
   final FavoriteController favController = Get.put(FavoriteController());
   final BestServiceProvidersController providersController = Get.put(
     BestServiceProvidersController(),
   );
+
 
   @override
   Widget build(BuildContext context) {
@@ -195,9 +197,8 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                             'icon': Icons.add_circle_outline,
                             'label': 'Add New Property',
                             'onTap': () {
-                              final authController = Get.find<AuthController>();
-                              final isSeller =
-                                  authController.isSellerFromStorage;
+                              // ✅ use storage directly
+                              final isSeller = box.read('isSeller') ?? false;
 
                               if (isSeller) {
                                 Get.toNamed(Routes.ADDPROPERTY);
@@ -307,13 +308,11 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                                   'icon': Icons.add_circle_outline,
                                   'label': 'Add New Service',
                                   'onTap': () {
-                                    final authController =
-                                        Get.find<AuthController>();
-                                    final isSeller =
-                                        authController.isSellerFromStorage;
+                                    // ✅ use storage directly
+                                    final isSeller = box.read('isSeller') ?? false;
 
                                     if (isSeller) {
-                                      // Get.toNamed(Routes.ADDPROPERTY);
+                                      Get.toNamed(Routes.ADDPROPERTY);
                                     } else {
                                       showUpgradeToSellerDialog();
                                     }

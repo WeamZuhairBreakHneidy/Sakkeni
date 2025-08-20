@@ -78,9 +78,7 @@ class AuthController extends GetxController {
 
   UserModel? get currentUser => user.value;
 
-  bool get isSeller => currentUser?.isSeller ?? false;
 
-  bool get isSellerFromStorage => box.read('isSeller') ?? false;
 
   Future<void> logout() async {
     await tokenService.removeToken();
