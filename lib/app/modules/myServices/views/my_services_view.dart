@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import '../../../core/theme/colors.dart';
+import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../../../widgets/service_card.dart';
 import '../controllers/my_services_controller.dart';
@@ -110,7 +111,12 @@ class MyServicesView extends StatelessWidget {
                         description: item.description ?? "",
                         availabilityStatus: item.availabilityStatus?.name ?? "",
                         categoryName: item.service?.serviceCategory?.name ?? "N/A",
-                        onTap: () {},
+                        onTap: () {
+                          Get.toNamed(
+                            Routes.GALLERY,
+                            arguments: item.service?.id,
+                          );
+                        },
                         onDismissed: () async {
                           controller.myServices.refresh();
 

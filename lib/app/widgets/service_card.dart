@@ -9,7 +9,7 @@ class ServiceCard extends StatelessWidget {
   final String categoryName;
   final DateTime? createdAt;
   final VoidCallback? onTap;
-  final VoidCallback? onDismissed; // عشان تنفذ الحذف فعلياً
+  final VoidCallback? onDismissed;
 
   const ServiceCard({
     Key? key,
@@ -64,8 +64,8 @@ class ServiceCard extends StatelessWidget {
     final statusIcon = statusStyle['icon'] as IconData;
 
     return Dismissible(
-      key: UniqueKey(), // مفتاح لازم يكون فريد
-      direction: DismissDirection.horizontal, // يمين ويسار
+      key: UniqueKey(),
+      direction: DismissDirection.horizontal,
       background: Container(
         alignment: Alignment.centerLeft,
         padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -91,132 +91,143 @@ class ServiceCard extends StatelessWidget {
         elevation: 10,
         shadowColor: AppColors.primary,
         margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 4.w),
-        child: Column(
-          children: [
-            // خط ملون بالأعلى
-            Container(
-              height: 3.h,
-              decoration: BoxDecoration(
-                color: AppColors.gray3.withOpacity(0.15),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.r),
-                  topRight: Radius.circular(20.r),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(20.r),
+          onTap: onTap, // <<< هي اللي بتشغل التاب
+          child: Column(
+            children: [
+              // خط ملون بالأعلى
+              Container(
+                height: 3.h,
+                decoration: BoxDecoration(
+                  color: AppColors.gray3.withOpacity(0.15),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20.r),
+                    topRight: Radius.circular(20.r),
+                  ),
                 ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.all(16.w),
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20.r),
-                  bottomRight: Radius.circular(20.r),
+              Container(
+                padding: EdgeInsets.all(16.w),
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(20.r),
+                    bottomRight: Radius.circular(20.r),
+                  ),
                 ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Service Name + Status
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          serviceName,
-                          style:
-                          Theme.of(context).textTheme.titleMedium!.copyWith(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.sp,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Service Name + Status
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            serviceName,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18.sp,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          overflow: TextOverflow.ellipsis,
                         ),
-                      ),
-                      Chip(
-                        avatar: Icon(statusIcon,
-                            color: Colors.white, size: 18.sp),
-                        backgroundColor: statusColor,
-                        label: Text(
-                          statusText,
-                          style: TextStyle(
-                              color: Colors.white, fontSize: 12.sp),
+                        Chip(
+                          avatar: Icon(statusIcon,
+                              color: Colors.white, size: 18.sp),
+                          backgroundColor: statusColor,
+                          label: Text(
+                            statusText,
+                            style: TextStyle(
+                                color: Colors.white, fontSize: 12.sp),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  10.verticalSpace,
-                  // Description
-                  Text(
-                    description.isNotEmpty
-                        ? description
-                        : "No description available",
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Colors.grey[700],
+                      ],
                     ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  6.verticalSpace,
-                  // Category
-                  Row(
-                    children: [
-                      Icon(Icons.category,
-                          size: 16.sp, color: AppColors.primary),
-                      6.horizontalSpace,
-                      Text(
-                        categoryName.isNotEmpty
-                            ? categoryName
-                            : 'No Category',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall!
-                            .copyWith(
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.w600,
-                        ),
+                    10.verticalSpace,
+                    // Description
+                    Text(
+                      description.isNotEmpty
+                          ? description
+                          : "No description available",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(
+                        color: Colors.grey[700],
                       ),
-                    ],
-                  ),
-                  12.verticalSpace,
-                  // Footer: Created At + Progress bar
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "📅 $formattedDate",
-                        style:
-                        Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Colors.grey[600],
-                          fontWeight: FontWeight.w500,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    6.verticalSpace,
+                    // Category
+                    Row(
+                      children: [
+                        Icon(Icons.category,
+                            size: 16.sp, color: AppColors.primary),
+                        6.horizontalSpace,
+                        Text(
+                          categoryName.isNotEmpty
+                              ? categoryName
+                              : 'No Category',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      ),
-                      Container(
-                        width: 80.w,
-                        height: 8.h,
-                        decoration: BoxDecoration(
-                          color: statusColor.withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(5.r),
+                      ],
+                    ),
+                    12.verticalSpace,
+                    // Footer: Created At + Progress bar
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "📅 $formattedDate",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(
+                            color: Colors.grey[600],
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                        child: FractionallySizedBox(
-                          alignment: Alignment.centerLeft,
-                          widthFactor: statusText == "Available"
-                              ? 1
-                              : statusText == "Pending"
-                              ? 0.6
-                              : 0.3,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: statusColor,
-                              borderRadius: BorderRadius.circular(5.r),
+                        Container(
+                          width: 80.w,
+                          height: 8.h,
+                          decoration: BoxDecoration(
+                            color: statusColor.withOpacity(0.3),
+                            borderRadius: BorderRadius.circular(5.r),
+                          ),
+                          child: FractionallySizedBox(
+                            alignment: Alignment.centerLeft,
+                            widthFactor: statusText == "Available"
+                                ? 1
+                                : statusText == "Pending"
+                                ? 0.6
+                                : 0.3,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: statusColor,
+                                borderRadius: BorderRadius.circular(5.r),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
