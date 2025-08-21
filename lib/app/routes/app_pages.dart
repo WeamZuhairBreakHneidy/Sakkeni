@@ -20,10 +20,16 @@ import '../modules/customMap/views/custom_map_view.dart';
 import '../modules/favorite/bindings/favorite_binding.dart';
 import '../modules/favorite/views/favorite_view.dart';
 import '../modules/getstarted/views/getstarted_view.dart';
-import '../modules/history/bindings/history_binding.dart';
-import '../modules/history/views/history_view.dart';
+import '../modules/historyOptions/bindings/history_options_binding.dart';
+import '../modules/historyOptions/views/history_options_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/myProperties/bindings/my_properties_binding.dart';
+import '../modules/myProperties/views/my_properties_view.dart';
+import '../modules/myServices/bindings/my_services_binding.dart';
+import '../modules/myServices/bindings/my_services_binding.dart';
+import '../modules/myServices/views/my_services_view.dart';
+import '../modules/myServices/views/my_services_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/properties/bindings/properties_binding.dart';
@@ -95,9 +101,9 @@ class AppPages {
       binding: ResetPasswordBinding(),
     ),
     GetPage(
-      name: Routes.VIEWHISTORY,
-      page: () => HistoryView(),
-      binding: HistoryBinding(),
+      name: Routes.MY_PROPERTIES,
+      page: () => MyPropertiesView(),
+      binding: MyPropertiesBinding(),
     ),
     GetPage(
       name: _Paths.CUSTOM_MAP,
@@ -149,6 +155,16 @@ class AppPages {
       name: _Paths.UPGRADE_TO_SERVICE_PROVIDER,
       page: () => UpgradeToServiceProviderView(),
       binding: UpgradeToServiceProviderBinding(),
+    ),
+    GetPage(
+      name: _Paths.MY_SERVICES,
+      page: () => MyServicesView(),
+      binding: MyServicesBinding(),
+    ),
+    GetPage(
+      name: _Paths.HISTORY_OPTIONS,
+      page: () => const HistoryOptionsView(),
+      binding: HistoryOptionsBinding(),
     ),
   ];
 }

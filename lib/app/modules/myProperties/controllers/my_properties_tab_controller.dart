@@ -1,6 +1,6 @@
 import '../../../core/controllers/BaseTabController.dart';
 
-class HistoryTabController extends BaseTabController<String> {
-  HistoryTabController()
+class MyPropertiesTabController extends BaseTabController<String> {
+  MyPropertiesTabController()
       : super(values: ['rent', 'purchase', 'offplan']);
 }

@@ -15,7 +15,7 @@ class ProfileView extends StatelessWidget {
   ProfileView({super.key});
 
   final controller = Get.put(ProfileController());
-  final box = GetStorage(); // ✅ initialize GetStorage
+  final box = GetStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +51,7 @@ class ProfileView extends StatelessWidget {
                     IconButton(
                       icon: Icon(Icons.history),
                       onPressed: () {
-                        final isSeller = box.read('isSeller') ?? false;
-
-                        if (isSeller) {
-                          Get.toNamed(Routes.ADDPROPERTY);
-                        } else {
-                          showUpgradeToSellerDialog();
-                        }
+                        Get.toNamed(Routes.HISTORY_OPTIONS);
                       },
                     ),
                   ],
@@ -98,16 +92,18 @@ class ProfileView extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 75.r,
-                          backgroundImage: profile.profilePicturePath != null
-                              ? NetworkImage(
-                            '${ApiService().baseUrl}/${profile.profilePicturePath}',
-                          )
-                              : AssetImage(
-                            Theme.of(context).brightness ==
-                                Brightness.dark
-                                ? "assets/backgrounds/default_black.png"
-                                : "assets/backgrounds/default.png",
-                          ) as ImageProvider,
+                          backgroundImage:
+                              profile.profilePicturePath != null
+                                  ? NetworkImage(
+                                    '${ApiService().baseUrl}/${profile.profilePicturePath}',
+                                  )
+                                  : AssetImage(
+                                        Theme.of(context).brightness ==
+                                                Brightness.dark
+                                            ? "assets/backgrounds/default_black.png"
+                                            : "assets/backgrounds/default.png",
+                                      )
+                                      as ImageProvider,
                         ),
                         50.verticalSpace,
                         ProfileInfoTile(
@@ -120,8 +116,7 @@ class ProfileView extends StatelessWidget {
                           text: profile.phoneNumber ?? 'No Phone',
                         ),
                         _buildDivider(),
-                        ProfileInfoTile(
-                            icon: Icons.email, text: profile.email),
+                        ProfileInfoTile(icon: Icons.email, text: profile.email),
                         _buildDivider(),
                         ProfileInfoTile(
                           icon: Icons.location_on,
@@ -142,16 +137,16 @@ class ProfileView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             TextButton(
-                              onPressed: () =>
-                                  Get.toNamed(Routes.UPDATEPROFILE),
+                              onPressed:
+                                  () => Get.toNamed(Routes.UPDATEPROFILE),
                               child: Text(
                                 "Edit Profile",
                                 style: Theme.of(context).textTheme.labelSmall,
                               ),
                             ),
                             TextButton(
-                              onPressed: () =>
-                                  Get.toNamed(Routes.RESETPASSWORD),
+                              onPressed:
+                                  () => Get.toNamed(Routes.RESETPASSWORD),
                               child: Text(
                                 "Reset Password",
                                 style: Theme.of(context).textTheme.labelSmall,

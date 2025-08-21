@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-import 'package:test1/app/modules/history/controllers/history_tab_controller.dart';
+import 'package:test1/app/modules/myProperties/controllers/my_properties_offplan_controller.dart';
+import 'package:test1/app/modules/myProperties/controllers/my_properties_purchase_controller.dart';
+import 'package:test1/app/modules/myProperties/controllers/my_properties_rent_controller.dart';
 import '../../../core/theme/colors.dart';
 import '../../../data/services/api_service.dart';
 import '../../../routes/app_pages.dart';
@@ -10,18 +12,16 @@ import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../../../widgets/properties_tab.dart';
 import '../../../widgets/property_card.dart';
 import '../../properties/controllers/delete-property.dart';
-import '../controllers/history_rent_controller.dart';
-import '../controllers/history_purchase_controller.dart';
-import '../controllers/history_offplan_controller.dart';
-import '../../../data/models/properties-model.dart'; // Ensure Datum is imported if it's not already
+import '../../../data/models/properties-model.dart';
+import '../controllers/my_properties_tab_controller.dart'; // Ensure Datum is imported if it's not already
 
-class HistoryView extends StatelessWidget {
+class MyPropertiesView extends StatelessWidget {
   final ScrollController scrollController = ScrollController();
-  final tabController = Get.put(HistoryTabController(), permanent: true);
+  final tabController = Get.put(MyPropertiesTabController(), permanent: true);
   late final dynamic _controller;
   final deleteController = Get.put(DeletePropertyController());
 
-  HistoryView({super.key}) {
+  MyPropertiesView({super.key}) {
     _controller =
         getControllerForCurrentRoute(); // Initialized in the constructor
     scrollController.addListener(() {
@@ -36,13 +36,13 @@ class HistoryView extends StatelessWidget {
     final typeParam = Get.parameters['type'] ?? 'rent';
     switch (typeParam) {
       case 'rent':
-        return Get.find<HistoryRentController>();
+        return Get.find<MyPropertiesRentController>();
       case 'purchase':
-        return Get.find<HistoryPurchaseController>();
+        return Get.find<MyPropertiesCPurchaseController>();
       case 'offplan':
-        return Get.find<HistoryOffPlanController>();
+        return Get.find<MyPropertiesOffPlanController>();
       default:
-        return Get.find<HistoryRentController>();
+        return Get.find<MyPropertiesRentController>();
     }
   }
 
@@ -83,10 +83,10 @@ class HistoryView extends StatelessWidget {
                   tabs: ['For Rent', 'For Sale', 'Off plan'],
                   onTabSelected: (index) {
                     final route = switch (index) {
-                      0 => '${Routes.VIEWHISTORY}?type=rent',
-                      1 => '${Routes.VIEWHISTORY}?type=purchase',
-                      2 => '${Routes.VIEWHISTORY}?type=offplan',
-                      _ => '${Routes.VIEWHISTORY}?type=rent',
+                      0 => '${Routes.MY_PROPERTIES}?type=rent',
+                      1 => '${Routes.MY_PROPERTIES}?type=purchase',
+                      2 => '${Routes.MY_PROPERTIES}?type=offplan',
+                      _ => '${Routes.MY_PROPERTIES}?type=rent',
                     };
                     Get.offNamed(route);
                   },

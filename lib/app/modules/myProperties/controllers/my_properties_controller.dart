@@ -6,7 +6,7 @@ import '../../../data/services/token_service.dart';
 
 enum HistoryTypeEnum { rent, purchase, offplan }
 
-abstract class HistoryController extends GetxController {
+abstract class MyPropertiesController extends GetxController {
   abstract final HistoryTypeEnum type;
 
   final isLoading = false.obs;

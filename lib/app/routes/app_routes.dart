@@ -17,7 +17,7 @@ abstract class Routes {
   static const PROFILE = _Paths.PROFILE;
   static const UPDATEPROFILE = _Paths.UPDATEPROFILE;
   static const RESETPASSWORD = _Paths.RESETPASSWORD;
-  static const VIEWHISTORY = _Paths.VIEWHISTORY;
+  static const MY_PROPERTIES = _Paths.MY_PROPERTIES;
   static const FAVORITEVIEW = _Paths.FAVORITEVIEW;
   // static const VIEWRENTHISTORY = _Paths.VIEWRENTHISTORY;
   // static const VIEWPURCHASEHISTORY = _Paths.VIEWPURCHASEHISTORY;
@@ -33,6 +33,8 @@ abstract class Routes {
   static const SAVED_PROPERTIES = _Paths.SAVED_PROPERTIES;
   static const SERVICES = _Paths.SERVICES;
   static const UPGRADE_TO_SERVICE_PROVIDER = _Paths.UPGRADE_TO_SERVICE_PROVIDER;
+  static const MY_SERVICES = _Paths.MY_SERVICES;
+  static const HISTORY_OPTIONS = _Paths.HISTORY_OPTIONS;
 }
 
 abstract class _Paths {
@@ -52,7 +54,7 @@ abstract class _Paths {
   static const PROFILE = '/profile';
   static const UPDATEPROFILE = '/updateprofile';
   static const RESETPASSWORD = '/resetpassword';
-  static const VIEWHISTORY = '/history';
+  static const MY_PROPERTIES = '/myProperties';
   static const FAVORITEVIEW = '/favorite';
   static const ADDPROPERTY = '/addProperty';
   static const ADDMAINPROPERTY = '/addProperty';
@@ -66,4 +68,6 @@ abstract class _Paths {
   static const SAVED_PROPERTIES = '/saved-properties';
   static const SERVICES = '/services';
   static const UPGRADE_TO_SERVICE_PROVIDER = '/upgrade-to-service-provider';
+  static const MY_SERVICES = '/my-services';
+  static const HISTORY_OPTIONS = '/history-options';
 }
