@@ -51,7 +51,6 @@ class ProfileView extends StatelessWidget {
                     IconButton(
                       icon: Icon(Icons.history),
                       onPressed: () {
-                        // ✅ use storage directly
                         final isSeller = box.read('isSeller') ?? false;
 
                         if (isSeller) {

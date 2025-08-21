@@ -134,7 +134,8 @@ class UpgradeToSellerController extends GetxController {
           ),
         );
       }
-    } finally {
+    }
+    finally {
       isLoading.value = false;
     }
   }

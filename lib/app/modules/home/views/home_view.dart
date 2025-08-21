@@ -13,7 +13,6 @@ import '../../../routes/app_pages.dart';
 import '../../../widgets/app_drawer.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../../../widgets/upgrade-to-seller.dart';
-import '../../auth/controllers/auth_controller.dart';
 import '../../favorite/controllers/favorite_controller.dart';
 import '../controllers/best_service_providers_controller.dart';
 import '../controllers/home_controller.dart';
@@ -21,19 +20,21 @@ import '../../../core/theme/colors.dart';
 
 class HomeView extends GetView<RecommendedPropertiesController> {
   HomeView({super.key});
+
   final box = GetStorage();
   final FavoriteController favController = Get.put(FavoriteController());
   final BestServiceProvidersController providersController = Get.put(
     BestServiceProvidersController(),
   );
 
-
   @override
   Widget build(BuildContext context) {
     final PageController pageController = PageController(
       viewportFraction: 0.90,
     );
-    final PageController providersPageController = PageController(viewportFraction: 0.90,);
+    final PageController providersPageController = PageController(
+      viewportFraction: 0.90,
+    );
 
     Timer? carouselTimer;
 
@@ -218,7 +219,8 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                         25.verticalSpace,
 
                         Obx(() {
-                          if (providersController.isLoading.value && providersController.providers.isEmpty) {
+                          if (providersController.isLoading.value &&
+                              providersController.providers.isEmpty) {
                             return _buildShimmerList();
                           }
                           final providers = providersController.providers;
@@ -259,23 +261,29 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: TextButton.icon(
-                                    onPressed: () {
-                                      Get.toNamed(Routes.SERVICE_PROVIDERS);
-                                    },
-                                    icon: Icon(Icons.arrow_forward_ios, size: 16.sp),
-                                    label: Text(
-                                      "More Service Providers",
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.primary,
-                                      ),
-                                    ),)),
+                                  onPressed: () {
+                                    Get.toNamed(Routes.SERVICE_PROVIDERS);
+                                  },
+                                  icon: Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 16.sp,
+                                  ),
+                                  label: Text(
+                                    "More Service Providers",
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.primary,
+                                    ),
+                                  ),
+                                ),
+                              ),
                               10.verticalSpace,
                               if (providers.isNotEmpty)
                                 SmoothPageIndicator(
-                                  controller: providersPageController, // وهنا استخدم نفس الـ controller
+                                  controller: providersPageController,
 
+                                  // وهنا استخدم نفس الـ controller
                                   count: providers.length,
                                   effect: ExpandingDotsEffect(
                                     activeDotColor: AppColors.primary,
@@ -297,7 +305,8 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                                   'icon': Icons.list_alt_rounded,
                                   'label': 'View Services',
                                   'onTap':
-                                      () =>  Get.offNamed(Routes.SERVICES,
+                                      () => Get.offNamed(
+                                        Routes.SERVICES,
                                         arguments:
                                             controller.properties.first.id,
                                       ),
@@ -308,19 +317,17 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                                   'icon': Icons.add_circle_outline,
                                   'label': 'Add New Service',
                                   'onTap': () {
-                                    showUpgradeToServiceProviderDialog();
-                                    // // ✅ use storage directly
-                                    // final isSeller = box.read('isSeller') ?? false;
-                                    //
-                                    // if (isSeller) {
-                                    //   Get.toNamed(Routes.ADDPROPERTY);
-                                    // } else {
-                                    //   showUpgradeToSellerDialog();
-                                    // }
+                                    final isServiceProvider =
+                                        box.read('isServiceProvider') ?? false;
+                                    if (isServiceProvider) {
+                                      Get.toNamed(Routes.ADDPROPERTY);
+                                    } else {
+                                      showUpgradeToServiceProviderDialog();
+                                    }
                                   },
                                 },
                               ]),
-                            10.verticalSpace
+                              10.verticalSpace,
                             ],
                           );
                         }),
@@ -495,10 +502,11 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                     top: 16.h,
                     right: 16.w,
                     child: Obx(() {
+                      // الحالة المحملة لكل عقار
                       final isLoading =
                           favController.loadingStatus[propertyId] ?? false;
-                      final isFavorited =
-                          favController.favoriteStatus[propertyId] ?? false;
+                      // حالة المفضلة من الـ controller
+                      final isFavorited = favController.isFavorite(propertyId);
 
                       return GestureDetector(
                         onTap:
@@ -517,12 +525,11 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                                 },
                         child: AnimatedSwitcher(
                           duration: const Duration(milliseconds: 300),
-                          transitionBuilder: (child, animation) {
-                            return ScaleTransition(
-                              scale: animation,
-                              child: child,
-                            );
-                          },
+                          transitionBuilder:
+                              (child, animation) => ScaleTransition(
+                                scale: animation,
+                                child: child,
+                              ),
                           child:
                               isLoading
                                   ? const SizedBox(

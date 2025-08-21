@@ -5,8 +5,9 @@ import '../../../data/services/api_service.dart';
 import '../../../data/services/token_service.dart';
 
 class FavoriteController extends GetxController {
+  // حالة المفضلة لكل property
   var favoriteStatus = <num, bool>{}.obs;
-  var loadingStatus = <num, bool>{}.obs; // لكل property
+  var loadingStatus = <num, bool>{}.obs; // لكل property حالة التحميل
   final TokenService _tokenService = TokenService();
   final _storage = GetStorage();
   final _favKey = 'favorite_status';
@@ -14,6 +15,8 @@ class FavoriteController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
+    // استرجاع البيانات المخزنة عند بداية التطبيق
     final stored = _storage.read<Map<dynamic, dynamic>>(_favKey);
     if (stored != null) {
       favoriteStatus.value = stored.map(
@@ -80,7 +83,7 @@ class FavoriteController extends GetxController {
 
       if (response.statusCode == 200) {
         favoriteStatus[propertyId] = false;
-        _saveFavorites();
+        _saveFavorites(); // تخزين الحالة بعد الإزالة
         Get.snackbar(
           'Success',
           response.body['message'] ??
@@ -104,5 +107,9 @@ class FavoriteController extends GetxController {
           (key, value) => MapEntry(key.toString(), value),
     );
     _storage.write(_favKey, toStore);
+  }
+
+  bool isFavorite(num propertyId) {
+    return favoriteStatus[propertyId] ?? false;
   }
 }

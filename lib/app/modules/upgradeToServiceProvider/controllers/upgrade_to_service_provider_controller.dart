@@ -8,21 +8,20 @@ import '../../../data/services/api_service.dart';
 import '../../../routes/app_pages.dart';
 
 class UpgradeToServiceProviderController extends GetxController {
+  var selectedServices = <int>[].obs;
+  var selectedPlanId = 0.obs;
+  var expandedCategoryIds = <int>[].obs;
+
+  void toggleCategory(int id) {
+    if (expandedCategoryIds.contains(id)) {
+      expandedCategoryIds.remove(id);
+    } else {
+      expandedCategoryIds.add(id);
+    }
+  }
+  var description = ''.obs;
   var isLoading = false.obs;
 
-  // Observables
-  final RxInt selectedPlanId = 0.obs;       // مش Nullable
-  final RxList<int> selectedServices = <int>[].obs;
-  final RxString description = ''.obs;
-
-  final box = GetStorage();
-
-  /// Select subscription plan
-  void selectPlan(int planId) {
-    selectedPlanId.value = planId;
-  }
-
-  /// Select or deselect a service
   void toggleService(int serviceId) {
     if (selectedServices.contains(serviceId)) {
       selectedServices.remove(serviceId);
@@ -31,11 +30,15 @@ class UpgradeToServiceProviderController extends GetxController {
     }
   }
 
-  /// Set description
-  void setDescription(String text) {
-    description.value = text;
+  void selectPlan(int planId) {
+    selectedPlanId.value = planId;
   }
 
+
+
+  void setDescription(String value) {
+    description.value = value;
+  }
   /// Upgrade account to Service Provider
   Future<void> upgradeToServiceProvider() async {
     if (selectedPlanId.value == 0) {
@@ -114,17 +117,55 @@ class UpgradeToServiceProviderController extends GetxController {
         );
       }
     } catch (e) {
-      final errorMessage = e.toString();
-      print("UpgradeToServiceProvider Error: $errorMessage");
-
-      Get.snackbar(
-        'Error',
-        errorMessage,
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: AppColors.primary,
-        colorText: Colors.white,
-      );
-    } finally {
+      final errorMessage = e.toString().toLowerCase();
+      print(errorMessage);
+      if (errorMessage ==
+          "please fill the address and phone number fields in your profile first") {
+        Get.snackbar(
+          'Incomplete Profile',
+          '',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: AppColors.primary,
+          margin: EdgeInsets.all(16),
+          borderRadius: 12,
+          duration: Duration(seconds: 6),
+          colorText: Colors.white,
+          icon: Icon(Icons.warning_amber_outlined, color: Colors.white),
+          messageText: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Please fill the address and phone number fields in your profile first.',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 8),
+              TextButton(
+                onPressed: () => Get.toNamed(Routes.UPDATEPROFILE),
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.white24,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                ),
+                child: Text(
+                  'Update Profile',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      }
+    }
+    finally {
       isLoading.value = false;
     }
   }

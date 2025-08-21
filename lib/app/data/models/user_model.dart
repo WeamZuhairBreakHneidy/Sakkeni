@@ -9,8 +9,9 @@ class UserModel {
   final String? phoneNumber;
   final String token;
 
-  // Seller flag
+  // Flags
   final bool isSeller;
+  final bool isServiceProvider;
 
   UserModel({
     required this.id,
@@ -23,9 +24,12 @@ class UserModel {
     this.phoneNumber,
     required this.token,
     required this.isSeller,
+    required this.isServiceProvider,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
+    List accountTypes = json['account_type'] ?? [];
+
     return UserModel(
       id: json['id'],
       firstName: json['first_name'] ?? '',
@@ -36,8 +40,8 @@ class UserModel {
       address: json['address'],
       phoneNumber: json['phone_number'],
       token: json['token'] ?? '',
-      isSeller: json['account_type'] != null &&
-          (json['account_type'] as List).contains("Seller"),
+      isSeller: accountTypes.contains("Seller"),
+      isServiceProvider: accountTypes.contains("Service Provider"),
     );
   }
 
@@ -53,6 +57,7 @@ class UserModel {
       'phone_number': phoneNumber,
       'token': token,
       'is_seller': isSeller,
+      'is_service_provider': isServiceProvider,
     };
   }
 
@@ -64,7 +69,9 @@ class UserModel {
     String? address,
     String? token,
     String? profilePicturePath,
-    bool? isSeller,  emailVerifiedAt,
+    bool? isSeller,
+    bool? isServiceProvider,
+    String? emailVerifiedAt,
   }) {
     return UserModel(
       id: id,
@@ -76,6 +83,8 @@ class UserModel {
       token: token ?? this.token,
       profilePicturePath: profilePicturePath ?? this.profilePicturePath,
       isSeller: isSeller ?? this.isSeller,
+      isServiceProvider: isServiceProvider ?? this.isServiceProvider,
+      emailVerifiedAt: emailVerifiedAt ?? this.emailVerifiedAt,
     );
   }
 }

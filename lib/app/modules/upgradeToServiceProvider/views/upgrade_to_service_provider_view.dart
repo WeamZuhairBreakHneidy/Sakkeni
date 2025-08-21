@@ -8,51 +8,19 @@ import 'package:test1/app/core/theme/colors.dart';
 import '../../../data/models/subscription_plan_model.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../../services/controllers/services_controller.dart';
+import '../../services/models/service_item_model.dart';
 import '../controllers/upgrade_to_service_provider_controller.dart';
 import '../controllers/subscription_plan_controller.dart';
 
 class UpgradeToServiceProviderView
     extends GetView<UpgradeToServiceProviderController> {
   UpgradeToServiceProviderView({super.key});
+
   final servicesController = Get.put(ServicesController());
-
-  /// خريطة أيقونات الخدمات
-  final Map<String, IconData> serviceIcons = {
-    "Fixes and Repairs": Icons.build,
-    "Cleaning": Icons.cleaning_services,
-    "Plumbing": Icons.plumbing,
-    "Flooring": Icons.layers,
-    "Painting & Finishing": Icons.format_paint,
-    "Carpenter": Icons.carpenter,
-    "Metalwork": Icons.hardware,
-    "Deep Cleaning": Icons.clean_hands,
-    "Regular Cleaning": Icons.cleaning_services,
-    "Water Tank Cleaning": Icons.water_drop,
-    "Plumber": Icons.plumbing,
-    "Sewage unclogging": Icons.block,
-    "Tiler": Icons.layers,
-    "Interior": Icons.palette,
-    "Exterior": Icons.format_paint,
-    "Electrician": Icons.electrical_services,
-    "Moving & Transport": Icons.local_shipping,
-    "Garden Upkeep": Icons.local_florist,
-    "Solar": Icons.solar_power,
-    "Generators": Icons.power,
-    "Moving Service": Icons.local_shipping,
-    "Irrigation": Icons.water_damage,
-    "Pest Control": Icons.pest_control,
-  };
-
-  /// خريطة أيقونات الباقات
-  final Map<String, IconData> planIcons = {
-    "Monthly": Icons.calendar_view_month,
-    "Yearly": Icons.calendar_today,
-  };
+  final subscriptionController = Get.put(SubscriptionPlanController());
 
   @override
   Widget build(BuildContext context) {
-    final subscriptionController = Get.put(SubscriptionPlanController());
-
     double screenHeight = MediaQuery.of(context).size.height;
     double contentHeight = screenHeight - 260.h;
 
@@ -100,7 +68,7 @@ class UpgradeToServiceProviderView
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        /// Title
+                        /// Title and description section
                         SizedBox(height: 20.h),
                         AnimatedTextKit(
                           animatedTexts: [
@@ -119,7 +87,6 @@ class UpgradeToServiceProviderView
                           displayFullTextOnTap: true,
                           stopPauseOnTap: true,
                         ),
-
                         SizedBox(height: 10.h),
                         Text(
                           "Choose your subscription plan, select services, and add a description.",
@@ -132,7 +99,7 @@ class UpgradeToServiceProviderView
 
                         SizedBox(height: 40.h),
 
-                        /// Subscription Plan
+                        /// Subscription Plan Section
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -145,7 +112,6 @@ class UpgradeToServiceProviderView
                           ),
                         ),
                         SizedBox(height: 16.h),
-
                         Obx(() {
                           if (subscriptionController.isLoading.value) {
                             return SizedBox(
@@ -157,31 +123,42 @@ class UpgradeToServiceProviderView
                               ),
                             );
                           }
-
-                          if (subscriptionController.subscriptionPlanModel.value.data.isEmpty) {
+                          if (subscriptionController
+                              .subscriptionPlanModel
+                              .value
+                              .data
+                              .isEmpty) {
                             return Text(
                               "No subscription plans available.",
                               style: TextStyle(
-                                  fontSize: 14.sp, color: Colors.grey[600]),
+                                fontSize: 14.sp,
+                                color: Colors.grey[600],
+                              ),
                             );
                           }
-
                           return Column(
-                            children: subscriptionController.subscriptionPlanModel.value.data
-                                .map((plan) => Padding(
-                              padding: EdgeInsets.symmetric(vertical: 8.h),
-                              child: _buildDynamicPlanCard(
-                                plan: plan,
-                                controller: subscriptionController,
-                              ),
-                            ))
-                                .toList(),
+                            children:
+                                subscriptionController
+                                    .subscriptionPlanModel
+                                    .value
+                                    .data
+                                    .map(
+                                      (plan) => Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          vertical: 8.h,
+                                        ),
+                                        child: _buildDynamicPlanCard(
+                                          plan: plan,
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
                           );
                         }),
 
                         SizedBox(height: 40.h),
 
-                        /// Services
+                        /// Services Section
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -194,42 +171,11 @@ class UpgradeToServiceProviderView
                           ),
                         ),
                         SizedBox(height: 16.h),
-                        Obx(() {
-                          if (servicesController.isLoading.value) {
-                            return SizedBox(
-                              height: 50.h,
-                              width: 50.w,
-                              child: LoadingIndicator(
-                                indicatorType: Indicator.ballScaleRipple,
-                                colors: [AppColors.primary],
-                              ),
-                            );
-                          }
-
-                          if (servicesController.categories.isEmpty) {
-                            return Text(
-                              "No services available.",
-                              style: TextStyle(
-                                  fontSize: 14.sp, color: Colors.grey[600]),
-                            );
-                          }
-
-                          return Column(
-                            children: servicesController.categories
-                                .map((service) => Padding(
-                              padding: EdgeInsets.symmetric(vertical: 8.h),
-                              child: _buildServiceCard(
-                                serviceId: service.id,
-                                name: service.name,
-                              ),
-                            ))
-                                .toList(),
-                          );
-                        }),
+                        _buildServiceSection(),
 
                         SizedBox(height: 40.h),
 
-                        /// Description
+                        /// Description and Upgrade Button
                         TextField(
                           maxLines: 3,
                           onChanged: controller.setDescription,
@@ -242,16 +188,17 @@ class UpgradeToServiceProviderView
                             fillColor: Colors.grey[100],
                           ),
                         ),
-
-                        /// Upgrade Button
                         SizedBox(height: 40.h),
                         Obx(
-                              () => Align(
+                          () => Align(
                             alignment: Alignment.bottomRight,
                             child: Padding(
                               padding: EdgeInsets.only(top: 20.h, right: 20.w),
                               child: TextButton(
-                                onPressed: controller.isLoading.value ? null : controller.upgradeToServiceProvider,
+                                onPressed:
+                                    controller.isLoading.value
+                                        ? null
+                                        : controller.upgradeToServiceProvider,
                                 style: TextButton.styleFrom(
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 20.w,
@@ -261,23 +208,25 @@ class UpgradeToServiceProviderView
                                     borderRadius: BorderRadius.circular(12.r),
                                   ),
                                 ),
-                                child: controller.isLoading.value
-                                    ? SizedBox(
-                                  height: 20.w,
-                                  width: 20.w,
-                                  child: LoadingIndicator(
-                                    indicatorType: Indicator.ballRotateChase,
-                                    colors: [AppColors.primary],
-                                    strokeWidth: 1,
-                                  ),
-                                )
-                                    : Text(
-                                  "Upgrade",
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                    color: AppColors.primary,
-                                  ),
-                                ),
+                                child:
+                                    controller.isLoading.value
+                                        ? SizedBox(
+                                          height: 20.w,
+                                          width: 20.w,
+                                          child: LoadingIndicator(
+                                            indicatorType:
+                                                Indicator.ballRotateChase,
+                                            colors: [AppColors.primary],
+                                            strokeWidth: 1,
+                                          ),
+                                        )
+                                        : Text(
+                                          "Upgrade",
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            color: AppColors.primary,
+                                          ),
+                                        ),
                               ),
                             ),
                           ),
@@ -295,24 +244,27 @@ class UpgradeToServiceProviderView
     );
   }
 
-  /// Dynamic Plan Card
-  Widget _buildDynamicPlanCard({
-    required Datum plan,
-    required SubscriptionPlanController controller,
-  }) {
+  /// Subscription Plan card
+  Widget _buildDynamicPlanCard({required Datum plan}) {
+    final Map<String, IconData> planIcons = {
+      "Monthly": Icons.calendar_view_month,
+      "Yearly": Icons.calendar_today,
+    };
     return Obx(() {
-      bool isSelected = this.controller.selectedPlanId.value == plan.id;
+      bool isSelected = controller.selectedPlanId.value == plan.id;
 
       return InkWell(
-        onTap: () => this.controller.selectPlan(plan.id ?? 0),
+        onTap: () => controller.selectPlan(plan.id),
         borderRadius: BorderRadius.circular(20.r),
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.primary.withOpacity(0.1) : Colors.white,
+            color:
+                isSelected ? AppColors.primary.withOpacity(0.1) : Colors.white,
             borderRadius: BorderRadius.circular(20.r),
             border: Border.all(
-              color: isSelected ? AppColors.primary : Colors.grey.withOpacity(0.3),
+              color:
+                  isSelected ? AppColors.primary : Colors.grey.withOpacity(0.3),
               width: 1.5,
             ),
           ),
@@ -341,7 +293,11 @@ class UpgradeToServiceProviderView
                           ),
                         ),
                         if (isSelected)
-                          Icon(Icons.check_circle, color: AppColors.primary, size: 20.w),
+                          Icon(
+                            Icons.check_circle,
+                            color: AppColors.primary,
+                            size: 20.w,
+                          ),
                       ],
                     ),
                   ],
@@ -355,37 +311,40 @@ class UpgradeToServiceProviderView
   }
 
   /// Service card
-  Widget _buildServiceCard({required int serviceId, required String name}) {
+  Widget _buildServiceCard(ServiceItem service) {
     return Obx(() {
-      bool isSelected = controller.selectedServices.contains(serviceId);
+      bool isSelected = controller.selectedServices.contains(service.id);
 
       return InkWell(
-        onTap: () => controller.toggleService(serviceId),
+        onTap: () => controller.toggleService(service.id),
         borderRadius: BorderRadius.circular(12.r),
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.primary.withOpacity(0.1) : Colors.white,
+            color:
+                isSelected ? AppColors.primary.withOpacity(0.1) : Colors.white,
             borderRadius: BorderRadius.circular(12.r),
             border: Border.all(
-              color: isSelected ? AppColors.primary : Colors.grey.withOpacity(0.3),
+              color:
+                  isSelected ? AppColors.primary : Colors.grey.withOpacity(0.3),
               width: 1.2,
             ),
           ),
           child: Row(
             children: [
               Icon(
-                serviceIcons[name] ?? Icons.miscellaneous_services,
+                service.icon,
                 color: isSelected ? AppColors.primary : Colors.grey,
                 size: 22.w,
               ),
               SizedBox(width: 12.w),
               Expanded(
                 child: Text(
-                  name,
+                  service.name,
                   style: TextStyle(
                     fontSize: 15.sp,
-                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                    fontWeight:
+                        isSelected ? FontWeight.bold : FontWeight.normal,
                     color: AppColors.background,
                   ),
                 ),
@@ -395,6 +354,93 @@ class UpgradeToServiceProviderView
             ],
           ),
         ),
+      );
+    });
+  }
+
+  /// Services Section with categories
+  Widget _buildServiceSection() {
+    return Obx(() {
+      if (servicesController.isLoading.value) {
+        return SizedBox(
+          height: 50.h,
+          width: 50.w,
+          child: LoadingIndicator(
+            indicatorType: Indicator.ballScaleRipple,
+            colors: [AppColors.primary],
+          ),
+        );
+      }
+      if (servicesController.categories.isEmpty) {
+        return Text(
+          "No services available.",
+          style: TextStyle(fontSize: 14.sp, color: Colors.grey[600]),
+        );
+      }
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children:
+            servicesController.categories.map((category) {
+              bool isCategoryExpanded =
+              controller.expandedCategoryIds.contains(category.id);
+
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  /// Category header
+                  InkWell(
+                    onTap: () {
+                      controller.toggleCategory(category.id);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 12.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.background.withOpacity(0.05),
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            category.name,
+                            style: TextStyle(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.background,
+                            ),
+                          ),
+                          Icon(
+                            isCategoryExpanded
+                                ? Icons.keyboard_arrow_up
+                                : Icons.keyboard_arrow_down,
+                            color: AppColors.background,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 8.h),
+
+                  /// Services under the category
+                  if (isCategoryExpanded)
+                    Column(
+                      children:
+                          category.services.map((service) {
+                            return Padding(
+                              padding: EdgeInsets.symmetric(vertical: 4.h),
+                              child: _buildServiceCard(service),
+                            );
+                          }).toList(),
+                    ),
+                  SizedBox(height: 16.h),
+                ],
+              );
+            }).toList(),
       );
     });
   }

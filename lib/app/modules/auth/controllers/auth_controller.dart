@@ -58,6 +58,7 @@ class AuthController extends GetxController {
           user.value = newUser;
 
           GetStorage().write('isSeller', newUser.isSeller);
+          GetStorage().write('isServiceProvider', newUser.isServiceProvider);
 
           box.write('rememberMe', rememberMe.value);
 
