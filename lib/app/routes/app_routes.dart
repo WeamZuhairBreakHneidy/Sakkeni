@@ -19,6 +19,7 @@ abstract class Routes {
   static const RESETPASSWORD = _Paths.RESETPASSWORD;
   static const MY_PROPERTIES = _Paths.MY_PROPERTIES;
   static const FAVORITEVIEW = _Paths.FAVORITEVIEW;
+  static const GALLERY = _Paths.GALLERY;
   // static const VIEWRENTHISTORY = _Paths.VIEWRENTHISTORY;
   // static const VIEWPURCHASEHISTORY = _Paths.VIEWPURCHASEHISTORY;
   // static const VIEWOFFPLANHISTORY = _Paths.VIEWOFFPLANHISTORY;
@@ -29,6 +30,9 @@ abstract class Routes {
   static const PROPERTY_DETAILS = _Paths.PROPERTY_DETAILS;
   static const RECOMMENDED_PROPERTIES = _Paths.RECOMMENDED_PROPERTIES;
   static const SERVICE_PROVIDERS = _Paths.SERVICE_PROVIDERS;
+  static const PROVIDER_DETAILS = _Paths.PROVIDER_DETAILS;
+  static const SERVICE_PROVIDER_GALLERY = _Paths.SERVICE_PROVIDER_GALLERY;
+
   static const FAVORITE = _Paths.FAVORITE;
   static const SAVED_PROPERTIES = _Paths.SAVED_PROPERTIES;
   static const SERVICES = _Paths.SERVICES;
@@ -64,10 +68,15 @@ abstract class _Paths {
   static const PROPERTY_DETAILS = '/property_details';
   static const RECOMMENDED_PROPERTIES = '/recommended-properties';
   static const SERVICE_PROVIDERS = '/service-providers';
+  static const PROVIDER_DETAILS = '/provider-details';
+  static const SERVICE_PROVIDER_GALLERY = '/service-provider-gallery';
+
   static const FAVORITE = '/favorite';
   static const SAVED_PROPERTIES = '/saved-properties';
   static const SERVICES = '/services';
   static const UPGRADE_TO_SERVICE_PROVIDER = '/upgrade-to-service-provider';
   static const MY_SERVICES = '/my-services';
   static const HISTORY_OPTIONS = '/history-options';
+  static const GALLERY = '/serviceGallery';
+
 }

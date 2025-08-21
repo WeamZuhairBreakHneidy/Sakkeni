@@ -2,33 +2,43 @@ import 'package:get/get.dart';
 import '../../../data/services/api_service.dart';
 import '../../../data/services/api_endpoints.dart';
 
-import '../models/service_category_model.dart';
+import '../models/service_provider.dart';
 
 class ServiceProvidersController extends GetxController {
-  var categories = <ServiceCategory>[].obs;
   var isLoading = false.obs;
+  var providers = <ServiceProvider>[].obs;
+  var serviceName = "".obs;
 
   @override
   void onInit() {
     super.onInit();
-    fetchCategories();
+
+    final args = Get.arguments;
+    if (args != null && args['service'] != null) {
+      serviceName.value = args['service'];
+      fetchProviders(serviceName.value);
+    }
   }
 
-  Future<void> fetchCategories() async {
+  Future<void> fetchProviders(String service) async {
     isLoading.value = true;
     try {
-      final response = await ApiService().getApi(url: ApiEndpoints.viewServiceCategories);
+      final response = await ApiService().getApi(
+        url: "${ApiEndpoints.viewServiceProviders}?page=1&service=$service",
+      );
 
       if (response.statusCode == 200) {
         final body = response.body;
         if (body['status'] == true) {
-          categories.value = (body['data'] as List)
-              .map((e) => ServiceCategory.fromJson(e))
+          final List<dynamic> data = body['data']['data'];
+          providers.value = data
+              .map((json) =>
+              ServiceProvider.fromJson(json, ApiEndpoints.baseUrl))
               .toList();
         }
       }
     } catch (e) {
-      print("Error fetching categories: $e");
+      print("Error fetching providers: $e");
     } finally {
       isLoading.value = false;
     }

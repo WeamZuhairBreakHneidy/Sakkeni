@@ -50,7 +50,7 @@ class ServicesView extends GetView<ServicesController> {
                         Padding(
                           padding: EdgeInsets.symmetric(vertical: 12.h),
                           child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+                            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
                             decoration: BoxDecoration(
                               color: Theme.of(context).canvasColor,
                               borderRadius: BorderRadius.circular(7.r),
@@ -62,7 +62,7 @@ class ServicesView extends GetView<ServicesController> {
                                   .bodySmall!
                                   .copyWith(
                                 color: Theme.of(context).primaryColor,
-                                fontSize: 14.sp,
+                                fontSize: 14.r,
                                 fontFamily: 'Roboto', // safe font
                               ),
                             ),
@@ -108,7 +108,9 @@ class ServicesView extends GetView<ServicesController> {
           onTapUp: (_) {
             scale.value = 1.0; // release
             // Navigate to detail page
-
+            Get.toNamed(Routes.SERVICE_PROVIDERS, arguments: {
+              "service": service.name,   // or service.id if API accepts id
+            });
           },
           onTapCancel: () => scale.value = 1.0, // canceled press
           child: Obx(() => AnimatedScale(
@@ -117,6 +119,7 @@ class ServicesView extends GetView<ServicesController> {
             curve: Curves.easeInOut,
             child: Container(
               width: 160.w,
+
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16.r),
                 color: Colors.white,
@@ -150,7 +153,7 @@ class ServicesView extends GetView<ServicesController> {
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: Container(
-                        height: 51.h,
+                        height: 60.h,
                         padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 6.w),
                         decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.95),
@@ -161,17 +164,12 @@ class ServicesView extends GetView<ServicesController> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(width: 6.w),
+
                             Expanded(
                               child: Text(
                                 service.name,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14.sp,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
+                                style: Theme.of(context).textTheme.titleMedium!.copyWith(overflow: TextOverflow.visible),)
                             ),
                           ],
                         ),
@@ -198,7 +196,7 @@ class ServicesView extends GetView<ServicesController> {
                         child: Icon(
                           service.icon,
                           size: 30,
-                          color: Colors.black,
+                          color: Theme.of(context).scaffoldBackgroundColor,
                         ),
                       ),
                     ),
@@ -214,13 +212,12 @@ class ServicesView extends GetView<ServicesController> {
 
   /// Header widget
   Widget buildHeaderSection(BuildContext context) {
-    final ProfileController profileController = Get.put(ProfileController());
-
     return Container(
       padding: EdgeInsets.only(top: 61.h, bottom: 16.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          /// Logo
           Center(
             child: SizedBox(
               width: 110.76.w,
@@ -228,74 +225,41 @@ class ServicesView extends GetView<ServicesController> {
               child: Image.asset('assets/Logo.png'),
             ),
           ),
+
+          /// Row: Menu + Search + Filter + Add
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Expanded(
-                child: Container(
-                  height: 45.h,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.background,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 12.w),
-                  child: Row(
+
+              10.horizontalSpace,
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
                     children: [
-                      const Icon(Icons.search, color: Colors.grey),
-                      SizedBox(width: 8.w),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () => print("Search tapped"),
-                          child: const Text(
-                            "Search",
-                            style: TextStyle(color: Colors.grey, fontFamily: 'Roboto'),
-                          ),
-                        ),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.tune, color: Colors.grey),
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            barrierColor: Colors.transparent,
-                            builder: (_) => Stack(
-                              children: [
-                                Positioned(
-                                  bottom: 80.h,
-                                  left: 0,
-                                  right: 0,
-                                  child: Container(
-                                    height: 650.h,
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context).colorScheme.background,
-                                      borderRadius: BorderRadius.all(Radius.circular(50.r)),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
+                      Icon(Icons.work_outline, color: Theme.of(context).colorScheme.surface),
+                      8.horizontalSpace,
+                      Text(
+                        "Services for you",
+                          style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Theme.of(context).colorScheme.surface, fontSize: 18.r),
                       ),
                     ],
                   ),
-                ),
+                  6.verticalSpace,
+                  Container(
+                    height: 3.h,
+                    width: 120.w,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [AppColors.white, AppColors.primary.withOpacity(0.4)],
+                      ),
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                  ),
+                ],
               ),
-              IconButton(
-                icon: Icon(
-                  Icons.add_circle_rounded,
-                  color: AppColors.search,
-                  size: 35.w,
-                ),
-                onPressed: () {
-                  final isSeller = profileController.profileModel.value?.data?.seller != null;
-                  if (isSeller) {
-                    Get.toNamed(Routes.ADDPROPERTY);
-                  } else {
-                    showUpgradeToSellerDialog();
-                  }
-                },
-              )
+
             ],
           ),
         ],

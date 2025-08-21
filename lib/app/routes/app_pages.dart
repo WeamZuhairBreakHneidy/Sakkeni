@@ -30,11 +30,17 @@ import '../modules/myServices/bindings/my_services_binding.dart';
 import '../modules/myServices/bindings/my_services_binding.dart';
 import '../modules/myServices/views/my_services_view.dart';
 import '../modules/myServices/views/my_services_view.dart';
+import '../modules/myServices/views/service_gallery_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/properties/bindings/properties_binding.dart';
 import '../modules/properties/views/properties_view.dart';
+import '../modules/serviceProviders/bindings/provider_details_binding.dart';
+import '../modules/serviceProviders/bindings/service_provider_service_gallery_binding.dart';
 import '../modules/serviceProviders/bindings/service_providers_binding.dart';
+import '../modules/serviceProviders/controllers/service_provider_service_gallery_controller.dart';
+import '../modules/serviceProviders/views/service_provider_details_view.dart';
+import '../modules/serviceProviders/views/service_provider_service_gallery_view.dart';
 import '../modules/serviceProviders/views/service_providers_view.dart';
 import '../modules/services/bindings/services_binding.dart';
 import '../modules/services/views/services_view.dart';
@@ -141,6 +147,17 @@ class AppPages {
       binding: ServiceProvidersBinding(),
     ),
     GetPage(
+      name: _Paths.PROVIDER_DETAILS,
+      page: () => ServiceProviderDetailsView(),
+      binding: ServiceProviderDetailsBinding(), // <-- new binding
+    ),
+    GetPage(
+      name: Routes.SERVICE_PROVIDER_GALLERY,
+      page: () => ServiceProviderGalleryView(),
+      binding: ServiceProviderServiceGalleryBinding(),
+    ),
+
+    GetPage(
       name: _Paths.FAVORITE,
       page: () => FavoriteView(),
       binding: FavoriteBinding(),
@@ -163,8 +180,13 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.HISTORY_OPTIONS,
-      page: () => const HistoryOptionsView(),
+      page: () =>  HistoryOptionsView(),
       binding: HistoryOptionsBinding(),
     ),
+  GetPage(
+  name:_Paths.GALLERY,
+  page: () =>  ServiceProviderServiceGalleryView(),
+  binding: HistoryOptionsBinding() ,
+  )
   ];
 }
