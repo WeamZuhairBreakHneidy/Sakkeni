@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../data/services/api_endpoints.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../controllers/service_providers_controller.dart';
@@ -24,52 +23,81 @@ class ServiceProvidersView extends GetView<ServiceProvidersController> {
           return const Center(child: Text("No providers found"));
         }
 
-        return ListView.builder(
+        return GridView.builder(
           padding: EdgeInsets.all(16.w),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, // 2 per row
+            crossAxisSpacing: 14.w,
+            mainAxisSpacing: 14.h,
+            childAspectRatio: 0.75, // adjust height/width ratio
+          ),
           itemCount: controller.providers.length,
           itemBuilder: (context, index) {
             final provider = controller.providers[index];
 
-            return Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
-              ),
-              elevation: 3,
-              margin: EdgeInsets.only(bottom: 12.h),
-              child: ListTile(
-                onTap: () {
-                  // Navigate to provider details page
-                  Get.toNamed(
-                    Routes.PROVIDER_DETAILS,
-                    arguments: provider, // pass full provider object
-                  );
+            return InkWell(
+              borderRadius: BorderRadius.circular(16.r),
+              onTap: () {
+                Get.toNamed(
+                  Routes.PROVIDER_DETAILS,
+                  arguments: provider,
+                );
+              },
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.r),
+                ),
+                elevation: 3,
+                child: Padding(
+                  padding: EdgeInsets.only( bottom: 10.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      // Profile photo
+                      Expanded(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12.r),
+                          child: provider.profilePicturePath != null
+                              ? Image.network(
+                            provider.profilePicturePath!,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          )
+                              : Image.asset(
+                            "assets/backgrounds/default.png",
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 8.h),
 
-                },
-                contentPadding: EdgeInsets.all(12.w),
-                leading: CircleAvatar(
-                  radius: 28.r,
-                  backgroundColor: Colors.grey[200],
-                  backgroundImage: provider.profilePicturePath != null
-                      ? NetworkImage(provider.profilePicturePath!)
-                      : const AssetImage("assets/backgrounds/default.png")
-                  as ImageProvider,
+                      // Name
+                      Text(
+                        "${provider.firstName} ${provider.lastName}".trim(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(fontWeight: FontWeight.w700),
+                      ),
+                      SizedBox(height: 4.h),
+
+                      // Address
+                      Text(
+                        provider.address,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(color:Theme.of(context).primaryColor ),
+                      ),
+                    ],
+                  ),
                 ),
-                title: Text(
-                  "${provider.firstName} ${provider.lastName}".trim(),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                subtitle: Text(
-                  provider.address,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               ),
             );
-
           },
         );
       }),

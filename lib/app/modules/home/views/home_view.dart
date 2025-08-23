@@ -78,7 +78,7 @@ class HomeView extends GetView<RecommendedPropertiesController> {
     });
 
     return Scaffold(
-      drawer: AppDrawer(),
+      endDrawer: AppDrawer(),
       body: Container(
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
@@ -595,8 +595,7 @@ class HomeView extends GetView<RecommendedPropertiesController> {
     String? imagePath,
     required String label,
     required VoidCallback onTap,
-  }) {
-    return GestureDetector(
+  }) {return GestureDetector(
       onTap: onTap,
       child: Container(
         height: 135.h,
@@ -664,10 +663,27 @@ class HomeView extends GetView<RecommendedPropertiesController> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Welcome to Sakkeni👋",
+              style: Theme.of(
+                context,
+              ).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.primary),
+            ),
+            Text(
+              "Find Your Dream Home",
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
         Builder(
           builder:
               (context) => GestureDetector(
-                onTap: () => Scaffold.of(context).openDrawer(),
+                onTap: () => Scaffold.of(context).openEndDrawer(),
                 child: Container(
                   width: 40.w,
                   height: 40.h,
@@ -684,23 +700,7 @@ class HomeView extends GetView<RecommendedPropertiesController> {
                 ),
               ),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              "Welcome Back 👋",
-              style: Theme.of(
-                context,
-              ).textTheme.titleSmall?.copyWith(color: Colors.black54),
-            ),
-            Text(
-              "Find Your Dream Home",
-              style: Theme.of(
-                context,
-              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
+
       ],
     );
   }

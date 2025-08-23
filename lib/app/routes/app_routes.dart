@@ -32,6 +32,7 @@ abstract class Routes {
   static const SERVICE_PROVIDERS = _Paths.SERVICE_PROVIDERS;
   static const PROVIDER_DETAILS = _Paths.PROVIDER_DETAILS;
   static const SERVICE_PROVIDER_GALLERY = _Paths.SERVICE_PROVIDER_GALLERY;
+  static const PROVIDER_QUOTES = _Paths.PROVIDER_QUOTES;
 
   static const FAVORITE = _Paths.FAVORITE;
   static const SAVED_PROPERTIES = _Paths.SAVED_PROPERTIES;
@@ -70,7 +71,7 @@ abstract class _Paths {
   static const SERVICE_PROVIDERS = '/service-providers';
   static const PROVIDER_DETAILS = '/provider-details';
   static const SERVICE_PROVIDER_GALLERY = '/service-provider-gallery';
-
+  static const PROVIDER_QUOTES = '/provider-quotes';
   static const FAVORITE = '/favorite';
   static const SAVED_PROPERTIES = '/saved-properties';
   static const SERVICES = '/services';

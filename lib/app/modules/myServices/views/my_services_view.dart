@@ -40,15 +40,30 @@ class MyServicesView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding:
-                  EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-                  child: Text(
-                    "My Services",
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      fontWeight: FontWeight.bold,
+                Row(
+                  children: [
+                    Padding(
+                      padding:
+                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                      child: Text(
+                        "My Services",
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
+                    Spacer(),
+                    Text(
+                      "View Request",
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.request_quote_outlined),
+                      onPressed: () {
+                        Get.toNamed(Routes.PROVIDER_QUOTES);
+                      },
+                    ),
+                  ],
                 ),
                 SizedBox(height: 10.h),
                 Divider(height: 1.h, color: Colors.grey),

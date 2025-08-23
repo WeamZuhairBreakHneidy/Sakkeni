@@ -96,117 +96,188 @@ class PropertiesUnifiedView extends StatelessWidget {
 
           /// Row: Menu + Search + Filter + Add
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               /// Drawer Button
-              Builder(
-                builder: (context) => GestureDetector(
-                  onTap: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                  child: Container(
-                    width: 35.w,
-                    height: 35.h,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: AppColors.search,
-                      borderRadius: Get.locale?.languageCode == 'en'
-                          ? BorderRadius.horizontal(
-                        right: Radius.circular(10.r),
-                      )
-                          : BorderRadius.horizontal(
-                        left: Radius.circular(10.r),
-                      ),
-                    ),
-                    child: Icon(
-                      Icons.menu_open_sharp,
-                      size: 20.sp,
-                      color: Colors.black54,
-                    ),
-                  ),
-                ),
-              ),
+              // Builder(
+              //   builder: (context) => GestureDetector(
+              //     onTap: () {
+              //       Scaffold.of(context).openDrawer();
+              //     },
+              //     child: Container(
+              //       width: 35.w,
+              //       height: 35.h,
+              //       alignment: Alignment.center,
+              //       decoration: BoxDecoration(
+              //         color: AppColors.search,
+              //         borderRadius: Get.locale?.languageCode == 'en'
+              //             ? BorderRadius.horizontal(
+              //           right: Radius.circular(10.r),
+              //         )
+              //             : BorderRadius.horizontal(
+              //           left: Radius.circular(10.r),
+              //         ),
+              //       ),
+              //       child: Icon(
+              //         Icons.menu_open_sharp,
+              //         size: 20.sp,
+              //         color: Colors.black54,
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
 
-              8.horizontalSpace,
+                  10.horizontalSpace,
 
-              /// Search Bar + Filter
-              Expanded(
-                child: Container(
-                  height: 45.h,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.background,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 12.w),
-                  child: Row(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Icon(Icons.search, color: Colors.grey),
-                      SizedBox(width: 8.w),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () => print("Search tapped"),
-                          child: Text(
-                            "Search",
-                            style: TextStyle(color: Colors.grey),
+                      Row(
+                        children: [
+                          Icon(Icons.holiday_village_outlined, color: Theme.of(context).colorScheme.surface),
+                          8.horizontalSpace,
+                          Text(
+                            "Properties for you",
+                            style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Theme.of(context).colorScheme.surface, fontSize: 18.r),
                           ),
-                        ),
+                        ],
                       ),
-                      IconButton(
-                        icon: Icon(Icons.tune, color: Colors.grey),
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            barrierColor: Colors.transparent,
-                            builder: (_) {
-                              return Stack(
-                                children: [
-                                  Positioned(
-                                    bottom: 80.h,
-                                    left: 0,
-                                    right: 0,
-                                    top: 0,
-                                    child: Container(
-                                      height: 650.h,
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .background,
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(50.r),
-                                        ),
-                                      ),
-                                      child: FilterSheet(),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
+                      6.verticalSpace,
+                      Container(
+                        height: 3.h,
+                        width: 120.w,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [AppColors.white, AppColors.primary.withOpacity(0.4)],
+                          ),
+                          borderRadius: BorderRadius.circular(10.r),
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ),
 
-              /// Add property button
-              IconButton(
-                icon: Icon(
-                  Icons.add_circle_rounded,
-                  color: AppColors.search,
-                  size: 35.w,
-                ),
-                onPressed: () {
-                  // ✅ use storage directly
-                  final isSeller = box.read('isSeller') ?? false;
-
-                  if (isSeller) {
-                    Get.toNamed(Routes.ADDPROPERTY);
-                  } else {
-                    showUpgradeToSellerDialog();
-                  }
-                },
+                ],
               ),
+              8.horizontalSpace,
+
+              Row(
+              children: [
+                /// Search Bar + Filter
+                IconButton(
+                  icon: Icon(Icons.tune, color: Colors.grey),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      barrierColor: Colors.transparent,
+                      builder: (_) {
+                        return Stack(
+                          children: [
+                            Positioned(
+                              bottom: 80.h,
+                              left: 0,
+                              right: 0,
+                              top: 0,
+                              child: Container(
+                                height: 650.h,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .background,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(50.r),
+                                  ),
+                                ),
+                                child: FilterSheet(),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
+                // Expanded(
+                //   child: Container(
+                //     height: 45.h,
+                //     decoration: BoxDecoration(
+                //       color: Theme.of(context).colorScheme.background,
+                //       borderRadius: BorderRadius.circular(10),
+                //     ),
+                //     padding: EdgeInsets.symmetric(horizontal: 12.w),
+                //     child: Row(
+                //       children: [
+                //         const Icon(Icons.search, color: Colors.grey),
+                //         SizedBox(width: 8.w),
+                //         Expanded(
+                //           child: GestureDetector(
+                //             onTap: () => print("Search tapped"),
+                //             child: Text(
+                //               "Search",
+                //               style: TextStyle(color: Colors.grey),
+                //             ),
+                //           ),
+                //         ),
+                //         IconButton(
+                //           icon: Icon(Icons.tune, color: Colors.grey),
+                //           onPressed: () {
+                //             showDialog(
+                //               context: context,
+                //               barrierColor: Colors.transparent,
+                //               builder: (_) {
+                //                 return Stack(
+                //                   children: [
+                //                     Positioned(
+                //                       bottom: 80.h,
+                //                       left: 0,
+                //                       right: 0,
+                //                       top: 0,
+                //                       child: Container(
+                //                         height: 650.h,
+                //                         decoration: BoxDecoration(
+                //                           color: Theme.of(context)
+                //                               .colorScheme
+                //                               .background,
+                //                           borderRadius: BorderRadius.all(
+                //                             Radius.circular(50.r),
+                //                           ),
+                //                         ),
+                //                         child: FilterSheet(),
+                //                       ),
+                //                     ),
+                //                   ],
+                //                 );
+                //               },
+                //             );
+                //           },
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+
+                /// Add property button
+                IconButton(
+                  icon: Icon(
+                    Icons.add_circle_rounded,
+                    color: AppColors.search,
+                    size: 35.w,
+                  ),
+                  onPressed: () {
+                    // ✅ use storage directly
+                    final isSeller = box.read('isSeller') ?? false;
+
+                    if (isSeller) {
+                      Get.toNamed(Routes.ADDPROPERTY);
+                    } else {
+                      showUpgradeToSellerDialog();
+                    }
+                  },
+                ),
+              ],
+            )
 
             ],
           ),

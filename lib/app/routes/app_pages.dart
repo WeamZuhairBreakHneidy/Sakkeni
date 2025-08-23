@@ -28,8 +28,10 @@ import '../modules/myProperties/bindings/my_properties_binding.dart';
 import '../modules/myProperties/views/my_properties_view.dart';
 import '../modules/myServices/bindings/my_services_binding.dart';
 import '../modules/myServices/bindings/my_services_binding.dart';
+import '../modules/myServices/bindings/provider_quotes_binding.dart';
 import '../modules/myServices/views/my_services_view.dart';
 import '../modules/myServices/views/my_services_view.dart';
+import '../modules/myServices/views/provider_quotes_view.dart';
 import '../modules/myServices/views/service_gallery_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
@@ -155,6 +157,11 @@ class AppPages {
       name: Routes.SERVICE_PROVIDER_GALLERY,
       page: () => ServiceProviderGalleryView(),
       binding: ServiceProviderServiceGalleryBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROVIDER_QUOTES,
+      page: () => ProviderQuotesView(),
+      binding: ProviderQuotesBinding(),
     ),
 
     GetPage(

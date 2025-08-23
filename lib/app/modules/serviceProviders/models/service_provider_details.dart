@@ -7,6 +7,7 @@ class ServiceProviderDetails {
   final String address;
   final String phoneNumber;
   final String description;
+  final double? rate; // ⭐ Add this
   final List<ServiceProviderService> services;
 
   ServiceProviderDetails({
@@ -18,6 +19,7 @@ class ServiceProviderDetails {
     required this.address,
     required this.phoneNumber,
     required this.description,
+    this.rate,
     required this.services,
   });
 
@@ -35,6 +37,9 @@ class ServiceProviderDetails {
       address: json['address'] ?? "No address available",
       phoneNumber: json['phone_number'] ?? "",
       description: serviceProviderData['description'] ?? "",
+      rate: (serviceProviderData['rate'] != null)
+          ? double.tryParse(serviceProviderData['rate'].toString())
+          : null,
       services: (serviceProviderData['service_provider_services'] ?? [])
           .map<ServiceProviderService>((s) => ServiceProviderService.fromJson(s, baseUrl))
           .toList(),

@@ -45,8 +45,8 @@ class ServiceProviderDetailsView extends GetView<ServiceProviderDetailsControlle
 
             // DraggableScrollableSheet for details
             DraggableScrollableSheet(
-              initialChildSize: 0.58,
-              minChildSize: 0.55,
+              initialChildSize: 0.50,
+              minChildSize: 0.50,
               maxChildSize: 0.95,
               builder: (context, scrollController) {
                 return Container(
@@ -70,7 +70,8 @@ class ServiceProviderDetailsView extends GetView<ServiceProviderDetailsControlle
 
 
 
-                        // Name & Email
+
+                        // Name
                         Center(
                           child: Text(
                             "${details.firstName} ${details.lastName}",
@@ -82,18 +83,29 @@ class ServiceProviderDetailsView extends GetView<ServiceProviderDetailsControlle
                           ),
                         ),
 
+                        SizedBox(height: 6.h),
 
 
-                        Center(
-                          child: Text(
-                            details.email,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(color: AppColors.primary),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
+                        if (details.rate != null)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.star, color: Colors.amber, size: 22.sp),
+                              SizedBox(width: 6.w),
+                              Text(
+                                details.rate!.toStringAsFixed(1),
+                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                            ],
+                          )
+                        else
+                          const Text("No rating yet",
+                              style: TextStyle(color: Colors.grey)),
+
+
                         SizedBox(height: 6.h),
 
 
@@ -159,11 +171,6 @@ class ServiceProviderDetailsView extends GetView<ServiceProviderDetailsControlle
                                     ),
                                     SizedBox(height: 8.h),
 
-                                    // Status
-                                    Text(
-                                      "Status: ${s.availabilityStatus}",
-                                      style: Theme.of(context).textTheme.bodyMedium,
-                                    ),
 
                                     // Description
                                     if (s.description != null && s.description!.isNotEmpty)

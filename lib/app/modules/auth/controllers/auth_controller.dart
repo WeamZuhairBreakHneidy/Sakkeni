@@ -59,6 +59,9 @@ class AuthController extends GetxController {
 
           GetStorage().write('isSeller', newUser.isSeller);
           GetStorage().write('isServiceProvider', newUser.isServiceProvider);
+          GetStorage().write('imagePath', newUser.profilePicturePath);
+          GetStorage().write('userName', "${newUser.firstName} ${newUser.lastName}");
+          GetStorage().write('email', newUser.email);
 
           box.write('rememberMe', rememberMe.value);
 
