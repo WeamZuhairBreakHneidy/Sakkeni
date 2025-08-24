@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../../../data/services/api_service.dart';
 import '../../../data/services/api_endpoints.dart';
@@ -11,6 +12,19 @@ class ProviderQuotesController extends GetxController {
   // track expanded quote IDs
   var expandedQuoteIds = <int>[].obs;
 
+  // Text controllers for SubmitQuoteSheetWidget
+  final scopeController = TextEditingController();
+  final amountController = TextEditingController();
+  final dateController = TextEditingController();
+
+  @override
+  void onClose() {
+    // Dispose controllers when the controller is removed
+    scopeController.dispose();
+    amountController.dispose();
+    dateController.dispose();
+    super.onClose();
+  }
   Future<void> fetchProviderQuotes() async {
     isLoading.value = true;
     try {

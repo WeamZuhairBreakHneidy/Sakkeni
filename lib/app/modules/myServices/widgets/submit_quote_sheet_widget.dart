@@ -7,14 +7,9 @@ import '../controllers/provider_quotes_controller.dart';
 import '../models/provider_quotes_model.dart';
 import '../../../widgets/input_text_form_field.dart';
 import '../models/submit_quote_request_model.dart';
-
 class SubmitQuoteSheetWidget extends StatelessWidget {
   final ProviderQuote quote;
   final ProviderQuotesController controller;
-
-  final _scopeController = TextEditingController();
-  final _amountController = TextEditingController();
-  final _dateController = TextEditingController();
 
   SubmitQuoteSheetWidget({super.key, required this.quote, required this.controller});
 
@@ -22,17 +17,20 @@ class SubmitQuoteSheetWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return DraggableScrollableSheet(
-      expand: false,
-      initialChildSize: 0.85,
-      minChildSize: 0.6,
-      maxChildSize: 0.95,
-      builder: (_, scrollController) => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: SingleChildScrollView(
-          controller: scrollController,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return SafeArea(
+      child: DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: 0.85,
+        minChildSize: 0.6,
+        maxChildSize: 0.95,
+        builder: (_, scrollController) => Padding(
+          padding: EdgeInsets.only(
+            left: 20.w,
+            right: 20.w,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 20.h,
+          ),
+          child: ListView(
+            controller: scrollController,
             children: [
               Center(
                 child: Container(
@@ -56,15 +54,15 @@ class SubmitQuoteSheetWidget extends StatelessWidget {
 
               _buildLabel("Scope of Work"),
               TextField(
-                controller: _scopeController,
+                controller: controller.scopeController,
                 maxLines: 4,
                 decoration: const InputDecoration(
                   hintText: "Enter the scope of work in detail...",
                   border: OutlineInputBorder(),
                   alignLabelWithHint: true,
                 ),
-                style:  TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
+                style: TextStyle(
+                  color: theme.colorScheme.primary,
                   fontSize: 12.r,
                 ),
               ),
@@ -72,7 +70,7 @@ class SubmitQuoteSheetWidget extends StatelessWidget {
 
               _buildLabel("Amount"),
               InputTextFormField(
-                textEditingController: _amountController,
+                textEditingController: controller.amountController,
                 validatorType: ValidatorType.Number,
                 obsecure: false,
                 hintText: "Enter price (e.g. 250.00)",
@@ -82,12 +80,12 @@ class SubmitQuoteSheetWidget extends StatelessWidget {
 
               _buildLabel("Start Date"),
               TextField(
-                style:  TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
+                controller: controller.dateController,
+                readOnly: true,
+                style: TextStyle(
+                  color: theme.colorScheme.primary,
                   fontSize: 12.r,
                 ),
-                controller: _dateController,
-                readOnly: true,
                 decoration: InputDecoration(
                   hintText: "Pick a date",
                   suffixIcon: Icon(Icons.calendar_today, color: AppColors.primary),
@@ -101,7 +99,7 @@ class SubmitQuoteSheetWidget extends StatelessWidget {
                     lastDate: DateTime(2100),
                   );
                   if (picked != null) {
-                    _dateController.text =
+                    controller.dateController.text =
                     "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
                   }
                 },
@@ -120,7 +118,7 @@ class SubmitQuoteSheetWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12.r),
                         ),
                       ),
-                      child: Text("Cancel", style: Theme.of(context).textTheme.labelMedium),
+                      child: Text("Cancel", style: theme.textTheme.labelMedium),
                     ),
                   ),
                   SizedBox(width: 12.w),
@@ -156,17 +154,24 @@ class SubmitQuoteSheetWidget extends StatelessWidget {
   }
 
   void _submitQuote() {
-    if (_scopeController.text.isNotEmpty &&
-        _amountController.text.isNotEmpty &&
-        _dateController.text.isNotEmpty) {
+    if (controller.scopeController.text.isNotEmpty &&
+        controller.amountController.text.isNotEmpty &&
+        controller.dateController.text.isNotEmpty) {
       final request = SubmitQuoteRequest(
-        scopeOfWork: _scopeController.text,
-        amount: _amountController.text,
-        startDate: _dateController.text,
+        scopeOfWork: controller.scopeController.text,
+        amount: controller.amountController.text,
+        startDate: controller.dateController.text,
       );
+
       controller.submitQuote(quote.id, request);
+
+      // Clear the text controllers after submitting
+      controller.scopeController.clear();
+      controller.amountController.clear();
+      controller.dateController.clear();
     } else {
       Get.snackbar("Error", "Please fill all fields");
     }
   }
+
 }
