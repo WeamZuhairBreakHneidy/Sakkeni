@@ -28,7 +28,7 @@ class ApiEndpoints {
   static const String viewServiceProviderQuote='/api/provider/quotes';
   static const String submitQuote = '/api/quotes'; // we will append /{id}/submit dynamically
   static const String declineQuote = '/api/quotes'; // we will append /{id}/decline-user-quote dynamically
-
+  static const String requestService = '/api/quotes/request';
 
   static const String addToFavorite = '/api/add-property-to-favorite';
   static const String removeFromFavorite = '/api/remove-property-from-favorite';
@@ -42,6 +42,7 @@ class ApiEndpoints {
   static const String upgradeToServiceProvider = '/api/upgrade-to-service-provider';
   static const String myServices = '/api/view-my-services';
   static const String removeService = '/api/remove-service';
+
 
 
 

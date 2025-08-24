@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import '../../../data/services/validator_service.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
+import '../../../widgets/input_text_form_field.dart';
+import '../../../widgets/responsive_buttun.dart';
 import '../controllers/service_provider_details_controller.dart';
 import '../models/service_provider.dart';
 import '../../../core/theme/colors.dart';
@@ -30,11 +33,9 @@ class ServiceProviderDetailsView extends GetView<ServiceProviderDetailsControlle
           return const Center(child: Text("No details found"));
         }
 
-
-
         return Stack(
           children: [
-            // Upper half image
+            // Top image
             SizedBox(
               height: 0.5.sh,
               width: 1.sw,
@@ -43,7 +44,7 @@ class ServiceProviderDetailsView extends GetView<ServiceProviderDetailsControlle
                   : Image.asset("assets/backgrounds/default.png", fit: BoxFit.cover),
             ),
 
-            // DraggableScrollableSheet for details
+            // Details bottom sheet
             DraggableScrollableSheet(
               initialChildSize: 0.50,
               minChildSize: 0.50,
@@ -67,11 +68,7 @@ class ServiceProviderDetailsView extends GetView<ServiceProviderDetailsControlle
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
-
-
-
-                        // Name
+                        // Provider name
                         Center(
                           child: Text(
                             "${details.firstName} ${details.lastName}",
@@ -79,13 +76,11 @@ class ServiceProviderDetailsView extends GetView<ServiceProviderDetailsControlle
                                 .textTheme
                                 .headlineMedium
                                 ?.copyWith(color: AppColors.primary),
-                            textAlign: TextAlign.center,
                           ),
                         ),
-
                         SizedBox(height: 6.h),
 
-
+                        // Rating
                         if (details.rate != null)
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -94,10 +89,10 @@ class ServiceProviderDetailsView extends GetView<ServiceProviderDetailsControlle
                               SizedBox(width: 6.w),
                               Text(
                                 details.rate!.toStringAsFixed(1),
-                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black87,
-                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(fontWeight: FontWeight.w600),
                               ),
                             ],
                           )
@@ -105,25 +100,16 @@ class ServiceProviderDetailsView extends GetView<ServiceProviderDetailsControlle
                           const Text("No rating yet",
                               style: TextStyle(color: Colors.grey)),
 
+                        SizedBox(height: 12.h),
 
-                        SizedBox(height: 6.h),
-
-
-
-                        // Address row only
+                        // Address
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             const Icon(Icons.location_on, color: Colors.redAccent),
                             SizedBox(width: 8.w),
                             Expanded(
-                              child: Text(
-                                details.address,
-                                style: Theme.of(context).textTheme.bodyMedium,
-                                overflow: TextOverflow.ellipsis,
-                              ),
+                              child: Text(details.address, overflow: TextOverflow.ellipsis),
                             ),
-
                           ],
                         ),
                         SizedBox(height: 16.h),
@@ -135,11 +121,10 @@ class ServiceProviderDetailsView extends GetView<ServiceProviderDetailsControlle
                                 .labelLarge
                                 ?.copyWith(color: AppColors.primary)),
                         SizedBox(height: 8.h),
-                        Text(details.description,
-                            style: Theme.of(context).textTheme.bodyMedium),
+                        Text(details.description),
                         SizedBox(height: 16.h),
 
-                        // Services list
+                        // Services
                         Text("Services",
                             style: Theme.of(context)
                                 .textTheme
@@ -151,8 +136,7 @@ class ServiceProviderDetailsView extends GetView<ServiceProviderDetailsControlle
                           children: details.services.map((s) {
                             return Card(
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16.r),
-                              ),
+                                  borderRadius: BorderRadius.circular(16.r)),
                               elevation: 3,
                               margin: EdgeInsets.symmetric(vertical: 8.h),
                               child: Padding(
@@ -160,92 +144,195 @@ class ServiceProviderDetailsView extends GetView<ServiceProviderDetailsControlle
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    // Service Name
-                                    Text(
-                                      s.serviceName,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelLarge
-                                          ?.copyWith(fontWeight: FontWeight.bold),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    SizedBox(height: 8.h),
+                                    Text(s.serviceName,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelLarge
+                                            ?.copyWith(fontWeight: FontWeight.bold)),
 
-
-                                    // Description
                                     if (s.description != null && s.description!.isNotEmpty)
                                       Padding(
-                                        padding: EdgeInsets.only(top: 4.h),
-                                        child: Text(
-                                          s.description!,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium
-                                              ?.copyWith(color: AppColors.gray1),
-                                          textAlign: TextAlign.start,
-                                        ),
+                                        padding: EdgeInsets.only(top: 8.h),
+                                        child: Text(s.description!),
                                       ),
 
                                     SizedBox(height: 12.h),
 
-                                    // Buttons: Request Service & View Gallery
+                                    // Buttons row
                                     Row(
                                       children: [
+                                        // Request button
                                         Expanded(
-                                          child: ElevatedButton.icon(
+                                          child: Obx(() => ResponsiveButton(
+                                            clickable: !controller.isRequesting.value,
                                             onPressed: () {
-                                              // Request service logic
-                                            },
-                                            icon: const Icon(Icons.add_task, color: AppColors.surface),
-                                            label: Text(
-                                              "Request",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .labelLarge!
-                                                  .copyWith(color: AppColors.surface),
-                                            ),
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: AppColors.primary,
-                                              padding:
-                                              EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(width: 12.w),
-                                        Expanded(
-                                          child: ElevatedButton.icon(
-                                            onPressed: () {
-                                              // Open gallery logic
-                                              Get.toNamed(
-                                                Routes.SERVICE_PROVIDER_GALLERY,
-                                                arguments: s.id, // service_provider_service_id
+                                              final descController = TextEditingController();
+                                              Get.bottomSheet(
+
+                                                Padding(
+                                                  padding: EdgeInsets.all(20.w),
+                                                  child: Column(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text("Request Service",
+                                                          style: Theme.of(context)
+                                                              .textTheme
+                                                              .headlineSmall
+                                                              ?.copyWith(
+                                                              color: AppColors.primary,
+                                                              fontWeight: FontWeight.bold)),
+                                                      SizedBox(height: 16.h),
+                                                      TextField(
+                                                        controller: descController,
+                                                        maxLines: 4,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium,
+                                                        decoration: InputDecoration(
+                                                          hintText: "Enter job description...",
+                                                          hintStyle: Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium
+                                                              ?.copyWith(color: AppColors.gray1),
+                                                          border: OutlineInputBorder(
+                                                              borderRadius: BorderRadius.circular(12.r)),
+                                                          focusedBorder: OutlineInputBorder(
+                                                              borderRadius: BorderRadius.circular(12.r),
+                                                              borderSide: BorderSide(
+                                                                  color: AppColors.primary, width: 2.w)),
+                                                          enabledBorder: OutlineInputBorder(
+                                                              borderRadius: BorderRadius.circular(12.r),
+                                                              borderSide:
+                                                              BorderSide(color: AppColors.primary)),
+                                                          filled: true,
+                                                          fillColor: AppColors.surface,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 20.h),
+
+                                                      Row(
+                                                        children: [
+                                                          Expanded(
+                                                            child: ResponsiveButton(
+
+                                                              clickable: true,
+                                                              onPressed: () => Get.back(),
+
+                                                              child: Text("Cancel",
+                                                                  style: TextStyle(
+                                                                      color: AppColors.primary)),
+                                                            ),
+                                                          ),
+                                                          SizedBox(width: 12.w),
+                                                          Expanded(
+                                                            child: ResponsiveButton(
+                                                              clickable: !controller.isRequesting.value,
+                                                              onPressed: () {
+                                                                final description =
+                                                                descController.text.trim();
+                                                                if (description.isEmpty) {
+                                                                  Get.snackbar("Error",
+                                                                      "Please enter a description");
+                                                                  return;
+                                                                }
+
+                                                                Get.back();
+                                                                Get.defaultDialog(
+                                                                  title: "Confirm Request",
+                                                                  middleText:
+                                                                  "Are you sure you want to submit this request?",
+                                                                  textCancel: "No",
+                                                                  textConfirm: "Yes, Submit",
+                                                                  confirmTextColor: Colors.white,
+                                                                  cancelTextColor: AppColors.primary,
+                                                                  buttonColor: AppColors.primary,
+                                                                  radius: 12.r,
+                                                                  onConfirm: () async {
+                                                                    Get.back();
+                                                                    await controller.requestService(
+                                                                      serviceProviderId:
+                                                                      serviceProviderId,
+                                                                      serviceId: s.id,
+                                                                      jobDescription: description,
+                                                                    );
+
+
+                                                                  },
+                                                                );
+                                                              },
+
+                                                              buttonStyle: ElevatedButton.styleFrom(
+                                                                backgroundColor: AppColors.primary,
+                                                              ),
+                                                              child: controller.isRequesting.value
+                                                                  ? const SizedBox(
+                                                                width: 20,
+                                                                height: 20,
+                                                                child: CircularProgressIndicator(
+                                                                  color: Colors.white,
+                                                                  strokeWidth: 2,
+                                                                ),
+                                                              )
+                                                                  : const Text("Submit",
+                                                                  style: TextStyle(color: Colors.white)),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                                isScrollControlled: true,
+                                                backgroundColor: Colors.white,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.vertical(
+                                                        top: Radius.circular(20.r))),
                                               );
                                             },
-                                            icon: const Icon(Icons.photo_library, color: AppColors.surface),
-                                            label: Text(
-                                              "Gallery",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .labelLarge!
-                                                  .copyWith(color: AppColors.surface),
-                                            ),
-                                            style: ElevatedButton.styleFrom(
+                                            buttonStyle: ElevatedButton.styleFrom(
                                               backgroundColor: AppColors.primary,
-                                              padding:
-                                              EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                                              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: const [
+                                                Icon(Icons.add_task, color: Colors.white),
+                                                SizedBox(width: 6),
+                                                Text("Request", style: TextStyle(color: Colors.white)),
+                                              ],
+                                            ),
+                                          )),
+                                        ),
+                                        SizedBox(width: 12.w),
+                                        // Gallery button
+                                        Expanded(
+                                          child: ResponsiveButton(
+                                            clickable: true,
+                                            onPressed: () {
+                                              Get.toNamed(Routes.SERVICE_PROVIDER_GALLERY, arguments: s.id);
+                                            },
+                                            buttonStyle: ElevatedButton.styleFrom(
+                                              backgroundColor: AppColors.primary,
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: const [
+                                                Icon(Icons.photo_library, color: Colors.white),
+                                                SizedBox(width: 6),
+                                                Text("Gallery", style: TextStyle(color: Colors.white)),
+                                              ],
                                             ),
                                           ),
                                         ),
                                       ],
-                                    ),
+                                    )
                                   ],
                                 ),
                               ),
                             );
                           }).toList(),
                         ),
-
-                        SizedBox(height: 24.h),
                       ],
                     ),
                   ),
@@ -258,7 +345,7 @@ class ServiceProviderDetailsView extends GetView<ServiceProviderDetailsControlle
               top: 40.h,
               left: 16.w,
               child: CircleAvatar(
-                backgroundColor: AppColors.surface.withOpacity(0.7),
+                backgroundColor: Colors.white70,
                 child: IconButton(
                   icon: const Icon(Icons.arrow_back, color: AppColors.primary),
                   onPressed: () => Get.back(),
@@ -268,7 +355,7 @@ class ServiceProviderDetailsView extends GetView<ServiceProviderDetailsControlle
           ],
         );
       }),
-      bottomNavigationBar: CustomBottomNavBar(),
+      bottomNavigationBar:  CustomBottomNavBar(),
     );
   }
 }
