@@ -44,7 +44,7 @@ class UserQuotesView extends GetView<UserQuotesController> {
             ),
           ),
 
-          // Summary Section for Pending User Acceptance, Awaiting Payment, In Progress, and Completed
+          // Summary Section for Pending, Awaiting Payment, In Progress, Completed, and Rated
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
             child: SingleChildScrollView(
@@ -61,6 +61,9 @@ class UserQuotesView extends GetView<UserQuotesController> {
                     .length;
                 final completedCount = controller.quotes
                     .where((quote) => quote.serviceActivity?.status == "Completed")
+                    .length;
+                final ratedCount = controller.quotes
+                    .where((quote) => quote.serviceActivity?.status == "Rated")
                     .length;
 
                 return Row(
@@ -96,6 +99,15 @@ class UserQuotesView extends GetView<UserQuotesController> {
                       title: "Completed",
                       count: completedCount,
                       color: Colors.purple,
+                      theme: theme,
+                      width: 100.w,
+                      height: 70.h,
+                    ),
+                    SizedBox(width: 8.w),
+                    _buildSummaryCard(
+                      title: "Rated",
+                      count: ratedCount,
+                      color: Colors.deepOrange,
                       theme: theme,
                       width: 100.w,
                       height: 70.h,
@@ -243,6 +255,9 @@ class UserQuotesView extends GetView<UserQuotesController> {
           break;
         case "Completed":
           activityStatusColor = Colors.purple;
+          break;
+        case "Rated":
+          activityStatusColor = Colors.deepOrange;
           break;
         default:
           activityStatusColor = Colors.grey;
@@ -447,6 +462,11 @@ class UserQuotesView extends GetView<UserQuotesController> {
   }
 
   Widget _buildActionButtons(UserQuote quote, Color? activityStatusColor) {
+    // No buttons for Rated status
+    if (quote.serviceActivity?.status == "Rated") {
+      return SizedBox.shrink();
+    }
+
     List<Widget> buttons = [];
 
     void addButton(String title, Color color, VoidCallback onTap) {
