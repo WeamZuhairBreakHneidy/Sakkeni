@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:test1/app/widgets/upgrade_to_service_provider.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../../../widgets/upgrade-to-seller.dart';
@@ -95,7 +96,7 @@ class HistoryOptionsView extends StatelessWidget {
                         if (isServiceProvider) {
                           Get.toNamed(Routes.MY_SERVICES);
                         } else {
-                          showUpgradeToSellerDialog();
+                          showUpgradeToServiceProviderDialog();
                         }
                       },
                     ).animate().fade(duration: 500.ms).slideX(begin: -0.2),

@@ -13,7 +13,7 @@ import '../controllers/update_profile_controller.dart';
 
 class UpdateProfileView extends StatelessWidget {
   final UpdateProfileController controller =
-      Get.find<UpdateProfileController>();
+  Get.find<UpdateProfileController>();
 
   UpdateProfileView({super.key});
 
@@ -32,7 +32,6 @@ class UpdateProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: SafeArea(
         child: Container(
           decoration: BoxDecoration(
@@ -48,7 +47,6 @@ class UpdateProfileView extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 19.h),
                 color: Theme.of(context).colorScheme.background,
-
                 child: Row(
                   children: [
                     Text(
@@ -58,7 +56,6 @@ class UpdateProfileView extends StatelessWidget {
                       ),
                     ),
                     Spacer(),
-
                   ],
                 ),
               ),
@@ -72,33 +69,62 @@ class UpdateProfileView extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 28.w),
                   child: Column(
                     children: [
-                      // Avatar
-                      GestureDetector(
-                        onTap: _pickImage,
-                        child: Obx(() {
-                          final user = controller.user.value;
-                          return CircleAvatar(
-                            radius: 75.r,
-                            backgroundImage:
+                      // Avatar with Edit Button
+                      Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          GestureDetector(
+                            onTap: _pickImage,
+                            child: Obx(() {
+                              final user = controller.user.value;
+                              return CircleAvatar(
+                                radius: 75.r,
+                                backgroundImage:
                                 controller.imageFile.value != null
                                     ? FileImage(controller.imageFile.value!)
                                     : (user?.profilePicturePath != null &&
-                                        user!.profilePicturePath!.isNotEmpty)
+                                    user!.profilePicturePath!
+                                        .isNotEmpty)
                                     ? NetworkImage(
-                                      '${ApiService().baseUrl}/${user.profilePicturePath!}?v=${DateTime.now().millisecondsSinceEpoch}',
-                                    )
+                                  '${ApiService().baseUrl}/${user.profilePicturePath!}?v=${DateTime.now().millisecondsSinceEpoch}',
+                                )
                                     : AssetImage(
-                                          Theme.of(context).brightness ==
-                                                  Brightness.dark
-                                              ? "assets/backgrounds/default_black.png"
-                                              : "assets/backgrounds/default.png",
-                                        )
-                                        as ImageProvider,
-                          );
-                        }),
+                                  Theme.of(context).brightness ==
+                                      Brightness.dark
+                                      ? "assets/backgrounds/default_black.png"
+                                      : "assets/backgrounds/default.png",
+                                ) as ImageProvider,
+                              );
+                            }),
+                          ),
+                          Positioned(
+                            top: -10.h,
+                            right: -10.w,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.primary.withOpacity(0.8),
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColors.gray2.withOpacity(0.3),
+                                    blurRadius: 4,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.edit,
+                                  color: Colors.white,
+                                  size: 20.r,
+                                ),
+                                onPressed: _pickImage,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       50.verticalSpace,
-
                       // First & Last Name
                       Row(
                         children: [
@@ -112,7 +138,7 @@ class UpdateProfileView extends StatelessWidget {
                               validatorType: ValidatorType.Name,
                               obsecure: false,
                               fillColor:
-                                  Theme.of(context).colorScheme.background,
+                              Theme.of(context).colorScheme.background,
                               borderColor: AppColors.border,
                             ),
                           ),
@@ -127,14 +153,14 @@ class UpdateProfileView extends StatelessWidget {
                               validatorType: ValidatorType.Name,
                               obsecure: false,
                               fillColor:
-                                  Theme.of(context).colorScheme.background,
+                              Theme.of(context).colorScheme.background,
                               borderColor: AppColors.border,
                             ),
                           ),
                         ],
                       ),
                       20.verticalSpace,
-
+                      // Email
                       Obx(() {
                         final user = controller.user.value;
                         return InputTextFormField(
@@ -163,7 +189,6 @@ class UpdateProfileView extends StatelessWidget {
                         );
                       }),
                       20.verticalSpace,
-
                       // Phone Number
                       InputTextFormField(
                         borderColor: AppColors.border,
@@ -177,7 +202,6 @@ class UpdateProfileView extends StatelessWidget {
                         fillColor: Theme.of(context).colorScheme.background,
                       ),
                       20.verticalSpace,
-
                       // Address
                       InputTextFormField(
                         textEditingController: controller.address,
@@ -191,30 +215,30 @@ class UpdateProfileView extends StatelessWidget {
                         borderColor: AppColors.border,
                       ),
                       50.verticalSpace,
-
                       // Save Button or Loading
                       Align(
                         alignment: Alignment.centerRight,
                         child: Obx(() {
                           return controller.isLoading.value
                               ? Center(
-                                child: SizedBox(
-                                  width: 75,
-                                  height: 75,
-                                  child: LoadingIndicator(
-                                    indicatorType: Indicator.ballPulse,
-                                    colors: [AppColors.primary],
-                                    strokeWidth: 1,
-                                  ),
-                                ),
-                              )
+                            child: SizedBox(
+                              width: 75,
+                              height: 75,
+                              child: LoadingIndicator(
+                                indicatorType: Indicator.ballPulse,
+                                colors: [AppColors.primary],
+                                strokeWidth: 1,
+                              ),
+                            ),
+                          )
                               : TextButton(
-                                onPressed: controller.updateProfile,
-                                child: Text(
-                                  "Save Changes",
-                                  style: Theme.of(context).textTheme.labelSmall,
-                                ),
-                              );
+                            onPressed: controller.updateProfile,
+                            child: Text(
+                              "Save Changes",
+                              style:
+                              Theme.of(context).textTheme.labelSmall,
+                            ),
+                          );
                         }),
                       ),
                       30.verticalSpace,

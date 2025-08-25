@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../modules/PropertyDetails/bindings/property_details_binding.dart';
 import '../modules/PropertyDetails/views/property_details_view.dart';
+
 import '../modules/addproperty/bindings/add_property_binding.dart';
 import '../modules/addproperty/views/add_main_information_view.dart';
 import '../modules/addproperty/views/add_property_view.dart';
@@ -17,6 +18,8 @@ import '../modules/auth/views/reset_password_view.dart';
 import '../modules/auth/views/update_profile_view.dart';
 import '../modules/customMap/bindings/custom_map_binding.dart';
 import '../modules/customMap/views/custom_map_view.dart';
+import '../modules/editService/bindings/edit_service_binding.dart';
+import '../modules/editService/views/edit_service_view.dart';
 import '../modules/favorite/bindings/favorite_binding.dart';
 import '../modules/favorite/views/favorite_view.dart';
 import '../modules/getstarted/views/getstarted_view.dart';
@@ -32,7 +35,6 @@ import '../modules/myServices/bindings/provider_quotes_binding.dart';
 import '../modules/myServices/views/my_services_view.dart';
 import '../modules/myServices/views/my_services_view.dart';
 import '../modules/myServices/views/provider_quotes_view.dart';
-import '../modules/myServices/views/service_gallery_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/properties/bindings/properties_binding.dart';
@@ -190,15 +192,17 @@ class AppPages {
       page: () => HistoryOptionsView(),
       binding: HistoryOptionsBinding(),
     ),
-    GetPage(
-      name: _Paths.GALLERY,
-      page: () => ServiceProviderServiceGalleryView(),
-      binding: HistoryOptionsBinding(),
-    ),
+
     GetPage(
       name: _Paths.USER_QUOTES,
-      page: () => const UserQuotesView(),
+      page: () => UserQuotesView(),
       binding: UserQuotesBinding(),
     ),
+    GetPage(
+      name: _Paths.EDIT_SERVICE,
+      page: () => EditServiceView(),
+      binding: EditServiceBinding(),
+    ),
+
   ];
 }

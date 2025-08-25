@@ -33,6 +33,7 @@ abstract class Routes {
   static const PROVIDER_DETAILS = _Paths.PROVIDER_DETAILS;
   static const SERVICE_PROVIDER_GALLERY = _Paths.SERVICE_PROVIDER_GALLERY;
   static const PROVIDER_QUOTES = _Paths.PROVIDER_QUOTES;
+  static const EDIT_SERVICE = _Paths.EDIT_SERVICE;
 
   static const FAVORITE = _Paths.FAVORITE;
   static const SAVED_PROPERTIES = _Paths.SAVED_PROPERTIES;
@@ -41,6 +42,7 @@ abstract class Routes {
   static const MY_SERVICES = _Paths.MY_SERVICES;
   static const HISTORY_OPTIONS = _Paths.HISTORY_OPTIONS;
   static const USER_QUOTES = _Paths.USER_QUOTES;
+  static const ADD_SERVICE = _Paths.ADD_SERVICE;
 }
 
 abstract class _Paths {
@@ -81,4 +83,6 @@ abstract class _Paths {
   static const HISTORY_OPTIONS = '/history-options';
   static const GALLERY = '/serviceGallery';
   static const USER_QUOTES = '/user-quotes';
+  static const EDIT_SERVICE = '/edit-service';
+  static const ADD_SERVICE = '/add-service';
 }

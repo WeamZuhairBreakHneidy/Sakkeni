@@ -1,4 +1,3 @@
-// File: upgrade-to-service-provider.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,7 +8,6 @@ import '../modules/auth/controllers/profile_controller.dart'; // تأكد من �
 import '../routes/app_pages.dart';
 
 void showUpgradeToServiceProviderDialog() {
-  final authController = Get.find<AuthController>();
 
   Get.defaultDialog(
     backgroundColor: AppColors.white,

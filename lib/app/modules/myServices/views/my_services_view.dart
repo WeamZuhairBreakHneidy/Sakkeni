@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
+import 'package:iconsax/iconsax.dart'; // تأكد من استيراد هذه المكتبة
 import '../../../core/theme/colors.dart';
 import '../../../routes/app_pages.dart';
+import '../../../widgets/add_service.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../../../widgets/service_card.dart';
+import '../controllers/add_service_controller.dart';
 import '../controllers/my_services_controller.dart';
 import '../controllers/remove_service_controller.dart';
 
 class MyServicesView extends StatelessWidget {
   final ScrollController scrollController = ScrollController();
   final MyServicesController controller = Get.put(MyServicesController());
+  AddServiceController add =Get.put(AddServiceController());
 
   MyServicesView({super.key}) {
     scrollController.addListener(() {
@@ -25,7 +29,6 @@ class MyServicesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: Column(
         children: [
           // Header
@@ -52,22 +55,44 @@ class MyServicesView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Text(
                       "View Request",
                       style: Theme.of(context).textTheme.labelSmall,
                     ),
                     IconButton(
-                      icon: Icon(Icons.request_quote_outlined),
+                      icon: const Icon(Icons.request_quote_outlined),
                       onPressed: () {
                         Get.toNamed(Routes.PROVIDER_QUOTES);
                       },
                     ),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        Get.dialog(AddServiceDialog(), barrierDismissible: false);
+                      },
+                      icon: const Icon(Iconsax.add, size: 18, color: Colors.white),
+                      label: Text(
+                        "Add",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.r), // زر دائري أكثر
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
+                        elevation: 3,
+                        shadowColor: AppColors.primary.withOpacity(0.4),
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(height: 10.h),
-                Divider(height: 1.h, color: Colors.grey),
-
+                const Divider(height: 1, color: Colors.grey),
               ],
             ),
           ),
@@ -114,55 +139,63 @@ class MyServicesView extends StatelessWidget {
                   },
                   child: ListView.builder(
                     controller: scrollController,
-                    physics: const AlwaysScrollableScrollPhysics(), // مهم
+                    physics: const AlwaysScrollableScrollPhysics(),
                     itemCount: services.length,
                     itemBuilder: (context, index) {
                       final item = services[index];
-
                       return Padding(
                         padding: EdgeInsets.only(bottom: 12.h),
                         child: ServiceCard(
-                      serviceName: item.service?.name ?? "N/A",
-                        description: item.description ?? "",
-                        availabilityStatus: item.availabilityStatus?.name ?? "",
-                        categoryName: item.service?.serviceCategory?.name ?? "N/A",
-                        onTap: () {
-                          Get.toNamed(
-                            Routes.GALLERY,
-                            arguments: item.service?.id,
-                          );
-                        },
-                        onDismissed: () async {
-                          controller.myServices.refresh();
+                          serviceName: item.service?.name ?? "N/A",
+                          description: item.description ?? "",
+                          availabilityStatus:
+                          item.availabilityStatus?.name ?? "",
+                          categoryName: item.service?.serviceCategory?.name ??
+                              "N/A",
+                          onTap: () {
+                            Get.toNamed(
+                              Routes.SERVICE_PROVIDER_GALLERY,
+                              arguments: item.service?.id,
+                            );
+                          },
+                          onDismissed: () async {
+                            controller.myServices.refresh();
+                            Get.defaultDialog(
+                              title: "Confirm Delete",
+                              middleText:
+                              "Do you really want to delete this service?",
+                              textCancel: "Cancel",
+                              textConfirm: "Delete",
+                              cancelTextColor: AppColors.primary,
+                              confirmTextColor: AppColors.primary,
+                              onConfirm: () async {
+                                Get.back();
+                                final removeController = Get.put(RemoveServiceController());
+                                final success = await removeController.removeService(item.id!);
 
-                          Get.defaultDialog(
-                            title: "Confirm Delete",
-                            middleText: "Do you really want to delete this service?",
-                            textCancel: "Cancel",
-                            textConfirm: "Delete",
-                            cancelTextColor: AppColors.primary,
-                            confirmTextColor: AppColors.primary,
-                            onConfirm: () async {
-                              Get.back();
-                              final removeController = Get.put(RemoveServiceController());
-                              final success = await removeController.removeService(item.id!);
-
-                              if (success) {
-                                controller.myServices.removeAt(index); // يشيل الكارد
-                                controller.myServices.refresh();       // يعمل ريفرش للـ Obx
-                              } else {
-                                Get.snackbar("Error", "Failed to remove service");
-                              }
-                            },
-
-
-                            onCancel: () {
-                              controller.myServices.refresh();
-                            },
-                          );
-                        },
-                      ),
-
+                                if (success) {
+                                  controller.myServices.removeAt(index);
+                                  controller.myServices.refresh();
+                                } else {
+                                  Get.snackbar(
+                                      "Error", "Failed to remove service");
+                                }
+                              },
+                              onCancel: () {
+                                controller.myServices.refresh();
+                              },
+                            );
+                          },
+                          onEdit: () {
+                            Get.toNamed(
+                              Routes.EDIT_SERVICE,
+                              arguments: {
+                                "serviceId": item.serviceId,
+                                "description": item.description,
+                              },
+                            );
+                          },
+                        ),
                       );
                     },
                   ),
@@ -173,6 +206,7 @@ class MyServicesView extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: CustomBottomNavBar(),
+
     );
   }
 }
