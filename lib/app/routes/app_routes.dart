@@ -40,6 +40,7 @@ abstract class Routes {
   static const UPGRADE_TO_SERVICE_PROVIDER = _Paths.UPGRADE_TO_SERVICE_PROVIDER;
   static const MY_SERVICES = _Paths.MY_SERVICES;
   static const HISTORY_OPTIONS = _Paths.HISTORY_OPTIONS;
+  static const USER_QUOTES = _Paths.USER_QUOTES;
 }
 
 abstract class _Paths {
@@ -79,5 +80,5 @@ abstract class _Paths {
   static const MY_SERVICES = '/my-services';
   static const HISTORY_OPTIONS = '/history-options';
   static const GALLERY = '/serviceGallery';
-
+  static const USER_QUOTES = '/user-quotes';
 }

@@ -130,6 +130,18 @@ class AppDrawer extends StatelessWidget {
             },
           ),
 
+
+            ListTile(
+              leading: Icon(Icons.request_quote),
+              title: Text(
+                'My Requests',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              onTap: () {
+                Get.toNamed(Routes.USER_QUOTES);
+              },
+            ),
+
           if ( GetStorage().read('isServiceProvider'))
             ListTile(
               leading: Icon(Icons.request_quote_outlined),

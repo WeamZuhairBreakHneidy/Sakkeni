@@ -54,6 +54,8 @@ import '../modules/upgradeToServiceProvider/views/upgrade_to_service_provider_vi
 import '../modules/upgradeToServiceProvider/views/upgrade_to_service_provider_view.dart';
 import '../modules/upgradetoseller/bindings/upgradetoseller_binding.dart';
 import '../modules/upgradetoseller/views/upgradetoseller_view.dart';
+import '../modules/userQuotes/bindings/user_quotes_binding.dart';
+import '../modules/userQuotes/views/user_quotes_view.dart';
 
 part 'app_routes.dart';
 
@@ -97,7 +99,6 @@ class AppPages {
       page: () => PropertiesUnifiedView(),
       binding: PropertiesBinding(),
     ),
-
     GetPage(
       name: Routes.UPDATEPROFILE,
       page: () => UpdateProfileView(),
@@ -163,7 +164,6 @@ class AppPages {
       page: () => ProviderQuotesView(),
       binding: ProviderQuotesBinding(),
     ),
-
     GetPage(
       name: _Paths.FAVORITE,
       page: () => FavoriteView(),
@@ -187,13 +187,18 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.HISTORY_OPTIONS,
-      page: () =>  HistoryOptionsView(),
+      page: () => HistoryOptionsView(),
       binding: HistoryOptionsBinding(),
     ),
-  GetPage(
-  name:_Paths.GALLERY,
-  page: () =>  ServiceProviderServiceGalleryView(),
-  binding: HistoryOptionsBinding() ,
-  )
+    GetPage(
+      name: _Paths.GALLERY,
+      page: () => ServiceProviderServiceGalleryView(),
+      binding: HistoryOptionsBinding(),
+    ),
+    GetPage(
+      name: _Paths.USER_QUOTES,
+      page: () => const UserQuotesView(),
+      binding: UserQuotesBinding(),
+    ),
   ];
 }
