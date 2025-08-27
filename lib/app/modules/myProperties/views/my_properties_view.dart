@@ -6,24 +6,26 @@ import 'package:test1/app/modules/myProperties/controllers/my_properties_offplan
 import 'package:test1/app/modules/myProperties/controllers/my_properties_purchase_controller.dart';
 import 'package:test1/app/modules/myProperties/controllers/my_properties_rent_controller.dart';
 import '../../../core/theme/colors.dart';
+import '../../../data/models/properties-model.dart';
 import '../../../data/services/api_service.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../../../widgets/properties_tab.dart';
 import '../../../widgets/property_card.dart';
 import '../../properties/controllers/delete-property.dart';
-import '../../../data/models/properties-model.dart';
-import '../controllers/my_properties_tab_controller.dart'; // Ensure Datum is imported if it's not already
+
+import '../controllers/my_properties_controller.dart'; // Import abstract controller
+import '../controllers/my_properties_tab_controller.dart';
 
 class MyPropertiesView extends StatelessWidget {
   final ScrollController scrollController = ScrollController();
   final tabController = Get.put(MyPropertiesTabController(), permanent: true);
-  late final dynamic _controller;
+  late final MyPropertiesController _controller; // Use abstract controller type
   final deleteController = Get.put(DeletePropertyController());
 
   MyPropertiesView({super.key}) {
-    _controller =
-        getControllerForCurrentRoute(); // Initialized in the constructor
+    print('MyPropertiesView: Route parameters: ${Get.parameters}'); // Debug log
+    _controller = getControllerForCurrentRoute();
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
           scrollController.position.maxScrollExtent - 100) {
@@ -32,17 +34,24 @@ class MyPropertiesView extends StatelessWidget {
     });
   }
 
-  dynamic getControllerForCurrentRoute() {
+  MyPropertiesController getControllerForCurrentRoute() {
     final typeParam = Get.parameters['type'] ?? 'rent';
-    switch (typeParam) {
-      case 'rent':
-        return Get.find<MyPropertiesRentController>();
-      case 'purchase':
-        return Get.find<MyPropertiesCPurchaseController>();
-      case 'offplan':
-        return Get.find<MyPropertiesOffPlanController>();
-      default:
-        return Get.find<MyPropertiesRentController>();
+    print('MyPropertiesView: Getting controller for type=$typeParam'); // Debug log
+    try {
+      switch (typeParam) {
+        case 'rent':
+          return Get.find<MyPropertiesRentController>();
+        case 'purchase':
+          return Get.find<MyPropertiesCPurchaseController>();
+        case 'offplan':
+          return Get.find<MyPropertiesOffPlanController>();
+        default:
+          return Get.find<MyPropertiesRentController>();
+      }
+    } catch (e) {
+      print('Error finding controller for type $typeParam: $e');
+      // Fallback to rent controller
+      return Get.find<MyPropertiesRentController>();
     }
   }
 
@@ -88,6 +97,7 @@ class MyPropertiesView extends StatelessWidget {
                       2 => '${Routes.MY_PROPERTIES}?type=offplan',
                       _ => '${Routes.MY_PROPERTIES}?type=rent',
                     };
+                    print('Navigating to: $route'); // Debug log
                     Get.offNamed(route);
                   },
                 ),
@@ -128,17 +138,17 @@ class MyPropertiesView extends StatelessWidget {
                   return const Center(child: Text("No properties found."));
                 }
                 return RefreshIndicator(
-                onRefresh: () async {
-                  _controller.currentPage.value = 1;
-                  _controller.hasMoreData.value = true;
-                  _controller.properties.clear();
-                  await _controller.fetchProperties(page: 1, isLoadMore: false);
-                },
-                child: ListView.builder(
-                itemCount: props.length + (hasMoreData ? 1 : 0),
-                controller: scrollController,
-                physics: const AlwaysScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
+                  onRefresh: () async {
+                    _controller.currentPage.value = 1;
+                    _controller.hasMoreData.value = true;
+                    _controller.properties.clear();
+                    await _controller.fetchProperties(page: 1, isLoadMore: false);
+                  },
+                  child: ListView.builder(
+                    itemCount: props.length + (hasMoreData ? 1 : 0),
+                    controller: scrollController,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
                       if (index < props.length) {
                         final Datum? property = props[index];
 
@@ -157,24 +167,16 @@ class MyPropertiesView extends StatelessWidget {
                           imageUrl = 'https://via.placeholder.com/150';
                         }
 
-                        final price =
-                            property.rent?.price.toStringAsFixed(0) ??
+                        final price = property.rent?.price.toStringAsFixed(0) ??
                             property.purchase?.price.toStringAsFixed(0) ??
-                            property.offplan?.overallPayment.toStringAsFixed(
-                              0,
-                            ) ??
+                            property.offplan?.overallPayment.toStringAsFixed(0) ??
                             '0';
 
                         final location =
                             "${property.location?.country?.name ?? ''}, ${property.location?.city?.name ?? ''}";
-                        final lease =
-                            property.rent?.leasePeriod.toString() ?? '';
+                        final lease = property.rent?.leasePeriod.toString() ?? '';
                         final propertyType = property.propertyType?.name ?? '';
-                        final subType =
-                            property
-                                .residential
-                                ?.residentialPropertyType
-                                ?.name ??
+                        final subType = property.residential?.residentialPropertyType?.name ??
                             property.commercial?.commercialPropertyType?.name ??
                             '';
 
@@ -192,8 +194,7 @@ class MyPropertiesView extends StatelessWidget {
                             onDelete: () {
                               Get.defaultDialog(
                                 title: "Confirm Deletion",
-                                middleText:
-                                    "Are you sure you want to delete this property?",
+                                middleText: "Are you sure you want to delete this property?",
                                 onConfirm: () {
                                   deleteController.deleteProperty(property.id);
                                   Get.back(); // Close the dialog
@@ -210,16 +211,14 @@ class MyPropertiesView extends StatelessWidget {
                         );
                       } else {
                         return Obx(
-                          () =>
-                              _controller.isLoading.value &&
-                                      _controller.hasMoreData.value
-                                  ? const Padding(
-                                    padding: EdgeInsets.all(16.0),
-                                    child: Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  )
-                                  : const SizedBox(),
+                              () => _controller.isLoading.value && _controller.hasMoreData.value
+                              ? const Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          )
+                              : const SizedBox(),
                         );
                       }
                     },
