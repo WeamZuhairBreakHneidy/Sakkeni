@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -60,7 +61,7 @@ class EditServiceController extends GetxController {
           final galleryData = serviceData['gallery'] ?? [];
           networkImages.value = (galleryData as List)
               .where((g) => g['image_path'] != null)
-              .map((g) => ApiEndpoints.baseUrl + g['image_path'] as String)
+              .map((g) => ApiEndpoints.baseUrl+'/' + g['image_path'] as String)
               .toList();
           print("Fetched network images: ${networkImages.value}");
         }
@@ -105,6 +106,8 @@ class EditServiceController extends GetxController {
       final fields = {
         'service_provider_service_id': serviceId.value.toString(),
         'description': description.text.trim(),
+        // ✅ تغيير اسم الحقل هنا ليتجنب التضارب مع حقل الملفات الجديدة
+        'network_images': json.encode(networkImages.value),
       };
 
       final headers = {
@@ -114,25 +117,35 @@ class EditServiceController extends GetxController {
 
       final response = await ApiService().uploadFiles(
         url: ApiEndpoints.editService,
+        // إرسال الصور الجديدة
         files: newImages,
+        // ✅ حقل الصور الجديدة
         fileKey: 'service_gallery',
         fields: fields,
         headers: headers,
       );
 
       final body = response.body;
-      if (response.statusCode == 200 && body != null && body is Map<String, dynamic> && body['status'] == true) {
+      if (response.statusCode == 200 &&
+          body != null &&
+          body is Map<String, dynamic> &&
+          body['status'] == true) {
         Get.snackbar('Success', body['message'] ?? 'Service updated');
         await Future.delayed(const Duration(milliseconds: 1500));
         Get.offAllNamed(Routes.MY_SERVICES);
       } else {
-        String errorMessage = body != null && body is Map<String, dynamic> ? (body['message'] ?? 'Failed to update service') : 'Failed to update service';
-        if (body != null && body is Map<String, dynamic> && body['errors'] != null) {
+        String errorMessage = body != null && body is Map<String, dynamic>
+            ? (body['message'] ?? 'Failed to update service')
+            : 'Failed to update service';
+        if (body != null &&
+            body is Map<String, dynamic> &&
+            body['errors'] != null) {
           body['errors'].forEach((key, value) {
             errorMessage += "\n$key: ${value.join(', ')}";
           });
         }
-        Get.snackbar('Error', errorMessage, duration: const Duration(seconds: 5));
+        Get.snackbar('Error', errorMessage,
+            duration: const Duration(seconds: 5));
       }
     } catch (e) {
       Get.snackbar('Exception', e.toString());

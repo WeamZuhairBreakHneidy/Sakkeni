@@ -29,7 +29,7 @@ class EditServiceView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  30.verticalSpace,
+                  50.verticalSpace,
                   Text(
                     "Update Your Service",
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -105,10 +105,9 @@ class EditServiceView extends StatelessWidget {
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.circular(8.r),
-                              child: image is File
-                                  ? Image.file(image, fit: BoxFit.cover)
-                                  : Image.network(
-                                image as String,
+                              child: image is String
+                                  ? Image.network(
+                                image,
                                 fit: BoxFit.cover,
                                 loadingBuilder: (context, child, loadingProgress) {
                                   if (loadingProgress == null) return child;
@@ -128,7 +127,8 @@ class EditServiceView extends StatelessWidget {
                                     size: 50,
                                   );
                                 },
-                              ),
+                              )
+                                  : Image.file(image as File, fit: BoxFit.cover),
                             ),
                             Positioned(
                               top: 5.h,
@@ -144,8 +144,7 @@ class EditServiceView extends StatelessWidget {
                             ),
                           ],
                         );
-                      },
-                    );
+                      },                    );
                   }),
 
                   SizedBox(height: 16.h),
