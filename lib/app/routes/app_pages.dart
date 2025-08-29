@@ -15,6 +15,8 @@ import '../modules/auth/views/profile_view.dart';
 import '../modules/auth/views/register_view.dart';
 import '../modules/auth/views/reset_password_view.dart';
 import '../modules/auth/views/update_profile_view.dart';
+import '../modules/conversation/bindings/conversation_binding.dart';
+import '../modules/conversation/views/conversation_view.dart';
 import '../modules/customMap/bindings/custom_map_binding.dart';
 import '../modules/customMap/views/custom_map_view.dart';
 import '../modules/favorite/bindings/favorite_binding.dart';
@@ -199,6 +201,11 @@ class AppPages {
       name: _Paths.USER_QUOTES,
       page: () => const UserQuotesView(),
       binding: UserQuotesBinding(),
+    ),
+    GetPage(
+      name: _Paths.CONVERSATION,
+      page: () =>  ConversationsView(),
+      binding: ConversationBinding(),
     ),
   ];
 }

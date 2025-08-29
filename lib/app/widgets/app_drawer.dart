@@ -156,6 +156,18 @@ class AppDrawer extends StatelessWidget {
 
 
           ListTile(
+            leading: Icon(Icons.mail),
+            title: Text(
+              'Massages',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            onTap: () {
+              Get.toNamed(Routes.CONVERSATION);
+            },
+          ),
+
+
+          ListTile(
             leading: Icon(Icons.language),
             title: Text(
               'Language: ${Get.locale?.languageCode.toUpperCase() ?? 'EN'}',
