@@ -46,6 +46,7 @@ import '../modules/serviceProviders/bindings/provider_details_binding.dart';
 import '../modules/serviceProviders/bindings/service_provider_service_gallery_binding.dart';
 import '../modules/serviceProviders/bindings/service_providers_binding.dart';
 import '../modules/serviceProviders/controllers/service_provider_service_gallery_controller.dart';
+import '../modules/serviceProviders/models/service_provider_service_gallrey.dart';
 import '../modules/serviceProviders/views/service_provider_details_view.dart';
 import '../modules/serviceProviders/views/service_provider_service_gallery_view.dart';
 import '../modules/serviceProviders/views/service_providers_view.dart';
@@ -197,7 +198,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.GALLERY,
-      page: () => ServiceProviderServiceGallery(),
+      page: () => ServiceProviderGalleryView(),
       binding: HistoryOptionsBinding(),
     ),
     GetPage(
