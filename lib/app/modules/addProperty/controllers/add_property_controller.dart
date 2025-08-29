@@ -557,16 +557,16 @@ class AddpropertyController extends GetxController {
         );
         return;
       }
-      if (selectedVideo.value == null) {
-        // Check if a video is selected
-        Get.snackbar(
-          'Error',
-          'Please select at least 1 video for the property.',
-        );
-
-
-        return;
-      }
+      // if (selectedVideo.value == null) {
+      //   // Check if a video is selected
+      //   Get.snackbar(
+      //     'Error',
+      //     'Please select at least 1 video for the property.',
+      //   );
+      //
+      //
+      //   return;
+      // }
 
       // Combine images and video into a single list for upload, or handle separately if API expects different keys
       final List<File> filesToUpload = [...selectedImages];

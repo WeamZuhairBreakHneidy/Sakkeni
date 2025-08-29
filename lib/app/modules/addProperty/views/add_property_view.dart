@@ -229,13 +229,13 @@ class AddPropertyView extends GetView<AddpropertyController> {
                           );
                           return;
                         }
-                        if (controller.selectedVideo.value == null) {
-                          Get.snackbar(
-                            "Video Required",
-                            "Please upload 1 video before continuing.",
-                          );
-                          return;
-                        }
+                        // if (controller.selectedVideo.value == null) {
+                        //   Get.snackbar(
+                        //     "Video Required",
+                        //     "Please upload 1 video before continuing.",
+                        //   );
+                        //   return;
+                        // }
 
                         Get.to(
                               () => AddmaininformationVeiw(),

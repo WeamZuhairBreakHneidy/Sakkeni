@@ -58,6 +58,7 @@ dependencies:
   geocoding:
   geolocator:
   pusher_channels_flutter:
+  iconsax:
 #  video_thumbnail:
   animated_text_kit:
   flutter_animate:

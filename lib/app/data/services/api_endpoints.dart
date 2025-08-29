@@ -26,14 +26,14 @@ class ApiEndpoints {
   static const String viewServiceProvidersDetails = '/api/view-service-provider-details';
   static const String viewServiceProviderServiceGallery = '/api/view-service-provider-service-gallery';
   static const String viewServiceProviderQuote='/api/provider/quotes';
-  static const String submitQuote = '/api/quotes'; // we will append /{id}/submit dynamically
-  static const String declineQuote = '/api/quotes'; // we will append /{id}/decline-user-quote dynamically
+  static const String submitQuote = '/api/quotes';
+  static const String declineQuote = '/api/quotes';
   static const String requestService = '/api/quotes/request';
   static const String viewUserRequests = '/api/user/quotes';
-  static const String confirmQuote = '/api/quotes'; // we will append /{id}/decline-user-quote dynamically
-   static const String updateQuote = '/api/quotes'; // we will append /{id}/decline-user-quote dynamically
+  static const String confirmQuote = '/api/quotes';
+   static const String updateQuote = '/api/quotes';
   static const String markServiceAsCompleted = '/api/service-activities';
-  static const String rateService = '/api/service-activities'; // we will append /{id}/decline-user-quote dynamically
+  static const String rateService = '/api/service-activities';
 
   static const String addToFavorite = '/api/add-property-to-favorite';
   static const String removeFromFavorite = '/api/remove-property-from-favorite';
@@ -47,6 +47,8 @@ class ApiEndpoints {
   static const String upgradeToServiceProvider = '/api/upgrade-to-service-provider';
   static const String myServices = '/api/view-my-services';
   static const String removeService = '/api/remove-service';
+  static const String editService = '/api/edit-service';
+  static const String addService = '/api/add-service';
 
 
   static const String getConversation = '/api/conversations';

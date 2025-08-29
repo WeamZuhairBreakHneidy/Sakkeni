@@ -10,6 +10,7 @@ class ServiceCard extends StatelessWidget {
   final DateTime? createdAt;
   final VoidCallback? onTap;
   final VoidCallback? onDismissed;
+  final VoidCallback? onEdit;
 
   const ServiceCard({
     Key? key,
@@ -20,6 +21,7 @@ class ServiceCard extends StatelessWidget {
     this.createdAt,
     this.onTap,
     this.onDismissed,
+    this.onEdit,
   }) : super(key: key);
 
   // Helper method to get the status color and text
@@ -93,7 +95,7 @@ class ServiceCard extends StatelessWidget {
         margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 4.w),
         child: InkWell(
           borderRadius: BorderRadius.circular(20.r),
-          onTap: onTap, // <<< هي اللي بتشغل التاب
+          onTap: onTap,
           child: Column(
             children: [
               // خط ملون بالأعلى
@@ -107,6 +109,17 @@ class ServiceCard extends StatelessWidget {
                   ),
                 ),
               ),
+
+              // 🔹 زر Edit أعلى الكارد
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: const Icon(Icons.edit, color: AppColors.primary),
+                  onPressed: onEdit,
+                  tooltip: "Edit Service",
+                ),
+              ),
+
               Container(
                 padding: EdgeInsets.all(16.w),
                 decoration: BoxDecoration(
