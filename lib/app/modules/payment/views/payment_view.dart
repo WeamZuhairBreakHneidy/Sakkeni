@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/payment_controller.dart';
+import '../controllers/payment_service_provider_controller.dart';
 
 class PaymentView extends StatelessWidget {
   const PaymentView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Get the service ID from the arguments
     final String? serviceId = Get.arguments as String?;
     final PaymentController controller = Get.put(PaymentController());
 
-    // You can handle the case where serviceId is null if needed
     if (serviceId == null) {
       return Scaffold(
         body: Center(
@@ -39,7 +37,6 @@ class PaymentView extends StatelessWidget {
                 } else {
                   return ElevatedButton(
                     onPressed: () {
-                      // Call the makePayment function from the Controller with the serviceId
                       controller.makePayment(serviceId: serviceId);
                     },
                     style: ElevatedButton.styleFrom(

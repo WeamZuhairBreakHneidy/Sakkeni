@@ -19,6 +19,7 @@ class UpgradeToServiceProviderController extends GetxController {
       expandedCategoryIds.add(id);
     }
   }
+
   var description = ''.obs;
   var isLoading = false.obs;
 
@@ -34,11 +35,10 @@ class UpgradeToServiceProviderController extends GetxController {
     selectedPlanId.value = planId;
   }
 
-
-
   void setDescription(String value) {
     description.value = value;
   }
+
   /// Upgrade account to Service Provider
   Future<void> upgradeToServiceProvider() async {
     if (selectedPlanId.value == 0) {
@@ -97,8 +97,8 @@ class UpgradeToServiceProviderController extends GetxController {
           GetStorage().write('isServiceProvider', true);
 
           Get.snackbar(
-            'Success',
-            message ?? 'Upgraded to service provider successfully',
+            '',
+            'Your request is binding and waiting for admin approval',
             snackPosition: SnackPosition.TOP,
             colorText: Colors.white,
           );
@@ -164,8 +164,7 @@ class UpgradeToServiceProviderController extends GetxController {
           ),
         );
       }
-    }
-    finally {
+    } finally {
       isLoading.value = false;
     }
   }

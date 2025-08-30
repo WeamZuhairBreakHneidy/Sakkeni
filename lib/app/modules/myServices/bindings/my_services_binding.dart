@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../../payment/controllers/sabscruption_controller.dart';
 import '../../serviceProviders/controllers/service_provider_service_gallery_controller.dart';
 import '../../services/controllers/services_controller.dart';
 import '../controllers/add_service_controller.dart';
@@ -19,6 +20,9 @@ class MyServicesBinding extends Bindings {
           () => AddServiceController(),
     ); Get.lazyPut<ServicesController>(
           () => ServicesController(),fenix: true
+    );;
+    Get.lazyPut<SabscruptionController>(
+          () => SabscruptionController(),fenix: true
     );
   }
 }
