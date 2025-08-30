@@ -9,11 +9,10 @@ class ConversationsView extends GetView<ConversationController> {
   const ConversationsView({super.key});
 
   String _fullImageUrl(String? path) {
-    if (path == null || path.isEmpty || path == "1" || !path.startsWith("storage/")) {
-      debugPrint("❌ Invalid image path: $path, using default icon");
-      return "";
-    }
-    return "${ApiEndpoints.baseUrl}/$path";
+    if (path == null || path.isEmpty) return "";
+    return path.startsWith("http")
+        ? path
+        : "${ApiEndpoints.baseUrl}/$path";
   }
 
   @override
@@ -44,9 +43,10 @@ class ConversationsView extends GetView<ConversationController> {
           separatorBuilder: (_, __) => SizedBox(height: 12.h),
           itemBuilder: (_, index) {
             final conv = controller.conversations[index];
-            final participantName = controller.getOtherParticipantName(conv);
-            final user = conv["user"];
-            final imageUrl = _fullImageUrl(user["profile_picture_path"]);
+            final participant = controller.getOtherParticipant(conv);
+            final name =
+            "${participant?['first_name'] ?? ''} ${participant?['last_name'] ?? ''}".trim();
+            final imageUrl = _fullImageUrl(participant?['profile_picture_path']);
 
             return GestureDetector(
               onTap: () {
@@ -63,6 +63,7 @@ class ConversationsView extends GetView<ConversationController> {
                     children: [
                       CircleAvatar(
                         radius: 28.r,
+                        backgroundColor: Colors.grey.shade300,
                         child: imageUrl.isNotEmpty
                             ? ClipOval(
                           child: Image.network(
@@ -70,14 +71,15 @@ class ConversationsView extends GetView<ConversationController> {
                             width: 56.r,
                             height: 56.r,
                             fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              debugPrint(
-                                  "❌ Image load error for $imageUrl: $error");
+                            errorBuilder:
+                                (context, error, stackTrace) {
                               return const Icon(Icons.person, size: 28);
                             },
-                            loadingBuilder: (context, child, loadingProgress) {
+                            loadingBuilder: (context, child,
+                                loadingProgress) {
                               if (loadingProgress == null) return child;
-                              return const Center(child: CircularProgressIndicator());
+                              return const Center(
+                                  child: CircularProgressIndicator());
                             },
                           ),
                         )
@@ -89,7 +91,7 @@ class ConversationsView extends GetView<ConversationController> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              participantName,
+                              name.isNotEmpty ? name : "Unknown User",
                               style: theme.textTheme.bodyLarge?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),

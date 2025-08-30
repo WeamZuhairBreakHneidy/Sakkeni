@@ -57,6 +57,7 @@ class AuthController extends GetxController {
           box.write('user', newUser.toJson());
           user.value = newUser;
 
+          GetStorage().write('user_id', newUser.id);
           GetStorage().write('isSeller', newUser.isSeller);
           GetStorage().write('isServiceProvider', newUser.isServiceProvider);
           GetStorage().write('imagePath', newUser.profilePicturePath);

@@ -23,7 +23,7 @@ import '../modules/editService/bindings/edit_service_binding.dart';
 import '../modules/editService/views/edit_service_view.dart';
 import '../modules/favorite/bindings/favorite_binding.dart';
 import '../modules/favorite/views/favorite_view.dart';
-import '../modules/getstarted/views/getstarted_view.dart';
+
 import '../modules/historyOptions/bindings/history_options_binding.dart';
 import '../modules/historyOptions/views/history_options_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -72,11 +72,7 @@ class AppPages {
   static var INITIAL = Routes.SPLASH;
 
   static final routes = [
-    GetPage(
-      name: _Paths.GETSTARTED,
-      page: () => const GetstartedView(),
-      binding: HomeBinding(),
-    ),
+
     GetPage(
       name: _Paths.ONBOARDING,
       page: () => OnboardingView(),

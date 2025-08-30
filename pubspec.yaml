@@ -40,13 +40,8 @@ dependencies:
   logger:
   get_storage:
   flutter_screenutil:
-  #FireBase
-  firebase_core:
-  firebase_auth:
-  cloud_firestore:
-  firebase_storage:
-  firebase_messaging:
-  google_sign_in:
+
+
   smooth_page_indicator:
   loading_indicator:
   image_picker:
@@ -60,6 +55,7 @@ dependencies:
   pusher_channels_flutter:
   iconsax:
   flutter_stripe:
+  http:
 #  video_thumbnail:
   animated_text_kit:
   flutter_animate:

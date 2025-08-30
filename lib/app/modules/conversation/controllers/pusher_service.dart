@@ -2,10 +2,11 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:test1/app/data/services/api_endpoints.dart';
 
 class PusherService {
   final PusherChannelsFlutter pusher;
-  static const String _backendUrl = 'http://192.168.20.39:8000';
+  static const String _backendUrl = '${ApiEndpoints.baseUrl}';
   static const String _pusherApiKey = 'a3b7f8aa8d0d286fc686';
   static const String _pusherCluster = 'eu';
   final String _authToken;

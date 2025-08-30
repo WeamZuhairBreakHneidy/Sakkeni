@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:get/Get.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import '../../../data/services/api_service.dart';
 import '../models/message.dart';
 import 'pusher_service.dart';
@@ -21,24 +22,14 @@ class ConversationController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _fetchUserId();
+    _loadUserIdFromStorage();
     fetchConversations();
   }
 
-  Future<void> _fetchUserId() async {
-    try {
-      final response = await ApiService().getApi(url: '/api/my-profile');
-      if (response.statusCode == 200 && response.body['status'] == true) {
-        _loggedInUserId = response.body['data']['id'];
-        debugPrint("✅ Logged-in user ID: $_loggedInUserId");
-      } else {
-        debugPrint("❌ Failed to fetch user ID: ${response.body}");
-        Get.snackbar("Error", "Failed to fetch user profile");
-      }
-    } catch (e) {
-      debugPrint("❌ Error fetching user ID: $e");
-      Get.snackbar("Error", "Failed to fetch user profile: $e");
-    }
+  void _loadUserIdFromStorage() {
+    final box = GetStorage();
+    _loggedInUserId = box.read('user_id');
+    debugPrint("✅ Loaded user_id from storage: $_loggedInUserId");
   }
 
   Future<void> initPusher(int conversationId) async {
@@ -58,7 +49,9 @@ class ConversationController extends GetxController {
         channelName: "private-conversation.$conversationId",
         onEvent: (event) {
           debugPrint("📩 New event: ${event.eventName} - ${event.data}");
-          if ((event.eventName == "NewMessage" || event.eventName == "NewMessageSent") && event.data != null) {
+          if ((event.eventName == "NewMessage" ||
+              event.eventName == "NewMessageSent") &&
+              event.data != null) {
             try {
               final decoded = jsonDecode(event.data);
               final msgJson = decoded['message'] ?? decoded;
@@ -73,24 +66,11 @@ class ConversationController extends GetxController {
             }
           }
         },
-
       );
       _subscribedConversations.add(conversationId);
       debugPrint("✅ Subscribed to private-conversation.$conversationId");
     } catch (e) {
       debugPrint("❌ Pusher init error: $e");
-      String errorMessage = "Unable to receive real-time messages. You can still view and send messages.";
-      if (e.toString().contains("Auth value for subscription")) {
-        errorMessage = "Permission denied for real-time updates. You can still view and send messages.";
-      }
-      Get.snackbar(
-        "Real-Time Error",
-        errorMessage,
-        snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 5),
-        backgroundColor: Colors.red.withOpacity(0.8),
-        colorText: Colors.white,
-      );
     }
   }
 
@@ -158,13 +138,17 @@ class ConversationController extends GetxController {
     }
   }
 
-  String getOtherParticipantName(Map<String, dynamic> conv) {
-    final user = User.fromJson(conv['user']);
-    final serviceProvider = ServiceProvider.fromJson(conv['service_provider']);
-    if (_loggedInUserId != null && user.id == _loggedInUserId) {
-      return "${serviceProvider.user.firstName} ${serviceProvider.user.lastName}";
+  /// ✅ Returns the OTHER participant info (name, photo) in the conversation
+  Map<String, dynamic>? getOtherParticipant(Map<String, dynamic> conv) {
+    if (_loggedInUserId == null) return null;
+
+    final user = conv['user'];
+    final serviceProvider = conv['service_provider']?['user'];
+
+    if (user != null && user['id'] == _loggedInUserId) {
+      return serviceProvider;
     }
-    return "${user.firstName} ${user.lastName}";
+    return user;
   }
 
   @override
