@@ -43,6 +43,7 @@ abstract class Routes {
   static const HISTORY_OPTIONS = _Paths.HISTORY_OPTIONS;
   static const USER_QUOTES = _Paths.USER_QUOTES;
   static const ADD_SERVICE = _Paths.ADD_SERVICE;
+  static const CONVERSATION = _Paths.CONVERSATION;
   static const PAYMENT = _Paths.PAYMENT;
 }
 
@@ -86,5 +87,6 @@ abstract class _Paths {
   static const USER_QUOTES = '/user-quotes';
   static const EDIT_SERVICE = '/edit-service';
   static const ADD_SERVICE = '/add-service';
+  static const CONVERSATION = '/conversation';
   static const PAYMENT = '/payment';
 }

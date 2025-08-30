@@ -1,5 +1,5 @@
 class ApiEndpoints {
-  static const String baseUrl = 'http://192.168.20.31:8000';
+  static const String baseUrl = 'http://192.168.20.23:8000';
   static const String login = '/api/login';
   static const String logout = '/api/logout';
   static const String signup = '/api/sign-up';
@@ -50,6 +50,11 @@ class ApiEndpoints {
   static const String editService = '/api/edit-service';
   static const String addService = '/api/add-service';
   static const String createPaymentIntent = '/api/service-activities';
+
+
+  static const String getConversation = '/api/conversations';
+  static const String viewMassages = '/api/conversations';
+  static const String sendMassage = '/api/conversations';
 
 
 

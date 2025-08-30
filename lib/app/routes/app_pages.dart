@@ -15,6 +15,8 @@ import '../modules/auth/views/profile_view.dart';
 import '../modules/auth/views/register_view.dart';
 import '../modules/auth/views/reset_password_view.dart';
 import '../modules/auth/views/update_profile_view.dart';
+import '../modules/conversation/bindings/conversation_binding.dart';
+import '../modules/conversation/views/conversation_view.dart';
 import '../modules/customMap/bindings/custom_map_binding.dart';
 import '../modules/customMap/views/custom_map_view.dart';
 import '../modules/editService/bindings/edit_service_binding.dart';
@@ -34,6 +36,7 @@ import '../modules/myServices/bindings/provider_quotes_binding.dart';
 import '../modules/myServices/views/my_services_view.dart';
 import '../modules/myServices/views/my_services_view.dart';
 import '../modules/myServices/views/provider_quotes_view.dart';
+
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/payment/bindings/payment_binding.dart';
@@ -44,6 +47,7 @@ import '../modules/serviceProviders/bindings/provider_details_binding.dart';
 import '../modules/serviceProviders/bindings/service_provider_service_gallery_binding.dart';
 import '../modules/serviceProviders/bindings/service_providers_binding.dart';
 import '../modules/serviceProviders/controllers/service_provider_service_gallery_controller.dart';
+import '../modules/serviceProviders/models/service_provider_service_gallrey.dart';
 import '../modules/serviceProviders/views/service_provider_details_view.dart';
 import '../modules/serviceProviders/views/service_provider_service_gallery_view.dart';
 import '../modules/serviceProviders/views/service_providers_view.dart';
@@ -193,11 +197,20 @@ class AppPages {
       page: () => HistoryOptionsView(),
       binding: HistoryOptionsBinding(),
     ),
-
+    GetPage(
+      name: _Paths.GALLERY,
+      page: () => ServiceProviderGalleryView(),
+      binding: HistoryOptionsBinding(),
+    ),
     GetPage(
       name: _Paths.USER_QUOTES,
       page: () => UserQuotesView(),
       binding: UserQuotesBinding(),
+    ),
+    GetPage(
+      name: _Paths.CONVERSATION,
+      page: () =>  ConversationsView(),
+      binding: ConversationBinding(),
     ),
     GetPage(
       name: _Paths.EDIT_SERVICE,
