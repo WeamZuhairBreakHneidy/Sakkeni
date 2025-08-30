@@ -25,6 +25,7 @@ class ProviderQuotesController extends GetxController {
     dateController.dispose();
     super.onClose();
   }
+
   Future<void> fetchProviderQuotes() async {
     isLoading.value = true;
     try {
@@ -41,6 +42,7 @@ class ProviderQuotesController extends GetxController {
       }
     } catch (e) {
       print("Error fetching provider quotes: $e");
+      Get.snackbar("Error", "Failed to fetch quotes");
     } finally {
       isLoading.value = false;
     }
@@ -65,11 +67,12 @@ class ProviderQuotesController extends GetxController {
       Get.snackbar('Error', 'Something went wrong');
     }
   }
+
   Future<void> declineQuote(int quoteId) async {
     try {
       final response = await ApiService().postApi(
         url: '${ApiEndpoints.declineQuote}/$quoteId/decline-user-quote',
-        body: null, // no body needed
+        body: null,
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -86,6 +89,31 @@ class ProviderQuotesController extends GetxController {
     } catch (e) {
       print("Error declining quote: $e");
       Get.snackbar('Error', 'Something went wrong');
+    }
+  }
+
+  Future<void> markAsComplete(int serviceActivityId) async {
+    try {
+      final response = await ApiService().postApi(
+        url: '${ApiEndpoints.markServiceAsCompleted}/$serviceActivityId/complete',
+        body: null,
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final body = response.body;
+        Get.snackbar(
+          body['status'] == true ? "Success" : "Error",
+          body['message'] ?? (body['status'] == true ? "Service marked as complete" : "Failed to mark service as complete"),
+        );
+        if (body['status'] == true) {
+          await fetchProviderQuotes();
+        }
+      } else {
+        Get.snackbar("Error", response.body['message'] ?? "Server error: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Error marking service as complete: $e");
+      Get.snackbar("Error", e.toString());
     }
   }
 

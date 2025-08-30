@@ -8,6 +8,7 @@ class ProviderQuote {
   final DateTime createdAt;
   final User user;
   final Service service;
+  final ServiceActivity? serviceActivity;
 
   ProviderQuote({
     required this.id,
@@ -19,6 +20,7 @@ class ProviderQuote {
     required this.createdAt,
     required this.user,
     required this.service,
+    this.serviceActivity,
   });
 
   factory ProviderQuote.fromJson(Map<String, dynamic> json) {
@@ -32,6 +34,9 @@ class ProviderQuote {
       createdAt: DateTime.parse(json['created_at']),
       user: User.fromJson(json['user']),
       service: Service.fromJson(json['service']),
+      serviceActivity: json['service_activity'] != null
+          ? ServiceActivity.fromJson(json['service_activity'])
+          : null,
     );
   }
 }
@@ -72,6 +77,47 @@ class Service {
     return Service(
       id: json['id'],
       name: json['name'] ?? "",
+    );
+  }
+}
+
+class ServiceActivity {
+  final int id;
+  final int userId;
+  final int serviceProviderId;
+  final int quoteId;
+  final String cost;
+  final String status;
+  final String startDate;
+  final String? estimatedEndDate;
+  final String createdAt;
+  final String updatedAt;
+
+  ServiceActivity({
+    required this.id,
+    required this.userId,
+    required this.serviceProviderId,
+    required this.quoteId,
+    required this.cost,
+    required this.status,
+    required this.startDate,
+    this.estimatedEndDate,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  factory ServiceActivity.fromJson(Map<String, dynamic> json) {
+    return ServiceActivity(
+      id: json['id'],
+      userId: json['user_id'],
+      serviceProviderId: json['service_provider_id'],
+      quoteId: json['quote_id'],
+      cost: json['cost']?.toString() ?? "",
+      status: json['status'] ?? "",
+      startDate: json['start_date'] ?? "",
+      estimatedEndDate: json['estimated_end_date'],
+      createdAt: json['created_at'] ?? "",
+      updatedAt: json['updated_at'] ?? "",
     );
   }
 }
