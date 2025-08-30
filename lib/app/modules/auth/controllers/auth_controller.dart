@@ -67,7 +67,7 @@ class AuthController extends GetxController {
           box.write('rememberMe', rememberMe.value);
 
           Get.offAllNamed(Routes.HOME);
-          Get.snackbar('Success', body['message'] ?? 'Login successful');
+
         } else {
           Get.snackbar('Login Failed', body['message'] ?? 'Unknown error');
         }
