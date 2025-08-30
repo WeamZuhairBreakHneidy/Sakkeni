@@ -3,11 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../core/theme/colors.dart';
+import '../../../routes/app_pages.dart';
+import '../../payment/controllers/payment_controller.dart';
 import '../controllers/user_quotes_controller.dart';
 import '../models/user_quote_model.dart';
 
 class UserQuotesView extends GetView<UserQuotesController> {
-  const UserQuotesView({super.key});
+   UserQuotesView({super.key});
+    final PaymentController paymentController = Get.put(PaymentController());
 
   @override
   Widget build(BuildContext context) {
@@ -461,6 +464,8 @@ class UserQuotesView extends GetView<UserQuotesController> {
     );
   }
 
+// In user_quotes_view.dart
+
   Widget _buildActionButtons(UserQuote quote, Color? activityStatusColor) {
     // No buttons for Rated status
     if (quote.serviceActivity?.status == "Rated") {
@@ -509,6 +514,7 @@ class UserQuotesView extends GetView<UserQuotesController> {
         });
         buttons.add(SizedBox(width: 8.w));
         addButton("Decline", Colors.red, () {
+          // Corrected: Decline should call a decline method, not makePayment.
           _showConfirmation("Decline", quote, () => controller.declineQuote(quote.id));
         });
         break;
@@ -520,7 +526,14 @@ class UserQuotesView extends GetView<UserQuotesController> {
         buttons.add(SizedBox(width: 8.w));
       }
       addButton("Pay Now", Colors.orange, () {
-        _showConfirmation("Pay Now", quote, () => controller.payQuote(quote.id));
+        _showConfirmation("Pay Now", quote, () {
+          // Corrected: The logic to initiate payment is now here.
+          if (quote.serviceActivity?.id != null) {
+            Get.toNamed(Routes.PAYMENT, arguments: quote.serviceActivity!.id.toString());
+          } else {
+            Get.snackbar("Error", "Service ID not available for payment.");
+          }
+        });
       });
     }
 
@@ -530,7 +543,7 @@ class UserQuotesView extends GetView<UserQuotesController> {
         buttons.add(SizedBox(width: 8.w));
       }
       addButton("Mark as Complete", Colors.blue, () {
-        _showConfirmation("Mark as Complete", quote, () => controller.markAsComplete(quote.id));
+        _showConfirmation("Mark as Complete", quote, () => controller.markAsComplete(quote.serviceActivity!.id));
       });
     }
 
@@ -546,7 +559,6 @@ class UserQuotesView extends GetView<UserQuotesController> {
 
     return Row(children: buttons);
   }
-
   void _showConfirmation(String title, UserQuote quote, VoidCallback onConfirm) {
     Get.dialog(
       Dialog(

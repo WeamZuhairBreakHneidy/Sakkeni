@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 
 import '../modules/PropertyDetails/bindings/property_details_binding.dart';
 import '../modules/PropertyDetails/views/property_details_view.dart';
-
 import '../modules/addproperty/bindings/add_property_binding.dart';
 import '../modules/addproperty/views/add_main_information_view.dart';
 import '../modules/addproperty/views/add_property_view.dart';
@@ -37,6 +36,8 @@ import '../modules/myServices/views/my_services_view.dart';
 import '../modules/myServices/views/provider_quotes_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
+import '../modules/payment/bindings/payment_binding.dart';
+import '../modules/payment/views/payment_view.dart';
 import '../modules/properties/bindings/properties_binding.dart';
 import '../modules/properties/views/properties_view.dart';
 import '../modules/serviceProviders/bindings/provider_details_binding.dart';
@@ -202,7 +203,10 @@ class AppPages {
       name: _Paths.EDIT_SERVICE,
       page: () => EditServiceView(),
       binding: EditServiceBinding(),
+    ),GetPage(
+      name: _Paths.PAYMENT,
+      page: () => PaymentView(),
+      binding: PaymentBinding(),
     ),
-
   ];
 }

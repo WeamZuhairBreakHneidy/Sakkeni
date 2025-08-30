@@ -58,6 +58,7 @@ dependencies:
   geocoding:
   geolocator:
   iconsax:
+  flutter_stripe:
 #  video_thumbnail:
   animated_text_kit:
   flutter_animate:

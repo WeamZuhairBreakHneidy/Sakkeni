@@ -35,14 +35,13 @@ class EditServiceController extends GetxController {
     }
   }
 
-  /// تهيئة البيانات وجلب صور المعرض قبل الدخول
   Future<void> initData(int id, String desc) async {
     serviceId.value = id;
     description.text = desc;
     await fetchGallery(id);
   }
 
-  /// جلب صور المعرض من الخادم
+
   Future<void> fetchGallery(int serviceId) async {
     isLoading.value = true;
     try {

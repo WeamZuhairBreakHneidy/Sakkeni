@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:test1/app/core/theme/colors.dart';
@@ -17,6 +18,9 @@ final LocaleService localeService = Get.put(LocaleService());
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey = 'pk_test_51S1iIJR8qUnPJEKySpTyzRNvCzFCaEQljoSS8mEvEbYcJBGrfXzQ1AFKsDEyyDyWvPOt8HwGIuBc1RCXlUI8GIKH00xHkiI0wa';
+  await Stripe.instance.applySettings();
+
   await GetStorage.init();
 
 

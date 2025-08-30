@@ -26,17 +26,6 @@ class AddPropertyView extends GetView<AddpropertyController> {
     }
   }
 
-  // New method to pick a video
-  Future<void> _pickVideo() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickVideo(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      controller.selectedVideo.value = File(pickedFile.path);
-    } else {
-      Get.snackbar("Note", "No video selected.");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -154,36 +143,6 @@ class AddPropertyView extends GetView<AddpropertyController> {
                         );
                       }),
                       SizedBox(height: 20.h),
-                      Obx(() {
-                        final video = controller.selectedVideo.value;
-                        if (video != null) {
-                          return Column(
-                            children: [
-                              Text(
-                                "Video Selected: ${video.path
-                                    .split('/')
-                                    .last}",
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-
-                              SizedBox(height: 10.h),
-                              // Optional: Display video thumbnail
-                            ],
-                          );
-                        } else {
-                          return GestureDetector(
-                            onTap: _pickVideo,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 16.h),
-                              child: Text(
-                                "Upload 1 video",
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                            ),
-                          );
-                        }
-                      }),
                       SizedBox(height: 20.h),
                     ],
                   ),

@@ -178,6 +178,7 @@ class AppDrawer extends StatelessWidget {
             },
           ),
 
+
           ListTile(
             leading: Icon(Get.isDarkMode ? Icons.dark_mode : Icons.light_mode),
             title: Text('Dark Mode'),
