@@ -178,5 +178,27 @@
     "select_at_least_one_exposure": "Please select at least one exposure.",
     "enter_the_address": "Please enter the address.",
     "pick_a_location": "Please pick a location on the map."
+  },
+  "categories": {
+    "fixes_and_repairs": "Fixes and Repairs",
+    "cleaning": "Cleaning"
+  },
+  "services": {
+    "carpenter": "Carpenter",
+    "metalwork": "Metalwork",
+    "deep_cleaning": "Deep Cleaning",
+    "regular_cleaning": "Regular Cleaning",
+    "water_tank_cleaning": "Water Tank Cleaning",
+    "plumber": "Plumber",
+    "tiler": "Tiler",
+    "interior": "Interior",
+    "exterior": "Exterior",
+    "electrician": "Electrician",
+    "solar": "Solar",
+    "generators": "Generators",
+    "moving_service": "Moving Service",
+    "irrigation": "Irrigation",
+    "pest_control": "Pest Control"
   }
+
 }

@@ -178,6 +178,27 @@
     "select_at_least_one_exposure": "الرجاء اختيار اتجاه واحد على الأقل.",
     "enter_the_address": "الرجاء إدخال العنوان.",
     "pick_a_location": "الرجاء تحديد موقع على الخريطة."
+  },
+  "categories": {
+    "fixes_and_repairs": "إصلاحات وصيانة",
+    "cleaning": "تنظيف"
+  },
+  "services": {
+    "carpenter": "نجار",
+    "metalwork": "حدادة",
+    "deep_cleaning": "تنظيف عميق",
+    "regular_cleaning": "تنظيف عادي",
+    "water_tank_cleaning": "تنظيف خزانات المياه",
+    "plumber": "سباك",
+    "tiler": "مبلط",
+    "interior": "دهان داخلي",
+    "exterior": "دهان خارجي",
+    "electrician": "كهربائي",
+    "solar": "طاقة شمسية",
+    "generators": "مولدات",
+    "moving_service": "نقل عفش",
+    "irrigation": "ري",
+    "pest_control": "مكافحة الحشرات"
   }
 
 }

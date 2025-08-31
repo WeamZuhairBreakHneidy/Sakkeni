@@ -207,6 +207,23 @@ class LocaleKeys {
       'messages_select_at_least_one_exposure';
   static const messages_enter_the_address = 'messages_enter_the_address';
   static const messages_pick_a_location = 'messages_pick_a_location';
+  static const categories_fixes_and_repairs = 'categories_fixes_and_repairs';
+  static const categories_cleaning = 'categories_cleaning';
+  static const services_carpenter = 'services_carpenter';
+  static const services_metalwork = 'services_metalwork';
+  static const services_deep_cleaning = 'services_deep_cleaning';
+  static const services_regular_cleaning = 'services_regular_cleaning';
+  static const services_water_tank_cleaning = 'services_water_tank_cleaning';
+  static const services_plumber = 'services_plumber';
+  static const services_tiler = 'services_tiler';
+  static const services_interior = 'services_interior';
+  static const services_exterior = 'services_exterior';
+  static const services_electrician = 'services_electrician';
+  static const services_solar = 'services_solar';
+  static const services_generators = 'services_generators';
+  static const services_moving_service = 'services_moving_service';
+  static const services_irrigation = 'services_irrigation';
+  static const services_pest_control = 'services_pest_control';
   static const labels_video_required = 'labels_video_required';
   static const error_profile = 'error_profile';
   static const error_view_history = 'error_view_history';
@@ -394,6 +411,23 @@ class Locales {
         'الرجاء اختيار اتجاه واحد على الأقل.',
     'messages_enter_the_address': 'الرجاء إدخال العنوان.',
     'messages_pick_a_location': 'الرجاء تحديد موقع على الخريطة.',
+    'categories_fixes_and_repairs': 'إصلاحات وصيانة',
+    'categories_cleaning': 'تنظيف',
+    'services_carpenter': 'نجار',
+    'services_metalwork': 'حدادة',
+    'services_deep_cleaning': 'تنظيف عميق',
+    'services_regular_cleaning': 'تنظيف عادي',
+    'services_water_tank_cleaning': 'تنظيف خزانات المياه',
+    'services_plumber': 'سباك',
+    'services_tiler': 'مبلط',
+    'services_interior': 'دهان داخلي',
+    'services_exterior': 'دهان خارجي',
+    'services_electrician': 'كهربائي',
+    'services_solar': 'طاقة شمسية',
+    'services_generators': 'مولدات',
+    'services_moving_service': 'نقل عفش',
+    'services_irrigation': 'ري',
+    'services_pest_control': 'مكافحة الحشرات',
   };
   static const en_US = {
     'welcome': 'Welcome',
@@ -571,5 +605,22 @@ class Locales {
         'Please select at least one exposure.',
     'messages_enter_the_address': 'Please enter the address.',
     'messages_pick_a_location': 'Please pick a location on the map.',
+    'categories_fixes_and_repairs': 'Fixes and Repairs',
+    'categories_cleaning': 'Cleaning',
+    'services_carpenter': 'Carpenter',
+    'services_metalwork': 'Metalwork',
+    'services_deep_cleaning': 'Deep Cleaning',
+    'services_regular_cleaning': 'Regular Cleaning',
+    'services_water_tank_cleaning': 'Water Tank Cleaning',
+    'services_plumber': 'Plumber',
+    'services_tiler': 'Tiler',
+    'services_interior': 'Interior',
+    'services_exterior': 'Exterior',
+    'services_electrician': 'Electrician',
+    'services_solar': 'Solar',
+    'services_generators': 'Generators',
+    'services_moving_service': 'Moving Service',
+    'services_irrigation': 'Irrigation',
+    'services_pest_control': 'Pest Control',
   };
 }
