@@ -22,7 +22,7 @@ class AddPropertyView extends GetView<AddpropertyController> {
       controller.selectedImages.value =
           pickedFiles.map((x) => File(x.path)).toList();
     } else {
-      Get.snackbar("Note", "Please select at least 3 images.");
+      Get.snackbar("labels_note".tr, "messages_select_at_least_3_images".tr);
     }
   }
 
@@ -73,7 +73,7 @@ class AddPropertyView extends GetView<AddpropertyController> {
                     ),
                     SizedBox(width: 12.w),
                     Text(
-                      "Add New Property",
+                      "labels_add_new_property".tr,
                       style: Theme
                           .of(context)
                           .textTheme
@@ -135,7 +135,7 @@ class AddPropertyView extends GetView<AddpropertyController> {
                           child: Padding(
                             padding: EdgeInsets.symmetric(vertical: 16.h),
                             child: Text(
-                              "Upload at least 3 photos",
+                              "messages_upload_at_least_3_photos".tr,
                               textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
@@ -158,7 +158,7 @@ class AddPropertyView extends GetView<AddpropertyController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Previous",
+                      "buttons_previous".tr,
                       style: TextStyle(
                         fontSize: 14.sp,
                         color: Colors.grey.shade400,
@@ -183,15 +183,15 @@ class AddPropertyView extends GetView<AddpropertyController> {
                       onTap: () {
                         if (controller.selectedImages.length < 3) {
                           Get.snackbar(
-                            "Images Required",
-                            "Please upload at least 3 images before continuing.",
+                            "labels_images_required".tr,
+                            "messages_upload_at_least_3_images_before_continuing".tr,
                           );
                           return;
                         }
                         // if (controller.selectedVideo.value == null) {
                         //   Get.snackbar(
-                        //     "Video Required",
-                        //     "Please upload 1 video before continuing.",
+                        //     "labels_video_required".tr,
+                        //     "messages_upload_1_video_before_continuing".tr,
                         //   );
                         //   return;
                         // }
@@ -202,7 +202,7 @@ class AddPropertyView extends GetView<AddpropertyController> {
                         );
                       },
                       child: Text(
-                        "Next",
+                        "buttons_next".tr,
                         style: TextStyle(
                           fontSize: 14.sp,
                           color: const Color(0xFF294741),

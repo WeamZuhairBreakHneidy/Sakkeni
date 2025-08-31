@@ -38,14 +38,14 @@ class ProfileView extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      "Profile",
+                      "labels_profile".tr,
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Spacer(),
                     Text(
-                      "View History",
+                      "labels_view_history".tr,
                       style: Theme.of(context).textTheme.labelSmall,
                     ),
                     IconButton(
@@ -82,7 +82,7 @@ class ProfileView extends StatelessWidget {
                   final profile = controller.profileModel.value?.data;
 
                   if (profile == null) {
-                    return const Center(child: Text("No profile data"));
+                    return Center(child: Text("labels_no_profile_data".tr));
                   }
 
                   return SingleChildScrollView(
@@ -93,17 +93,17 @@ class ProfileView extends StatelessWidget {
                         CircleAvatar(
                           radius: 75.r,
                           backgroundImage:
-                              profile.profilePicturePath != null
-                                  ? NetworkImage(
-                                    '${ApiService().baseUrl}/${profile.profilePicturePath}',
-                                  )
-                                  : AssetImage(
-                                        Theme.of(context).brightness ==
-                                                Brightness.dark
-                                            ? "assets/backgrounds/default_black.png"
-                                            : "assets/backgrounds/default.png",
-                                      )
-                                      as ImageProvider,
+                          profile.profilePicturePath != null
+                              ? NetworkImage(
+                            '${ApiService().baseUrl}/${profile.profilePicturePath}',
+                          )
+                              : AssetImage(
+                            Theme.of(context).brightness ==
+                                Brightness.dark
+                                ? "assets/backgrounds/default_black.png"
+                                : "assets/backgrounds/default.png",
+                          )
+                          as ImageProvider,
                         ),
                         50.verticalSpace,
                         ProfileInfoTile(
@@ -113,21 +113,21 @@ class ProfileView extends StatelessWidget {
                         _buildDivider(),
                         ProfileInfoTile(
                           icon: Icons.phone,
-                          text: profile.phoneNumber ?? 'No Phone',
+                          text: profile.phoneNumber ?? "labels_no_phone".tr,
                         ),
                         _buildDivider(),
                         ProfileInfoTile(icon: Icons.email, text: profile.email),
                         _buildDivider(),
                         ProfileInfoTile(
                           icon: Icons.location_on,
-                          text: profile.address ?? 'No Address',
+                          text: profile.address ?? "labels_no_address".tr,
                         ),
                         _buildDivider(),
 
                         if (profile.seller != null) ...[
                           ProfileInfoTile(
                             icon: Icons.store,
-                            text: "Seller Account",
+                            text: "labels_seller_account".tr,
                           ),
                           _buildDivider(),
                         ],
@@ -140,7 +140,7 @@ class ProfileView extends StatelessWidget {
                               onPressed:
                                   () => Get.toNamed(Routes.UPDATEPROFILE),
                               child: Text(
-                                "Edit Profile",
+                                "buttons_edit_profile".tr,
                                 style: Theme.of(context).textTheme.labelSmall,
                               ),
                             ),
@@ -148,7 +148,7 @@ class ProfileView extends StatelessWidget {
                               onPressed:
                                   () => Get.toNamed(Routes.RESETPASSWORD),
                               child: Text(
-                                "Reset Password",
+                                "buttons_reset_password".tr,
                                 style: Theme.of(context).textTheme.labelSmall,
                               ),
                             ),

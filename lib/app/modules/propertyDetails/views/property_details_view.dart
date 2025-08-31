@@ -1,4 +1,3 @@
-//... الكود في الأعلى كما هو
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
@@ -148,6 +147,10 @@ class PropertyDetailsView extends GetView<PropertyDetailsController> {
                       SizedBox(height: 16.h),
                       _buildDetailRow(context, [
                         _buildDetailItem(
+                          Icons.square_foot,
+                          'id',
+                          '${property.id ?? ''} sqm',
+                        ),   _buildDetailItem(
                           Icons.square_foot,
                           'Area',
                           '${property.area ?? 'N/A'} sqm',

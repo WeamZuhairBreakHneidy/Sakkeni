@@ -71,7 +71,7 @@ class FavoriteView extends StatelessWidget {
                     vertical: 12.h,
                   ),
                   child: Text(
-                    "Favorite Properties",
+                    "labels_favorite_properties".tr,
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -82,7 +82,7 @@ class FavoriteView extends StatelessWidget {
                 20.verticalSpace,
                 TabSelector(
                   controller: tabController,
-                  tabs: ['For Rent', 'For Sale', 'Off plan'],
+                  tabs: ['tabs_for_rent'.tr, 'tabs_for_sale'.tr, 'tabs_off_plan'.tr],
                   onTabSelected: (index) {
                     final route = switch (index) {
                       0 => '${Routes.FAVORITEVIEW}?type=rent',
@@ -127,7 +127,7 @@ class FavoriteView extends StatelessWidget {
                   );
                 }
                 if (favs.isEmpty && !isLoading) {
-                  return const Center(child: Text("No properties found."));
+                  return Center(child: Text("error_no_properties_found".tr));
                 }
 
                 return RefreshIndicator(
@@ -171,8 +171,8 @@ class FavoriteView extends StatelessWidget {
                                 .residential
                                 ?.residentialPropertyType
                                 ?.name ??
-                            property.commercial?.commercialPropertyType?.name ??
-                            '';
+                                property.commercial?.commercialPropertyType?.name ??
+                                '';
 
                         return SizedBox(
                           child: PropertyCard(
@@ -197,16 +197,16 @@ class FavoriteView extends StatelessWidget {
                         );
                       } else {
                         return Obx(
-                          () =>
-                              _controller.isLoading.value &&
-                                      _controller.hasMoreData.value
-                                  ? const Padding(
-                                    padding: EdgeInsets.all(16.0),
-                                    child: Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  )
-                                  : const SizedBox(),
+                              () =>
+                          _controller.isLoading.value &&
+                              _controller.hasMoreData.value
+                              ? const Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          )
+                              : const SizedBox(),
                         );
                       }
                     },

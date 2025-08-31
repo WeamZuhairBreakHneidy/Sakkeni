@@ -26,7 +26,11 @@ class TabbedPropertiesView extends StatelessWidget {
       children: [
         TabSelector(
           controller: tabController,
-          tabs: ['For Rent', 'For Sale', 'Off plan'],
+          tabs: [
+            'tabs_for_rent'.tr,
+            'tabs_for_sale'.tr,
+            'tabs_off_plan'.tr,
+          ],
           onTabSelected: (index) {
             final route = switch (index) {
               0 => '${Routes.PropertiesUnifiedView}?type=rent',
@@ -68,7 +72,6 @@ class TabbedPropertiesView extends StatelessWidget {
             );
           }),
         ),
-
       ],
     );
   }

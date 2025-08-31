@@ -50,7 +50,7 @@ class UpdateProfileView extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      "Profile",
+                      "labels_profile".tr,
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -132,7 +132,7 @@ class UpdateProfileView extends StatelessWidget {
                             child: InputTextFormField(
                               textEditingController: controller.first_name,
                               labelTextAboveTextField: Text(
-                                "First Name",
+                                "labels_first_name".tr,
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               validatorType: ValidatorType.Name,
@@ -147,7 +147,7 @@ class UpdateProfileView extends StatelessWidget {
                             child: InputTextFormField(
                               textEditingController: controller.last_name,
                               labelTextAboveTextField: Text(
-                                "Last Name",
+                                "labels_last_name".tr,
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               validatorType: ValidatorType.Name,
@@ -168,12 +168,12 @@ class UpdateProfileView extends StatelessWidget {
                           textEditingController: TextEditingController(
                             text: user?.email ?? '',
                           ),
-                          hintText: "E-mail",
+                          hintText: "labels_email".tr,
                           obsecure: false,
                           validatorType: ValidatorType.Email,
                           fillColor: Theme.of(context).colorScheme.background,
                           decoration: InputDecoration(
-                            labelText: "E-mail",
+                            labelText: "labels_email".tr,
                             enabled: false,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.r),
@@ -194,7 +194,7 @@ class UpdateProfileView extends StatelessWidget {
                         borderColor: AppColors.border,
                         textEditingController: controller.phone_number,
                         labelTextAboveTextField: Text(
-                          "Phone Number",
+                          "labels_phone_number".tr,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         validatorType: ValidatorType.PhoneNumber,
@@ -206,7 +206,7 @@ class UpdateProfileView extends StatelessWidget {
                       InputTextFormField(
                         textEditingController: controller.address,
                         labelTextAboveTextField: Text(
-                          "Address",
+                          "labels_address".tr,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         validatorType: ValidatorType.Default,
@@ -234,7 +234,7 @@ class UpdateProfileView extends StatelessWidget {
                               : TextButton(
                             onPressed: controller.updateProfile,
                             child: Text(
-                              "Save Changes",
+                              "buttons_save_changes".tr,
                               style:
                               Theme.of(context).textTheme.labelSmall,
                             ),

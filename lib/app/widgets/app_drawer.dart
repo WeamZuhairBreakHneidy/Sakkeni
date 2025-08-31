@@ -73,7 +73,7 @@ class AppDrawer extends StatelessWidget {
                     children: [
                       // User Name
                       Text(
-                        GetStorage().read('userName') ?? "Guest User",
+                        GetStorage().read('userName') ?? "labels_guest_user".tr,
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           color: Theme.of(context).secondaryHeaderColor,
                           fontWeight: FontWeight.bold,
@@ -109,7 +109,7 @@ class AppDrawer extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.home),
               title: Text(
-                'My Properties',
+                'drawer_my_properties'.tr,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               onTap: () {
@@ -118,35 +118,35 @@ class AppDrawer extends StatelessWidget {
             ),
 
 
-    if ( GetStorage().read('isServiceProvider'))
-       ListTile(
-            leading: Icon(Icons.work),
-            title: Text(
-              'My Services',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            onTap: () {
-            Get.toNamed(Routes.MY_SERVICES);
-            },
-          ),
-
-
+          if ( GetStorage().read('isServiceProvider'))
             ListTile(
-              leading: Icon(Icons.request_quote),
+              leading: Icon(Icons.work),
               title: Text(
-                'My Requests',
+                'drawer_my_services'.tr,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               onTap: () {
-                Get.toNamed(Routes.USER_QUOTES);
+                Get.toNamed(Routes.MY_SERVICES);
               },
             ),
+
+
+          ListTile(
+            leading: Icon(Icons.request_quote),
+            title: Text(
+              'drawer_my_requests'.tr,
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            onTap: () {
+              Get.toNamed(Routes.USER_QUOTES);
+            },
+          ),
 
           if ( GetStorage().read('isServiceProvider'))
             ListTile(
               leading: Icon(Icons.request_quote_outlined),
               title: Text(
-                'Requests to do',
+                'drawer_requests_to_do'.tr,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               onTap: () {
@@ -158,7 +158,7 @@ class AppDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.mail),
             title: Text(
-              'Massages',
+              'drawer_messages'.tr,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             onTap: () {
@@ -170,7 +170,7 @@ class AppDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.language),
             title: Text(
-              'Language: ${Get.locale?.languageCode.toUpperCase() ?? 'EN'}',
+              '${"labels_language".tr}: ${Get.locale?.languageCode.toUpperCase() ?? 'EN'}',
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             onTap: () {
@@ -184,7 +184,7 @@ class AppDrawer extends StatelessWidget {
 
           ListTile(
             leading: Icon(Icons.settings),
-            title: Text('Settings'),
+            title: Text('drawer_settings'.tr),
             onTap: () {
               Get.back();
             },
@@ -193,7 +193,7 @@ class AppDrawer extends StatelessWidget {
 
           ListTile(
             leading: Icon(Get.isDarkMode ? Icons.dark_mode : Icons.light_mode),
-            title: Text('Dark Mode'),
+            title: Text('drawer_dark_mode'.tr),
             trailing: Switch(
               value: Get.isDarkMode,
               onChanged: (value) {
@@ -210,23 +210,23 @@ class AppDrawer extends StatelessWidget {
             return ListTile(
               leading: Icon(Icons.logout),
               title:
-                  controller.isLoading.value
-                      ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2.5,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            AppColors.primary,
-                          ),
-                        ),
-                      )
-                      : Text(
-                        'Logout',
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
+              controller.isLoading.value
+                  ? const SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.5,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    AppColors.primary,
+                  ),
+                ),
+              )
+                  : Text(
+                'labels_logout'.tr,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
               onTap:
-                  controller.isLoading.value ? null : () => controller.logout(),
+              controller.isLoading.value ? null : () => controller.logout(),
             );
           }),
         ],

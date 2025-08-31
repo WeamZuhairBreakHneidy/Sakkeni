@@ -43,7 +43,7 @@ class MyServicesController extends GetxController {
             fontSize: 18,
             color: AppColors.primary,
           ),
-          barrierDismissible: false, // ما فيك تسكّر الدialog بالضغط برة
+          barrierDismissible: false,
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -59,7 +59,7 @@ class MyServicesController extends GetxController {
               SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
-                  Get.back(); // لتسكير الـ dialog
+                  Get.back();
                   sabscruptionController.makePayment();
                 },
                 style: ElevatedButton.styleFrom(

@@ -73,7 +73,7 @@ class UpgradeToServiceProviderView
                         AnimatedTextKit(
                           animatedTexts: [
                             TyperAnimatedText(
-                              'Become a Service Provider!',
+                              'labels_become_a_service_provider'.tr,
                               textStyle: TextStyle(
                                 fontSize: 26.sp,
                                 fontWeight: FontWeight.bold,
@@ -89,7 +89,7 @@ class UpgradeToServiceProviderView
                         ),
                         SizedBox(height: 10.h),
                         Text(
-                          "Choose your subscription plan, select services, and add a description.",
+                          "messages_choose_plan_and_services".tr,
                           style: TextStyle(
                             fontSize: 15.sp,
                             color: Colors.grey[600],
@@ -103,7 +103,7 @@ class UpgradeToServiceProviderView
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Subscription Plan",
+                            "labels_subscription_plan".tr,
                             style: TextStyle(
                               fontSize: 16.sp,
                               fontWeight: FontWeight.bold,
@@ -129,7 +129,7 @@ class UpgradeToServiceProviderView
                               .data
                               .isEmpty) {
                             return Text(
-                              "No subscription plans available.",
+                              "messages_no_subscription_plans_available".tr,
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 color: Colors.grey[600],
@@ -138,21 +138,21 @@ class UpgradeToServiceProviderView
                           }
                           return Column(
                             children:
-                                subscriptionController
-                                    .subscriptionPlanModel
-                                    .value
-                                    .data
-                                    .map(
-                                      (plan) => Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          vertical: 8.h,
-                                        ),
-                                        child: _buildDynamicPlanCard(
-                                          plan: plan,
-                                        ),
-                                      ),
-                                    )
-                                    .toList(),
+                            subscriptionController
+                                .subscriptionPlanModel
+                                .value
+                                .data
+                                .map(
+                                  (plan) => Padding(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 8.h,
+                                ),
+                                child: _buildDynamicPlanCard(
+                                  plan: plan,
+                                ),
+                              ),
+                            )
+                                .toList(),
                           );
                         }),
 
@@ -162,7 +162,7 @@ class UpgradeToServiceProviderView
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Select Services",
+                            "labels_select_services".tr,
                             style: TextStyle(
                               fontSize: 16.sp,
                               fontWeight: FontWeight.bold,
@@ -180,7 +180,7 @@ class UpgradeToServiceProviderView
                           maxLines: 3,
                           onChanged: controller.setDescription,
                           decoration: InputDecoration(
-                            hintText: "Write something about your services...",
+                            hintText: "hint_text_write_about_services".tr,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12.r),
                             ),
@@ -190,15 +190,15 @@ class UpgradeToServiceProviderView
                         ),
                         SizedBox(height: 40.h),
                         Obx(
-                          () => Align(
+                              () => Align(
                             alignment: Alignment.bottomRight,
                             child: Padding(
                               padding: EdgeInsets.only(top: 20.h, right: 20.w),
                               child: TextButton(
                                 onPressed:
-                                    controller.isLoading.value
-                                        ? null
-                                        : controller.upgradeToServiceProvider,
+                                controller.isLoading.value
+                                    ? null
+                                    : controller.upgradeToServiceProvider,
                                 style: TextButton.styleFrom(
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 20.w,
@@ -209,24 +209,24 @@ class UpgradeToServiceProviderView
                                   ),
                                 ),
                                 child:
-                                    controller.isLoading.value
-                                        ? SizedBox(
-                                          height: 20.w,
-                                          width: 20.w,
-                                          child: LoadingIndicator(
-                                            indicatorType:
-                                                Indicator.ballRotateChase,
-                                            colors: [AppColors.primary],
-                                            strokeWidth: 1,
-                                          ),
-                                        )
-                                        : Text(
-                                          "Upgrade",
-                                          style: TextStyle(
-                                            fontSize: 14.sp,
-                                            color: AppColors.primary,
-                                          ),
-                                        ),
+                                controller.isLoading.value
+                                    ? SizedBox(
+                                  height: 20.w,
+                                  width: 20.w,
+                                  child: LoadingIndicator(
+                                    indicatorType:
+                                    Indicator.ballRotateChase,
+                                    colors: [AppColors.primary],
+                                    strokeWidth: 1,
+                                  ),
+                                )
+                                    : Text(
+                                  "buttons_upgrade".tr,
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    color: AppColors.primary,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -260,11 +260,11 @@ class UpgradeToServiceProviderView
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           decoration: BoxDecoration(
             color:
-                isSelected ? AppColors.primary.withOpacity(0.1) : Colors.white,
+            isSelected ? AppColors.primary.withOpacity(0.1) : Colors.white,
             borderRadius: BorderRadius.circular(20.r),
             border: Border.all(
               color:
-                  isSelected ? AppColors.primary : Colors.grey.withOpacity(0.3),
+              isSelected ? AppColors.primary : Colors.grey.withOpacity(0.3),
               width: 1.5,
             ),
           ),
@@ -284,7 +284,7 @@ class UpgradeToServiceProviderView
                       children: [
                         Expanded(
                           child: Text(
-                            plan.name ?? "Unnamed Plan",
+                            plan.name ?? "labels_unnamed_plan".tr,
                             style: TextStyle(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.bold,
@@ -322,11 +322,11 @@ class UpgradeToServiceProviderView
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
           decoration: BoxDecoration(
             color:
-                isSelected ? AppColors.primary.withOpacity(0.1) : Colors.white,
+            isSelected ? AppColors.primary.withOpacity(0.1) : Colors.white,
             borderRadius: BorderRadius.circular(12.r),
             border: Border.all(
               color:
-                  isSelected ? AppColors.primary : Colors.grey.withOpacity(0.3),
+              isSelected ? AppColors.primary : Colors.grey.withOpacity(0.3),
               width: 1.2,
             ),
           ),
@@ -344,7 +344,7 @@ class UpgradeToServiceProviderView
                   style: TextStyle(
                     fontSize: 15.sp,
                     fontWeight:
-                        isSelected ? FontWeight.bold : FontWeight.normal,
+                    isSelected ? FontWeight.bold : FontWeight.normal,
                     color: AppColors.background,
                   ),
                 ),
@@ -373,7 +373,7 @@ class UpgradeToServiceProviderView
       }
       if (servicesController.categories.isEmpty) {
         return Text(
-          "No services available.",
+          "messages_no_services_available".tr,
           style: TextStyle(fontSize: 14.sp, color: Colors.grey[600]),
         );
       }
@@ -381,66 +381,66 @@ class UpgradeToServiceProviderView
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children:
-            servicesController.categories.map((category) {
-              bool isCategoryExpanded =
-              controller.expandedCategoryIds.contains(category.id);
+        servicesController.categories.map((category) {
+          bool isCategoryExpanded =
+          controller.expandedCategoryIds.contains(category.id);
 
 
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  /// Category header
-                  InkWell(
-                    onTap: () {
-                      controller.toggleCategory(category.id);
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.w,
-                        vertical: 12.h,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.background.withOpacity(0.05),
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            category.name,
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.background,
-                            ),
-                          ),
-                          Icon(
-                            isCategoryExpanded
-                                ? Icons.keyboard_arrow_up
-                                : Icons.keyboard_arrow_down,
-                            color: AppColors.background,
-                          ),
-                        ],
-                      ),
-                    ),
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /// Category header
+              InkWell(
+                onTap: () {
+                  controller.toggleCategory(category.id);
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 12.h,
                   ),
-                  SizedBox(height: 8.h),
+                  decoration: BoxDecoration(
+                    color: AppColors.background.withOpacity(0.05),
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        category.name,
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.background,
+                        ),
+                      ),
+                      Icon(
+                        isCategoryExpanded
+                            ? Icons.keyboard_arrow_up
+                            : Icons.keyboard_arrow_down,
+                        color: AppColors.background,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 8.h),
 
-                  /// Services under the category
-                  if (isCategoryExpanded)
-                    Column(
-                      children:
-                          category.services.map((service) {
-                            return Padding(
-                              padding: EdgeInsets.symmetric(vertical: 4.h),
-                              child: _buildServiceCard(service),
-                            );
-                          }).toList(),
-                    ),
-                  SizedBox(height: 16.h),
-                ],
-              );
-            }).toList(),
+              /// Services under the category
+              if (isCategoryExpanded)
+                Column(
+                  children:
+                  category.services.map((service) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: 4.h),
+                      child: _buildServiceCard(service),
+                    );
+                  }).toList(),
+                ),
+              SizedBox(height: 16.h),
+            ],
+          );
+        }).toList(),
       );
     });
   }

@@ -58,7 +58,7 @@ class HistoryOptionsView extends StatelessWidget {
                         child: AnimatedTextKit(
                           animatedTexts: [
                             TypewriterAnimatedText(
-                              "Your History",
+                              "labels_your_history".tr,
                               textStyle: TextStyle(
                                 fontSize: 26.sp,
                                 fontWeight: FontWeight.bold,
@@ -76,7 +76,7 @@ class HistoryOptionsView extends StatelessWidget {
                     ),
                     SizedBox(height: 10.h),
                     Text(
-                      "View your past activity easily",
+                      "messages_view_history_description".tr,
                       style: TextStyle(
                         fontSize: 15.sp,
                         color: Colors.grey[600],
@@ -86,10 +86,9 @@ class HistoryOptionsView extends StatelessWidget {
                     SizedBox(height: 40.h),
                     // --- My Services Card (Animated) ---
                     _HistoryOptionCard(
-                      title: "My Services",
-                      subtitle: "Check the services you provide",
+                      title: "drawer_my_services".tr,
+                      subtitle: "messages_check_services_provided".tr,
                       icon: Icons.design_services,
-
                       onTap: () {
                         final isServiceProvider =
                             box.read('isServiceProvider') ?? false;
@@ -100,24 +99,21 @@ class HistoryOptionsView extends StatelessWidget {
                         }
                       },
                     ).animate().fade(duration: 500.ms).slideX(begin: -0.2),
-
                     SizedBox(height: 25.h),
-
                     // --- My Properties Card (Animated) ---
                     _HistoryOptionCard(
-                          title: "My Properties",
-                          subtitle: "Review your listed properties",
-                          icon: Icons.home_rounded,
-
-                          onTap: () {
-                            final isSeller = box.read('isSeller') ?? false;
-                            if (isSeller) {
-                              Get.toNamed(Routes.MY_PROPERTIES);
-                            } else {
-                              showUpgradeToSellerDialog();
-                            }
-                          },
-                        )
+                      title: "drawer_my_properties".tr,
+                      subtitle: "messages_review_listed_properties".tr,
+                      icon: Icons.home_rounded,
+                      onTap: () {
+                        final isSeller = box.read('isSeller') ?? false;
+                        if (isSeller) {
+                          Get.toNamed(Routes.MY_PROPERTIES);
+                        } else {
+                          showUpgradeToSellerDialog();
+                        }
+                      },
+                    )
                         .animate()
                         .fade(duration: 500.ms, delay: 200.ms)
                         .slideX(begin: 0.2),
@@ -132,21 +128,18 @@ class HistoryOptionsView extends StatelessWidget {
     );
   }
 }
-
 // --- Extracted Widget for the Option Card ---
 class _HistoryOptionCard extends StatelessWidget {
   final String title;
   final String subtitle;
   final IconData icon;
   final VoidCallback onTap;
-
   const _HistoryOptionCard({
     required this.title,
     required this.subtitle,
     required this.icon,
     required this.onTap,
   });
-
   @override
   Widget build(BuildContext context) {
     return Card(

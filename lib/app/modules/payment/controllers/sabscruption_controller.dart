@@ -37,7 +37,6 @@ class SabscruptionController extends GetxController {
     }
 
     try {
-      // 1) نطلب clientSecret من الباكند
       final response = await ApiService().postApi(
         url: '${ApiEndpoints.subscription}',
         body: {},

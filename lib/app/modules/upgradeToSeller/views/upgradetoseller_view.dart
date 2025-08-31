@@ -64,7 +64,7 @@ class UpgradeToSellerView extends GetView<UpgradeToSellerController> {
                         AnimatedTextKit(
                           animatedTexts: [
                             TyperAnimatedText(
-                              'Become a Seller!',
+                              'labels_become_a_seller'.tr,
                               textStyle: TextStyle(
                                 fontSize: 26.sp,
                                 fontWeight: FontWeight.bold,
@@ -81,7 +81,7 @@ class UpgradeToSellerView extends GetView<UpgradeToSellerController> {
 
                         SizedBox(height: 10.h),
                         Text(
-                          "Choose the account type that best fits your selling needs.",
+                          "messages_choose_account_type".tr,
                           style: TextStyle(
                             fontSize: 15.sp,
                             color: Colors.grey[600],
@@ -93,9 +93,9 @@ class UpgradeToSellerView extends GetView<UpgradeToSellerController> {
                         _buildAccountTypeCard(
                           context,
                           icon: Icons.business_center,
-                          title: "Commercial Account",
+                          title: "labels_commercial_account".tr,
                           description:
-                          "For real estate agencies, developers, and businesses.",
+                          "messages_commercial_account_description".tr,
                           onTap:
                               () => controller.selectAccountType('Commercial'),
                         ),
@@ -104,9 +104,9 @@ class UpgradeToSellerView extends GetView<UpgradeToSellerController> {
                         _buildAccountTypeCard(
                           context,
                           icon: Icons.person,
-                          title: "Personal Account",
+                          title: "labels_personal_account".tr,
                           description:
-                          "For individuals looking to sell or rent their own properties.",
+                          "messages_personal_account_description".tr,
                           onTap: () => controller.selectAccountType('Personal'),
                         ),
                         // زر التأكيد
@@ -146,7 +146,7 @@ class UpgradeToSellerView extends GetView<UpgradeToSellerController> {
                                       ),
                                     )
                                         : Text(
-                                      "Upgrade",
+                                      "buttons_upgrade".tr,
                                       style: TextStyle(
                                         fontSize: 14.sp,
                                         color: AppColors.primary,
@@ -218,26 +218,26 @@ class UpgradeToSellerView extends GetView<UpgradeToSellerController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                Row(
-                children: [
-                Expanded(
-                child: Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.background,
-                  ),
-                  overflow: TextOverflow.ellipsis, // لو طويل جدًا، نقط
-                ),
-              ),
-              if (isSelected)
-                Padding(
-                  padding: EdgeInsets.only(left: 8.w),
-                  child: Icon(Icons.check_circle, color: AppColors.primary, size: 20.w),
-                ),
-            ],
-          ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            title,
+                            style: TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.background,
+                            ),
+                            overflow: TextOverflow.ellipsis, // لو طويل جدًا، نقط
+                          ),
+                        ),
+                        if (isSelected)
+                          Padding(
+                            padding: EdgeInsets.only(left: 8.w),
+                            child: Icon(Icons.check_circle, color: AppColors.primary, size: 20.w),
+                          ),
+                      ],
+                    ),
 
                     SizedBox(height: 5.h),
                     Text(

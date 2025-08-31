@@ -17,7 +17,6 @@ class ResetPasswordView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: SafeArea(
         child: Container(
           height: Get.height,
@@ -38,10 +37,9 @@ class ResetPasswordView extends StatelessWidget {
                       horizontal: 20.w,
                       vertical: 25.h,
                     ),
-              color: Theme.of(context).colorScheme.background,
-
+                    color: Theme.of(context).colorScheme.background,
                     child: Text(
-                      "Reset Password",
+                      "labels_reset_password".tr,
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -56,15 +54,14 @@ class ResetPasswordView extends StatelessWidget {
                     ),
                   ),
                   50.verticalSpace,
-
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30.w),
                     child: InputTextFormField(
                       textEditingController:
-                          controller.currentPasswordController,
+                      controller.currentPasswordController,
                       labelTextAboveTextField: Text(
-                        "Current Password",
-                        style: Theme.of(context).textTheme.bodyMedium!
+                          "labels_current_password".tr,
+                          style: Theme.of(context).textTheme.bodyMedium!
                       ),
                       obsecure: true,
                       validatorType: ValidatorType.Password,
@@ -77,15 +74,13 @@ class ResetPasswordView extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 30.w),
                     child: InputTextFormField(
                       textEditingController: controller.newPasswordController,
-                      // hintText: "New Password",
                       labelTextAboveTextField: Text(
-                        "New Password",
-                        style: Theme.of(context).textTheme.bodyMedium!
+                          "labels_new_password".tr,
+                          style: Theme.of(context).textTheme.bodyMedium!
                       ),
                       obsecure: true,
                       validatorType: ValidatorType.Password,
                       fillColor:Theme.of(context).colorScheme.background,
-
                       borderColor: AppColors.border,
                     ),
                   ),
@@ -94,15 +89,14 @@ class ResetPasswordView extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 30.w),
                     child: InputTextFormField(
                       textEditingController:
-                          controller.confirmPasswordController,
+                      controller.confirmPasswordController,
                       labelTextAboveTextField: Text(
-                        "Confirm Password",
-                        style: Theme.of(context).textTheme.bodyMedium
+                          "labels_confirm_password".tr,
+                          style: Theme.of(context).textTheme.bodyMedium
                       ),
                       obsecure: true,
                       validatorType: ValidatorType.Password,
                       fillColor:            Theme.of(context).colorScheme.background,
-
                       borderColor: AppColors.border,
                     ),
                   ),
@@ -110,34 +104,34 @@ class ResetPasswordView extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerRight,
                     child:
-                        controller.isLoading.value
-                            ? Center(
-                              child: SizedBox(
-                                width: 75,
-                                height: 75,
-                                child: LoadingIndicator(
-                                  indicatorType: Indicator.ballPulse,
-                                  colors: [AppColors.primary],
-                                  strokeWidth: 1,
-                                ),
-                              ),
-                            )
-                            : TextButton(
-                              onPressed: controller.resetPassword,
-                              style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 35.w,
-                                  vertical: 12.h,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.r),
-                                ),
-                              ),
-                              child: Text(
-                                "Save Changes",
-                                style: Theme.of(context).textTheme.labelSmall,
-                              ),
-                            ),
+                    controller.isLoading.value
+                        ? Center(
+                      child: SizedBox(
+                        width: 75,
+                        height: 75,
+                        child: LoadingIndicator(
+                          indicatorType: Indicator.ballPulse,
+                          colors: [AppColors.primary],
+                          strokeWidth: 1,
+                        ),
+                      ),
+                    )
+                        : TextButton(
+                      onPressed: controller.resetPassword,
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 35.w,
+                          vertical: 12.h,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.r),
+                        ),
+                      ),
+                      child: Text(
+                        "buttons_save_changes".tr,
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                    ),
                   ),
                 ],
               );
@@ -146,7 +140,6 @@ class ResetPasswordView extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: CustomBottomNavBar(),
-
     );
   }
 }

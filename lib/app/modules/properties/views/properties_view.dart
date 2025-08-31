@@ -48,7 +48,7 @@ class PropertiesUnifiedView extends StatelessWidget {
                   if (searchController.searchResults.isEmpty) {
                     return Center(
                       child: Text(
-                        "No results found",
+                        "error_no_results_found".tr,
                         style: TextStyle(
                           fontSize: 16.sp,
                           color: Colors.grey,
@@ -69,7 +69,6 @@ class PropertiesUnifiedView extends StatelessWidget {
               }),
             ),
           ),
-
         ],
       ),
       bottomNavigationBar: CustomBottomNavBar(),
@@ -108,7 +107,7 @@ class PropertiesUnifiedView extends StatelessWidget {
                   //             color: Theme.of(context).colorScheme.surface),
                   //         8.horizontalSpace,
                   //         Text(
-                  //           "Properties for you",
+                  //           "labels_properties_for_you".tr,
                   //           style: Theme.of(context)
                   //               .textTheme
                   //               .titleMedium!
@@ -152,7 +151,7 @@ class PropertiesUnifiedView extends StatelessWidget {
                           }
                         },
                         decoration: InputDecoration(
-                          hintText: "Search",
+                          hintText: "hint_text_search".tr,
                           hintStyle: TextStyle(color: Colors.grey),
                           border: InputBorder.none,
                           prefixIcon:
@@ -177,9 +176,6 @@ class PropertiesUnifiedView extends StatelessWidget {
               Row(
                 children: [
                   /// Search Field
-
-
-
                   /// Filter
                   IconButton(
                     icon: const Icon(Icons.tune, color: Colors.grey),

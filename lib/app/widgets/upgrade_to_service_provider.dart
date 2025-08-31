@@ -22,7 +22,7 @@ void showUpgradeToServiceProviderDialog() {
         ),
         SizedBox(height: 20.h),
         Text(
-          "You must upgrade to a Service Provider to access this feature.",
+          "messages_upgrade_to_service_provider_required".tr,
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 14.sp,
@@ -45,7 +45,7 @@ void showUpgradeToServiceProviderDialog() {
               padding: EdgeInsets.symmetric(vertical: 12.h),
             ),
             child: Text(
-              "Upgrade to Service Provider",
+              "buttons_upgrade_to_service_provider".tr,
               style: TextStyle(color: Colors.white, fontSize: 14.sp),
             ),
           ),
@@ -56,7 +56,7 @@ void showUpgradeToServiceProviderDialog() {
             Get.back(); // Close the dialog
           },
           child: Text(
-            "Cancel",
+            "buttons_cancel".tr,
             style: TextStyle(
               color: AppColors.primary,
               fontSize: 13.sp,

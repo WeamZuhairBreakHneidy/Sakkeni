@@ -40,7 +40,7 @@ class PropertiesGridView extends StatelessWidget {
     }
 
     if (props.isEmpty && !isLoading) {
-      return Center(child: Text("No properties found."));
+      return Center(child: Text("messages_no_properties_found".tr));
     }
 
     return RefreshIndicator(
@@ -64,17 +64,17 @@ class PropertiesGridView extends StatelessWidget {
               "${ApiService().baseUrl}/${property.coverImage?.imagePath ?? ''}";
           final price =
               property.rent?.price?.toStringAsFixed(0) ??
-              property.purchase?.price?.toStringAsFixed(0) ??
-              property.offplan?.overallPayment?.toStringAsFixed(0) ??
-              '0';
+                  property.purchase?.price?.toStringAsFixed(0) ??
+                  property.offplan?.overallPayment?.toStringAsFixed(0) ??
+                  '0';
           final location =
               "${property.location?.country?.name ?? ''}, ${property.location?.city?.name ?? ''}";
           final lease = property.rent?.leasePeriod?.toString() ?? '';
           final propertyType = property.propertyType?.name ?? '';
           final subType =
               property.residential?.residentialPropertyType?.name ??
-              property.commercial?.commercialPropertyType?.name ??
-              '';
+                  property.commercial?.commercialPropertyType?.name ??
+                  '';
 
           return Stack(
             children: [
@@ -100,48 +100,48 @@ class PropertiesGridView extends StatelessWidget {
 
                   return GestureDetector(
                     onTap:
-                        isLoading
-                            ? null
-                            : () {
-                              if (isFavorited) {
-                                favController.removePropertyFromFavorite(
-                                  property.id,
-                                );
-                              } else {
-                                favController.addPropertyToFavorite(
-                                  property.id,
-                                );
-                              }
-                            },
+                    isLoading
+                        ? null
+                        : () {
+                      if (isFavorited) {
+                        favController.removePropertyFromFavorite(
+                          property.id,
+                        );
+                      } else {
+                        favController.addPropertyToFavorite(
+                          property.id,
+                        );
+                      }
+                    },
                     child: AnimatedSwitcher(
                       duration: const Duration(milliseconds: 300),
                       transitionBuilder:
                           (child, animation) =>
-                              ScaleTransition(scale: animation, child: child),
+                          ScaleTransition(scale: animation, child: child),
                       child:
-                          isLoading
-                              ? const SizedBox(
-                                key: ValueKey('loading'),
-                                width: 28,
-                                height: 28,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2.5,
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    Colors.white,
-                                  ),
-                                ),
-                              )
-                              : Icon(
-                                isFavorited
-                                    ? Icons.favorite
-                                    : Icons.favorite_border,
-                                key: ValueKey(isFavorited),
-                                color:
-                                    isFavorited
-                                        ? Colors.red
-                                        : Colors.white.withOpacity(0.9),
-                                size: 28.sp,
-                              ),
+                      isLoading
+                          ? const SizedBox(
+                        key: ValueKey('loading'),
+                        width: 28,
+                        height: 28,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.5,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.white,
+                          ),
+                        ),
+                      )
+                          : Icon(
+                        isFavorited
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        key: ValueKey(isFavorited),
+                        color:
+                        isFavorited
+                            ? Colors.red
+                            : Colors.white.withOpacity(0.9),
+                        size: 28.sp,
+                      ),
                     ),
                   );
                 }),

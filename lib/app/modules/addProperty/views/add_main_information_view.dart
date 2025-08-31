@@ -58,7 +58,7 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
 
                     if (countriesController.countriesModel.value.data.isEmpty) {
                       return Text(
-                        "No countries found",
+                        "messages_no_countries_found".tr,
                         style: TextStyle(fontSize: 14.sp),
                       );
                     }
@@ -68,14 +68,14 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
                       children: [
                         20.verticalSpace,
                         Text(
-                          "Country Name",
+                          "labels_country_name".tr,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         SizedBox(height: 8.h),
                         _buildDropdown(
                           items: countriesController.countriesModel.value.data,
                           selectedValue:
-                              countriesController.selectedCountry.value,
+                          countriesController.selectedCountry.value,
                           onChanged: (value) {
                             countriesController.selectCountry(value);
                             controller.selectedCountryId.value = value?.id;
@@ -83,16 +83,16 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
                         ),
                         SizedBox(height: 20.h),
                         Text(
-                          "City Name",
+                          "labels_city_name".tr,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         SizedBox(height: 8.h),
                         _buildDropdown(
                           items:
-                              countriesController
-                                  .selectedCountry
-                                  .value
-                                  ?.cities ??
+                          countriesController
+                              .selectedCountry
+                              .value
+                              ?.cities ??
                               [],
                           selectedValue: countriesController.selectedCity.value,
                           onChanged: (value) {
@@ -102,20 +102,20 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
                         ),
                         SizedBox(height: 25.h),
                         Text(
-                          "Exposure",
+                          "labels_exposure".tr,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         SizedBox(height: 8.h),
                         MultiSelectChips(
                           options: [
-                            'North',
-                            'South',
-                            'East',
-                            'West',
-                            'Northeast',
-                            'Northwest',
-                            'Southeast',
-                            'Southwest',
+                            'labels_north'.tr,
+                            'labels_south'.tr,
+                            'labels_east'.tr,
+                            'labels_west'.tr,
+                            'labels_northeast'.tr,
+                            'labels_northwest'.tr,
+                            'labels_southeast'.tr,
+                            'labels_southwest'.tr,
                           ],
                           selectedItems: controller.selectedDirections,
                           onItemToggle: controller.toggleDirection,
@@ -126,12 +126,12 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
                         ),
                         SizedBox(height: 25.h),
                         Text(
-                          "Address",
+                          "labels_address".tr,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         SizedBox(height: 8.h),
                         InputTextFormField(
-                          hintText: 'Type an address',
+                          hintText: 'hint_text_type_an_address'.tr,
                           textEditingController: controller.location,
                           obsecure: false,
                           validatorType: ValidatorType.Default,
@@ -155,7 +155,7 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
                     GestureDetector(
                       onTap: () => Get.back(),
                       child: Text(
-                        "Previous",
+                        "buttons_previous".tr,
                         style: TextStyle(
                           fontSize: 14.sp,
                           color: Color(0xFF294741),
@@ -184,52 +184,52 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
 
                         if (countryId == null) {
                           Get.snackbar(
-                            "Missing Field",
-                            "Please select a country.",
+                            "labels_missing_field".tr,
+                            "messages_select_a_country".tr,
                           );
                           return;
                         }
 
                         if (cityId == null) {
                           Get.snackbar(
-                            "Missing Field",
-                            "Please select a city.",
+                            "labels_missing_field".tr,
+                            "messages_select_a_city".tr,
                           );
                           return;
                         }
 
                         if (directions.isEmpty) {
                           Get.snackbar(
-                            "Missing Field",
-                            "Please select at least one exposure.",
+                            "labels_missing_field".tr,
+                            "messages_select_at_least_one_exposure".tr,
                           );
                           return;
                         }
 
                         if (locationText.isEmpty) {
                           Get.snackbar(
-                            "Missing Field",
-                            "Please enter the address.",
+                            "labels_missing_field".tr,
+                            "messages_enter_the_address".tr,
                           );
                           return;
                         }
 
                         if (latLng == null) {
                           Get.snackbar(
-                            "Missing Location",
-                            "Please pick a location on the map.",
+                            "labels_missing_location".tr,
+                            "messages_pick_a_location".tr,
                           );
                           return;
                         }
 
                         Get.to(
-                          () => ApartmentForRentView(),
+                              () => ApartmentForRentView(),
                           binding: AddPropertyBinding(),
                         );
                       },
 
                       child: Text(
-                        "Next",
+                        "buttons_next".tr,
                         style: TextStyle(
                           fontSize: 14.sp,
                           color: Color(0xFF294741),
@@ -267,7 +267,7 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
               ),
               12.horizontalSpace,
               Text(
-                "Add New Property",
+                "labels_add_new_property".tr,
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 16.sp,
@@ -301,15 +301,15 @@ class AddmaininformationVeiw extends GetView<AddpropertyController> {
       child: DropdownButton<Datum>(
         isExpanded: true,
         value: selectedValue,
-        hint: const Text("Choose"),
+        hint: Text("hint_text_choose".tr),
         underline: SizedBox(),
         items:
-            items.map((item) {
-              return DropdownMenuItem<Datum>(
-                value: item,
-                child: Text(item.name ?? ''),
-              );
-            }).toList(),
+        items.map((item) {
+          return DropdownMenuItem<Datum>(
+            value: item,
+            child: Text(item.name ?? ''),
+          );
+        }).toList(),
         onChanged: onChanged,
       ),
     );

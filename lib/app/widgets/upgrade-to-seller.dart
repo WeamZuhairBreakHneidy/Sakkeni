@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:test1/app/modules/auth/controllers/auth_controller.dart';
 
 import '../core/theme/colors.dart';
-import '../modules/auth/controllers/profile_controller.dart'; // تأكد من استيراد الـ ProfileController
+import '../modules/auth/controllers/profile_controller.dart';
 import '../routes/app_pages.dart';
 
 void showUpgradeToSellerDialog() {
@@ -24,7 +24,7 @@ void showUpgradeToSellerDialog() {
         ),
         SizedBox(height: 20.h),
         Text(
-          "You must upgrade to a seller to access this feature.",
+          "messages_upgrade_to_seller_required".tr,
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 14.sp,
@@ -50,7 +50,7 @@ void showUpgradeToSellerDialog() {
               padding: EdgeInsets.symmetric(vertical: 12.h),
             ),
             child: Text(
-              "Upgrade to Seller",
+              "buttons_upgrade_to_seller".tr,
               style: TextStyle(color: Colors.white, fontSize: 14.sp),
             ),
           ),
@@ -61,7 +61,7 @@ void showUpgradeToSellerDialog() {
             Get.back(); // إغلاق مربع الحوار
           },
           child: Text(
-            "Cancel",
+            "buttons_cancel".tr,
             style: TextStyle(
               color: AppColors.primary,
               fontSize: 13.sp,

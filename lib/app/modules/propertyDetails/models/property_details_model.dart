@@ -134,7 +134,7 @@ class Data {
           json["ownership_type"] == null
               ? null
               : AvailabilityStatus.fromJson(json["ownership_type"]),
-      owner: json["owner"] == null ? null : Owner.fromJson(json["owner"]),
+      owner: json["admin"] == null ? null : Owner.fromJson(json["admin"]),
       location:
           json["location"] == null ? null : Location.fromJson(json["location"]),
       residential:
@@ -143,7 +143,6 @@ class Data {
               : Residential.fromJson(json["residential"]),
       purchase:
           json["purchase"] == null ? null : Purchase.fromJson(json["purchase"]),
-      // تم إضافة هذه الحقول الجديدة من الـ JSON
       commercial:
           json["commercial"] == null
               ? null
