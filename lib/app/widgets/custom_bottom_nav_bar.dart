@@ -49,7 +49,7 @@ class CustomBottomNavBar extends StatelessWidget {
         showSelectedLabels: false,
         showUnselectedLabels: false,
         items: [
-          _buildNavItem(Icons.content_paste_rounded, 0),
+          _buildNavItem(Icons.favorite, 0),
           _buildNavItem(Icons.home_work_sharp, 1),
           _buildLogoNavItem(),
           _buildNavItem(Icons.work, 3),

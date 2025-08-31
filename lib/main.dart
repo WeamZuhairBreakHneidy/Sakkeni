@@ -18,7 +18,7 @@ final LocaleService localeService = Get.put(LocaleService());
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Stripe.publishableKey = 'pk_test_51S1iIJR8qUnPJEKySpTyzRNvCzFCaEQljoSS8mEvEbYcJBGrfXzQ1AFKsDEyyDyWvPOt8HwGIuBc1RCXlUI8GIKH00xHkiI0wa';
+  Stripe.publishableKey = 'pk_test_51RwXa7PNJA2H8uutBj7aAfevoOQINFUIC046uJfM8zPfdkwPbWK53N1DJOi7jN70xlTufofQhw2CW4qjVpLA059i00OYFOJrDa';
   await Stripe.instance.applySettings();
 
   await GetStorage.init();

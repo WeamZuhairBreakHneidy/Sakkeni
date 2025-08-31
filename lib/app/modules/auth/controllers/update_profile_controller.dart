@@ -14,6 +14,7 @@ class UpdateProfileController extends GetxController {
   final phone_number = TextEditingController();
   final first_name = TextEditingController();
   final last_name = TextEditingController();
+  final stripeAccountId = TextEditingController();
 
   final Rx<File?> imageFile = Rx<File?>(null);
 
@@ -35,6 +36,7 @@ class UpdateProfileController extends GetxController {
       user.value = UserModel.fromJson(Map<String, dynamic>.from(json));
       first_name.text = user.value?.firstName ?? '';
       last_name.text = user.value?.lastName ?? '';
+
       phone_number.text = user.value?.phoneNumber ?? '';
       address.text = user.value?.address ?? '';
     }

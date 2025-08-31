@@ -34,8 +34,6 @@ class PropertiesUnifiedView extends StatelessWidget {
       body: Column(
         children: [
           buildHeaderSection(context),
-
-          /// Expanded body
           Expanded(
             child: Container(
               decoration: BoxDecoration(

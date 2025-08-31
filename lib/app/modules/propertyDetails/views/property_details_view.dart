@@ -32,7 +32,7 @@ class PropertyDetailsView extends GetView<PropertyDetailsController> {
           return const Center(child: Text('No property details found.'));
         } else {
           final property_model.Data property =
-          controller.propertyDetails.value!.data!;
+              controller.propertyDetails.value!.data!;
 
           return CustomScrollView(
             slivers: [
@@ -59,21 +59,21 @@ class PropertyDetailsView extends GetView<PropertyDetailsController> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(12.r),
                                 child:
-                                imagePath.isNotEmpty
-                                    ? Image.network(
-                                  '${ApiService().baseUrl}/${imagePath.trim()}',
-                                  fit: BoxFit.cover,
-                                  errorBuilder:
-                                      (context, error, stackTrace) =>
-                                  const Icon(
-                                    Icons.broken_image,
-                                    size: 100,
-                                  ),
-                                )
-                                    : Image.asset(
-                                  'assets/Logo.png',
-                                  fit: BoxFit.cover,
-                                ),
+                                    imagePath.isNotEmpty
+                                        ? Image.network(
+                                          '${ApiService().baseUrl}/${imagePath.trim()}',
+                                          fit: BoxFit.cover,
+                                          errorBuilder:
+                                              (context, error, stackTrace) =>
+                                                  const Icon(
+                                                    Icons.broken_image,
+                                                    size: 100,
+                                                  ),
+                                        )
+                                        : Image.asset(
+                                          'assets/Logo.png',
+                                          fit: BoxFit.cover,
+                                        ),
                               ),
                             );
                           },
@@ -81,27 +81,27 @@ class PropertyDetailsView extends GetView<PropertyDetailsController> {
                       ),
                       if (property.images.length > 1)
                         Obx(
-                              () => Row(
+                          () => Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children:
-                            property.images.asMap().entries.map((entry) {
-                              return Container(
-                                width: 8.w,
-                                height: 8.h,
-                                margin: EdgeInsets.symmetric(
-                                  horizontal: 4.w,
-                                  vertical: 4.h,
-                                ),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color:
-                                  controller.currentImageIndex.value ==
-                                      entry.key
-                                      ? Colors.blue
-                                      : Colors.grey,
-                                ),
-                              );
-                            }).toList(),
+                                property.images.asMap().entries.map((entry) {
+                                  return Container(
+                                    width: 8.w,
+                                    height: 8.h,
+                                    margin: EdgeInsets.symmetric(
+                                      horizontal: 4.w,
+                                      vertical: 4.h,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color:
+                                          controller.currentImageIndex.value ==
+                                                  entry.key
+                                              ? Colors.blue
+                                              : Colors.grey,
+                                    ),
+                                  );
+                                }).toList(),
                           ),
                         ),
                     ],
@@ -116,13 +116,22 @@ class PropertyDetailsView extends GetView<PropertyDetailsController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       if (property.purchase?.price != null)
-                        Text(
-                          '\$${property.purchase?.price.toStringAsFixed(0) ?? 'N/A'}',
-                          style: TextStyle(
-                            fontSize: 28.sp,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green[700],
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              '\$${property.purchase?.price.toStringAsFixed(0) ?? 'N/A'}',
+                              style: TextStyle(
+                                fontSize: 28.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green[700],
+                              ),
+                            ),
+                            Spacer(),
+                            Text(
+                              '# ${property.id ?? ''} ',
+                              style: TextStyle(fontSize: 20.sp,fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         ),
                       SizedBox(height: 8.h),
                       Row(
@@ -148,10 +157,6 @@ class PropertyDetailsView extends GetView<PropertyDetailsController> {
                       _buildDetailRow(context, [
                         _buildDetailItem(
                           Icons.square_foot,
-                          'id',
-                          '${property.id ?? ''} sqm',
-                        ),   _buildDetailItem(
-                          Icons.square_foot,
                           'Area',
                           '${property.area ?? 'N/A'} sqm',
                         ),
@@ -171,12 +176,9 @@ class PropertyDetailsView extends GetView<PropertyDetailsController> {
                         'Property Type',
                         property.propertyType?.name ?? 'N/A',
                       ),
-                      _buildInfoTile(
-                        'Ownership Type',
-                        property.ownershipType?.name ?? 'N/A',
-                      ),
+
                       SizedBox(height: 16.h),
-                      _buildSectionTitle('Owner Information'),
+                      _buildSectionTitle('admin Information'),
                       _buildInfoTile(
                         'Name',
                         '${property.owner?.firstName ?? ''} ${property.owner?.lastName ?? ''}',
@@ -209,16 +211,16 @@ class PropertyDetailsView extends GetView<PropertyDetailsController> {
                           spacing: 8.w,
                           runSpacing: 8.h,
                           children:
-                          property.amenities
-                              .map(
-                                (amenity) => Chip(
-                              label: Text(amenity.name ?? ''),
-                              backgroundColor: Colors.blue.withOpacity(
-                                0.1,
-                              ),
-                            ),
-                          )
-                              .toList(),
+                              property.amenities
+                                  .map(
+                                    (amenity) => Chip(
+                                      label: Text(amenity.name ?? ''),
+                                      backgroundColor: Colors.blue.withOpacity(
+                                        0.1,
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
                         ),
                         SizedBox(height: 16.h),
                       ],
@@ -227,21 +229,22 @@ class PropertyDetailsView extends GetView<PropertyDetailsController> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children:
-                          property.directions
-                              .map(
-                                (direction) => Padding(
-                              padding: EdgeInsets.only(bottom: 4.h),
-                              child: Text(
-                                '- ${direction.name ?? ''}',
-                                style: TextStyle(fontSize: 14.sp),
-                              ),
-                            ),
-                          )
-                              .toList(),
+                              property.directions
+                                  .map(
+                                    (direction) => Padding(
+                                      padding: EdgeInsets.only(bottom: 4.h),
+                                      child: Text(
+                                        '- ${direction.name ?? ''}',
+                                        style: TextStyle(fontSize: 14.sp),
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
                         ),
                         SizedBox(height: 16.h),
                       ],
-                      if (property.description != null && property.description.isNotEmpty) ...[
+                      if (property.description != null &&
+                          property.description.isNotEmpty) ...[
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -252,10 +255,7 @@ class PropertyDetailsView extends GetView<PropertyDetailsController> {
                             ),
                           ],
                         ),
-                        ExpandableText(
-                          property.description,
-                          trimLines: 3,
-                        ),
+                        ExpandableText(property.description, trimLines: 3),
                         SizedBox(height: 16.h),
                       ],
                     ],
@@ -339,10 +339,7 @@ Widget _buildFurnishedStatus(num isFurnished) {
   return Row(
     children: [
       Text(label, style: TextStyle(fontSize: 14.sp, color: Colors.black87)),
-      Text(
-        '',
-        style: TextStyle(fontSize: 14.sp, color: Colors.black87),
-      ),
+      Text('', style: TextStyle(fontSize: 14.sp, color: Colors.black87)),
       SizedBox(width: 4.h),
     ],
   );
@@ -352,11 +349,7 @@ class ExpandableText extends GetView<ExpandableTextController> {
   final String text;
   final int trimLines;
 
-  const ExpandableText(
-      this.text, {
-        super.key,
-        this.trimLines = 3,
-      }) : super();
+  const ExpandableText(this.text, {super.key, this.trimLines = 3}) : super();
 
   @override
   Widget build(BuildContext context) {
@@ -386,10 +379,7 @@ class ExpandableText extends GetView<ExpandableTextController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (controller.isExpanded.value)
-            Text(
-              text,
-              style: defaultTextStyle,
-            )
+            Text(text, style: defaultTextStyle)
           else
             Text(
               text,

@@ -67,7 +67,40 @@
     "southeast": "جنوب شرق",
     "southwest": "جنوب غرب",
     "missing_field": "حقل مفقود",
-    "missing_location": "الموقع مفقود"
+    "missing_location": "الموقع مفقود",
+    "stripe_account_id": "معرف حساب سترايب",
+    "select_sell_type": "اختر نوع البيع",
+    "select_property_type": "اختر نوع العقار",
+    "apartment": "شقة",
+    "villa": "فيلا",
+    "office": "مكتب",
+    "price": "السعر",
+    "area": "المساحة",
+    "floor_number": "رقم الطابق",
+    "building_number": "رقم المبنى",
+    "apartment_number": "رقم الشقة",
+    "bathrooms": "الحمامات",
+    "balconies": "الشرفات",
+    "bedrooms": "غرف النوم",
+    "lease_period_value": "قيمة فترة الإيجار",
+    "lease_period_unit": "وحدة فترة الإيجار",
+    "furnished": "التأثيث",
+    "delivery_date": "تاريخ التسليم",
+    "first_payment": "الدفعة الأولى",
+    "overall_payment": "الدفعة الكلية",
+    "payment_plan_details": "تفاصيل خطة الدفع",
+    "phase_0": "المرحلة 0 (الدفعة المقدمة)",
+    "phase_1": "المرحلة 1 (أثناء البناء)",
+    "phase_2": "المرحلة 2 (عند الاكتمال)",
+    "duration_value": "قيمة المدة",
+    "duration_unit": "وحدة المدة",
+    "percentage": "النسبة",
+    "yes": "نعم",
+    "no": "لا",
+    "months": "أشهر",
+    "years": "سنوات",
+    "amenities": "المرافق",
+    "additional_info": "معلومات إضافية"
 
   },
   "drawer": {
@@ -80,6 +113,7 @@
     "dark_mode": "الوضع الداكن"
   },
   "hint_text": {
+    "additional_info": "أدخل معلومات إضافية",
     "enter_your_email": "أدخل البريد الإلكتروني",
     "enter_your_password": "أدخل كلمة السر",
     "enter_your_user_name": "أدخل اسم المستخدم",
@@ -89,7 +123,21 @@
     "search": "بحث",
     "write_about_services": "اكتب شيئًا عن خدماتك...",
     "type_an_address": "اكتب عنوانًا",
-    "choose": "اختر"
+    "choose": "اختر",
+    "choose_area": "اختر المساحة",
+    "choose_delivery_date": "اختر تاريخ التسليم",
+    "first_payment": "الدفعة الأولى",
+    "overall_payment": "الدفعة الكلية",
+    "bathrooms": "الحمامات",
+    "balconies": "الشرفات",
+    "bedrooms": "غرف النوم",
+    "floor_number": "رقم الطابق",
+    "building_number": "رقم المبنى",
+    "apartment_number": "رقم الشقة",
+    "duration_value": "مثال: 1 (لمدة شهر واحد)",
+    "choose_duration_unit": "اختر وحدة المدة",
+    "percentage": "مثال: 60%",
+    "choose_lease_period_unit": "اختر وحدة فترة الإيجار"
 
   },
   "error": {
@@ -147,8 +195,8 @@
     "personal_account": "حساب شخصي",
     "upgrade": "ترقية",
     "previous": "السابق",
-    "next": "التالي"
-
+    "next": "التالي",
+    "finish": "إنهاء"
 
   },
   "tabs": {
@@ -177,7 +225,9 @@
     "select_a_city": "الرجاء اختيار مدينة.",
     "select_at_least_one_exposure": "الرجاء اختيار اتجاه واحد على الأقل.",
     "enter_the_address": "الرجاء إدخال العنوان.",
-    "pick_a_location": "الرجاء تحديد موقع على الخريطة."
+    "pick_a_location": "الرجاء تحديد موقع على الخريطة.",
+    "complete_required_fields": "يرجى ملء جميع الحقول المطلوبة وإكمال أي مراحل دفع بدأت قبل المتابعة.",
+    "complete_required_fields_additional_info": "يرجى ملء جميع الحقول المطلوبة واختيار مرفق واحد على الأقل قبل الإنهاء."
   }
 
 }

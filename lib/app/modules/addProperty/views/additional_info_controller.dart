@@ -15,6 +15,7 @@ import '../widgets/buildStepLine.dart';
 class AdditionalInfoView extends GetView<AddpropertyController> {
   AdditionalInfoView({super.key});
   final amenitiesController = Get.put(AmenitiesController());
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -34,7 +35,7 @@ class AdditionalInfoView extends GetView<AddpropertyController> {
                 _buildHeader(context),
                 30.verticalSpace,
                 Text(
-                  "Amenities",
+                  "labels_amenities".tr,
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     fontWeight: FontWeight.bold,
                     fontSize: 16.sp,
@@ -82,12 +83,13 @@ class AdditionalInfoView extends GetView<AddpropertyController> {
                   );
                 }),
                 30.verticalSpace,
-                Text("additional_info",
-                    style:
-                    TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold)),
+                Text(
+                  "labels_additional_info".tr,
+                  style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+                ),
                 SizedBox(height: 8.h),
                 InputTextFormField(
-                  hintText: 'additional info',
+                  hintText: "hint_text_additional_info".tr,
                   textEditingController: controller.additionalInfo,
                   obsecure: false,
                   validatorType: ValidatorType.Default,
@@ -124,7 +126,7 @@ class AdditionalInfoView extends GetView<AddpropertyController> {
               ),
               12.horizontalSpace,
               Text(
-                "Add New Property",
+                "labels_add_new_property".tr,
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 16.sp,
@@ -153,7 +155,7 @@ class AdditionalInfoView extends GetView<AddpropertyController> {
           GestureDetector(
             onTap: () => Get.back(),
             child: Text(
-              "Previous",
+              "buttons_previous".tr,
               style: TextStyle(
                 fontSize: 14.sp,
                 color: Color(0xFF294741),
@@ -161,7 +163,6 @@ class AdditionalInfoView extends GetView<AddpropertyController> {
               ),
             ),
           ),
-
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -187,26 +188,24 @@ class AdditionalInfoView extends GetView<AddpropertyController> {
 
                 if (hasEmptyFields) {
                   Get.snackbar(
-                    "Missing Fields",
-                    "Please complete all required fields before finishing.",
+                    "error_missing_field".tr,
+                    "messages_complete_required_fields_additional_info".tr,
+                    snackPosition: SnackPosition.TOP,
                   );
                   return;
                 }
 
-                controller
-                    .submitProperty();
+                controller.submitProperty();
               },
               child: Padding(
                 padding: EdgeInsets.only(right: 0.w),
                 child: TextButton(
                   onPressed: controller.isLoading.value
                       ? null
-                      : controller
-                      .submitProperty,
+                      : controller.submitProperty,
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.symmetric(
-                      horizontal:
-                      12.w,
+                      horizontal: 12.w,
                       vertical: 12.h,
                     ),
                     shape: RoundedRectangleBorder(
@@ -224,7 +223,7 @@ class AdditionalInfoView extends GetView<AddpropertyController> {
                     ),
                   )
                       : Text(
-                    "Finish",
+                    "buttons_finish".tr,
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: AppColors.primary,

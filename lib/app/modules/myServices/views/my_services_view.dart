@@ -21,7 +21,6 @@ class MyServicesView extends StatelessWidget {
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
           scrollController.position.maxScrollExtent - 100) {
-        // يمكن هنا تضيف تحميل المزيد إذا كنت تدعم Pagination
       }
     });
   }

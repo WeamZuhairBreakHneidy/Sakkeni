@@ -1,3 +1,5 @@
+// ... (Your existing code)
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -66,7 +68,7 @@ class UpdateProfileView extends StatelessWidget {
               30.verticalSpace,
               Expanded(
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(horizontal: 28.w),
+                  padding: EdgeInsets.symmetric(horizontal: 28.w,vertical: 15.h),
                   child: Column(
                     children: [
                       // Avatar with Edit Button
@@ -214,6 +216,21 @@ class UpdateProfileView extends StatelessWidget {
                         obsecure: false,
                         borderColor: AppColors.border,
                       ),
+                      20.verticalSpace, // إضافة مسافة
+                      // ------------------------------------------------
+                      // Stripe Account ID field (New Code)
+                      InputTextFormField(
+                        textEditingController: controller.stripeAccountId,
+                        labelTextAboveTextField: Text(
+                          "labels_stripe_account_id".tr,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        validatorType: ValidatorType.Default, // يمكنك استخدام Default أو إنشاء Validator خاص
+                        fillColor: Theme.of(context).colorScheme.background,
+                        obsecure: false,
+                        borderColor: AppColors.border,
+                      ),
+                      // ------------------------------------------------
                       50.verticalSpace,
                       // Save Button or Loading
                       Align(

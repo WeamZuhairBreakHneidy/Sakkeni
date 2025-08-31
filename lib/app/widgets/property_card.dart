@@ -14,7 +14,11 @@ class PropertyCard extends StatelessWidget {
   final String? subType;
   final VoidCallback? onTap;
   final VoidCallback? onDelete;
-
+  final bool? showPayButton;
+  final VoidCallback? onPayNow;
+  // New parameters for status
+  final String? statusText;
+  final Color? statusColor;
 
   const PropertyCard({
     super.key,
@@ -26,6 +30,10 @@ class PropertyCard extends StatelessWidget {
     this.subType,
     this.onTap,
     this.onDelete,
+    this.showPayButton = false,
+    this.onPayNow,
+    this.statusText,
+    this.statusColor,
   });
 
   @override
@@ -37,70 +45,107 @@ class PropertyCard extends StatelessWidget {
         decoration: _cardDecoration(context),
         clipBehavior: Clip.antiAlias,
         child: Column(
-          mainAxisSize: MainAxisSize.min, // 👈 يضبط الحجم على قد المحتوى
-
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // The Stack widget allows for overlapping children
             if (imageUrl != null)
               Stack(
                 children: [
                   _buildImage(imageUrl!),
                   if (onDelete != null)
-                    if (onDelete != null)
-                      Positioned(
-                        // يمكنك تقليل هذه القيم لتقريب الزر من الزاوية
-                        top: 6.h,
-                        right: 6.w,
-                        child: SizedBox(
-                          // حدد حجمًا أصغر لـ IconButton
-                          width: 32.w,
-                          height: 32.h,
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.remove,
-                              color: AppColors.primary,
-                              // قم بتصغير حجم الأيقونة أيضًا
-                              size: 16.w,
+                    Positioned(
+                      top: 6.h,
+                      right: 6.w,
+                      child: SizedBox(
+                        width: 32.w,
+                        height: 32.h,
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.remove,
+                            color: AppColors.primary,
+                            size: 16.w,
+                          ),
+                          onPressed: onDelete,
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                              Colors.white.withOpacity(0.8),
                             ),
-                            onPressed: onDelete,
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                Colors.white.withOpacity(0.8),
-                              ),
-                              shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50.r),
-                                ),
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50.r),
                               ),
                             ),
                           ),
                         ),
                       ),
-
-
+                    ),
+                  // New status badge
+                  if (statusText != null)
+                    Positioned(
+                      top: 10.h,
+                      left: 10.w,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.w,
+                          vertical: 4.h,
+                        ),
+                        decoration: BoxDecoration(
+                          color: statusColor,
+                          borderRadius: BorderRadius.circular(8.r),
+                        ),
+                        child: Text(
+                          statusText!,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10.sp,
+                          ),
+                        ),
+                      ),
+                    ),
                 ],
               ),
             Padding(
               padding: EdgeInsets.all(13.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min, // 👈 يخلي الكولمن ياخذ قد العناصر فقط
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   if (price != null) _buildPrice(),
                   if (location != null) _buildTextLine(context, location!),
                   if (propertyType != null) _buildTextLine(context, propertyType!),
                   if (subType != null && subType!.isNotEmpty)
                     _buildTextLine(context, subType!),
+                  if (showPayButton == true) ...[
+                    const SizedBox(height: 12),
+                    if (showPayButton == true) ...[
+                      const SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ElevatedButton(
+                            onPressed: onPayNow,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary,
+                            ),
+                            child: const Text(
+                              "Pay Now",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ],
                 ],
               ),
             ),
-
           ],
         ),
       ),
     );
   }
+
   BoxDecoration _cardDecoration(BuildContext context) => BoxDecoration(
     color: Theme.of(context).colorScheme.background,
     borderRadius: BorderRadius.circular(16.r),
@@ -113,16 +158,11 @@ class PropertyCard extends StatelessWidget {
     ],
   );
 
-// property_card.dart
-
-  // property_card.dart
-
   Widget _buildImage(String? url) {
     const String defaultImagePath = 'assets/backgrounds/default_placeholder.png';
     final bool hasImage = url != null && url.isNotEmpty;
-
-    // Check if the URL is already a full, valid URL
-    final bool isFullUrl = url != null && (url.startsWith('http://') || url.startsWith('https://'));
+    final bool isFullUrl =
+        url != null && (url.startsWith('http://') || url.startsWith('https://'));
     final String finalUrl = isFullUrl ? url! : "${ApiService().baseUrl}/$url";
 
     return ClipRRect(
@@ -133,14 +173,14 @@ class PropertyCard extends StatelessWidget {
         height: 150.h,
         width: double.infinity,
         fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) => Image.asset( // Show default image on network error
+        errorBuilder: (_, __, ___) => Image.asset(
           defaultImagePath,
           height: 150.h,
           width: double.infinity,
           fit: BoxFit.cover,
         ),
       )
-          : Image.asset( // Show default image if url is null or empty
+          : Image.asset(
         defaultImagePath,
         height: 150.h,
         width: double.infinity,
@@ -151,7 +191,7 @@ class PropertyCard extends StatelessWidget {
 
   Widget _buildPrice() {
     return Row(
-      mainAxisSize: MainAxisSize.min, // 👈 يخلي الرو ياخذ قد العناصر فقط
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           price!,

@@ -970,7 +970,7 @@ import '../models/user_quote_model.dart';
 class UserQuotesView extends GetView<UserQuotesController> {
   UserQuotesView({super.key});
 
-  final PaymentController paymentController = Get.put(PaymentController());
+  final PaymentServiceProviderController paymentController = Get.put(PaymentServiceProviderController());
 
   @override
   Widget build(BuildContext context) {

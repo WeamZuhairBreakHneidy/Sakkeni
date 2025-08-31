@@ -7,7 +7,7 @@ import '../../../data/models/user_model.dart';
 import '../../../data/services/api_endpoints.dart';
 import '../../../data/services/api_service.dart';
 
-class PaymentServiceProviderController extends GetxController {
+class PaymentPropertiesController extends GetxController {
   final isLoading = false.obs;
   final box = GetStorage();
   final Rx<UserModel?> user = Rx<UserModel?>(null);
@@ -25,7 +25,7 @@ class PaymentServiceProviderController extends GetxController {
     }
   }
 
-  Future<void> makePayment({required String serviceId}) async {
+  Future<void> makePayment({required String propertyId}) async {
     isLoading.value = true;
     final currentUser = user.value;
 
@@ -36,9 +36,8 @@ class PaymentServiceProviderController extends GetxController {
     }
 
     try {
-      // 1) نطلب clientSecret من الباكند
       final response = await ApiService().postApi(
-        url: '${ApiEndpoints.servicePaymentIntent}/$serviceId/pay',
+        url: '${ApiEndpoints.propertiesPayment}/$propertyId/pay',
         body: {},
         headers: {
           'Authorization': 'Bearer ${currentUser.token}',
@@ -53,21 +52,15 @@ class PaymentServiceProviderController extends GetxController {
         final clientSecret = body['data']['clientSecret'];
         print("Client Secret: $clientSecret");
 
-        // 2) تهيئة الـ PaymentSheet
         await Stripe.instance.initPaymentSheet(
           paymentSheetParameters: SetupPaymentSheetParameters(
             paymentIntentClientSecret: clientSecret,
             merchantDisplayName: 'Sakkeni',
             style: ThemeMode.light,
-            billingDetails: BillingDetails(
-              email: currentUser.email,
-            ),
+            billingDetails: BillingDetails(email: currentUser.email),
           ),
         );
-
-        // 3) عرض واجهة الدفع
         await Stripe.instance.presentPaymentSheet();
-
         Get.snackbar(
           'Success',
           'Payment successful!',

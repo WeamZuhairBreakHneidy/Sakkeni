@@ -9,7 +9,7 @@ class PaymentView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String? serviceId = Get.arguments as String?;
-    final PaymentController controller = Get.put(PaymentController());
+    final PaymentServiceProviderController controller = Get.put(PaymentServiceProviderController());
 
     if (serviceId == null) {
       return Scaffold(

@@ -12,6 +12,7 @@ import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_bottom_nav_bar.dart';
 import '../../../widgets/properties_tab.dart';
 import '../../../widgets/property_card.dart';
+import '../../payment/controllers/payment_properties_controller.dart';
 import '../../properties/controllers/delete-property.dart';
 
 import '../controllers/my_properties_controller.dart'; // Import abstract controller
@@ -22,6 +23,9 @@ class MyPropertiesView extends StatelessWidget {
   final tabController = Get.put(MyPropertiesTabController(), permanent: true);
   late final MyPropertiesController _controller; // Use abstract controller type
   final deleteController = Get.put(DeletePropertyController());
+  final PaymentPropertiesController paymentPropertiesController = Get.put(
+    PaymentPropertiesController(),
+  );
 
   MyPropertiesView({super.key}) {
     print('MyPropertiesView: Route parameters: ${Get.parameters}'); // Debug log
@@ -36,7 +40,9 @@ class MyPropertiesView extends StatelessWidget {
 
   MyPropertiesController getControllerForCurrentRoute() {
     final typeParam = Get.parameters['type'] ?? 'rent';
-    print('MyPropertiesView: Getting controller for type=$typeParam'); // Debug log
+    print(
+      'MyPropertiesView: Getting controller for type=$typeParam',
+    ); // Debug log
     try {
       switch (typeParam) {
         case 'rent':
@@ -142,7 +148,10 @@ class MyPropertiesView extends StatelessWidget {
                     _controller.currentPage.value = 1;
                     _controller.hasMoreData.value = true;
                     _controller.properties.clear();
-                    await _controller.fetchProperties(page: 1, isLoadMore: false);
+                    await _controller.fetchProperties(
+                      page: 1,
+                      isLoadMore: false,
+                    );
                   },
                   child: ListView.builder(
                     itemCount: props.length + (hasMoreData ? 1 : 0),
@@ -167,20 +176,65 @@ class MyPropertiesView extends StatelessWidget {
                           imageUrl = 'https://via.placeholder.com/150';
                         }
 
-                        final price = property.rent?.price.toStringAsFixed(0) ??
+                        final price =
+                            property.rent?.price.toStringAsFixed(0) ??
                             property.purchase?.price.toStringAsFixed(0) ??
-                            property.offplan?.overallPayment.toStringAsFixed(0) ??
+                            property.offplan?.overallPayment.toStringAsFixed(
+                              0,
+                            ) ??
                             '0';
 
                         final location =
                             "${property.location?.country?.name ?? ''}, ${property.location?.city?.name ?? ''}";
-                        final lease = property.rent?.leasePeriod.toString() ?? '';
+                        final lease =
+                            property.rent?.leasePeriod.toString() ?? '';
                         final propertyType = property.propertyType?.name ?? '';
-                        final subType = property.residential?.residentialPropertyType?.name ??
+                        final subType =
+                            property
+                                .residential
+                                ?.residentialPropertyType
+                                ?.name ??
                             property.commercial?.commercialPropertyType?.name ??
                             '';
 
-                        return SizedBox(
+                        // Determine status text and color
+                        String? statusText;
+                        Color? statusColor;
+                        final status = property.availabilityStatus?.name;
+                        switch (status) {
+                          case "Pending":
+                            statusText = "Pending";
+                            statusColor = Colors.grey;
+                            break;
+                          case "Active":
+                            statusText = "Active";
+                            statusColor = Colors.green;
+                            break;
+                          case "InActive":
+                            statusText = "Inactive";
+                            statusColor = Colors.red;
+                            break;
+                          case "Rejected":
+                            statusText = "Rejected";
+                            statusColor = Colors.red;
+                            break;
+                          case "Sold":
+                            statusText = "Sold";
+                            statusColor = Colors.purple;
+                            break;
+                          case "Pending Payment":
+                            statusText = "Pending Payment";
+                            statusColor = Colors.orange;
+                            break;
+                          default:
+                            statusText = null;
+                            statusColor = null;
+                        }
+
+                        final bool showPayButton = status == "Pending Payment";
+
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 16.h),
                           child: PropertyCard(
                             imageUrl: imageUrl,
                             price: "\$$price",
@@ -188,13 +242,25 @@ class MyPropertiesView extends StatelessWidget {
                             location: location,
                             propertyType: propertyType,
                             subType: subType,
+                            showPayButton: showPayButton,
+                            onPayNow:
+                                showPayButton
+                                    ? () =>
+                                        paymentPropertiesController.makePayment(
+                                          propertyId: property.id.toString(),
+                                        )
+                                    : null,
                             onTap: () {
-                              // Navigate to property details if needed
+                              Get.toNamed(
+                                Routes.PROPERTY_DETAILS,
+                                arguments: property.id,
+                              );
                             },
                             onDelete: () {
                               Get.defaultDialog(
                                 title: "Confirm Deletion",
-                                middleText: "Are you sure you want to delete this property?",
+                                middleText:
+                                    "Are you sure you want to delete this property?",
                                 onConfirm: () {
                                   deleteController.deleteProperty(property.id);
                                   Get.back(); // Close the dialog
@@ -207,18 +273,22 @@ class MyPropertiesView extends StatelessWidget {
                                 buttonColor: AppColors.primary,
                               );
                             },
+                            statusText: statusText,
+                            statusColor: statusColor,
                           ),
                         );
                       } else {
                         return Obx(
-                              () => _controller.isLoading.value && _controller.hasMoreData.value
-                              ? const Padding(
-                            padding: EdgeInsets.all(16.0),
-                            child: Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          )
-                              : const SizedBox(),
+                          () =>
+                              _controller.isLoading.value &&
+                                      _controller.hasMoreData.value
+                                  ? const Padding(
+                                    padding: EdgeInsets.all(16.0),
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  )
+                                  : const SizedBox(),
                         );
                       }
                     },

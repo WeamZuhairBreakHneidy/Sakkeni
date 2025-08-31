@@ -68,7 +68,40 @@
     "southeast": "Southeast",
     "southwest": "Southwest",
     "missing_field": "Missing Field",
-    "missing_location": "Missing Location"
+    "missing_location": "Missing Location",
+    "stripe_account_id": "Stripe Account ID",
+    "select_sell_type": "Select Sell Type",
+    "select_property_type": "Select Property Type",
+    "apartment": "Apartment",
+    "villa": "Villa",
+    "office": "Office",
+    "price": "Price",
+    "area": "Area",
+    "floor_number": "Floor Number",
+    "building_number": "Building Number",
+    "apartment_number": "Apartment Number",
+    "bathrooms": "Bathrooms",
+    "balconies": "Balconies",
+    "bedrooms": "Bedrooms",
+    "lease_period_value": "Lease Period Value",
+    "lease_period_unit": "Lease Period Unit",
+    "furnished": "Furnished",
+    "delivery_date": "Delivery Date",
+    "first_payment": "First Payment",
+    "overall_payment": "Overall Payment",
+    "payment_plan_details": "Payment Plan Details",
+    "phase_0": "Phase 0 (Down Payment)",
+    "phase_1": "Phase 1 (During Construction)",
+    "phase_2": "Phase 2 (On Completion)",
+    "duration_value": "Duration Value",
+    "duration_unit": "Duration Unit",
+    "percentage": "Percentage",
+    "yes": "Yes",
+    "no": "No",
+    "months": "Months",
+    "years": "Years",
+    "amenities": "Amenities",
+    "additional_info": "Additional Info"
   },
   "drawer": {
     "my_properties": "My Properties",
@@ -80,6 +113,7 @@
     "dark_mode": "Dark Mode"
   },
   "hint_text": {
+    "additional_info": "Enter additional info",
     "enter_your_email": "Enter your email",
     "enter_your_password": "Enter your password",
     "enter_your_user_name": "Enter your user name",
@@ -89,8 +123,23 @@
     "enter_your_last_name": "Last Name",
     "write_about_services": "Write something about your services...",
     "type_an_address": "Type an address",
-    "choose": "Choose"
-
+    "choose": "Choose",
+    "choose_area": "Select Area",
+    "choose_delivery_date": "Select Delivery Date",
+    "first_payment": "First Payment",
+    "overall_payment": "Overall Payment",
+    "bathrooms": "Bathrooms",
+    "balconies": "Balconies",
+    "bedrooms": "Bedrooms",
+    "floor_number": "Floor Number",
+    "building_number": "Building Number",
+    "apartment_number": "Apartment Number",
+    "duration_value": "e.g., 1 (for 1 month)",
+    "choose_duration_unit": "Select Duration Unit",
+    "percentage": "e.g., 60%",
+    "choose_lease_period_unit": "Select Lease Period Unit",
+    "price": "Price",
+    "lease_period_value": "Lease Period Value"
   },
   "error": {
     "email_must_not_be_empty": "Email must not be empty",
@@ -121,9 +170,10 @@
     "seller_account": "Seller Account",
     "no_results_found": "No results found",
     "no_properties_found": "No properties found.",
-    "no_categories_available": "No categories available"
-
-
+    "no_categories_available": "No categories available",
+    "missing_field": "Missing Field",
+    "yes": "Yes",
+    "no": "No"
   }
 ,
   "buttons": {
@@ -147,8 +197,8 @@
     "upgrade_to_seller": "Upgrade to Seller",
     "upgrade": "Upgrade",
     "previous": "Previous",
-    "next": "Next"
-
+    "next": "Next",
+    "finish": "Finish"
 
   },
   "tabs": {
@@ -177,6 +227,9 @@
     "select_a_city": "Please select a city.",
     "select_at_least_one_exposure": "Please select at least one exposure.",
     "enter_the_address": "Please enter the address.",
-    "pick_a_location": "Please pick a location on the map."
+    "pick_a_location": "Please pick a location on the map.",
+    "complete_required_fields": "Please fill all required fields and complete any started payment plan phases before continuing.",
+    "complete_required_fields_additional_info": "Please fill all required fields and select at least one amenity before finishing."
   }
+
 }

@@ -19,6 +19,7 @@ import 'package:intl/intl.dart';
 
 class ApartmentForRentView extends GetView<AddpropertyController> {
   ApartmentForRentView({super.key});
+
   final sellTypeTabController = Get.find<SellTypeController>();
   final propertyTypeTabController = Get.find<PropertyTypeController>();
   final countriesController = Get.find<CountriesController>();
@@ -68,7 +69,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
           ),
           12.horizontalSpace,
           Text(
-            "Add New Property",
+            "labels_add_new_property".tr,
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
               fontWeight: FontWeight.bold,
               fontSize: 16.sp,
@@ -86,17 +87,17 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildTabLabel(context, "Select sell Type"),
+          _buildTabLabel(context, "labels_select_sell_type".tr),
           _buildTabSelector(
             sellTypeTabController,
-            ['For Rent', 'For Sale', 'Off plan'],
-                (index) => controller.selectedSellTypeIndex.value = index,
+            ['tabs_for_rent'.tr, 'tabs_for_sale'.tr, 'tabs_off_plan'.tr],
+            (index) => controller.selectedSellTypeIndex.value = index,
           ),
-          _buildTabLabel(context, "Select Property Type"),
+          _buildTabLabel(context, "labels_select_property_type".tr),
           _buildTabSelector(
             propertyTypeTabController,
-            ['Apartment', 'Villa', 'Office'],
-                (index) => controller.selectedPropertyTypeIndex.value = index,
+            ['labels_apartment'.tr, 'labels_villa'.tr, 'labels_office'.tr],
+            (index) => controller.selectedPropertyTypeIndex.value = index,
           ),
         ],
       ),
@@ -113,11 +114,10 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
   }
 
   Widget _buildTabSelector(
-      dynamic tabController,
-      List<String> tabs,
-      Function(int) onTabSelected,
-      )
-  {
+    dynamic tabController,
+    List<String> tabs,
+    Function(int) onTabSelected,
+  ) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
       child: TabSelector(
@@ -139,14 +139,14 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
         return _buildFields(
           isApartment: true,
           showBuildingAndApartment: true,
-            context: context
+          context: context,
         );
       } else if (propertyType == 1) {
         // Villa for Rent
         return _buildFields(
           isApartment: true,
           showBuildingAndApartment: true,
-            context: context
+          context: context,
         );
       } else if (propertyType == 2) {
         // Office for Rent
@@ -154,7 +154,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
           isApartment: true,
           showBuildingAndApartment: true,
           isOffice: true,
-            context: context
+          context: context,
         );
       }
     } else if (sellType == 1) {
@@ -164,22 +164,22 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
         return _buildFields(
           isApartment: true,
           showBuildingAndApartment: true,
-            context: context
+          context: context,
         );
-      }
-      else if (propertyType == 1) {
+      } else if (propertyType == 1) {
         // Villa for Sale
         return _buildFields(
           isApartment: true,
           showBuildingAndApartment: true,
-          context: context
-        );      } else if (propertyType == 2) {
+          context: context,
+        );
+      } else if (propertyType == 2) {
         // Office for Sale
         return _buildFields(
           isApartment: true,
           showBuildingAndApartment: true,
           isOffice: true,
-            context: context
+          context: context,
         );
       }
     } else if (sellType == 2) {
@@ -203,9 +203,13 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
     required bool isApartment,
     required bool showBuildingAndApartment,
     bool isOffice = false,
-    required BuildContext context
+    required BuildContext context,
   }) {
-    List<String> labels = ["Price", "Area", "Floor Number"];
+    List<String> labels = [
+      "labels_price".tr,
+      "labels_area".tr,
+      "labels_floor_number".tr,
+    ];
     List<TextEditingController> controllers = [
       controller.priceController,
       controller.areaController,
@@ -213,7 +217,12 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
     ];
 
     if (showBuildingAndApartment) {
-      labels.addAll(["Building Number", "Apartment Number", "Bathrooms", "Balconies"]);
+      labels.addAll([
+        "labels_building_number".tr,
+        "labels_apartment_number".tr,
+        "labels_bathrooms".tr,
+        "labels_balconies".tr,
+      ]);
       controllers.addAll([
         controller.buildingNumberController,
         controller.apartmentNumberController,
@@ -223,15 +232,11 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
     }
 
     if (!isOffice) {
-      // Residential properties usually have bedrooms, bathrooms, balconies
-      labels.addAll(["Bedrooms"]);
-      controllers.addAll([
-        controller.bedroomsController,
-
-      ]);
+      labels.add("labels_bedrooms".tr);
+      controllers.add(controller.bedroomsController);
     }
 
-    labels.add("Lease Period value");
+    labels.add("labels_lease_period_value".tr);
     controllers.add(controller.leasePeriodValueController);
 
     return Padding(
@@ -249,27 +254,6 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
     );
   }
 
-  Widget _buildSaleVillaFields() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildForm(
-            ["Building Number", "Apartment Number", "Bathrooms", "Balconies"],
-            [
-              controller.buildingNumberController,
-              controller.apartmentNumberController,
-              controller.bathroomsController,
-              controller.balconiesController,
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-
   Widget _buildOffPlanApartmentFields(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -277,63 +261,61 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildTextField(
-            label: "Area",
-            hint: "Select Area",
+            label: "labels_area".tr,
+            hint: "hint_text_choose_area".tr,
             controller: controller.areaController,
             keyboardType: ValidatorType.Number,
           ),
           _buildDateField(
-            label: "Delivery Date",
-            hint: "Select Delivery Date",
+            label: "labels_delivery_date".tr,
+            hint: "hint_text_choose_delivery_date".tr,
             controller: controller.deliveryDateController,
           ),
           _buildTextField(
-            label: "First Payment",
-            hint: "First Payment",
+            label: "labels_first_payment".tr,
+            hint: "hint_text_first_payment".tr,
             controller: controller.firstPayController,
             keyboardType: ValidatorType.Number,
           ),
           _buildTextField(
-            label: "Overall Payment",
-            hint: "Overall Payment",
+            label: "labels_overall_payment".tr,
+            hint: "hint_text_overall_payment".tr,
             controller: controller.overallPaymentController,
             keyboardType: ValidatorType.Number,
           ),
           _buildTextField(
-            label: "Bathrooms",
-            hint: "",
+            label: "labels_bathrooms".tr,
+            hint: "hint_text_bathrooms".tr,
             controller: controller.bathroomsController,
-            keyboardType:ValidatorType.Number, // Ensure numeric input
+            keyboardType: ValidatorType.Number,
           ),
           _buildTextField(
-            label: "Balconies",
-            hint: "",
+            label: "labels_balconies".tr,
+            hint: "hint_text_balconies".tr,
             controller: controller.balconiesController,
-            keyboardType:ValidatorType.Number, // Ensure numeric input
+            keyboardType: ValidatorType.Number,
           ),
-
-          // استبدال حقول Payment Plan الفردية بـ PageView
           _buildTextField(
-            label: "Bedrooms",
-            hint: "Bedrooms",
+            label: "labels_bedrooms".tr,
+            hint: "hint_text_bedrooms".tr,
             controller: controller.bedroomsController,
             keyboardType: ValidatorType.Number,
           ),
           _buildTextField(
-            label: "Floor Number",
-            hint: "Floor Number",
+            label: "labels_floor_number".tr,
+            hint: "hint_text_floor_number".tr,
             controller: controller.floorNumberController,
-            keyboardType:ValidatorType.Number,
+            keyboardType: ValidatorType.Number,
           ),
           _buildTextField(
-            label: "Building Number",
-            hint: "Building Number",
+            label: "labels_building_number".tr,
+            hint: "hint_text_building_number".tr,
             controller: controller.buildingNumberController,
-            keyboardType:ValidatorType.Number,
+            keyboardType: ValidatorType.Number,
           ),
           _buildTextField(
-            label: "Apartment Number",
-            hint: "Apartment Number",
+            label: "labels_apartment_number".tr,
+            hint: "hint_text_apartment_number".tr,
             controller: controller.apartmentNumberController,
             keyboardType: ValidatorType.Number,
           ),
@@ -342,7 +324,6 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
       ),
     );
   }
-
 
   Widget _buildOffPlanOfficeFields(BuildContext context) {
     return Padding(
@@ -351,56 +332,55 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildTextField(
-            label: "Area",
-            hint: "Select Area",
+            label: "labels_area".tr,
+            hint: "hint_text_choose_area".tr,
             controller: controller.areaController,
             keyboardType: ValidatorType.Number,
           ),
           _buildDateField(
-            label: "Delivery Date",
-            hint: "Select Delivery Date",
+            label: "labels_delivery_date".tr,
+            hint: "hint_text_choose_delivery_date".tr,
             controller: controller.deliveryDateController,
           ),
           _buildTextField(
-            label: "First Payment",
-            hint: "First Payment",
+            label: "labels_first_payment".tr,
+            hint: "hint_text_first_payment".tr,
             controller: controller.firstPayController,
-            keyboardType:ValidatorType.Number,
+            keyboardType: ValidatorType.Number,
           ),
           _buildTextField(
-            label: "Overall Payment",
-            hint: "Overall Payment",
+            label: "labels_overall_payment".tr,
+            hint: "hint_text_overall_payment".tr,
             controller: controller.overallPaymentController,
             keyboardType: ValidatorType.Number,
           ),
-
-
-
           _buildTextField(
-            label: "Floor Number",
-            hint: "Floor Number",
+            label: "labels_floor_number".tr,
+            hint: "hint_text_floor_number".tr,
             controller: controller.floorNumberController,
             keyboardType: ValidatorType.Number,
           ),
           _buildTextField(
-            label: "Building Number",
-            hint: "Building Number",
+            label: "labels_building_number".tr,
+            hint: "hint_text_building_number".tr,
             controller: controller.buildingNumberController,
             keyboardType: ValidatorType.Number,
           ),
           _buildTextField(
-            label: "Apartment Number",
-            hint: "Apartment Number",
+            label: "labels_apartment_number".tr,
+            hint: "hint_text_apartment_number".tr,
             controller: controller.apartmentNumberController,
             keyboardType: ValidatorType.Number,
-          ),  _buildTextField(
-            label: "bathrooms",
-            hint: "bathrooms ",
+          ),
+          _buildTextField(
+            label: "labels_bathrooms".tr,
+            hint: "hint_text_bathrooms".tr,
             controller: controller.bathroomsController,
             keyboardType: ValidatorType.Number,
-          ), _buildTextField(
-            label: "balconies",
-            hint: "balconies ",
+          ),
+          _buildTextField(
+            label: "labels_balconies".tr,
+            hint: "hint_text_balconies".tr,
             controller: controller.balconiesController,
             keyboardType: ValidatorType.Number,
           ),
@@ -410,31 +390,25 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
     );
   }
 
-
   Widget _buildPaymentPlanPageView(BuildContext context) {
-    // قائمة بويدجت كل مرحلة دفع
     final List<Widget> paymentPhases = [
       _buildPaymentPhaseFields(
         context: context,
-        phaseName: "Phase 0 (Down Payment)",
-        // phaseController: controller.payPlanPhase0Controller, // Removed
+        phaseName: "labels_phase_0".tr,
         durationValueController: controller.payPlanDurationValue0Controller,
         durationUnitController: controller.payPlanDurationUnit0Controller,
-        percentageController:
-        controller.payPlanPercentage0Controller,
+        percentageController: controller.payPlanPercentage0Controller,
       ),
       _buildPaymentPhaseFields(
         context: context,
-        phaseName: "Phase 1 (During Construction)",
-        // phaseController: controller.payPlanPhase1Controller, // Removed
+        phaseName: "labels_phase_1".tr,
         durationValueController: controller.payPlanDurationValue1Controller,
         durationUnitController: controller.payPlanDurationUnit1Controller,
         percentageController: controller.payPlanPercentage1Controller,
       ),
       _buildPaymentPhaseFields(
         context: context,
-        phaseName: "Phase 2 (On Completion)",
-        // phaseController: controller.payPlanPhase2Controller, // Removed
+        phaseName: "labels_phase_2".tr,
         durationValueController: controller.payPlanDurationValue2Controller,
         durationUnitController: controller.payPlanDurationUnit2Controller,
         percentageController: controller.payPlanPercentage2Controller,
@@ -445,7 +419,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Payment Plan Details",
+          "labels_payment_plan_details".tr,
           style: TextStyle(
             fontSize: 18.sp,
             fontWeight: FontWeight.bold,
@@ -453,21 +427,17 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
           ),
         ),
         10.verticalSpace,
-        // PageView لحقول مراحل الدفع
         SizedBox(
-          // PageView يحتاج لارتفاع محدد
-          height: 350.h, // قد تحتاج لتعديل هذا الارتفاع بناءً على حجم المحتوى
+          height: 350.h,
           child: PageView.builder(
             controller: controller.paymentPageController,
             itemCount: paymentPhases.length,
             onPageChanged: (index) {
-              controller.currentPaymentPageIndex.value =
-                  index; // تحديث مؤشر الصفحة
+              controller.currentPaymentPageIndex.value = index;
             },
             itemBuilder: (context, index) {
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 5.w),
-                // إضافة مساحة حول كل بطاقة
                 child: paymentPhases[index],
               );
             },
@@ -475,10 +445,9 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
         ),
         10.verticalSpace,
         Obx(
-              () => Row(
+          () => Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // زر السابق
               if (controller.currentPaymentPageIndex.value > 0)
                 IconButton(
                   icon: Icon(
@@ -493,26 +462,21 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
                     );
                   },
                 ),
-              // مؤشرات الصفحات (النقاط)
               ...List.generate(
                 paymentPhases.length,
-                    (index) => Container(
+                (index) => Container(
                   margin: EdgeInsets.symmetric(horizontal: 4.w),
                   width: 8.w,
                   height: 8.h,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color:
-                    controller.currentPaymentPageIndex.value == index
-                        ? AppColors
-                        .primary // نقطة الصفحة المختارة
-                        : Colors.grey.withOpacity(
-                      0.5,
-                    ), // نقطة الصفحة غير المختارة
+                        controller.currentPaymentPageIndex.value == index
+                            ? AppColors.primary
+                            : Colors.grey.withOpacity(0.5),
                   ),
                 ),
               ),
-              // زر التالي
               if (controller.currentPaymentPageIndex.value <
                   paymentPhases.length - 1)
                 IconButton(
@@ -531,19 +495,17 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
             ],
           ),
         ),
-        20.verticalSpace, // مسافة بعد قسم خطة الدفع
+        20.verticalSpace,
       ],
     );
   }
 
   Widget _buildPaymentPhaseFields({
-
     required String phaseName,
     required TextEditingController durationValueController,
     required TextEditingController durationUnitController,
     required TextEditingController percentageController,
-    required BuildContext context
-
+    required BuildContext context,
   }) {
     return Card(
       elevation: 2,
@@ -564,25 +526,27 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
                 ),
               ),
               10.verticalSpace,
-              // Removed _buildTextField for "Payment Phase"
               _buildTextField(
-                label: "Duration Value",
-                hint: "e.g., 1 (for 1 month)",
+                label: "labels.duration_value".tr,
+                hint: "hint_text.duration_value".tr,
                 controller: durationValueController,
-                keyboardType:ValidatorType.Number,
+                keyboardType: ValidatorType.Number,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Duration Unit",
-                    style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+                    "labels.duration_unit".tr,
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   5.verticalSpace,
                   DropdownButtonFormField<String>(
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor:Theme.of(context).colorScheme.background,
+                      fillColor: Theme.of(context).colorScheme.background,
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: AppColors.border),
                         borderRadius: BorderRadius.circular(8.r),
@@ -592,11 +556,20 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
                         borderRadius: BorderRadius.circular(8.r),
                       ),
                     ),
-                    value: durationUnitController.text.isNotEmpty ? durationUnitController.text : null,
-                    hint:  Text("Select Duration Unit"),
-                    items: ['months', 'years', 'weeks']
-                        .map((e) => DropdownMenuItem<String>(value: e, child: Text(e)))
-                        .toList(),
+                    value:
+                        durationUnitController.text.isNotEmpty
+                            ? durationUnitController.text
+                            : null,
+                    hint: Text("hint_text_choose_duration_unit".tr),
+                    items:
+                        ['labels_months'.tr, 'labels_years'.tr]
+                            .map(
+                              (e) => DropdownMenuItem<String>(
+                                value: e,
+                                child: Text(e),
+                              ),
+                            )
+                            .toList(),
                     onChanged: (val) {
                       if (val != null) {
                         durationUnitController.text = val;
@@ -605,10 +578,9 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
                   ),
                 ],
               ),
-
               _buildTextField(
-                label: "Percentage",
-                hint: "e.g., 60%",
+                label: "labels_percentage".tr,
+                hint: "hint_text_percentage".tr,
                 controller: percentageController,
                 keyboardType: ValidatorType.Number,
               ),
@@ -620,30 +592,18 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
   }
 
   Widget _buildForm(
-      List<String> labels,
-      List<TextEditingController> controllers,
-      ) {
+    List<String> labels,
+    List<TextEditingController> controllers,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(
         labels.length,
-            (i) => _buildTextField(
+        (i) => _buildTextField(
           label: labels[i],
-          hint: labels[i],
+          hint: "${labels[i].toLowerCase().replaceAll(' ', '_')}".tr,
           controller: controllers[i],
-          // تحديد نوع لوحة المفاتيح بناءً على التسمية
-          keyboardType:  ValidatorType.Number
-          // (labels[i].contains("Price") ||
-          //     labels[i].contains("Area") ||
-          //     labels[i].contains("Number") ||
-          //     labels[i].contains("Bedrooms") ||
-          //     labels[i].contains("Bathrooms") ||
-          //     labels[i].contains("Balconies") ||
-          //     labels[i].contains("Lease Period value") ||
-          //     labels[i].contains("Garage") ||
-          //     labels[i].contains("Yard Area"))
-
-              // : TextInputType.text,
+          keyboardType: ValidatorType.Number,
         ),
       ),
     );
@@ -653,7 +613,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
     required String label,
     required String hint,
     required TextEditingController controller,
-    required ValidatorType keyboardType ,
+    required ValidatorType keyboardType,
   }) {
     return Padding(
       padding: EdgeInsets.only(bottom: 15.h),
@@ -678,7 +638,6 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
     );
   }
 
-  // Widget جديد لاختيار التاريخ
   Widget _buildDateField({
     required String label,
     required String hint,
@@ -732,12 +691,12 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Lease Period Unit",
+          "labels_lease_period_unit".tr,
           style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
         ),
         5.verticalSpace,
         Obx(
-              () => DropdownButtonFormField<String>(
+          () => DropdownButtonFormField<String>(
             decoration: InputDecoration(
               filled: true,
               fillColor: AppColors.white,
@@ -751,16 +710,16 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
               ),
             ),
             value:
-            controller.leasePeriodUnit.value.isNotEmpty
-                ? controller.leasePeriodUnit.value
-                : null,
-            hint: const Text("Select Lease Period Unit"),
+                controller.leasePeriodUnit.value.isNotEmpty
+                    ? controller.leasePeriodUnit.value
+                    : null,
+            hint: Text("hint_text_choose_lease_period_unit".tr),
             items:
-            ['months', 'years', 'weeks']
-                .map(
-                  (e) => DropdownMenuItem<String>(value: e, child: Text(e)),
-            )
-                .toList(),
+                ['labels_months'.tr, 'labels_years'.tr]
+                    .map(
+                      (e) => DropdownMenuItem<String>(value: e, child: Text(e)),
+                    )
+                    .toList(),
             onChanged: (val) {
               if (val != null) {
                 controller.leasePeriodUnit.value = val;
@@ -772,21 +731,21 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
     );
   }
 
-  Widget _buildFurnishingToggle( BuildContext context) {
+  Widget _buildFurnishingToggle(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Furnishing",
+          "labels_furnished".tr,
           style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
         ),
         10.verticalSpace,
         Obx(
-              () => Row(
+          () => Row(
             children: [
-              _buildFurnishingOption("Yes",context),
+              _buildFurnishingOption("labels_yes".tr, context),
               12.horizontalSpace,
-              _buildFurnishingOption("No",context),
+              _buildFurnishingOption("labels_no".tr, context),
             ],
           ),
         ),
@@ -794,7 +753,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
     );
   }
 
-  Widget _buildFurnishingOption(String value,BuildContext context) {
+  Widget _buildFurnishingOption(String value, BuildContext context) {
     final isSelected = controller.furnishing.value == value;
 
     return Expanded(
@@ -803,7 +762,10 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 12.h),
           decoration: BoxDecoration(
-            color: isSelected ? const Color(0xFF294741) :Theme.of(context).colorScheme.background,
+            color:
+                isSelected
+                    ? const Color(0xFF294741)
+                    : Theme.of(context).colorScheme.background,
             borderRadius: BorderRadius.circular(8.r),
             border: Border.all(color: AppColors.border),
           ),
@@ -830,7 +792,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
           GestureDetector(
             onTap: () => Get.back(),
             child: Text(
-              "Previous",
+              "buttons_previous".tr,
               style: TextStyle(
                 fontSize: 14.sp,
                 color: const Color(0xFF294741),
@@ -888,14 +850,11 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
                     controller.bathroomsController,
                     controller.balconiesController,
                   ]);
-                  // No bedrooms, bathrooms, balconies
                 }
-              }
-
-              else if (sellType == 1) {
+              } else if (sellType == 1) {
                 // Sale
                 if (propertyType == 0) {
-                  // Apartment (Sale) - currently same as rent fields
+                  // Apartment (Sale)
                   requiredControllers.addAll([
                     controller.priceController,
                     controller.areaController,
@@ -928,7 +887,6 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
                   // Office (Sale)
                   requiredControllers.addAll([
                     controller.priceController,
-
                     controller.floorNumberController,
                     controller.buildingNumberController,
                     controller.apartmentNumberController,
@@ -937,7 +895,7 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
               } else if (sellType == 2) {
                 // Off Plan
                 requiredControllers.addAll([
-                  controller.areaController, // Added Area for Off Plan
+                  controller.areaController,
                   controller.deliveryDateController,
                   controller.firstPayController,
                   controller.overallPaymentController,
@@ -947,8 +905,8 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
                   // Apartment (Off Plan)
                   requiredControllers.addAll([
                     controller.bedroomsController,
-                    controller.bathroomsController, // Required for apartments
-                    controller.balconiesController, // Required for apartments
+                    controller.bathroomsController,
+                    controller.balconiesController,
                     controller.buildingNumberController,
                     controller.apartmentNumberController,
                   ]);
@@ -956,8 +914,8 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
                   // Villa (Off Plan)
                   requiredControllers.addAll([
                     controller.bedroomsController,
-                    controller.bathroomsController, // Required for villas
-                    controller.balconiesController, // Required for villas
+                    controller.bathroomsController,
+                    controller.balconiesController,
                   ]);
                 } else if (propertyType == 2) {
                   // Office (Off Plan)
@@ -966,26 +924,20 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
                     controller.apartmentNumberController,
                   ]);
                 }
-
               }
 
               final hasEmptyTextFields = requiredControllers.any(
-                    (c) => c.text.trim().isEmpty,
+                (c) => c.text.trim().isEmpty,
               );
-
               final hasEmptyRxStrings = requiredRxStrings.any(
-                    (s) => s.value.trim().isEmpty,
+                (s) => s.value.trim().isEmpty,
               );
 
-              // تحقق إضافي من صلاحية خطة الدفع
               bool allRequiredPaymentPlanFieldsFilled = true;
               if (sellType == 2) {
-                // إذا كان نوع البيع "Off Plan"
-                // تحقق من Phase 0 (عادة ما تكون إلزامية)
-                // Removed check for payPlanPhase0Controller.text
                 if (controller.payPlanDurationValue0Controller.text
-                    .trim()
-                    .isEmpty ||
+                        .trim()
+                        .isEmpty ||
                     controller.payPlanDurationUnit0Controller.text
                         .trim()
                         .isEmpty ||
@@ -995,10 +947,9 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
                   allRequiredPaymentPlanFieldsFilled = false;
                 }
 
-                // إذا كانت Phase 1 مملوءة جزئياً، تأكد من ملء جميع حقولها الفرعية
                 if (controller.payPlanDurationValue1Controller.text
-                    .trim()
-                    .isNotEmpty ||
+                        .trim()
+                        .isNotEmpty ||
                     controller.payPlanDurationUnit1Controller.text
                         .trim()
                         .isNotEmpty ||
@@ -1006,8 +957,8 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
                         .trim()
                         .isNotEmpty) {
                   if (controller.payPlanDurationValue1Controller.text
-                      .trim()
-                      .isEmpty ||
+                          .trim()
+                          .isEmpty ||
                       controller.payPlanDurationUnit1Controller.text
                           .trim()
                           .isEmpty ||
@@ -1017,10 +968,10 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
                     allRequiredPaymentPlanFieldsFilled = false;
                   }
                 }
-                // إذا كانت Phase 2 مملوءة جزئياً، تأكد من ملء جميع حقولها الفرعية
+
                 if (controller.payPlanDurationValue2Controller.text
-                    .trim()
-                    .isNotEmpty ||
+                        .trim()
+                        .isNotEmpty ||
                     controller.payPlanDurationUnit2Controller.text
                         .trim()
                         .isNotEmpty ||
@@ -1028,8 +979,8 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
                         .trim()
                         .isNotEmpty) {
                   if (controller.payPlanDurationValue2Controller.text
-                      .trim()
-                      .isEmpty ||
+                          .trim()
+                          .isEmpty ||
                       controller.payPlanDurationUnit2Controller.text
                           .trim()
                           .isEmpty ||
@@ -1045,19 +996,17 @@ class ApartmentForRentView extends GetView<AddpropertyController> {
                   hasEmptyRxStrings ||
                   !allRequiredPaymentPlanFieldsFilled) {
                 Get.snackbar(
-                  "Missing Fields",
-                  "Please fill all required fields and complete any started payment plan phases before continuing.",
+                  "error_missing_field".tr,
+                  "messages_complete_required_fields".tr,
                   snackPosition: SnackPosition.TOP,
-
                 );
                 return;
               }
 
-              // اجتياز جميع الفحوصات، انتقل للصفحة التالية
               Get.to(() => AdditionalInfoView(), binding: AddPropertyBinding());
             },
             child: Text(
-              "Next",
+              "buttons_next".tr,
               style: TextStyle(
                 fontSize: 14.sp,
                 color: const Color(0xFF294741),

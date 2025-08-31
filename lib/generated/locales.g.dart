@@ -83,6 +83,39 @@ class LocaleKeys {
   static const labels_southwest = 'labels_southwest';
   static const labels_missing_field = 'labels_missing_field';
   static const labels_missing_location = 'labels_missing_location';
+  static const labels_stripe_account_id = 'labels_stripe_account_id';
+  static const labels_select_sell_type = 'labels_select_sell_type';
+  static const labels_select_property_type = 'labels_select_property_type';
+  static const labels_apartment = 'labels_apartment';
+  static const labels_villa = 'labels_villa';
+  static const labels_office = 'labels_office';
+  static const labels_price = 'labels_price';
+  static const labels_area = 'labels_area';
+  static const labels_floor_number = 'labels_floor_number';
+  static const labels_building_number = 'labels_building_number';
+  static const labels_apartment_number = 'labels_apartment_number';
+  static const labels_bathrooms = 'labels_bathrooms';
+  static const labels_balconies = 'labels_balconies';
+  static const labels_bedrooms = 'labels_bedrooms';
+  static const labels_lease_period_value = 'labels_lease_period_value';
+  static const labels_lease_period_unit = 'labels_lease_period_unit';
+  static const labels_furnished = 'labels_furnished';
+  static const labels_delivery_date = 'labels_delivery_date';
+  static const labels_first_payment = 'labels_first_payment';
+  static const labels_overall_payment = 'labels_overall_payment';
+  static const labels_payment_plan_details = 'labels_payment_plan_details';
+  static const labels_phase_0 = 'labels_phase_0';
+  static const labels_phase_1 = 'labels_phase_1';
+  static const labels_phase_2 = 'labels_phase_2';
+  static const labels_duration_value = 'labels_duration_value';
+  static const labels_duration_unit = 'labels_duration_unit';
+  static const labels_percentage = 'labels_percentage';
+  static const labels_yes = 'labels_yes';
+  static const labels_no = 'labels_no';
+  static const labels_months = 'labels_months';
+  static const labels_years = 'labels_years';
+  static const labels_amenities = 'labels_amenities';
+  static const labels_additional_info = 'labels_additional_info';
   static const drawer_my_properties = 'drawer_my_properties';
   static const drawer_my_services = 'drawer_my_services';
   static const drawer_my_requests = 'drawer_my_requests';
@@ -90,6 +123,7 @@ class LocaleKeys {
   static const drawer_messages = 'drawer_messages';
   static const drawer_settings = 'drawer_settings';
   static const drawer_dark_mode = 'drawer_dark_mode';
+  static const hint_text_additional_info = 'hint_text_additional_info';
   static const hint_text_enter_your_email = 'hint_text_enter_your_email';
   static const hint_text_enter_your_password = 'hint_text_enter_your_password';
   static const hint_text_enter_your_user_name =
@@ -105,6 +139,23 @@ class LocaleKeys {
       'hint_text_write_about_services';
   static const hint_text_type_an_address = 'hint_text_type_an_address';
   static const hint_text_choose = 'hint_text_choose';
+  static const hint_text_choose_area = 'hint_text_choose_area';
+  static const hint_text_choose_delivery_date =
+      'hint_text_choose_delivery_date';
+  static const hint_text_first_payment = 'hint_text_first_payment';
+  static const hint_text_overall_payment = 'hint_text_overall_payment';
+  static const hint_text_bathrooms = 'hint_text_bathrooms';
+  static const hint_text_balconies = 'hint_text_balconies';
+  static const hint_text_bedrooms = 'hint_text_bedrooms';
+  static const hint_text_floor_number = 'hint_text_floor_number';
+  static const hint_text_building_number = 'hint_text_building_number';
+  static const hint_text_apartment_number = 'hint_text_apartment_number';
+  static const hint_text_duration_value = 'hint_text_duration_value';
+  static const hint_text_choose_duration_unit =
+      'hint_text_choose_duration_unit';
+  static const hint_text_percentage = 'hint_text_percentage';
+  static const hint_text_choose_lease_period_unit =
+      'hint_text_choose_lease_period_unit';
   static const error_email_must_not_be_empty = 'error_email_must_not_be_empty';
   static const error_invalid_email_format = 'error_invalid_email_format';
   static const error_name_must_not_be_empty = 'error_name_must_not_be_empty';
@@ -168,6 +219,7 @@ class LocaleKeys {
   static const buttons_upgrade = 'buttons_upgrade';
   static const buttons_previous = 'buttons_previous';
   static const buttons_next = 'buttons_next';
+  static const buttons_finish = 'buttons_finish';
   static const tabs_for_rent = 'tabs_for_rent';
   static const tabs_for_sale = 'tabs_for_sale';
   static const tabs_off_plan = 'tabs_off_plan';
@@ -207,13 +259,22 @@ class LocaleKeys {
       'messages_select_at_least_one_exposure';
   static const messages_enter_the_address = 'messages_enter_the_address';
   static const messages_pick_a_location = 'messages_pick_a_location';
+  static const messages_complete_required_fields =
+      'messages_complete_required_fields';
+  static const messages_complete_required_fields_additional_info =
+      'messages_complete_required_fields_additional_info';
   static const labels_video_required = 'labels_video_required';
+  static const hint_text_price = 'hint_text_price';
+  static const hint_text_lease_period_value = 'hint_text_lease_period_value';
   static const error_profile = 'error_profile';
   static const error_view_history = 'error_view_history';
   static const error_no_profile_data = 'error_no_profile_data';
   static const error_no_phone = 'error_no_phone';
   static const error_no_address = 'error_no_address';
   static const error_seller_account = 'error_seller_account';
+  static const error_missing_field = 'error_missing_field';
+  static const error_yes = 'error_yes';
+  static const error_no = 'error_no';
 }
 
 class Locales {
@@ -287,6 +348,39 @@ class Locales {
     'labels_southwest': 'جنوب غرب',
     'labels_missing_field': 'حقل مفقود',
     'labels_missing_location': 'الموقع مفقود',
+    'labels_stripe_account_id': 'معرف حساب سترايب',
+    'labels_select_sell_type': 'اختر نوع البيع',
+    'labels_select_property_type': 'اختر نوع العقار',
+    'labels_apartment': 'شقة',
+    'labels_villa': 'فيلا',
+    'labels_office': 'مكتب',
+    'labels_price': 'السعر',
+    'labels_area': 'المساحة',
+    'labels_floor_number': 'رقم الطابق',
+    'labels_building_number': 'رقم المبنى',
+    'labels_apartment_number': 'رقم الشقة',
+    'labels_bathrooms': 'الحمامات',
+    'labels_balconies': 'الشرفات',
+    'labels_bedrooms': 'غرف النوم',
+    'labels_lease_period_value': 'قيمة فترة الإيجار',
+    'labels_lease_period_unit': 'وحدة فترة الإيجار',
+    'labels_furnished': 'التأثيث',
+    'labels_delivery_date': 'تاريخ التسليم',
+    'labels_first_payment': 'الدفعة الأولى',
+    'labels_overall_payment': 'الدفعة الكلية',
+    'labels_payment_plan_details': 'تفاصيل خطة الدفع',
+    'labels_phase_0': 'المرحلة 0 (الدفعة المقدمة)',
+    'labels_phase_1': 'المرحلة 1 (أثناء البناء)',
+    'labels_phase_2': 'المرحلة 2 (عند الاكتمال)',
+    'labels_duration_value': 'قيمة المدة',
+    'labels_duration_unit': 'وحدة المدة',
+    'labels_percentage': 'النسبة',
+    'labels_yes': 'نعم',
+    'labels_no': 'لا',
+    'labels_months': 'أشهر',
+    'labels_years': 'سنوات',
+    'labels_amenities': 'المرافق',
+    'labels_additional_info': 'معلومات إضافية',
     'drawer_my_properties': 'عقاراتي',
     'drawer_my_services': 'خدماتي',
     'drawer_my_requests': 'طلباتي',
@@ -294,6 +388,7 @@ class Locales {
     'drawer_messages': 'الرسائل',
     'drawer_settings': 'الإعدادات',
     'drawer_dark_mode': 'الوضع الداكن',
+    'hint_text_additional_info': 'أدخل معلومات إضافية',
     'hint_text_enter_your_email': 'أدخل البريد الإلكتروني',
     'hint_text_enter_your_password': 'أدخل كلمة السر',
     'hint_text_enter_your_user_name': 'أدخل اسم المستخدم',
@@ -304,6 +399,20 @@ class Locales {
     'hint_text_write_about_services': 'اكتب شيئًا عن خدماتك...',
     'hint_text_type_an_address': 'اكتب عنوانًا',
     'hint_text_choose': 'اختر',
+    'hint_text_choose_area': 'اختر المساحة',
+    'hint_text_choose_delivery_date': 'اختر تاريخ التسليم',
+    'hint_text_first_payment': 'الدفعة الأولى',
+    'hint_text_overall_payment': 'الدفعة الكلية',
+    'hint_text_bathrooms': 'الحمامات',
+    'hint_text_balconies': 'الشرفات',
+    'hint_text_bedrooms': 'غرف النوم',
+    'hint_text_floor_number': 'رقم الطابق',
+    'hint_text_building_number': 'رقم المبنى',
+    'hint_text_apartment_number': 'رقم الشقة',
+    'hint_text_duration_value': 'مثال: 1 (لمدة شهر واحد)',
+    'hint_text_choose_duration_unit': 'اختر وحدة المدة',
+    'hint_text_percentage': 'مثال: 60%',
+    'hint_text_choose_lease_period_unit': 'اختر وحدة فترة الإيجار',
     'error_email_must_not_be_empty': 'البريد الإلكتروني يجب ألا يكون فارغاً',
     'error_invalid_email_format': 'تنسيق البريد الإلكتروني غير صالح',
     'error_name_must_not_be_empty': 'الاسم يجب ألا يكون فارغاً',
@@ -361,6 +470,7 @@ class Locales {
     'buttons_upgrade': 'ترقية',
     'buttons_previous': 'السابق',
     'buttons_next': 'التالي',
+    'buttons_finish': 'إنهاء',
     'tabs_for_rent': 'للإيجار',
     'tabs_for_sale': 'للبيع',
     'tabs_off_plan': 'على الخارطة',
@@ -394,6 +504,10 @@ class Locales {
         'الرجاء اختيار اتجاه واحد على الأقل.',
     'messages_enter_the_address': 'الرجاء إدخال العنوان.',
     'messages_pick_a_location': 'الرجاء تحديد موقع على الخريطة.',
+    'messages_complete_required_fields':
+        'يرجى ملء جميع الحقول المطلوبة وإكمال أي مراحل دفع بدأت قبل المتابعة.',
+    'messages_complete_required_fields_additional_info':
+        'يرجى ملء جميع الحقول المطلوبة واختيار مرفق واحد على الأقل قبل الإنهاء.',
   };
   static const en_US = {
     'welcome': 'Welcome',
@@ -466,6 +580,39 @@ class Locales {
     'labels_southwest': 'Southwest',
     'labels_missing_field': 'Missing Field',
     'labels_missing_location': 'Missing Location',
+    'labels_stripe_account_id': 'Stripe Account ID',
+    'labels_select_sell_type': 'Select Sell Type',
+    'labels_select_property_type': 'Select Property Type',
+    'labels_apartment': 'Apartment',
+    'labels_villa': 'Villa',
+    'labels_office': 'Office',
+    'labels_price': 'Price',
+    'labels_area': 'Area',
+    'labels_floor_number': 'Floor Number',
+    'labels_building_number': 'Building Number',
+    'labels_apartment_number': 'Apartment Number',
+    'labels_bathrooms': 'Bathrooms',
+    'labels_balconies': 'Balconies',
+    'labels_bedrooms': 'Bedrooms',
+    'labels_lease_period_value': 'Lease Period Value',
+    'labels_lease_period_unit': 'Lease Period Unit',
+    'labels_furnished': 'Furnished',
+    'labels_delivery_date': 'Delivery Date',
+    'labels_first_payment': 'First Payment',
+    'labels_overall_payment': 'Overall Payment',
+    'labels_payment_plan_details': 'Payment Plan Details',
+    'labels_phase_0': 'Phase 0 (Down Payment)',
+    'labels_phase_1': 'Phase 1 (During Construction)',
+    'labels_phase_2': 'Phase 2 (On Completion)',
+    'labels_duration_value': 'Duration Value',
+    'labels_duration_unit': 'Duration Unit',
+    'labels_percentage': 'Percentage',
+    'labels_yes': 'Yes',
+    'labels_no': 'No',
+    'labels_months': 'Months',
+    'labels_years': 'Years',
+    'labels_amenities': 'Amenities',
+    'labels_additional_info': 'Additional Info',
     'drawer_my_properties': 'My Properties',
     'drawer_my_services': 'My Services',
     'drawer_my_requests': 'My Requests',
@@ -473,6 +620,7 @@ class Locales {
     'drawer_messages': 'Messages',
     'drawer_settings': 'Settings',
     'drawer_dark_mode': 'Dark Mode',
+    'hint_text_additional_info': 'Enter additional info',
     'hint_text_enter_your_email': 'Enter your email',
     'hint_text_enter_your_password': 'Enter your password',
     'hint_text_enter_your_user_name': 'Enter your user name',
@@ -483,6 +631,22 @@ class Locales {
     'hint_text_write_about_services': 'Write something about your services...',
     'hint_text_type_an_address': 'Type an address',
     'hint_text_choose': 'Choose',
+    'hint_text_choose_area': 'Select Area',
+    'hint_text_choose_delivery_date': 'Select Delivery Date',
+    'hint_text_first_payment': 'First Payment',
+    'hint_text_overall_payment': 'Overall Payment',
+    'hint_text_bathrooms': 'Bathrooms',
+    'hint_text_balconies': 'Balconies',
+    'hint_text_bedrooms': 'Bedrooms',
+    'hint_text_floor_number': 'Floor Number',
+    'hint_text_building_number': 'Building Number',
+    'hint_text_apartment_number': 'Apartment Number',
+    'hint_text_duration_value': 'e.g., 1 (for 1 month)',
+    'hint_text_choose_duration_unit': 'Select Duration Unit',
+    'hint_text_percentage': 'e.g., 60%',
+    'hint_text_choose_lease_period_unit': 'Select Lease Period Unit',
+    'hint_text_price': 'Price',
+    'hint_text_lease_period_value': 'Lease Period Value',
     'error_email_must_not_be_empty': 'Email must not be empty',
     'error_invalid_email_format': 'Invalid email format',
     'error_name_must_not_be_empty': 'Name must not be empty',
@@ -516,6 +680,9 @@ class Locales {
     'error_no_results_found': 'No results found',
     'error_no_properties_found': 'No properties found.',
     'error_no_categories_available': 'No categories available',
+    'error_missing_field': 'Missing Field',
+    'error_yes': 'Yes',
+    'error_no': 'No',
     'buttons_login': 'Login',
     'buttons_register': 'Register',
     'buttons_sign_up': 'Sign up',
@@ -537,6 +704,7 @@ class Locales {
     'buttons_upgrade': 'Upgrade',
     'buttons_previous': 'Previous',
     'buttons_next': 'Next',
+    'buttons_finish': 'Finish',
     'tabs_for_rent': 'For Rent',
     'tabs_for_sale': 'For Sale',
     'tabs_off_plan': 'Off plan',
@@ -571,5 +739,9 @@ class Locales {
         'Please select at least one exposure.',
     'messages_enter_the_address': 'Please enter the address.',
     'messages_pick_a_location': 'Please pick a location on the map.',
+    'messages_complete_required_fields':
+        'Please fill all required fields and complete any started payment plan phases before continuing.',
+    'messages_complete_required_fields_additional_info':
+        'Please fill all required fields and select at least one amenity before finishing.',
   };
 }
