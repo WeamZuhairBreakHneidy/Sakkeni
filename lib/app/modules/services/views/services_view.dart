@@ -52,7 +52,7 @@ class ServicesView extends GetView<ServicesController> {
                           child: Container(
                             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
                             decoration: BoxDecoration(
-                              color: Theme.of(context).canvasColor,
+                              color: Theme.of(context).colorScheme.primary,
                               borderRadius: BorderRadius.circular(7.r),
                             ),
                             child: Text(
@@ -61,7 +61,7 @@ class ServicesView extends GetView<ServicesController> {
                                   .textTheme
                                   .bodySmall!
                                   .copyWith(
-                                color: Theme.of(context).primaryColor,
+                                color: Theme.of(context).colorScheme.surface,
                                 fontSize: 14.r,
                                 fontFamily: 'Roboto', // safe font
                               ),
@@ -158,7 +158,7 @@ class ServicesView extends GetView<ServicesController> {
                           height: 60.h,
                           padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 6.w),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.95),
+                            color:Theme.of(context).primaryColor,
                             borderRadius: BorderRadius.vertical(
                               bottom: Radius.circular(16.r),
                             ),
@@ -171,7 +171,7 @@ class ServicesView extends GetView<ServicesController> {
                                   child: Text(
                                     service.name,
                                     textAlign: TextAlign.center,
-                                    style: Theme.of(context).textTheme.titleMedium!.copyWith(overflow: TextOverflow.visible),)
+                                    style: Theme.of(context).textTheme.titleMedium!.copyWith(overflow: TextOverflow.visible, color: Theme.of(context).cardColor),)
                               ),
                             ],
                           ),
@@ -240,7 +240,7 @@ class ServicesView extends GetView<ServicesController> {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.work_outline, color: Theme.of(context).colorScheme.surface),
+                      Icon(Icons.work_outline, color: Theme.of(context).colorScheme.background),
                       8.horizontalSpace,
                       Text(
                         "labels_services_for_you".tr,

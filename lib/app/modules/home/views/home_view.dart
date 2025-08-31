@@ -86,7 +86,7 @@ class HomeView extends GetView<RecommendedPropertiesController> {
             bottomRight: Radius.circular(20.r),
             bottomLeft: Radius.circular(20.r),
           ),
-          color: AppColors.white,
+          color: Theme.of(context).colorScheme.background,
         ),
         child: SafeArea(
           child: Padding(
