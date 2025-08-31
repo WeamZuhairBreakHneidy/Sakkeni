@@ -96,6 +96,7 @@ flutter:
     - assets/
     - assets/icons/
     - assets/backgrounds/
+    - assets/services/
     - storage/property/
     - storage/profile/
 

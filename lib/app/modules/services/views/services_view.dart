@@ -104,108 +104,110 @@ class ServicesView extends GetView<ServicesController> {
     return StatefulBuilder(
       builder: (context, setState) {
         return GestureDetector(
-          onTapDown: (_) => scale.value = 0.9, // pressed down
-          onTapUp: (_) {
-            scale.value = 1.0; // release
-            // Navigate to detail page
-            Get.toNamed(Routes.SERVICE_PROVIDERS, arguments: {
-              "service": service.name,   // or service.id if API accepts id
-            });
-          },
-          onTapCancel: () => scale.value = 1.0, // canceled press
-          child: Obx(() => AnimatedScale(
-            scale: scale.value,
-            duration: const Duration(milliseconds: 100),
-            curve: Curves.easeInOut,
-            child: Container(
-              width: 160.w,
+            onTapDown: (_) => scale.value = 0.9, // pressed down
+            onTapUp: (_) {
+              scale.value = 1.0; // release
+              // Navigate to detail page
+              Get.toNamed(Routes.SERVICE_PROVIDERS, arguments: {
+                "service": service.name,   // or service.id if API accepts id
+              });
+            },
+            onTapCancel: () => scale.value = 1.0, // canceled press
+            child: Obx(() => AnimatedScale(
+              scale: scale.value,
+              duration: const Duration(milliseconds: 100),
+              curve: Curves.easeInOut,
+              child: Container(
+                width: 160.w,
 
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16.r),
-                color: Colors.white,
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 6,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16.r),
-                child: Stack(
-                  children: [
-                    // Image with fallback
-                    Image.asset(
-                      service.image.isNotEmpty ? service.image : "assets/backgrounds/services.png",
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      height: double.infinity,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Image.asset(
-                          "assets/backgrounds/services.png",
-                          fit: BoxFit.cover,
-                        );
-                      },
-                    ),
-
-                    // Bottom overlay with service name
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        height: 60.h,
-                        padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 6.w),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.95),
-                          borderRadius: BorderRadius.vertical(
-                            bottom: Radius.circular(16.r),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-
-                            Expanded(
-                                child: Text(
-                                  service.name,
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(overflow: TextOverflow.visible),)
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    // Shield icon overlay
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        margin: EdgeInsets.all(45),
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.95),
-                          borderRadius: BorderRadius.all(Radius.circular(100.r)),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.black,
-                              blurRadius: 6,
-                              offset: Offset(1, 1),
-                            ),
-                          ],
-                        ),
-                        child: Icon(
-                          service.icon,
-                          size: 30,
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                        ),
-                      ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.r),
+                  color: Colors.white,
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 6,
+                      offset: Offset(0, 2),
                     ),
                   ],
                 ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16.r),
+                  child: Stack(
+                    children: [
+                      // Image with fallback
+                      // inside _buildServiceCard
+                      Image.asset(
+                        service.image.isNotEmpty ? service.image : "assets/backgrounds/services.png",
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: double.infinity,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Image.asset(
+                            "assets/backgrounds/services.png",
+                            fit: BoxFit.cover,
+                          );
+                        },
+                      ),
+
+
+                      // Bottom overlay with service name
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          height: 60.h,
+                          padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 6.w),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.95),
+                            borderRadius: BorderRadius.vertical(
+                              bottom: Radius.circular(16.r),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+
+                              Expanded(
+                                  child: Text(
+                                    service.name,
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context).textTheme.titleMedium!.copyWith(overflow: TextOverflow.visible),)
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      // Shield icon overlay
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          margin: EdgeInsets.all(45),
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.95),
+                            borderRadius: BorderRadius.all(Radius.circular(100.r)),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.black,
+                                blurRadius: 6,
+                                offset: Offset(1, 1),
+                              ),
+                            ],
+                          ),
+                          child: Icon(
+                            service.icon,
+                            size: 30,
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-          )),
-        );
+            )));
+
       },
     );
   }

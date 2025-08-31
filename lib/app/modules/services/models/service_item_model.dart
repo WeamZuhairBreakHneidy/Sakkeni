@@ -14,7 +14,6 @@ class ServiceItem {
   });
 
   factory ServiceItem.fromJson(Map<String, dynamic> json) {
-    // Assign icon and image based on service name
     final name = json['name'] as String;
     final iconImage = _getIconAndImage(name);
 
@@ -27,91 +26,46 @@ class ServiceItem {
   }
 
   static Map<String, dynamic> _getIconAndImage(String serviceName) {
-    switch (serviceName.toLowerCase()) {
+    // normalize filename: lowercase + replace spaces with "_"
+    final normalized = serviceName.toLowerCase().replaceAll(" ", "_");
+
+    String imagePath = "assets/services/${serviceName}.jpg";
+
+    switch (normalized) {
       case "carpenter":
-        return {
-          "icon": Icons.construction,
-          "image": "assets/backgrounds/services.png",
-        };
+        return {"icon": Icons.construction, "image": "assets/services/Carpenter.jpg"};
       case "metalwork":
-        return {
-          "icon": Icons.handyman,
-          "image": "assets/backgrounds/services.png",
-        };
-      case "deep cleaning":
-        return {
-          "icon": Icons.cleaning_services,
-          "image": "assets/backgrounds/services.png",
-        };
-      case "regular cleaning":
-        return {
-          "icon": Icons.clean_hands,
-          "image": "assets/backgrounds/services.png",
-        };
-      case "water tank cleaning":
-        return {
-          "icon": Icons.water_damage,
-          "image": "assets/backgrounds/services.png",
-        };
+        return {"icon": Icons.handyman, "image": "assets/services/Metal_work.jpg"};
+      case "deep_cleaning":
+        return {"icon": Icons.cleaning_services, "image": "assets/services/Deep cleaning.jpg"};
+      case "regular_cleaning":
+        return {"icon": Icons.clean_hands, "image":"assets/services/Regular_cleaning.jpg"};
+      case "water_tank_cleaning":
+        return {"icon": Icons.water_damage, "image": "assets/services/Water_tank_cleaning.jpg"};
       case "plumber":
-        return {
-          "icon": Icons.plumbing,
-          "image": "assets/backgrounds/services.png",
-        };
-      case "sewage unclogging":
-        return {
-          "icon": Icons.waves,
-          "image": "assets/backgrounds/services.png",
-        };
+        return {"icon": Icons.plumbing, "image": "assets/services/Plumber.jpg"};
       case "tiler":
-        return {
-          "icon": Icons.grid_view,
-          "image": "assets/backgrounds/services.png",
-        };
+        return {"icon": Icons.grid_view, "image": "assets/services/Tiler.jpg"};
       case "interior":
-        return {
-          "icon": Icons.format_paint,
-          "image": "assets/backgrounds/services.png",
-        };
+        return {"icon": Icons.format_paint, "image": "assets/services/Tiler.jpg"};
       case "exterior":
-        return {
-          "icon": Icons.brush,
-          "image": "assets/backgrounds/services.png",
-        };
+        return {"icon": Icons.brush, "image": "assets/services/Exterior.jpg"};
       case "electrician":
-        return {
-          "icon": Icons.electrical_services,
-          "image": "assets/backgrounds/services.png",
-        };
+        return {"icon": Icons.electrical_services, "image": "assets/services/Electrician.jpg"};
       case "solar":
-        return {
-          "icon": Icons.wb_sunny,
-          "image": "assets/backgrounds/services.png",
-        };
+        return {"icon": Icons.wb_sunny, "image": "assets/services/Solar.jpg"};
       case "generators":
-        return {
-          "icon": Icons.power,
-          "image": "assets/backgrounds/services.png",
-        };
-      case "moving service":
-        return {
-          "icon": Icons.local_shipping,
-          "image": "assets/backgrounds/services.png",
-        };
+        return {"icon": Icons.power, "image": "assets/services/Generators.jpg"};
+      case "moving_service":
+        return {"icon": Icons.local_shipping, "image": "assets/services/Moving_Service.jpg"};
       case "irrigation":
-        return {
-          "icon": Icons.water,
-          "image": "assets/backgrounds/services.png",
-        };
-      case "pest control":
-        return {
-          "icon": Icons.bug_report,
-          "image": "assets/backgrounds/services.png",
-        };
+        return {"icon": Icons.water, "image": "assets/services/Irritation.jpg"};
+      case "pest_control":
+        return {"icon": Icons.bug_report, "image": "assets/services/Pest_Control.jpg"};
       default:
         return {
           "icon": Icons.build,
-          "image": "assets/backgrounds/services.png",
+          "image": "assets/backgrounds/services.png", // fallback
         };
     }
   }
